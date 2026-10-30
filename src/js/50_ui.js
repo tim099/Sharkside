@@ -534,7 +534,7 @@
     }
     var W = I.weaponOn(), we = $('bsi-wpn');                             // 拿著特殊武器：哪一把、還剩幾秒（每一格畫那一條才順）
     we.classList.toggle('on', !!W);
-    if (W) { var wl = I.weaponLeft(); html('bsi-wpn-ico', I.img('wpn/' + W.id, W.ico)); txt('bsi-wpn-nm', W.name + '：點敵艦'); txt('bsi-wpn-s', wl.toFixed(1) + 's'); $('bsi-wpn-bar').style.width = (wl / W.dur * 100).toFixed(1) + '%'; }
+    if (W) { var wl = I.weaponLeft(); html('bsi-wpn-ico', I.img('wpn/' + W.id, W.ico)); txt('bsi-wpn-nm', W.name + '：' + (W.how || '點敵艦')); txt('bsi-wpn-s', wl.toFixed(1) + 's'); $('bsi-wpn-bar').style.width = (wl / W.dur * 100).toFixed(1) + '%'; }
     var BT = I.BT, fz = I.frenzyOn(), fe = $('bsi-frz');                  // 鯊魚狂潮：還剩幾秒、這一波全力咬了幾口；結束那一下喊一聲（40_fx.js frenzyEnd）
     if (fe.classList.contains('on') !== fz) fe.classList.toggle('on', fz);
     if (fz) { var fl = (BT.frenzyUntil - I.now()) / 1000; txt('bsi-frz-nm', '鯊魚狂潮・蓄力全滿　全力咬了 ' + (BT.frenzyBites || 0) + ' 口'); txt('bsi-frz-s', fl.toFixed(1) + 's'); $('bsi-frz-bar').style.width = (fl / FRZ.dur * 100).toFixed(1) + '%'; }

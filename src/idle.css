@@ -359,6 +359,13 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
 #bsi .bsi-frz b { color: #c8f8ff; }
 #bsi .bsi-frz .bar i { background: linear-gradient(90deg, #2b8bd6, #4fd1ff, #c8f8ff); }
 
+/* ── 火藥桶（40_fx.js kegFrame）：飛過去的桶（在演出層）、海上的水雷（在名牌層：紅燈一閃一閃，碰到就炸；點不到 ⇒ 不擋點船）── */
+#bsi .bsi-keg, #bsi .bsi-mine { position: absolute; left: 0; top: 0; pointer-events: none; will-change: transform; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .6)); }
+#bsi .bsi-keg .bsi-img, #bsi .bsi-mine .bsi-img { display: block; width: 100%; height: 100%; }
+#bsi .bsi-mine .bsi-img { filter: sepia(.4) saturate(1.6) hue-rotate(-20deg) brightness(.85); }   /* 跟漂流木桶分得開：偏紅、暗一點 */
+#bsi .bsi-mine .lamp { position: absolute; left: 50%; top: -6px; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%; background: #ff3b3b; box-shadow: 0 0 8px 3px rgba(255, 60, 60, .8); opacity: .35; }
+#bsi .bsi-mine.armed .lamp { animation: bsiBlink .5s steps(2) infinite; opacity: 1; }
+
 /* ── 船上的標記 ── */
 #bsi .bsi-marks, #bsi .bsi-float { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 #bsi .bsi-mark { position: absolute; left: 0; top: 0; margin: -40px 0 0 -64px; width: 128px; text-align: center; will-change: transform; transition: opacity .3s; }

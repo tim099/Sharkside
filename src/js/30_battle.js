@@ -35,7 +35,7 @@
   I.startZone = function (N) {
     var S = I.S, Z = I.zone(N), M = mapNow(), seq = ++BT.seq;
     if (Z.map !== M.map || (Z.map && Z.site !== M.site)) { BT.phase = 'reload'; I.emit('reload', Z); return; }
-    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false;
+    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false; BT.kegs = []; BT.mines = [];
     var mine = S.fleet.filter(function (id) { return S.own[id] && I.cardOf(id); }).slice(0, S.slots);
     if (!mine.length) mine = ['flyingfish'];
     I.emit('zoneLoad', Z);
@@ -87,6 +87,7 @@
   // ── 每一格畫面（主程式叫）：收入、降旗、出局、下一波、勝負 ──
   I.battleTick = function () {
     if (BT.phase !== 'fight' && BT.phase !== 'hold') return;
+    kegTick();
     var Z = BT.Z, ships = C.ships(), st = C.state(), now = I.now(), vm = I.valueMul() * I.incomeMul();
     var strike = I.strikeAt(), redUp = 0, blueUp = 0, myLost = 0, repairing = now < BT.repairUntil;
     var rT = I.reloadT() * I.bmul('reload'), hk = I.bmul('hard'), sk = I.bmul('speed');   // 增益（核心每次開火讀 reloadT、每一步讀 cfg）
@@ -293,13 +294,13 @@
     return sh ? I.biteShip(sh, cx, cy) : 0;
   };
   /** 畫面上那一點離哪艘敵艦最近（照船的中心投影；遠的船門檻小一點）。 */
-  I.foeAt = function (cx, cy) {
+  I.foeAt = function (cx, cy, k) {                                       // k：門檻的倍數（火藥桶分「點偏了」與「點海放水雷」用小一點的）
     var best = null, bd = Infinity;
     C.ships().forEach(function (sh) {
       if (sh.team !== 'red' || sh.sunk) return;
       var c = C.center(sh); if (!c) return;
       var p = C.project(c[0], c[1], c[2]); if (!p) return;
-      var d = Math.hypot(p.x - cx, p.y - cy), lim = I.clamp(9000 / p.d, 50, 260);
+      var d = Math.hypot(p.x - cx, p.y - cy), lim = I.clamp(9000 / p.d, 50, 260) * (k || 1);
       if (d < lim && d < bd) { bd = d; best = sh; }
     });
     return best;
@@ -307,6 +308,48 @@
 
   // ── 特殊武器（撿軍火箱拿到：35_loot.js；表在 10_data.js I.WEAPONS）──
   var wpnAt = 0;
+  // ── 火藥桶（10_data.js WEAPONS keg）：點到船 ⇒ 從鏡頭那一側的海面丟過去、落到那一點炸開（核心 blast）；點到海 ⇒ 落在那裡變水雷，誰的船身碰到就炸（核心 hullAt；自己的船也算）──
+  //   落點、碰撞照模擬時間（BT.kegs、BT.mines；⛔ 照牆上的時間 ⇒ 開 ×4 的時候船已經開走了）；演出在 40_fx.js（飛的桶、海上的水雷）
+  function kegThrow(W, cx, cy, sh) {
+    var h = sh ? null : C.pick(cx, cy), to = null, mine = false;
+    if (I.biteable(h)) { sh = h.sh; to = h.w; }
+    else if (!sh) {                                                     // 沒點到船身：離敵艦很近（一般判定的 BAL.kegNear 倍）⇒ 當成點偏了、丟它；遠 ⇒ 點的是海 ⇒ 水雷（天上、鏡頭後面 ⇒ 照最近那艘丟）
+      sh = I.foeAt(cx, cy, B.kegNear);
+      if (!sh) { to = C.seaAt(cx, cy); mine = !!to; if (!to) sh = I.foeAt(cx, cy); }
+    }
+    if (!to && sh) { var hh = I.hullAt(sh, cx, cy); to = hh ? hh.w : C.center(sh); }
+    if (!to) return 0;
+    wpnAt = I.now();
+    var t = C.state().t, eye = C.cam.get().eye, ex = eye ? eye[0] - to[0] : 0, ez = eye ? eye[2] - to[2] : 1, el = Math.hypot(ex, ez) || 1;
+    var fx = to[0] + ex / el * 14, fz = to[2] + ez / el * 14, from = [fx, C.seaY(fx, fz), fz];   // 從鏡頭那一側 14 m 的海面丟出來（鯊魚甩尾）⇒ 看得到飛過去
+    if (sh && !mine) { var vel = sh.vel || [0, 0, 0]; to = [to[0] + vel[0] * W.fly, to[1], to[2] + vel[2] * W.fly]; }   // 提前量：飛 fly 秒
+    BT.kegs.push({ from: from, to: to, t0: t, fly: W.fly, mine: mine, R: W.R0 * (1 + W.RL * I.lv('teeth')), sh: sh || null, id: ++kegSeq });
+    I.emit('weaponFire', W, sh, to, cx, cy);
+    return 1;
+  }
+  var kegSeq = 0;
+  /** 每一格（battleTick）：落地的桶 ⇒ 炸開或變水雷；水雷 ⇒ 誰的船身碰到就炸、太久沒人碰就沉掉。 */
+  function kegTick() {
+    var t = C.state().t, W = I.weaponDef('keg');
+    for (var i = 0; i < BT.kegs.length; i++) {
+      var k = BT.kegs[i]; if (t < k.t0 + k.fly) continue;
+      BT.kegs.splice(i--, 1);
+      if (k.mine) {
+        BT.mines.push({ w: k.to.slice(), R: k.R, t0: t, id: k.id });
+        while (BT.mines.length > W.mines) I.emit('mineGone', BT.mines.shift(), 'many');
+        I.emit('mineLay', BT.mines[BT.mines.length - 1]);
+      } else { C.blast(k.to, k.R, { name: '鯊魚丟的火藥桶', f: BT.myDmg * I.bmul('dmg') }); I.emit('kegBoom', k); }
+    }
+    for (var j = 0; j < BT.mines.length; j++) {
+      var m = BT.mines[j]; m.w[1] = C.seaY(m.w[0], m.w[2]);           // 浮在浪上
+      if (t - m.t0 > W.life) { BT.mines.splice(j--, 1); I.emit('mineGone', m, 'old'); continue; }
+      if (t - m.t0 < W.arm) continue;
+      var hit = C.hullAt(m.w, 4); if (!hit) continue;
+      BT.mines.splice(j--, 1);
+      C.blast(m.w, m.R, { name: '水雷', f: BT.myDmg * I.bmul('dmg') });
+      I.emit('mineBoom', m, hit);
+    }
+  }
   I.weaponDef = function (id) { return I.WEAPONS.filter(function (w) { return w.id === id; })[0]; };
   /** 現在拿著哪一把（沒有、時間到了 ⇒ null）。 */
   I.weaponOn = function () { var w = BT.wpn; return w && I.now() < w.until ? I.weaponDef(w.id) : null; };
@@ -316,6 +359,7 @@
   /** 打畫面那一點：點到敵艦的船身 ⇒ 那一點；沒點到 ⇒ 最近那艘（sh 給了 ⇒ 那艘）往中心找船身、找不到打船心。回打了沒。 */
   I.weaponFire = function (cx, cy, sh) {
     var W = I.weaponOn(), now = I.now(); if (!W || (BT.phase !== 'fight' && BT.phase !== 'hold') || now - wpnAt < W.gap * 1000) return 0;
+    if (W.id === 'keg') return kegThrow(W, cx, cy, sh);
     var h = sh ? null : C.pick(cx, cy), to = null;
     if (I.biteable(h)) { sh = h.sh; to = h.w; }
     else { sh = sh || I.foeAt(cx, cy); if (!sh) return 0; var hh = I.hullAt(sh, cx, cy); to = hh ? hh.w : C.center(sh); }

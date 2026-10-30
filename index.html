@@ -491,7 +491,7 @@
   #err button:disabled{ opacity:.5; cursor:default; }
   #err label.chk{ display:inline-flex; align-items:center; gap:6px; margin:8px 0 0; font-size:13px; }
 </style>
-<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "6314e69fc8591331", "shell": "791a4c528c53"}};</script></head>
+<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "6314e69fc8591331", "shell": "e5f9d0563c61"}};</script></head>
 <body>
 <!-- 擬真沙盒（84_fleetlab.js；?lab=fleet，根目錄 fleetlab.html 轉過來）：body.flab 才顯示；看實景（body.flab3d）時俯視圖藏起來、底下的遊戲畫布露出來 -->
 <div id="flab">
@@ -46769,6 +46769,13 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
 #bsi .bsi-frz b { color: #c8f8ff; }
 #bsi .bsi-frz .bar i { background: linear-gradient(90deg, #2b8bd6, #4fd1ff, #c8f8ff); }
 
+/* ── 火藥桶（40_fx.js kegFrame）：飛過去的桶（在演出層）、海上的水雷（在名牌層：紅燈一閃一閃，碰到就炸；點不到 ⇒ 不擋點船）── */
+#bsi .bsi-keg, #bsi .bsi-mine { position: absolute; left: 0; top: 0; pointer-events: none; will-change: transform; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .6)); }
+#bsi .bsi-keg .bsi-img, #bsi .bsi-mine .bsi-img { display: block; width: 100%; height: 100%; }
+#bsi .bsi-mine .bsi-img { filter: sepia(.4) saturate(1.6) hue-rotate(-20deg) brightness(.85); }   /* 跟漂流木桶分得開：偏紅、暗一點 */
+#bsi .bsi-mine .lamp { position: absolute; left: 50%; top: -6px; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%; background: #ff3b3b; box-shadow: 0 0 8px 3px rgba(255, 60, 60, .8); opacity: .35; }
+#bsi .bsi-mine.armed .lamp { animation: bsiBlink .5s steps(2) infinite; opacity: 1; }
+
 /* ── 船上的標記 ── */
 #bsi .bsi-marks, #bsi .bsi-float { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 #bsi .bsi-mark { position: absolute; left: 0; top: 0; margin: -40px 0 0 -64px; width: 128px; text-align: center; will-change: transform; transition: opacity .3s; }
@@ -47104,6 +47111,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
     // 水線下的咬傷（Tim 2026-10-30：「水線下的咬傷威力要下降(不然沉太快了 應該在50%以下(可能30%?))」；30_battle.js bite）：
     //   咬的那一點在海面下 ⇒ 威力 × biteUnder（半徑 × √）；照深度漸變：中心在海面下半個咬痕半徑以上才扣滿，貼著水線只扣一點；已經在沉的不扣（咬沉船撿格照舊）
     biteUnder: 0.3,
+    kegNear: 0.35,                // 火藥桶（30_battle.js kegThrow）：沒點到船身、離敵艦船心的投影在一般判定（foeAt）的這個倍數以內 ⇒ 當成點偏了、丟那艘；更遠 ⇒ 點的是海 ⇒ 水雷
     // 鯊魚利齒前 teethGrow 級：咬得更大（半徑 +1）、獎勵 ×1.25、特殊武器的噴火多團；再上去每一級蓄滿的時間 ×teethFast（30 級 ⇒ 0.95^15 ≈ 0.46 秒）
     teethGrow: 15, teethFast: 0.95,
     // 軍火箱（35_loot.js 的漂流寶物多一種；一般的 armsP、黃金寶船 armsGold 的機率）：點一下撿才有（自動撿 ⇒ 沉下去了）⇒ 接下來那把武器的 dur 秒點敵艦換成它（I.WEAPONS）
@@ -47191,7 +47199,11 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   // gap：兩發最短隔幾秒（Tim 2026-10-30：「射擊間格可以更短(不用等上一發命中)」⇒ 0.3／0.45 ⇒ 0.12／0.18）
   I.WEAPONS = [
     { id: 'fire', ico: '🔥', name: '鯊魚噴火', dur: 10, gap: 0.12, n0: 2, dmg0: 2, dmgL: 0.2, desc: '從海裡噴出希臘火：點到哪裡燒到哪裡，木頭會延燒、燒穿' },
-    { id: 'cannon', ico: '💣', name: '天降砲擊', dur: 10, gap: 0.18, m0: 30, mL: 0.3, dmg0: 3, dmgL: 0.2, desc: '憑空一顆大爆裂彈從你這邊打過去：點到哪裡炸到哪裡' }
+    { id: 'cannon', ico: '💣', name: '天降砲擊', dur: 10, gap: 0.18, m0: 30, mL: 0.3, dmg0: 3, dmgL: 0.2, desc: '憑空一顆大爆裂彈從你這邊打過去：點到哪裡炸到哪裡' },
+    // 火藥桶（Tim 2026-10-30：「丟火藥桶(就是船上的彈藥) 碰撞到船會爆炸 可以點在海水上會變水雷(船碰到爆炸 可能炸到自己的船 然後發射速度可以慢一些)」；30_battle.js kegThrow）：
+    //   R0 ＋ 每級利齒 RL ⇒ 爆炸半徑（格；核心 blast）；fly 飛幾秒（模擬秒）；水雷：最多 mines 顆（再丟 ⇒ 最舊那顆沉掉）、落水 arm 秒之後才會炸、life 秒沒人碰就沉掉
+    { id: 'keg', ico: '🧨', name: '火藥桶', dur: 12, gap: 0.9, R0: 16, RL: 0.02, fly: 0.7, mines: 6, arm: 0.5, life: 90, how: '點敵艦丟過去、點海面放水雷',
+      desc: '一桶火藥：碰到船就炸開；丟在海上變水雷 —— 誰的船碰到就炸誰（自己的也算）' }
   ];
 
   /** 艦隊方針（＝ 核心的砲長，51_captain.js CAPTAINS）：我方每艘照它挑瞄準。 */
@@ -47660,7 +47672,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   I.startZone = function (N) {
     var S = I.S, Z = I.zone(N), M = mapNow(), seq = ++BT.seq;
     if (Z.map !== M.map || (Z.map && Z.site !== M.site)) { BT.phase = 'reload'; I.emit('reload', Z); return; }
-    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false;
+    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false; BT.kegs = []; BT.mines = [];
     var mine = S.fleet.filter(function (id) { return S.own[id] && I.cardOf(id); }).slice(0, S.slots);
     if (!mine.length) mine = ['flyingfish'];
     I.emit('zoneLoad', Z);
@@ -47712,6 +47724,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   // ── 每一格畫面（主程式叫）：收入、降旗、出局、下一波、勝負 ──
   I.battleTick = function () {
     if (BT.phase !== 'fight' && BT.phase !== 'hold') return;
+    kegTick();
     var Z = BT.Z, ships = C.ships(), st = C.state(), now = I.now(), vm = I.valueMul() * I.incomeMul();
     var strike = I.strikeAt(), redUp = 0, blueUp = 0, myLost = 0, repairing = now < BT.repairUntil;
     var rT = I.reloadT() * I.bmul('reload'), hk = I.bmul('hard'), sk = I.bmul('speed');   // 增益（核心每次開火讀 reloadT、每一步讀 cfg）
@@ -47918,13 +47931,13 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
     return sh ? I.biteShip(sh, cx, cy) : 0;
   };
   /** 畫面上那一點離哪艘敵艦最近（照船的中心投影；遠的船門檻小一點）。 */
-  I.foeAt = function (cx, cy) {
+  I.foeAt = function (cx, cy, k) {                                       // k：門檻的倍數（火藥桶分「點偏了」與「點海放水雷」用小一點的）
     var best = null, bd = Infinity;
     C.ships().forEach(function (sh) {
       if (sh.team !== 'red' || sh.sunk) return;
       var c = C.center(sh); if (!c) return;
       var p = C.project(c[0], c[1], c[2]); if (!p) return;
-      var d = Math.hypot(p.x - cx, p.y - cy), lim = I.clamp(9000 / p.d, 50, 260);
+      var d = Math.hypot(p.x - cx, p.y - cy), lim = I.clamp(9000 / p.d, 50, 260) * (k || 1);
       if (d < lim && d < bd) { bd = d; best = sh; }
     });
     return best;
@@ -47932,6 +47945,48 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
 
   // ── 特殊武器（撿軍火箱拿到：35_loot.js；表在 10_data.js I.WEAPONS）──
   var wpnAt = 0;
+  // ── 火藥桶（10_data.js WEAPONS keg）：點到船 ⇒ 從鏡頭那一側的海面丟過去、落到那一點炸開（核心 blast）；點到海 ⇒ 落在那裡變水雷，誰的船身碰到就炸（核心 hullAt；自己的船也算）──
+  //   落點、碰撞照模擬時間（BT.kegs、BT.mines；⛔ 照牆上的時間 ⇒ 開 ×4 的時候船已經開走了）；演出在 40_fx.js（飛的桶、海上的水雷）
+  function kegThrow(W, cx, cy, sh) {
+    var h = sh ? null : C.pick(cx, cy), to = null, mine = false;
+    if (I.biteable(h)) { sh = h.sh; to = h.w; }
+    else if (!sh) {                                                     // 沒點到船身：離敵艦很近（一般判定的 BAL.kegNear 倍）⇒ 當成點偏了、丟它；遠 ⇒ 點的是海 ⇒ 水雷（天上、鏡頭後面 ⇒ 照最近那艘丟）
+      sh = I.foeAt(cx, cy, B.kegNear);
+      if (!sh) { to = C.seaAt(cx, cy); mine = !!to; if (!to) sh = I.foeAt(cx, cy); }
+    }
+    if (!to && sh) { var hh = I.hullAt(sh, cx, cy); to = hh ? hh.w : C.center(sh); }
+    if (!to) return 0;
+    wpnAt = I.now();
+    var t = C.state().t, eye = C.cam.get().eye, ex = eye ? eye[0] - to[0] : 0, ez = eye ? eye[2] - to[2] : 1, el = Math.hypot(ex, ez) || 1;
+    var fx = to[0] + ex / el * 14, fz = to[2] + ez / el * 14, from = [fx, C.seaY(fx, fz), fz];   // 從鏡頭那一側 14 m 的海面丟出來（鯊魚甩尾）⇒ 看得到飛過去
+    if (sh && !mine) { var vel = sh.vel || [0, 0, 0]; to = [to[0] + vel[0] * W.fly, to[1], to[2] + vel[2] * W.fly]; }   // 提前量：飛 fly 秒
+    BT.kegs.push({ from: from, to: to, t0: t, fly: W.fly, mine: mine, R: W.R0 * (1 + W.RL * I.lv('teeth')), sh: sh || null, id: ++kegSeq });
+    I.emit('weaponFire', W, sh, to, cx, cy);
+    return 1;
+  }
+  var kegSeq = 0;
+  /** 每一格（battleTick）：落地的桶 ⇒ 炸開或變水雷；水雷 ⇒ 誰的船身碰到就炸、太久沒人碰就沉掉。 */
+  function kegTick() {
+    var t = C.state().t, W = I.weaponDef('keg');
+    for (var i = 0; i < BT.kegs.length; i++) {
+      var k = BT.kegs[i]; if (t < k.t0 + k.fly) continue;
+      BT.kegs.splice(i--, 1);
+      if (k.mine) {
+        BT.mines.push({ w: k.to.slice(), R: k.R, t0: t, id: k.id });
+        while (BT.mines.length > W.mines) I.emit('mineGone', BT.mines.shift(), 'many');
+        I.emit('mineLay', BT.mines[BT.mines.length - 1]);
+      } else { C.blast(k.to, k.R, { name: '鯊魚丟的火藥桶', f: BT.myDmg * I.bmul('dmg') }); I.emit('kegBoom', k); }
+    }
+    for (var j = 0; j < BT.mines.length; j++) {
+      var m = BT.mines[j]; m.w[1] = C.seaY(m.w[0], m.w[2]);           // 浮在浪上
+      if (t - m.t0 > W.life) { BT.mines.splice(j--, 1); I.emit('mineGone', m, 'old'); continue; }
+      if (t - m.t0 < W.arm) continue;
+      var hit = C.hullAt(m.w, 4); if (!hit) continue;
+      BT.mines.splice(j--, 1);
+      C.blast(m.w, m.R, { name: '水雷', f: BT.myDmg * I.bmul('dmg') });
+      I.emit('mineBoom', m, hit);
+    }
+  }
   I.weaponDef = function (id) { return I.WEAPONS.filter(function (w) { return w.id === id; })[0]; };
   /** 現在拿著哪一把（沒有、時間到了 ⇒ null）。 */
   I.weaponOn = function () { var w = BT.wpn; return w && I.now() < w.until ? I.weaponDef(w.id) : null; };
@@ -47941,6 +47996,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   /** 打畫面那一點：點到敵艦的船身 ⇒ 那一點；沒點到 ⇒ 最近那艘（sh 給了 ⇒ 那艘）往中心找船身、找不到打船心。回打了沒。 */
   I.weaponFire = function (cx, cy, sh) {
     var W = I.weaponOn(), now = I.now(); if (!W || (BT.phase !== 'fight' && BT.phase !== 'hold') || now - wpnAt < W.gap * 1000) return 0;
+    if (W.id === 'keg') return kegThrow(W, cx, cy, sh);
     var h = sh ? null : C.pick(cx, cy), to = null;
     if (I.biteable(h)) { sh = h.sh; to = h.w; }
     else { sh = sh || I.foeAt(cx, cy); if (!sh) return 0; var hh = I.hullAt(sh, cx, cy); to = hh ? hh.w : C.center(sh); }
@@ -48224,13 +48280,49 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   // 特殊武器（30_battle.js weaponGet／weaponFire）：撿到喊一聲；打出去 ⇒ 聲音、點的那一點冒個字、鏡頭鎖過去（同咬）
   I.on('weapon', function (W) {
     I.toast(I.img('wpn/' + W.id, W.ico) + ' 撿到 <b>' + I.esc(W.name) + '<\/b>！' + W.dur + ' 秒內點敵艦不咬，換成' + I.esc(W.name) + ' —— ' + I.esc(W.desc), 'gold', 5000);
-    I.banner(I.img('wpn/' + W.id, W.ico) + ' ' + I.esc(W.name) + '<small>' + W.dur + ' 秒內點敵艦！威力照鯊魚利齒<\/small>', 'zone');
+    I.banner(I.img('wpn/' + W.id, W.ico) + ' ' + I.esc(W.name) + '<small>' + W.dur + ' 秒內' + (W.how || '點敵艦') + '！威力照鯊魚利齒<\/small>', 'zone');
     I.sfx('arms');
   });
   I.on('weaponFire', function (W, sh, to, cx, cy) {
-    if (I.S.cam === 'foe' || I.S.cam === 'auto') { lockOn(sh); camHold = I.now() + 8000; }
+    if (sh && (I.S.cam === 'foe' || I.S.cam === 'auto')) { lockOn(sh); camHold = I.now() + 8000; }   // 火藥桶丟在海上（水雷）⇒ 沒有船 ⇒ 鏡頭不動
     I.sfx(W.id === 'fire' ? 'flame' : 'whistle');
     if (cx !== undefined) I.floatAt(cx, cy - 30, I.img('wpn/' + W.id, W.id === 'fire' ? '🔥' : '💣'), 'bite');
+  });
+  // 火藥桶（30_battle.js kegThrow、kegTick）：飛過去的桶、海上的水雷（照世界座標投影；圖：wpn/keg，還沒有 ⇒ 漂流木桶的圖，再沒有 ⇒ 🧨）
+  var kegEls = new Map(), mineEls = new Map();
+  function kegImg() { return I.img('wpn/keg', I.img('loot/barrel', '🧨')); }
+  function kegFrame() {
+    var BT = I.BT, t = C.state().t, live = new Set();
+    (BT.kegs || []).forEach(function (k) {
+      var u = I.clamp((t - k.t0) / k.fly, 0, 1), x = k.from[0] + (k.to[0] - k.from[0]) * u, z = k.from[2] + (k.to[2] - k.from[2]) * u;
+      var y = k.from[1] + (k.to[1] - k.from[1]) * u + 4 * 5 * u * (1 - u), p = C.project(x, y, z);   // 弧頂比直線高 5 m
+      var e = kegEls.get(k.id); if (!e) { e = I.h('div', 'bsi-keg', kegImg()); FX.appendChild(e); kegEls.set(k.id, e); }
+      live.add(k.id);
+      if (!p) { e.style.display = 'none'; return; }
+      var sz = I.clamp(2600 / p.d, 18, 64);
+      e.style.display = ''; e.style.width = e.style.height = sz.toFixed(0) + 'px';
+      e.style.transform = 'translate(' + p.x.toFixed(0) + 'px,' + p.y.toFixed(0) + 'px) translate(-50%,-50%) rotate(' + (u * 540).toFixed(0) + 'deg)';
+    });
+    kegEls.forEach(function (e, id) { if (!live.has(id)) { e.remove(); kegEls.delete(id); } });
+    var liveM = new Set();
+    (BT.mines || []).forEach(function (m) {
+      var e = mineEls.get(m.id); if (!e) { e = I.h('div', 'bsi-mine', '<i class="lamp"><\/i>' + kegImg()); e.title = '水雷：誰的船碰到就炸（自己的也算）'; MK.appendChild(e); mineEls.set(m.id, e); }
+      liveM.add(m.id);
+      var p = C.project(m.w[0], m.w[1] + 0.2, m.w[2]); if (!p) { e.style.display = 'none'; return; }
+      var sz = I.clamp(2400 / p.d, 16, 52);
+      e.style.display = ''; e.style.width = e.style.height = sz.toFixed(0) + 'px';
+      e.style.transform = 'translate(' + p.x.toFixed(0) + 'px,' + p.y.toFixed(0) + 'px) translate(-50%,-70%)';
+      e.classList.toggle('armed', t - m.t0 >= I.weaponDef('keg').arm);
+    });
+    mineEls.forEach(function (e, id) { if (!liveM.has(id)) { e.remove(); mineEls.delete(id); } });
+  }
+  I.on('kegBoom', function (k) { var p = C.project(k.to[0], k.to[1], k.to[2]); if (p) I.floatAt(p.x, p.y - 30, '💥 BOOM!', 'boom'); shake(true); });
+  I.on('mineLay', function (m) { I.sfx('bottle'); });                    // 噗通（瓶中信撿到那一聲）
+  I.on('mineBoom', function (m, sh) {
+    var p = C.project(m.w[0], m.w[1], m.w[2]); if (p) I.floatAt(p.x, p.y - 30, '💥 水雷！', 'boom');
+    shake(true);
+    var me = sh.team === 'blue';
+    I.toast(kegImg() + ' 水雷炸到 <b>' + I.esc(sh.name) + '<\/b>' + (me ? ' —— 是自己人啦！' : ''), me ? 'warn' : 'boom', 4500);
   });
   // 黃金寶船（30_battle.js reinforce）：喊一聲、鎖定敵艦的鏡頭換過去
   I.on('gold', function (sh) {
@@ -48331,7 +48423,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
     marks.set(sh, m);
     return m;
   }
-  I.marksClear = function () { marks.forEach(function (m) { m.e.remove(); }); marks.clear(); };
+  I.marksClear = function () { marks.forEach(function (m) { m.e.remove(); }); marks.clear(); mineEls.forEach(function (e) { e.remove(); }); mineEls.clear(); kegEls.forEach(function (e) { e.remove(); }); kegEls.clear(); };
   I.on('zoneLoad', function () { I.marksClear(); });
 
   // ── 鯊魚狂潮：每艘敵艦旁邊兩片鯊鰭繞著游（照船在水面的那一點投影；遠的船繞小圈、鰭小一點；繞到船後面那半圈潛下去）──
@@ -48360,6 +48452,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
 
   var camT = 0, camHold = 0, userT = 0, camSeq = 0;
   I.fxFrame = function (dt) {
+    kegFrame();
     if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); HTML.classList.toggle('bsi-wpn', !!I.weaponOn()); HTML.classList.toggle('bsi-frz', I.frenzyOn()); }   // 游標不動、船在動；拿著特殊武器 ⇒ 準星；狂潮 ⇒ 畫面邊緣發藍光
     finFrame(dt);
     if (CB && CB.classList.contains('on')) {                              // 連咬：剩幾秒會斷（那一條）；斷了收起來
@@ -49027,7 +49120,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
     }
     var W = I.weaponOn(), we = $('bsi-wpn');                             // 拿著特殊武器：哪一把、還剩幾秒（每一格畫那一條才順）
     we.classList.toggle('on', !!W);
-    if (W) { var wl = I.weaponLeft(); html('bsi-wpn-ico', I.img('wpn/' + W.id, W.ico)); txt('bsi-wpn-nm', W.name + '：點敵艦'); txt('bsi-wpn-s', wl.toFixed(1) + 's'); $('bsi-wpn-bar').style.width = (wl / W.dur * 100).toFixed(1) + '%'; }
+    if (W) { var wl = I.weaponLeft(); html('bsi-wpn-ico', I.img('wpn/' + W.id, W.ico)); txt('bsi-wpn-nm', W.name + '：' + (W.how || '點敵艦')); txt('bsi-wpn-s', wl.toFixed(1) + 's'); $('bsi-wpn-bar').style.width = (wl / W.dur * 100).toFixed(1) + '%'; }
     var BT = I.BT, fz = I.frenzyOn(), fe = $('bsi-frz');                  // 鯊魚狂潮：還剩幾秒、這一波全力咬了幾口；結束那一下喊一聲（40_fx.js frenzyEnd）
     if (fe.classList.contains('on') !== fz) fe.classList.toggle('on', fz);
     if (fz) { var fl = (BT.frenzyUntil - I.now()) / 1000; txt('bsi-frz-nm', '鯊魚狂潮・蓄力全滿　全力咬了 ' + (BT.frenzyBites || 0) + ' 口'); txt('bsi-frz-s', fl.toFixed(1) + 's'); $('bsi-frz-bar').style.width = (fl / FRZ.dur * 100).toFixed(1) + '%'; }

@@ -29,7 +29,7 @@
 | 升級 | `img/upg/` | 128×128 透明 | 32～40 px | `gun`、`reload`、`powder`、`hull`、`pump`、`sail`、`value`、`bounty`、`fear`、`teeth`（10） |
 | 深海科技 | `img/tech/` | 128×128 透明 | 32～40 px | `trident`、`coral`、`current`、`dream`、`chest`、`yard`、`tide`、`instinct`、`mate`（9） |
 | 技能 | `img/abil/` | 128×128 透明 | 技能鈕 44～56 px | `volley`、`frenzy`、`mega`、`repair`（4） |
-| 特殊武器 | `img/wpn/` | 128×128 透明 | 鈕、軍火箱角標 20～40 px | `fire`（鯊魚噴火）、`cannon`（天降砲擊）（2） |
+| 特殊武器 | `img/wpn/` | 128×128 透明 | 鈕、軍火箱角標 20～40 px | `fire`（鯊魚噴火）、`cannon`（天降砲擊）、`keg`（火藥桶；同一張也是丟出去在空中翻滾的桶 18～64 px、海上的水雷 16～52 px ⇒ 還沒畫：暫時借漂流木桶的圖，圖示退回 🧨）（3） |
 | 強化卡框 | `img/perk/frame-<稀有度>.png` | 256×352 透明 | 卡片約 200 px 寬 | `common`、`rare`、`epic`（3） |
 | 增益 | `img/buff/` | 128×128 透明 | 卡面 48 px、列 20 px | `fury`、`oak`、`quick`、`gold`、`skull`、`wind`、`blood`、`compass`（8） |
 | 祝福 | `img/bless/` | 128×128 透明 | 卡面 48 px | `atk`、`def`、`inc`（3） |

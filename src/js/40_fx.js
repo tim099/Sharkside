@@ -142,13 +142,49 @@
   // 特殊武器（30_battle.js weaponGet／weaponFire）：撿到喊一聲；打出去 ⇒ 聲音、點的那一點冒個字、鏡頭鎖過去（同咬）
   I.on('weapon', function (W) {
     I.toast(I.img('wpn/' + W.id, W.ico) + ' 撿到 <b>' + I.esc(W.name) + '</b>！' + W.dur + ' 秒內點敵艦不咬，換成' + I.esc(W.name) + ' —— ' + I.esc(W.desc), 'gold', 5000);
-    I.banner(I.img('wpn/' + W.id, W.ico) + ' ' + I.esc(W.name) + '<small>' + W.dur + ' 秒內點敵艦！威力照鯊魚利齒</small>', 'zone');
+    I.banner(I.img('wpn/' + W.id, W.ico) + ' ' + I.esc(W.name) + '<small>' + W.dur + ' 秒內' + (W.how || '點敵艦') + '！威力照鯊魚利齒</small>', 'zone');
     I.sfx('arms');
   });
   I.on('weaponFire', function (W, sh, to, cx, cy) {
-    if (I.S.cam === 'foe' || I.S.cam === 'auto') { lockOn(sh); camHold = I.now() + 8000; }
+    if (sh && (I.S.cam === 'foe' || I.S.cam === 'auto')) { lockOn(sh); camHold = I.now() + 8000; }   // 火藥桶丟在海上（水雷）⇒ 沒有船 ⇒ 鏡頭不動
     I.sfx(W.id === 'fire' ? 'flame' : 'whistle');
     if (cx !== undefined) I.floatAt(cx, cy - 30, I.img('wpn/' + W.id, W.id === 'fire' ? '🔥' : '💣'), 'bite');
+  });
+  // 火藥桶（30_battle.js kegThrow、kegTick）：飛過去的桶、海上的水雷（照世界座標投影；圖：wpn/keg，還沒有 ⇒ 漂流木桶的圖，再沒有 ⇒ 🧨）
+  var kegEls = new Map(), mineEls = new Map();
+  function kegImg() { return I.img('wpn/keg', I.img('loot/barrel', '🧨')); }
+  function kegFrame() {
+    var BT = I.BT, t = C.state().t, live = new Set();
+    (BT.kegs || []).forEach(function (k) {
+      var u = I.clamp((t - k.t0) / k.fly, 0, 1), x = k.from[0] + (k.to[0] - k.from[0]) * u, z = k.from[2] + (k.to[2] - k.from[2]) * u;
+      var y = k.from[1] + (k.to[1] - k.from[1]) * u + 4 * 5 * u * (1 - u), p = C.project(x, y, z);   // 弧頂比直線高 5 m
+      var e = kegEls.get(k.id); if (!e) { e = I.h('div', 'bsi-keg', kegImg()); FX.appendChild(e); kegEls.set(k.id, e); }
+      live.add(k.id);
+      if (!p) { e.style.display = 'none'; return; }
+      var sz = I.clamp(2600 / p.d, 18, 64);
+      e.style.display = ''; e.style.width = e.style.height = sz.toFixed(0) + 'px';
+      e.style.transform = 'translate(' + p.x.toFixed(0) + 'px,' + p.y.toFixed(0) + 'px) translate(-50%,-50%) rotate(' + (u * 540).toFixed(0) + 'deg)';
+    });
+    kegEls.forEach(function (e, id) { if (!live.has(id)) { e.remove(); kegEls.delete(id); } });
+    var liveM = new Set();
+    (BT.mines || []).forEach(function (m) {
+      var e = mineEls.get(m.id); if (!e) { e = I.h('div', 'bsi-mine', '<i class="lamp"></i>' + kegImg()); e.title = '水雷：誰的船碰到就炸（自己的也算）'; MK.appendChild(e); mineEls.set(m.id, e); }
+      liveM.add(m.id);
+      var p = C.project(m.w[0], m.w[1] + 0.2, m.w[2]); if (!p) { e.style.display = 'none'; return; }
+      var sz = I.clamp(2400 / p.d, 16, 52);
+      e.style.display = ''; e.style.width = e.style.height = sz.toFixed(0) + 'px';
+      e.style.transform = 'translate(' + p.x.toFixed(0) + 'px,' + p.y.toFixed(0) + 'px) translate(-50%,-70%)';
+      e.classList.toggle('armed', t - m.t0 >= I.weaponDef('keg').arm);
+    });
+    mineEls.forEach(function (e, id) { if (!liveM.has(id)) { e.remove(); mineEls.delete(id); } });
+  }
+  I.on('kegBoom', function (k) { var p = C.project(k.to[0], k.to[1], k.to[2]); if (p) I.floatAt(p.x, p.y - 30, '💥 BOOM!', 'boom'); shake(true); });
+  I.on('mineLay', function (m) { I.sfx('bottle'); });                    // 噗通（瓶中信撿到那一聲）
+  I.on('mineBoom', function (m, sh) {
+    var p = C.project(m.w[0], m.w[1], m.w[2]); if (p) I.floatAt(p.x, p.y - 30, '💥 水雷！', 'boom');
+    shake(true);
+    var me = sh.team === 'blue';
+    I.toast(kegImg() + ' 水雷炸到 <b>' + I.esc(sh.name) + '</b>' + (me ? ' —— 是自己人啦！' : ''), me ? 'warn' : 'boom', 4500);
   });
   // 黃金寶船（30_battle.js reinforce）：喊一聲、鎖定敵艦的鏡頭換過去
   I.on('gold', function (sh) {
@@ -249,7 +285,7 @@
     marks.set(sh, m);
     return m;
   }
-  I.marksClear = function () { marks.forEach(function (m) { m.e.remove(); }); marks.clear(); };
+  I.marksClear = function () { marks.forEach(function (m) { m.e.remove(); }); marks.clear(); mineEls.forEach(function (e) { e.remove(); }); mineEls.clear(); kegEls.forEach(function (e) { e.remove(); }); kegEls.clear(); };
   I.on('zoneLoad', function () { I.marksClear(); });
 
   // ── 鯊魚狂潮：每艘敵艦旁邊兩片鯊鰭繞著游（照船在水面的那一點投影；遠的船繞小圈、鰭小一點；繞到船後面那半圈潛下去）──
@@ -278,6 +314,7 @@
 
   var camT = 0, camHold = 0, userT = 0, camSeq = 0;
   I.fxFrame = function (dt) {
+    kegFrame();
     if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); HTML.classList.toggle('bsi-wpn', !!I.weaponOn()); HTML.classList.toggle('bsi-frz', I.frenzyOn()); }   // 游標不動、船在動；拿著特殊武器 ⇒ 準星；狂潮 ⇒ 畫面邊緣發藍光
     finFrame(dt);
     if (CB && CB.classList.contains('on')) {                              // 連咬：剩幾秒會斷（那一條）；斷了收起來
