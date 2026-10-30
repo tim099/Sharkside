@@ -125,9 +125,9 @@
     if (!o.big && (I.S.cam === 'foe' || I.S.cam === 'auto')) { lockOn(o.sh); camHold = I.now() + 8000; }   // 咬到哪艘，鏡頭就看哪艘（巨齒鯊一口氣咬全部 ⇒ 不跟，免得一直跳）
     if (x !== undefined) {
       var cls = o.big ? 'big' : o.crit ? 'crit' : '';
-      if (!o.big) cls += I.frenzyOn() ? ' frz' : o.pw < 0.6 ? ' weak' : '';   // 狂潮：藍色；沒蓄力就咬：小一號、淡一點
+      if (!o.big) cls += I.frenzyOn() ? ' frz' : o.pw * (o.uw || 1) < 0.6 ? ' weak' : '';   // 狂潮：藍色；沒蓄力就咬、咬在水線下（30_battle.js）：小一號、淡一點
       I.chomp(x, y, cls, anc, o.big ? 'MEGA CHOMP!' : o.crit ? 'CRITICAL!' : o.combo >= 2 ? 'COMBO ×' + o.combo : null);
-      I.floatAt(x, y - (o.big ? 80 : 54), '🦈 ' + (o.g > 0 ? '+' + I.fmt(o.g) : o.n + ' 格'), 'bite' + (cls ? ' ' + cls : ''));
+      I.floatAt(x, y - (o.big ? 80 : 54), '🦈 ' + (o.g > 0 ? '+' + I.fmt(o.g) : o.n + ' 格') + (o.uw < 0.9 ? ' <small>水下</small>' : ''), 'bite' + (cls ? ' ' + cls : ''));   // 水下打了折 ⇒ 字上說一聲
     }
     if (o.combo >= 2) comboShow(o);
     shake(o.big || o.crit);

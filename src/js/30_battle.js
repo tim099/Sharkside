@@ -248,6 +248,9 @@
     var nc = o.big || !full ? I.comboNow() : now - comboT < B.comboGap * 1000 ? combo + 1 : 1, crit = !o.big && full && nc % B.comboCrit === 0;
     if (!o.big) biteAt = now;
     var r = o.big ? 10 + I.teethLv() : Math.max(2, Math.round(I.biteR() * (crit ? 1.6 : 1) * Math.sqrt(pw)));
+    var uw = 1;                                                         // 水線下（BAL.biteUnder）：o.w ＝ 點到的那一點（世界座標），核心 seaY 是那一點現在的海面（含浪）
+    if (o.w && !C.isOut(sh)) { var dp = C.seaY(o.w[0], o.w[2]) - o.w[1]; if (dp > 0) uw = 1 - (1 - B.biteUnder) * Math.min(1, dp / (r * 0.05)); }   // r 是格（0.1 m）⇒ 半個半徑 ＝ r × 0.05 m
+    if (uw < 1) r = Math.max(2, Math.round(r * Math.sqrt(uw)));
     var res = o.at ? C.bite(sh, o.at, r, o.dir) : C.bite(sh, { fx: 0.2 + Math.random() * 0.6, side: 0, dz: o.big ? 0 : 1 }, r);
     if (!res) return 0;
     if (!o.big && full) { combo = nc; comboT = now; if (combo > I.S.st.comboMax) I.S.st.comboMax = combo; }
@@ -259,7 +262,7 @@
     var b = sh.bsi, bonus = Math.min(b.pool * 0.3 - b.biteGot, b.pool * B.biteK * Math.sqrt(res.n / 100) * Math.sqrt(pw) * I.biteMul() * cm), g = 0;
     if (bonus > 0) { b.biteGot += bonus; g = I.gain(bonus * I.valueMul() * I.incomeMul(), 'bite'); BT.income += g; }
     if (!o.big && I.frenzyOn()) { BT.frenzyBites = (BT.frenzyBites || 0) + 1; BT.frenzyGot = (BT.frenzyGot || 0) + g; }   // 狂潮那一波全力咬了幾口、咬下多少（50_ui.js 那一條、結束時的訊息）
-    I.emit('bite', { sh: sh, n: res.n, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy, combo: o.big || !full ? 0 : combo, crit: crit, cm: cm, pw: pw });
+    I.emit('bite', { sh: sh, n: res.n, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy, combo: o.big || !full ? 0 : combo, crit: crit, cm: cm, pw: pw, uw: uw });
     return res.n;
   };
   /** 畫面那一點沒點到那艘的船身（點到名牌、手機點偏了）⇒ 從那一點往它的中心走，第一個點得到它的地方。 */
@@ -277,7 +280,7 @@
     if (cx === undefined) { var c = C.center(sh), p = c && C.project(c[0], c[1], c[2]); if (!p) return I.weaponOn() ? 0 : I.bite(sh); cx = p.x; cy = p.y; }
     if (I.weaponOn()) return I.weaponFire(cx, cy, sh);
     var h = I.hullAt(sh, cx, cy);
-    return I.bite(sh, h ? { at: h.p, dir: h.d } : {});
+    return I.bite(sh, h ? { at: h.p, dir: h.d, w: h.w } : {});
   };
   /** 核心 pick 打到的那一點咬得咬不到：敵艦；沉沒了還在往下沉的 ⇒ 水面下 BAL.wreckY 以內（再深就看不到了）。水面本身不擋。 */
   I.biteable = function (h) { return !!(h && h.sh.team === 'red' && h.sh.bsi && (!h.sh.sunk || h.w[1] > B.wreckY)); };
@@ -285,7 +288,7 @@
   I.tapBite = function (cx, cy) {
     if (I.weaponOn()) return I.weaponFire(cx, cy);
     var h = C.pick(cx, cy);
-    if (I.biteable(h)) return I.bite(h.sh, { at: h.p, dir: h.d, cx: cx, cy: cy });
+    if (I.biteable(h)) return I.bite(h.sh, { at: h.p, dir: h.d, w: h.w, cx: cx, cy: cy });
     var sh = I.foeAt(cx, cy);
     return sh ? I.biteShip(sh, cx, cy) : 0;
   };
