@@ -487,7 +487,7 @@
   #err button:disabled{ opacity:.5; cursor:default; }
   #err label.chk{ display:inline-flex; align-items:center; gap:6px; margin:8px 0 0; font-size:13px; }
 </style>
-<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "bac25f2af754c75e", "shell": "5600ceeab345"}};</script></head>
+<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "bac25f2af754c75e", "shell": "799962d79a93"}};</script></head>
 <body>
 <!-- 擬真沙盒（84_fleetlab.js；?lab=fleet，根目錄 fleetlab.html 轉過來）：body.flab 才顯示；看實景（body.flab3d）時俯視圖藏起來、底下的遊戲畫布露出來 -->
 <div id="flab">
@@ -46579,8 +46579,11 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     //   ⇒ 一艘船的錢有上限：火力強只會打得快，不會讓一艘船更值錢（⛔ 2026-10-30 第一版照格算：火力 ⇒ 洞大 ⇒ 格多 ⇒ 錢多 ⇒ 火力，第 21 海域一場 7 秒 3,000 萬格）
     // 收入的升級（2026-10-30 第二版；Tim：「升級價格目前有點太低了(可以拉高後面的升級價格)」，存到 12.4 億格、每秒才 +33）：
     //   ⛔ 第一版鑑價師 ×1.1 每級只漲 1.3、賞金獵人 ×1.2 每級只漲 1.32 ⇒ 跟著砲術一起買，收入每個海域漲得比砲術、船殼的價錢快 ⇒ 錢滾成天文數字
-    //   ⇒ 鑑價師每級漲 1.5、賞金獵人 ×1.15 每級漲 1.6，所有升級再乘 e^(upgRamp × L(L−1)/2)。粗模（最便宜的先買）：0.5 h 海域 25、1 h 40、4 h 60、16 h 撞牆在 70 附近
-    upgRamp: 0.002,
+    //   ⇒ 鑑價師每級漲 1.5、賞金獵人 ×1.15 每級漲 1.6，所有升級再乘 e^(upgRamp × L(L−1)/2)
+    // 後段再加價（第三版；Tim：「後面的升級可以更貴一些(目前很容易就賺到破億)」）：upgRamp 0.002 ⇒ 0.006。第 10 級 ×1.2、20 級 ×2.1、40 級 ×22、60 級 ×1,200（跟 0.002 比）
+    //   粗模（最便宜的先買；沒算強化三選一、科技、寶藏，實際會快一點）：一場破億 35 分 ⇒ 1 h；0.5 h 海域 20、1 h 26（可以轉生了）、4 h 34、16 h 40
+    //   ⛔ 0.002：1 h 海域 40、一場 15 億，16 h 才在 70 撞牆 ⇒ 第一次轉生要等太久
+    upgRamp: 0.006,
     vGrow: 1.17,              // 一格的價值：每過一個海域 ×
     poolK: 130, poolExp: 0.75,
     hitShare: 0.6, outShare: 0.4, boomShare: 0.3, hitRef: 0.05,
@@ -47417,18 +47420,26 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     var eye = C.cam.get().eye, L = I.lv('teeth'), dmg = W.dmg0 * (1 + W.dmgL * L) * BT.myDmg * I.bmul('dmg');
     var ex = eye ? eye[0] - to[0] : 0, ez = eye ? eye[2] - to[2] : 1, el = Math.hypot(ex, ez) || 1;   // 往鏡頭那一側（水平）⇒ 看得到從哪裡打過來
     ex /= el; ez /= el; wpnAt = now;
-    // 砲擊幾乎垂直落下（斜上方 60 m、往鏡頭那一側偏 10 m）⇒ 先砸到那一點上面的船身、甲板（⛔ 斜著來 ⇒ 點在水線附近時先碰到浪，爆裂彈一落水就沒了：量過 6 發中 2）
+    // 砲擊從鏡頭打出去（Tim：「從攝影機位置發射出去(然後射往瞄準點)」）：鏡頭看得到那一點 ⇒ 鏡頭到那一點的視線沒有東西擋，彈飛得快、弧只比視線高一點 ⇒ 點哪打哪
+    //   ⛔ 視線被別的船擋住（沒點到船身、照最近那艘往中心找的時候）⇒ 改成那一點上方 60 m 幾乎垂直落下（斜著從低處來 ⇒ 點在水線附近先碰到浪，爆裂彈一落水就沒了：量過 6 發中 2）
     var fire = W.id === 'fire', V = fire ? 32 : 110, from = fire ? [to[0] + ex * 16, 0.4, to[2] + ez * 16] : [to[0] + ex * 10, to[1] + 60, to[2] + ez * 10];
+    if (!fire && eye && seen(sh, to)) {
+      var dx = to[0] - eye[0], dy = to[1] - eye[1], dz = to[2] - eye[2], d = Math.hypot(dx, dy, dz) || 1;
+      from = [eye[0] + dx / d * 5, eye[1] + dy / d * 5, eye[2] + dz / d * 5];   // 鏡頭前 5 m（再近 ⇒ 進了近裁切面、看不到彈出去）
+      V = Math.max(150, d / 0.45);                                      // 遠 ⇒ 快：0.45 秒內到（⛔ 0.8 秒：中彈在沉、在歪的船 0.7 秒就往下掉一截，彈從上面飛過去落海，量過 6 發中 3）
+    }
     var tf = Math.hypot(to[0] - from[0], to[1] - from[1], to[2] - from[2]) / V, vel = sh.vel || [0, 0, 0];
     to = [to[0] + vel[0] * tf, to[1], to[2] + vel[2] * tf];             // 提前量：飛到那裡要 tf 秒（⛔ 照現在的位置打 ⇒ 船開走了、落在後面的海裡）
     if (fire) {                                                         // 鯊魚噴火：從水面噴出好幾團，散在那一點附近
       for (var i = 0, n = W.n0 + Math.floor(L / 5); i < n; i++) C.shot(from, [to[0] + (Math.random() - 0.5) * 3, to[1] + (Math.random() - 0.5) * 1.5, to[2] + (Math.random() - 0.5) * 3], { kind: 'fire', v: V, dmg: dmg, owner: own, fx: i === 0 });
-    } else {                                                            // 天降砲擊：斜上方憑空落下一顆
+    } else {                                                            // 天降砲擊：憑空生一顆
       C.shot(from, to, { kind: 'shell', v: V, m: Math.min(300, W.m0 * (1 + W.mL * L)), dmg: dmg, owner: own });
     }
     I.emit('weaponFire', W, sh, to, cx, cy);                           // 演出、鏡頭鎖過去（40_fx.js）
     return 1;
   };
+  /** 鏡頭看得到 sh 身上的那一點 p 嗎：投影回畫面、從那一點 pick，先打到的是 sh。 */
+  function seen(sh, p) { var s = C.project(p[0], p[1], p[2]), h = s && C.pick(s.x, s.y); return !!(h && h.sh === sh); }
 
   // ── 技能 ──
   I.abilReady = function (a) { return I.S.bestZone >= a.zone && I.now() >= (I.S.cd && I.S.cd[a.id] || 0); };

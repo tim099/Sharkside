@@ -303,18 +303,26 @@
     var eye = C.cam.get().eye, L = I.lv('teeth'), dmg = W.dmg0 * (1 + W.dmgL * L) * BT.myDmg * I.bmul('dmg');
     var ex = eye ? eye[0] - to[0] : 0, ez = eye ? eye[2] - to[2] : 1, el = Math.hypot(ex, ez) || 1;   // 往鏡頭那一側（水平）⇒ 看得到從哪裡打過來
     ex /= el; ez /= el; wpnAt = now;
-    // 砲擊幾乎垂直落下（斜上方 60 m、往鏡頭那一側偏 10 m）⇒ 先砸到那一點上面的船身、甲板（⛔ 斜著來 ⇒ 點在水線附近時先碰到浪，爆裂彈一落水就沒了：量過 6 發中 2）
+    // 砲擊從鏡頭打出去（Tim：「從攝影機位置發射出去(然後射往瞄準點)」）：鏡頭看得到那一點 ⇒ 鏡頭到那一點的視線沒有東西擋，彈飛得快、弧只比視線高一點 ⇒ 點哪打哪
+    //   ⛔ 視線被別的船擋住（沒點到船身、照最近那艘往中心找的時候）⇒ 改成那一點上方 60 m 幾乎垂直落下（斜著從低處來 ⇒ 點在水線附近先碰到浪，爆裂彈一落水就沒了：量過 6 發中 2）
     var fire = W.id === 'fire', V = fire ? 32 : 110, from = fire ? [to[0] + ex * 16, 0.4, to[2] + ez * 16] : [to[0] + ex * 10, to[1] + 60, to[2] + ez * 10];
+    if (!fire && eye && seen(sh, to)) {
+      var dx = to[0] - eye[0], dy = to[1] - eye[1], dz = to[2] - eye[2], d = Math.hypot(dx, dy, dz) || 1;
+      from = [eye[0] + dx / d * 5, eye[1] + dy / d * 5, eye[2] + dz / d * 5];   // 鏡頭前 5 m（再近 ⇒ 進了近裁切面、看不到彈出去）
+      V = Math.max(150, d / 0.45);                                      // 遠 ⇒ 快：0.45 秒內到（⛔ 0.8 秒：中彈在沉、在歪的船 0.7 秒就往下掉一截，彈從上面飛過去落海，量過 6 發中 3）
+    }
     var tf = Math.hypot(to[0] - from[0], to[1] - from[1], to[2] - from[2]) / V, vel = sh.vel || [0, 0, 0];
     to = [to[0] + vel[0] * tf, to[1], to[2] + vel[2] * tf];             // 提前量：飛到那裡要 tf 秒（⛔ 照現在的位置打 ⇒ 船開走了、落在後面的海裡）
     if (fire) {                                                         // 鯊魚噴火：從水面噴出好幾團，散在那一點附近
       for (var i = 0, n = W.n0 + Math.floor(L / 5); i < n; i++) C.shot(from, [to[0] + (Math.random() - 0.5) * 3, to[1] + (Math.random() - 0.5) * 1.5, to[2] + (Math.random() - 0.5) * 3], { kind: 'fire', v: V, dmg: dmg, owner: own, fx: i === 0 });
-    } else {                                                            // 天降砲擊：斜上方憑空落下一顆
+    } else {                                                            // 天降砲擊：憑空生一顆
       C.shot(from, to, { kind: 'shell', v: V, m: Math.min(300, W.m0 * (1 + W.mL * L)), dmg: dmg, owner: own });
     }
     I.emit('weaponFire', W, sh, to, cx, cy);                           // 演出、鏡頭鎖過去（40_fx.js）
     return 1;
   };
+  /** 鏡頭看得到 sh 身上的那一點 p 嗎：投影回畫面、從那一點 pick，先打到的是 sh。 */
+  function seen(sh, p) { var s = C.project(p[0], p[1], p[2]), h = s && C.pick(s.x, s.y); return !!(h && h.sh === sh); }
 
   // ── 技能 ──
   I.abilReady = function (a) { return I.S.bestZone >= a.zone && I.now() >= (I.S.cd && I.S.cd[a.id] || 0); };
