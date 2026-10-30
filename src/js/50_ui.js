@@ -137,7 +137,7 @@
   function zoneLive() {
     var BT = I.BT, Z = BT.Z; if (!Z) return;
     var st = C.state(), ships = C.ships(), up = ships.filter(function (s) { return s.team === 'red' && !C.isOut(s); }).length;
-    var s = BT.phase === 'loading' ? '⏳ 船隊集結中…' : BT.phase === 'fight' ? '敵艦 ' + up + ' 艘' + (BT.wave.length ? '（後面還有 ' + BT.wave.length + '）' : '') + (BT.waveN > 1 ? ' · 第 ' + BT.waveN + ' 波' : '') + ' · ' + clock(st.t) + ' / ' + clock(Z.timeout) : BT.phase === 'hold' ? (BT.result === 'win' ? '✔ 拿下了' : '✘ 撤退') : '';
+    var s = BT.phase === 'loading' ? '⏳ 船隊集結中…' : BT.phase === 'fight' ? '敵艦 ' + up + ' 艘' + (BT.wave.length ? '（候補 ' + BT.wave.length + ' 艘）' : '') + ' · ' + clock(st.t) + ' / ' + clock(Z.timeout) : BT.phase === 'hold' ? (BT.result === 'win' ? '✔ 拿下了' : '✘ 撤退') : '';
     txt('bsi-zstat', s);
     var a = BT.phase === 'loading' ? I.atk() / Z.lv : BT.atkR, d2 = BT.phase === 'loading' ? I.def() / Z.lv : BT.defR;
     html('bsi-ratio', '<span class="' + rc(a) + '" title="我方火力 ÷ 這個海域的強度：越高敵艦越脆、我方砲彈越兇">🎯 火力比 ' + a.toFixed(2) + '</span><span class="' + rc(d2) + '" title="我方船堅 ÷ 這個海域的強度：越高越打不穿">🛡️ 船堅比 ' + d2.toFixed(2) + '</span>');

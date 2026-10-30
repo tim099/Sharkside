@@ -6,7 +6,7 @@
 (function (I) {
   'use strict';
   var C = I.core, B = I.BAL;
-  var BT = I.BT = { phase: 'idle', Z: null, startWall: 0, holdUntil: 0, result: null, income: 0, wave: [], waveN: 0, frenzyUntil: 0, repairUntil: 0,
+  var BT = I.BT = { phase: 'idle', Z: null, startWall: 0, holdUntil: 0, result: null, income: 0, wave: [], spawnAt: 0, goldQ: false, frenzyUntil: 0, repairUntil: 0,
     myDmg: 1, foeDmg: 1, myHard: 1, eHard: 1, myHole: 1, foeHole: 1, atkR: 1, defR: 1, myLost0: 0, kills: [], seq: 0 };
 
   if (!C) return;
@@ -45,7 +45,7 @@
       BT.myDmg = I.clamp(Math.pow(BT.atkR, B.atkExp), B.dmgMin, B.dmgMax); BT.eHard = I.clamp(Math.pow(BT.atkR, -B.atkExp), B.hardMin, B.hardMax);
       BT.myHard = I.clamp(Math.pow(BT.defR, B.defExp), B.hardMin, B.hardMax); BT.foeDmg = I.clamp(Math.pow(BT.defR, -B.defExp), B.dmgMin, B.dmgMax);
       BT.myHole = I.clamp(B.myHole * Math.pow(BT.atkR, B.holeExp), B.holeMin, B.holeMax); BT.foeHole = I.clamp(Math.pow(BT.defR, -B.holeExp), B.holeMin, B.holeMax);
-      var first = Z.foes.slice(0, B.fieldFoes); BT.wave = Z.foes.slice(B.fieldFoes); BT.waveN = 1;
+      var first = Z.foes.slice(0, B.fieldFoes); BT.wave = Z.foes.slice(B.fieldFoes); BT.spawnAt = 0; BT.goldQ = false;   // wave ＝ 候補（reinforce 一艘一艘補上）
       var spec = mine.map(function (h) { return { team: 'blue', hull: h }; }).concat(first.map(function (h) { return { team: 'red', hull: h }; }));
       return C.start(spec, { dist: B.dist, field: spec.length, weather: Z.wx, mode: 'eve', staged: true }).then(function () {
         if (seq !== BT.seq) return;
@@ -54,7 +54,7 @@
         BT.myLost0 = 0; BT.phase = 'fight'; BT.startWall = I.now();
         I.S.st.battles++;
         I.emit('zoneStart', Z);
-        if (!Z.boss && Math.random() < B.goldP * (Z.mod && Z.mod.gold || 1)) setTimeout(function () { if (seq === BT.seq && BT.phase === 'fight') spawnGold(); }, 5000 + Math.random() * 10000);
+        if (!Z.boss && Math.random() < B.goldP * (Z.mod && Z.mod.gold || 1)) setTimeout(function () { if (seq === BT.seq && BT.phase === 'fight') BT.goldQ = true; }, 5000 + Math.random() * 10000);   // 排進候補那一條（reinforce）
       });
     }).catch(function (e) { console.error(e); BT.phase = 'error'; I.emit('error', e); });
   };
@@ -117,7 +117,8 @@
     if (BT.phase === 'hold') { if (now >= BT.holdUntil && !I.S.perk) next(); return; }   // 強化三選一還沒選 ⇒ 等（選了、或倒數完自動選）
     BT.myLost = myLost;
     if (!blueUp) return finish('lose');
-    if (!redUp) { if (BT.wave.length) spawnWave(ships); else return finish('win'); }
+    if (!redUp && !BT.wave.length && !BT.goldQ) return finish('win');
+    reinforce(ships, redUp, now);
     if (st.t > Z.timeout) return finish('timeout');
   };
 
@@ -138,31 +139,41 @@
     I.emit('boom', sh, g);
   }
   function mid(L) { var x = 0, z = 0; L.forEach(function (o) { x += o.px; z += o.pz; }); return L.length ? [x / L.length, z / L.length] : [0, 0]; }
-  /** 下一波：在敵方剩下的那一側、離我方艦隊中心 280 m 的地方進場（有海圖 ⇒ 不超出開戰點的開闊水域）。 */
-  function spawnWave(ships) {
-    var mine = ships.filter(function (s) { return s.team === 'blue' && !C.isOut(s); }), foes = ships.filter(function (s) { return s.team === 'red'; });
-    var Mc = mid(mine), Ec = mid(foes), dx = Ec[0] - Mc[0], dz = Ec[1] - Mc[1], dl = Math.hypot(dx, dz) || 1; dx /= dl; dz /= dl;
-    var take = BT.wave.splice(0, B.fieldFoes); BT.waveN++;
-    take.forEach(function (h, i) {
-      var off = (i - (take.length - 1) / 2) * 90, x = Mc[0] + dx * 280 - dz * off, z = Mc[1] + dz * 280 + dx * off, r = Math.hypot(x, z);
-      if (BT.Z.map && r > 420) { x *= 420 / r; z *= 420 / r; }
-      var sh = C.add({ team: 'red', hull: h, x: x, z: z }); if (sh) apply(sh);
-    });
-    I.emit('wave', BT.waveN, take.length);
-  }
-  /** 黃金寶船：這個海域最大的那一型（開打前就載好了），從敵方那一側斜斜地進場；身價 × goldK、幾乎不還手（裝填 45 秒）、船殼軟一點；這一場多給一艘的時間。 */
-  function spawnGold() {
-    var Z = BT.Z, ships = C.ships(), mine = ships.filter(function (s) { return s.team === 'blue' && !C.isOut(s); }), foes = ships.filter(function (s) { return s.team === 'red' && !C.isOut(s); });
-    if (!mine.length) return;
-    var hull = Z.foes.slice().sort(function (a, b) { return I.tons(b) - I.tons(a); })[0], Mc = mid(mine), Ec = foes.length ? mid(foes) : null, a = Math.random() * 6.283;
-    var dx = Ec ? Ec[0] - Mc[0] : Math.cos(a), dz = Ec ? Ec[1] - Mc[1] : Math.sin(a), dl = Math.hypot(dx, dz) || 1, sd = Math.random() < 0.5 ? 1 : -1; dx /= dl; dz /= dl;
-    var x = Mc[0] + dx * 230 - dz * 140 * sd, z = Mc[1] + dz * 230 + dx * 140 * sd, r = Math.hypot(x, z);
-    if (Z.map && r > 420) { x *= 420 / r; z *= 420 / r; }
-    var sh = C.add({ team: 'red', hull: hull, x: x, z: z }); if (!sh) return;
+  // ── 候補（照核心 52_fleet.js 的 reinforce／spawnReserve；Tim 2026-10-30：「目前有出現卡頓現象 是否可以參考原本的候補機制 讓船一艘一艘上場」）──
+  //   場上還在打的敵艦少於 BAL.fieldFoes ⇒ 候補（BT.wave）的下一艘進場；黃金寶船也排這一條；兩艘之間至少隔 BAL.reinfGap 秒 ⇒ 一次只開一艘。
+  //   ⛔ 以前一整波（最多 3 艘）等場上全出局才同一格 C.add：一艘 15～30 ms、那一型第一次開 70～95 ms（船型的快取）⇒ 一次卡 0.1～0.3 秒。
+  function reinforce(ships, redUp, now) {
+    if (now < BT.spawnAt) return;
+    var gold = BT.goldQ, hull = gold ? goldHull() : redUp < B.fieldFoes && BT.wave.length ? BT.wave.shift() : null;
+    if (!hull) return;
+    BT.goldQ = false; BT.spawnAt = now + B.reinfGap * 1000;
+    var P = reservePos(ships), sh = C.add({ team: 'red', hull: hull, x: P[0], z: P[1] }); if (!sh) return;
     apply(sh);
-    sh.bsi.gold = true; sh.bsi.pool *= B.goldK; sh.reloadT = 45; sh.cfg.hard *= 0.6;
-    Z.timeout += B.timeoutPer;
-    I.emit('gold', sh);
+    if (gold) {                                                       // 黃金寶船：身價 × goldK、幾乎不還手（裝填 45 秒）、船殼軟一點；這一場多給一艘的時間
+      sh.bsi.gold = true; sh.bsi.pool *= B.goldK; sh.reloadT = 45; sh.cfg.hard *= 0.6; BT.Z.timeout += B.timeoutPer;
+      I.emit('gold', sh);
+    } else I.emit('reserve', sh, BT.wave.length);
+  }
+  /** 黃金寶船用這個海域最大的那一型（開打前就載好了）。 */
+  function goldHull() { return BT.Z.foes.slice().sort(function (a, b) { return I.tons(b) - I.tons(a); })[0]; }
+  /** 進場的位置（照核心 spawnReserve）：敵方還在打的船的中心往「離我方中心」的方向再退 120 m（至少離我方中心 260 m），
+   *  左右每 80 m 錯開到離每一艘還浮著的船 70 m 以上；有海圖 ⇒ 不超出開戰點的開闊水域（420 m）。船頭照 C.add 的預設（對著我方還在打的船）。 */
+  function reservePos(ships) {
+    var afloat = ships.filter(function (o) { return !o.sunk; }), P = null;
+    function m(L) { return L.length ? mid(L) : null; }
+    var E = m(afloat.filter(function (o) { return o.team === 'blue' && !C.isOut(o); })) || [0, 0];
+    var O = m(afloat.filter(function (o) { return o.team === 'red' && !C.isOut(o); })) || m(afloat.filter(function (o) { return o.team === 'red'; }));
+    var dx = O ? O[0] - E[0] : 0, dz = O ? O[1] - E[1] : 0, dl = Math.hypot(dx, dz);
+    if (dl < 1) { var a = Math.random() * 6.283; dx = Math.cos(a); dz = Math.sin(a); dl = 1; }
+    dx /= dl; dz /= dl;
+    var R = Math.max((O ? Math.hypot(O[0] - E[0], O[1] - E[1]) : 0) + 120, 260);
+    [0, 1, -1, 2, -2, 3, -3, 4, -4].some(function (q) {
+      var p = [E[0] + dx * R + dz * q * 80, E[1] + dz * R - dx * q * 80], r = Math.hypot(p[0], p[1]);
+      if (BT.Z.map && r > 420) { p[0] *= 420 / r; p[1] *= 420 / r; }
+      if (afloat.every(function (o) { return Math.hypot(o.px - p[0], o.pz - p[1]) > 70; })) { P = p; return true; }
+      return false;
+    });
+    return P || [E[0] + dx * (R + 150), E[1] + dz * (R + 150)];
   }
 
   function finish(kind) {

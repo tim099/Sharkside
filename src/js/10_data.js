@@ -35,14 +35,15 @@
     shardZone: 25,            // 第一次能潛回亞特蘭提斯（轉生）的海域
     slotPrice: [0, 15000, 6e5, 4e7, 5e9],    // 艦隊第 n 個位置的價錢
     shipK: 3000, shipTonExp: 0.7, shipGrow: 1.3, // 造船：shipK × (噸位/50)^shipTonExp × shipGrow^(第一次出現的海域−1)
-    fieldFoes: 3,             // 同時在場的敵艦最多幾艘（其他的照順序補上 ＝ 一波一波）
+    fieldFoes: 3,             // 同時在場的敵艦最多幾艘；其他的是候補：場上空出名額就一艘一艘補上（30_battle.js reinforce）
+    reinfGap: 1.5,            // 兩艘進場之間至少隔幾秒（實際時間；一艘 C.add 15～95 ms ⇒ 不疊在同一格）
     biteK: 0.02,              // 咬一口的獎勵 ≈ 那艘身價的 2%（× √(咬掉的格 ÷ 100) × 利齒；一艘最多領身價的三成）
     // 漂流寶物（35_loot.js）：敵艦被我方打中 ⇒ 每發 lootP 的機率在中彈的地方漂出一件；兩件之間至少 lootGap 秒（實際時間）、同時最多 lootMax 件，
     //   lootLife 秒沒撿就自動撿、只拿 lootAuto 倍。木桶、寶箱 ＝ 那艘身價的 barrelK、chestK；瓶中信 ＝ 隨機一種增益 bottleSec 秒
     lootP: 0.045, lootGap: 2.4, lootMax: 4, lootLife: 16, lootAuto: 0.5,
     barrelK: 0.05, chestK: 0.2, bottleSec: 30,
     perkAuto: 15,             // 強化三選一：幾秒沒選就自動選（設定可以改成一跳出來就自動選）
-    // 黃金寶船（30_battle.js spawnGold）：不是守將的海域，每場 goldP 的機率在開打後幾秒冒出來（沉船海域 ×2）；身價 × goldK、火力很弱，打中掉寶 × goldLoot
+    // 黃金寶船（30_battle.js reinforce，跟候補排同一條）：不是守將的海域，每場 goldP 的機率在開打後幾秒冒出來（沉船海域 ×2）；身價 × goldK、火力很弱，打中掉寶 × goldLoot
     goldP: 0.14, goldK: 5, goldLoot: 4,
     // 連咬（30_battle.js bite）：上一口之後 comboGap 秒內再咬 ⇒ 連咬 +1，獎勵 ×（1 ＋ comboStep ×（連咬 − 1））最多 comboMax；每 comboCrit 口暴擊一次（咬得大 1.6 倍、獎勵 ×2）
     comboGap: 1.6, comboStep: 0.15, comboMax: 3, comboCrit: 10,
