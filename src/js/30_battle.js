@@ -6,7 +6,7 @@
 (function (I) {
   'use strict';
   var C = I.core, B = I.BAL;
-  var BT = I.BT = { phase: 'idle', Z: null, startWall: 0, holdUntil: 0, result: null, income: 0, wave: [], blueQ: [], build: { blue: 0, red: 0 }, spawnAt: 0, goldQ: false, frenzyUntil: 0, repairUntil: 0, pupAt: 0, pupWall: 0,
+  var BT = I.BT = { phase: 'idle', Z: null, startWall: 0, holdUntil: 0, result: null, income: 0, wave: [], blueQ: [], build: { blue: 0, red: 0 }, spawnAt: 0, goldQ: false, frenzyUntil: 0, repairUntil: 0, pupAt: 0, pupWall: 0, pupPend: null,
     myDmg: 1, foeDmg: 1, myHard: 1, eHard: 1, myHole: 1, foeHole: 1, atkR: 1, defR: 1, myLost0: 0, kills: [], seq: 0 };
 
   if (!C) return;
@@ -35,7 +35,7 @@
   I.startZone = function (N) {
     var S = I.S, Z = I.zone(N), M = mapNow(), seq = ++BT.seq;
     if (Z.map !== M.map || (Z.map && Z.site !== M.site)) { BT.phase = 'reload'; I.emit('reload', Z); return; }
-    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false; BT.kegs = []; BT.mines = []; BT.pupAt = 0;
+    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false; BT.kegs = []; BT.mines = []; BT.pupAt = 0; BT.pupPend = null;
     var mine = S.fleet.filter(function (id) { return S.own[id] && I.cardOf(id); }).slice(0, S.slots);
     if (!mine.length) mine = ['flyingfish'];
     I.emit('zoneLoad', Z);
@@ -272,20 +272,27 @@
   //   獎勵照同樣格數的一口 × pupK，一艘最多領身價的 pupCap（跟玩家咬的那三成分開）；不算連咬、蓄力，也不算賞金任務的「咬」（事件另外叫 pupBite）
   /** 現在有幾隻（升級的級數；鯊群出沒的海域 × 海況的 pups）。 */
   I.pupsNow = function () { var md = BT.Z && BT.Z.mod; return I.lv('pups') * (md && md.pups || 1); };
+  //   先瞄、再咬（Tim 2026-10-30「鯊魚寶寶 可以嘗試在海面上顯示游動的鯊魚鰭」）：輪到的那一口先挑好船與位置、發 pupAim（40_fx.js 最近的那片鰭衝過去），
+  //   B.pupLunge 模擬秒之後才真的咬（那艘這中間出局了 ⇒ 這一口作廢）
   function pupTick() {
     var n = I.pupsNow(); if (!n) return;
-    var t = C.state().t, now = I.now(), gap = Math.max(B.pupMin, B.pupGap / n);
+    var t = C.state().t, now = I.now(), gap = Math.max(B.pupMin, B.pupGap / n), P = BT.pupPend;
+    if (P) { if (t >= P.at) { BT.pupPend = null; if (!P.sh.sunk && !C.isOut(P.sh)) pupBite(P); } return; }
     if (!BT.pupAt) { BT.pupAt = t + gap * (0.5 + Math.random()); return; }   // 開打後第一口錯開一點
     if (t < BT.pupAt || now - BT.pupWall < 300) return;               // 實際時間也至少隔 0.3 秒（開 ×4 的時候）
     BT.pupAt = t + gap * (0.7 + Math.random() * 0.6); BT.pupWall = now;
     var L = C.ships().filter(function (sh) { return sh.team === 'red' && sh.bsi && !sh.sunk && !C.isOut(sh); }); if (!L.length) return;
-    var sh = I.pick(L), r = B.pupR + Math.floor(I.teethLv() / 5), dz = B.pupDz[0] + Math.random() * (B.pupDz[1] - B.pupDz[0]);
-    var res = C.bite(sh, { fx: 0.12 + Math.random() * 0.76, side: 0, dz: dz }, r); if (!res) return;   // 那裡沒有船殼（船頭船尾翹起來）⇒ 這一口落空，下一口再來
+    BT.pupPend = { sh: I.pick(L), fx: 0.12 + Math.random() * 0.76, dz: B.pupDz[0] + Math.random() * (B.pupDz[1] - B.pupDz[0]), at: t + B.pupLunge };
+    I.emit('pupAim', BT.pupPend);
+  }
+  function pupBite(P) {
+    var sh = P.sh, r = B.pupR + Math.floor(I.teethLv() / 5);
+    var res = C.bite(sh, { fx: P.fx, side: 0, dz: P.dz }, r); if (!res) { I.emit('pupMiss', P); return; }   // 那裡沒有船殼（船頭船尾翹起來）⇒ 這一口落空，下一口再來
     var nn = res.n + (res.mdl || 0) * B.biteMdl, b = sh.bsi, g = 0;
     var bonus = Math.min(b.pool * B.pupCap - (b.pupGot || 0), b.pool * B.biteK * Math.sqrt(nn / 100) * I.biteMul() * B.pupK);
     if (bonus > 0) { b.pupGot = (b.pupGot || 0) + bonus; g = I.gain(bonus * I.valueMul() * I.incomeMul(), 'pup'); BT.income += g; }
     I.S.st.pups++;
-    I.emit('pupBite', { sh: sh, n: nn, g: g, w: res.w });
+    I.emit('pupBite', { sh: sh, n: nn, g: g, w: res.w, P: P });
   }
   /** 畫面那一點沒點到那艘的船身（點到名牌、手機點偏了）⇒ 從那一點往它的中心走，第一個點得到它的地方。 */
   I.hullAt = function (sh, cx, cy) {

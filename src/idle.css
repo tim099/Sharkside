@@ -164,6 +164,9 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .row.slot.flag { background: rgba(79, 209, 255, .08); }
 #bsi .row select { max-width: 104px; font: inherit; font-size: 12px; color: var(--ink); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 4px; }
 #bsi .row .tag { font-size: 11px; color: var(--dim); padding: 2px 8px; border-radius: 8px; background: rgba(0, 0, 0, .25); white-space: nowrap; }
+/* 抽到的升級（10_data.js draw）：沒有買的按鈕，標成卡片的金色 */
+#bsi .row .tag.draw { display: flex; flex-direction: column; align-items: center; gap: 1px; color: #ffd166; border: 1px solid rgba(255, 209, 102, .45); background: rgba(255, 209, 102, .08); padding: 4px 9px; }
+#bsi .row .tag.draw small { font-size: 10px; color: var(--dim); }
 #bsi button.cost { flex: none; min-width: 92px; padding: 6px 8px; font-weight: 700; color: var(--gold); background: rgba(255, 209, 102, .08); border-color: rgba(255, 209, 102, .35); display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
 #bsi button.cost .l { font-size: 10px; font-weight: 400; color: var(--dim); }
 #bsi button.cost:disabled { color: var(--dim); background: rgba(0, 0, 0, .2); border-color: var(--line); }
@@ -306,6 +309,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
 #bsi .bsi-fins { position: absolute; pointer-events: none; overflow: hidden; }
 #bsi .bsi-fin { position: absolute; left: 0; top: 0; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .55)); }
 #bsi .bsi-fin svg { display: block; width: 100%; height: auto; }
+#bsi .bsi-fin.pup { transition: opacity .25s; }                         /* 鯊魚寶寶（40_fx.js pupFrame）：潛下去、繞到船後面淡掉 */
 #bsi .bsi-fin > .bsi-img { display: block; width: 160%; height: auto; margin: 0 -30%; transform: translateY(22%); }   /* 圖的下半是水花、鰭只佔中間一半 ⇒ 放大、往下挪到水面那一點 */
 #bsi .bsi-fl.frz { color: #9ff6ff; text-shadow: 0 0 10px rgba(79, 209, 255, .95), 0 2px 3px #000; }
 #bsi .bsi-fl.weak { font-size: 12px; opacity: .75; }

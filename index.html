@@ -491,7 +491,16 @@
   #err button:disabled{ opacity:.5; cursor:default; }
   #err label.chk{ display:inline-flex; align-items:center; gap:6px; margin:8px 0 0; font-size:13px; }
 </style>
-<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "3d482e859eb7c94b", "shell": "80fc951eb07e"}};</script></head>
+<style data-shell="boot.css">/* ───────────────────────── 方舷放置：開機那幾秒（shell.json head_css ⇒ 放在 <head>，核心還在下載、執行的時候就生效）─────────────────────────
+   Tim 2026-10-30：「目前載入時都會跳出Blockside主選單 是否可以隱藏」⇒ idle.css 跟外殼的 js 都接在 3 MB 的核心後面，最後才到；
+   在那之前核心的主選單（#cover）、HUD 照它自己的樣子畫出來 ⇒ 這裡先藏（跟 idle.css 第一段同一批），外殼的標題畫面出來之前只看到深海色跟一行字。 */
+#cover, #end, #spk, #gfxov, #flab, #stage > :not(#cv) { display: none !important; }
+html, body { background: #04101c; }
+html:not(.bsi-on) body::after {
+  content: '🦈 方舷放置 · 載入中…'; position: fixed; left: 0; right: 0; top: 50%; transform: translateY(-50%); z-index: 99;
+  text-align: center; color: #9fc4de; font: 600 18px/1.4 system-ui, -apple-system, "Segoe UI", "Microsoft JhengHei", "PingFang TC", sans-serif; letter-spacing: .08em;
+}
+</style><script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "3d482e859eb7c94b", "shell": "c2eca8309853"}};</script></head>
 <body>
 <!-- 擬真沙盒（84_fleetlab.js；?lab=fleet，根目錄 fleetlab.html 轉過來）：body.flab 才顯示；看實景（body.flab3d）時俯視圖藏起來、底下的遊戲畫布露出來 -->
 <div id="flab">
@@ -46631,6 +46640,9 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .row.slot.flag { background: rgba(79, 209, 255, .08); }
 #bsi .row select { max-width: 104px; font: inherit; font-size: 12px; color: var(--ink); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 4px; }
 #bsi .row .tag { font-size: 11px; color: var(--dim); padding: 2px 8px; border-radius: 8px; background: rgba(0, 0, 0, .25); white-space: nowrap; }
+/* 抽到的升級（10_data.js draw）：沒有買的按鈕，標成卡片的金色 */
+#bsi .row .tag.draw { display: flex; flex-direction: column; align-items: center; gap: 1px; color: #ffd166; border: 1px solid rgba(255, 209, 102, .45); background: rgba(255, 209, 102, .08); padding: 4px 9px; }
+#bsi .row .tag.draw small { font-size: 10px; color: var(--dim); }
 #bsi button.cost { flex: none; min-width: 92px; padding: 6px 8px; font-weight: 700; color: var(--gold); background: rgba(255, 209, 102, .08); border-color: rgba(255, 209, 102, .35); display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
 #bsi button.cost .l { font-size: 10px; font-weight: 400; color: var(--dim); }
 #bsi button.cost:disabled { color: var(--dim); background: rgba(0, 0, 0, .2); border-color: var(--line); }
@@ -46773,6 +46785,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
 #bsi .bsi-fins { position: absolute; pointer-events: none; overflow: hidden; }
 #bsi .bsi-fin { position: absolute; left: 0; top: 0; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .55)); }
 #bsi .bsi-fin svg { display: block; width: 100%; height: auto; }
+#bsi .bsi-fin.pup { transition: opacity .25s; }                         /* 鯊魚寶寶（40_fx.js pupFrame）：潛下去、繞到船後面淡掉 */
 #bsi .bsi-fin > .bsi-img { display: block; width: 160%; height: auto; margin: 0 -30%; transform: translateY(22%); }   /* 圖的下半是水花、鰭只佔中間一半 ⇒ 放大、往下挪到水面那一點 */
 #bsi .bsi-fl.frz { color: #9ff6ff; text-shadow: 0 0 10px rgba(79, 209, 255, .95), 0 2px 3px #000; }
 #bsi .bsi-fl.weak { font-size: 12px; opacity: .75; }
@@ -47183,6 +47196,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
     //   每隻大約 pupGap 秒（模擬秒）咬一口，整群最快 pupMin 秒一口（模擬秒；6 隻 0.67 秒、鯊群出沒 12 隻碰到 0.4）、實際時間最快 0.3 秒一口（開 ×4 也不會一秒十幾口：碎木、粒子顧效能）
     //   獎勵 ＝ 同樣格數的一口 × pupK，一艘最多領身價的 pupCap（跟玩家咬的那三成分開算）；不算連咬、蓄力，也不算賞金任務的「咬」
     pupGap: 4, pupMin: 0.4, pupR: 3, pupDz: [1, 4], pupK: 0.4, pupCap: 0.1,
+    pupLunge: 0.5,                                                      // 瞄好之後幾模擬秒才咬（40_fx.js 那片鰭先衝過去；30_battle.js pupTick）
     biteMdl: 60,                  // 咬掉一個模型（舵輪、砲、門…；核心 bite 的 mdl）算幾格：獎勵、訊息照「格」算 ⇒ 只咬到舵輪也有一口的份（一般一口約 100 格）
     kegNear: 0.35,                // 火藥桶（30_battle.js kegThrow）：沒點到船身、離敵艦船心的投影在一般判定（foeAt）的這個倍數以內 ⇒ 當成點偏了、丟那艘；更遠 ⇒ 點的是海 ⇒ 水雷
     // 鯊魚利齒前 teethGrow 級：咬得更大（半徑 +1）、獎勵 ×1.25、特殊武器的噴火多團；再上去每一級蓄滿的時間 ×teethFast（30 級 ⇒ 0.95^15 ≈ 0.46 秒）
@@ -47222,8 +47236,9 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
     //   價錢（Tim 同一天又說：「價格成長曲線可以再更陡一些(總體漲價 且最後幾階段要很貴)」）：起價 200 ⇒ 500、每級 1.45 ⇒ 1.75 ⇒ 1.85，再加自己的後段加價 ramp 0.02（其他升級照 BAL.upgRamp 0.006）
     //   ⇒ 10 級 58 萬、15 級 4,200 萬、20 級 49 億、25 級 9,600 億、最後一級 94 兆（第一版 1.75／0.006：7.1 萬、170 萬、4,500 萬、14 億、260 億）
     { id: 'teeth', tab: 'atk', ico: '🦷', name: '鯊魚利齒', c0: 500, g: 1.85, ramp: 0.02, max: 30, eff: 1.25, desc: '點敵艦哪裡就咬哪裡：咬得更大、咬下來的格 ×1.25；第 16 級起改成蓄力更快' },
-    // 鯊魚寶寶（2026-10-30 gura：放著不點也有咬的那一份）：zone ＝ 到過這個海域才買得到（20_econ.js upgLocked）
-    { id: 'pups', tab: 'atk', ico: '🐟', name: '鯊魚寶寶', zone: 5, c0: 4000, g: 2.4, ramp: 0.03, max: 6, eff: 1, desc: '每一級多一隻小鯊魚：自己去咬敵艦（水線上、小口；鯊群出沒的海域 ×2）' },
+    // 鯊魚寶寶（2026-10-30 gura：放著不點也有咬的那一份）：zone ＝ 到過這個海域才抽得到（20_econ.js upgLocked）
+    //   draw（Tim 2026-10-30「做成只能隨機抽到的升級(介面內不能點 之後也打算加更多這種需要靠抽的升級)」）：面板裡不能買、自動航海士不買，只有強化三選一抽得到（20_econ.js perkCard 的 draw 卡）；c0、g 只剩讀數用
+    { id: 'pups', tab: 'atk', ico: '🐟', name: '鯊魚寶寶', zone: 5, draw: true, c0: 4000, g: 2.4, ramp: 0.03, max: 6, eff: 1, desc: '每一級多一隻小鯊魚：在敵艦旁邊游、自己去咬（水線上、小口；鯊群出沒的海域 ×2）' },
     { id: 'gun', tab: 'atk', ico: '🎯', name: '砲術訓練', c0: 250, g: 1.25, max: 0, eff: 1.1, desc: '火力 ×1.1：砲彈更兇、洞更大、敵艦的船殼更脆' },
     { id: 'reload', tab: 'atk', ico: '⏱️', name: '裝填演練', c0: 600, g: 1.45, max: 24, eff: 0.95, desc: '裝填時間 ×0.95' },
     { id: 'powder', tab: 'atk', ico: '💥', name: '火藥專家', c0: 5000, g: 1.6, max: 15, eff: 0.88, desc: '敵艦的火藥桶更不耐打（更容易殉爆）、殉爆賞金 +20%' },
@@ -47310,8 +47325,11 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   I.RARITY = [
     { id: 'common', name: '普通', w: 62, lv: 2, n: 3, loot: 2 },
     { id: 'rare', name: '稀有', w: 28, lv: 4, n: 5, loot: 4 },
-    { id: 'epic', name: '史詩', w: 10, lv: 7, n: 8, loot: 8 }
+    { id: 'epic', name: '史詩', w: 10, lv: 7, n: 8, loot: 8, dlv: 2 }
   ];
+  /** 抽到的升級（UPG 的 draw）：三選一每一張是「抽升級卡」的權重（其他：免費升級 40、增益 34、寶藏 16、冷卻 10；史詩多祝福 40）；一張給 dlv 級（沒寫 ＝ 1）。
+   *  18 ⇒ 一張大約 15%、一次三張至少一張大約 40%（同一次不重複）⇒ 第 5～25 海域一輪大約抽到 8 次。 */
+  I.DRAW_W = 18;
   /** 祝福（只有史詩卡）：這一輪一直有效、可以疊，轉生才清掉。 */
   I.BLESS = [
     { id: 'atk', ico: '🔱', name: '海神的祝福', desc: '火力 ×1.15' },
@@ -47525,16 +47543,19 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
     for (var i = 0; i < L.length; i++) if ((x -= L[i].w) < 0) return min + i;
     return I.RARITY.length - 1;
   }
-  /** 一張：{ t：upg 免費升級／buff 增益／loot 沉船寶藏／cd 技能冷卻歸零／bless 祝福, r：稀有度, id, n, amt }；同一次的三張不重複。 */
+  /** 一張：{ t：upg 免費升級／draw 抽到的升級／buff 增益／loot 沉船寶藏／cd 技能冷卻歸零／bless 祝福, r：稀有度, id, n, amt }；同一次的三張不重複。 */
   function perkCard(r, ref, used) {
     var R = I.RARITY[r], kinds = [['upg', 40], ['buff', 34], ['loot', 16]];
+    var D = I.UPG.filter(function (u) { return u.draw && !I.upgMaxed(u) && !I.upgLocked(u); });
+    if (D.length) kinds.push(['draw', I.DRAW_W]);
     if (I.S.bestZone >= I.ABIL[0].zone) kinds.push(['cd', 10]);
     if (r === I.RARITY.length - 1) kinds.push(['bless', 40]);
     var tot = kinds.reduce(function (a, k) { return a + k[1]; }, 0);
     for (var tries = 0; tries < 24; tries++) {
       var x = Math.random() * tot, t = kinds[0][0], c = null;
       for (var j = 0; j < kinds.length; j++) if ((x -= kinds[j][1]) < 0) { t = kinds[j][0]; break; }
-      if (t === 'upg') { var U = I.UPG.filter(function (u) { return !I.upgMaxed(u) && !I.upgLocked(u); }); if (U.length) { var u = I.pick(U); c = { t: t, id: u.id, n: u.max > 0 ? Math.min(R.lv, u.max - I.lv(u.id)) : R.lv }; } }
+      if (t === 'upg') { var U = I.UPG.filter(function (u) { return !u.draw && !I.upgMaxed(u) && !I.upgLocked(u); }); if (U.length) { var u = I.pick(U); c = { t: t, id: u.id, n: u.max > 0 ? Math.min(R.lv, u.max - I.lv(u.id)) : R.lv }; } }
+      else if (t === 'draw') { var du = I.pick(D), dn = R.dlv || 1; c = { t: t, id: du.id, n: du.max > 0 ? Math.min(dn, du.max - I.lv(du.id)) : dn }; }
       else if (t === 'buff') c = { t: t, id: I.pick(I.BUFF).id, n: R.n };
       else if (t === 'loot') c = { t: t, amt: R.loot * ref };
       else if (t === 'bless') c = { t: t, id: I.pick(I.BLESS).id };
@@ -47551,15 +47572,15 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
     I.S.perk = { zone: N, cards: L, at: I.now() };
     I.emit('perk', I.S.perk);
   };
-  /** 沒選就自動選的那一張：最稀有的；一樣稀有照 升級 > 祝福 > 增益 > 寶藏 > 冷卻。 */
+  /** 沒選就自動選的那一張：最稀有的；一樣稀有照 抽到的升級 > 升級 > 祝福 > 增益 > 寶藏 > 冷卻。 */
   I.perkBest = function (P) {
-    var ord = ['upg', 'bless', 'buff', 'loot', 'cd'], b = 0;
+    var ord = ['draw', 'upg', 'bless', 'buff', 'loot', 'cd'], b = 0;
     P.cards.forEach(function (c, i) { var o = P.cards[b]; if (c.r > o.r || c.r === o.r && ord.indexOf(c.t) < ord.indexOf(o.t)) b = i; });
     return b;
   };
   I.perkTake = function (i, auto) {
     var S = I.S, P = S.perk, c = P && P.cards[i]; if (!c) return false;
-    if (c.t === 'upg') { S.upg[c.id] = I.lv(c.id) + c.n; I.emit('buy', 'upg', c.id, c.n); }
+    if (c.t === 'upg' || c.t === 'draw') { S.upg[c.id] = I.lv(c.id) + c.n; I.emit('buy', 'upg', c.id, c.n); }
     else if (c.t === 'buff') I.buffAdd(c.id, { n: c.n });
     else if (c.t === 'loot') I.gain(c.amt, 'perk');
     else if (c.t === 'cd') S.cd = {};
@@ -47631,10 +47652,10 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   I.upgMaxed = function (u) { return u.max > 0 && I.lv(u.id) >= u.max; };
   /** 還沒解鎖（u.zone：到過那個海域才買得到；強化三選一、自動航海士也跳過）。 */
   I.upgLocked = function (u) { return !!u.zone && I.S.bestZone < u.zone; };
-  /** 買 n 級（Infinity ＝ 買得起的全部）；回買了幾級。 */
+  /** 買 n 級（Infinity ＝ 買得起的全部）；回買了幾級。抽到的升級（u.draw）不賣 ⇒ 0。 */
   I.buyUpg = function (id, n) {
     var u = I.upgDef(id), k = 0;
-    while (k < n && !I.upgMaxed(u) && !I.upgLocked(u)) {
+    while (k < n && !u.draw && !I.upgMaxed(u) && !I.upgLocked(u)) {
       var c = I.upgCost(u); if (!I.spend(c)) break;
       I.S.upg[id] = I.lv(id) + 1; k++;
     }
@@ -47715,7 +47736,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   I.mateTick = function () {
     if (!I.tlv('mate') || !I.S.mate) return;
     var best = null, bc = Infinity;
-    I.UPG.forEach(function (u) { if (I.upgMaxed(u) || I.upgLocked(u)) return; var c = I.upgCost(u); if (c < bc) { bc = c; best = u; } });
+    I.UPG.forEach(function (u) { if (u.draw || I.upgMaxed(u) || I.upgLocked(u)) return; var c = I.upgCost(u); if (c < bc) { bc = c; best = u; } });
     if (best && I.S.blocks >= bc) I.buyUpg(best.id, 1);
   };
 })(window.BSI = window.BSI || {});
@@ -47727,7 +47748,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
 (function (I) {
   'use strict';
   var C = I.core, B = I.BAL;
-  var BT = I.BT = { phase: 'idle', Z: null, startWall: 0, holdUntil: 0, result: null, income: 0, wave: [], blueQ: [], build: { blue: 0, red: 0 }, spawnAt: 0, goldQ: false, frenzyUntil: 0, repairUntil: 0, pupAt: 0, pupWall: 0,
+  var BT = I.BT = { phase: 'idle', Z: null, startWall: 0, holdUntil: 0, result: null, income: 0, wave: [], blueQ: [], build: { blue: 0, red: 0 }, spawnAt: 0, goldQ: false, frenzyUntil: 0, repairUntil: 0, pupAt: 0, pupWall: 0, pupPend: null,
     myDmg: 1, foeDmg: 1, myHard: 1, eHard: 1, myHole: 1, foeHole: 1, atkR: 1, defR: 1, myLost0: 0, kills: [], seq: 0 };
 
   if (!C) return;
@@ -47756,7 +47777,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   I.startZone = function (N) {
     var S = I.S, Z = I.zone(N), M = mapNow(), seq = ++BT.seq;
     if (Z.map !== M.map || (Z.map && Z.site !== M.site)) { BT.phase = 'reload'; I.emit('reload', Z); return; }
-    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false; BT.kegs = []; BT.mines = []; BT.pupAt = 0;
+    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false; BT.kegs = []; BT.mines = []; BT.pupAt = 0; BT.pupPend = null;
     var mine = S.fleet.filter(function (id) { return S.own[id] && I.cardOf(id); }).slice(0, S.slots);
     if (!mine.length) mine = ['flyingfish'];
     I.emit('zoneLoad', Z);
@@ -47993,20 +48014,27 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   //   獎勵照同樣格數的一口 × pupK，一艘最多領身價的 pupCap（跟玩家咬的那三成分開）；不算連咬、蓄力，也不算賞金任務的「咬」（事件另外叫 pupBite）
   /** 現在有幾隻（升級的級數；鯊群出沒的海域 × 海況的 pups）。 */
   I.pupsNow = function () { var md = BT.Z && BT.Z.mod; return I.lv('pups') * (md && md.pups || 1); };
+  //   先瞄、再咬（Tim 2026-10-30「鯊魚寶寶 可以嘗試在海面上顯示游動的鯊魚鰭」）：輪到的那一口先挑好船與位置、發 pupAim（40_fx.js 最近的那片鰭衝過去），
+  //   B.pupLunge 模擬秒之後才真的咬（那艘這中間出局了 ⇒ 這一口作廢）
   function pupTick() {
     var n = I.pupsNow(); if (!n) return;
-    var t = C.state().t, now = I.now(), gap = Math.max(B.pupMin, B.pupGap / n);
+    var t = C.state().t, now = I.now(), gap = Math.max(B.pupMin, B.pupGap / n), P = BT.pupPend;
+    if (P) { if (t >= P.at) { BT.pupPend = null; if (!P.sh.sunk && !C.isOut(P.sh)) pupBite(P); } return; }
     if (!BT.pupAt) { BT.pupAt = t + gap * (0.5 + Math.random()); return; }   // 開打後第一口錯開一點
     if (t < BT.pupAt || now - BT.pupWall < 300) return;               // 實際時間也至少隔 0.3 秒（開 ×4 的時候）
     BT.pupAt = t + gap * (0.7 + Math.random() * 0.6); BT.pupWall = now;
     var L = C.ships().filter(function (sh) { return sh.team === 'red' && sh.bsi && !sh.sunk && !C.isOut(sh); }); if (!L.length) return;
-    var sh = I.pick(L), r = B.pupR + Math.floor(I.teethLv() / 5), dz = B.pupDz[0] + Math.random() * (B.pupDz[1] - B.pupDz[0]);
-    var res = C.bite(sh, { fx: 0.12 + Math.random() * 0.76, side: 0, dz: dz }, r); if (!res) return;   // 那裡沒有船殼（船頭船尾翹起來）⇒ 這一口落空，下一口再來
+    BT.pupPend = { sh: I.pick(L), fx: 0.12 + Math.random() * 0.76, dz: B.pupDz[0] + Math.random() * (B.pupDz[1] - B.pupDz[0]), at: t + B.pupLunge };
+    I.emit('pupAim', BT.pupPend);
+  }
+  function pupBite(P) {
+    var sh = P.sh, r = B.pupR + Math.floor(I.teethLv() / 5);
+    var res = C.bite(sh, { fx: P.fx, side: 0, dz: P.dz }, r); if (!res) { I.emit('pupMiss', P); return; }   // 那裡沒有船殼（船頭船尾翹起來）⇒ 這一口落空，下一口再來
     var nn = res.n + (res.mdl || 0) * B.biteMdl, b = sh.bsi, g = 0;
     var bonus = Math.min(b.pool * B.pupCap - (b.pupGot || 0), b.pool * B.biteK * Math.sqrt(nn / 100) * I.biteMul() * B.pupK);
     if (bonus > 0) { b.pupGot = (b.pupGot || 0) + bonus; g = I.gain(bonus * I.valueMul() * I.incomeMul(), 'pup'); BT.income += g; }
     I.S.st.pups++;
-    I.emit('pupBite', { sh: sh, n: nn, g: g, w: res.w });
+    I.emit('pupBite', { sh: sh, n: nn, g: g, w: res.w, P: P });
   }
   /** 畫面那一點沒點到那艘的船身（點到名牌、手機點偏了）⇒ 從那一點往它的中心走，第一個點得到它的地方。 */
   I.hullAt = function (sh, cx, cy) {
@@ -48591,11 +48619,74 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
     fins.forEach(function (L, sh) { if (!live.has(sh)) { L.forEach(function (e) { e.remove(); }); fins.delete(sh); } });
   }
 
+  // ── 鯊魚寶寶的背鰭（Tim 2026-10-30「鯊魚寶寶 可以嘗試在海面上顯示游動的鯊魚鰭」）：一隻一片，在敵艦旁邊沿著船身繞橢圓游、浮在浪上 ──
+  //   船的座標（核心 sh.M，一欄一軸）：第一欄 ＝ 船長方向、第二欄 ＝ 船寬、第三欄 ＝ 上，一格 0.1 m；橢圓 ＝ 船長一半＋4.5 m、船寬一半＋3 m（一隻比一隻外圈一點、繞的方向交錯）。
+  //   咬：30_battle.js 先發 pupAim（船、沿著船長的位置）⇒ 離那一點最近的那片衝過去（B.pupLunge 秒內到）；pupBite ⇒ 潛下去 PUP_DIVE 秒，在水下照樣往回游、再冒出來。
+  //   ⛔ 鰭是疊在畫面上的 DOM、擋不住 ⇒ 比船心離鏡頭遠的那半圈淡掉（不然像鰭插在船身上）；鏡頭後面、畫面外的不畫。
+  var pups = [], pupT = -1, PUP_SPD = 5, PUP_DASH = 26, PUP_DIVE = 1.4, beamC = {};
+  /** 船寬的一半（格）：船身中間那一段、水線上一點，從兩舷往裡找第一格船殼（一型量一次）。 */
+  function beamOf(sh) {
+    var T = sh.T, k = T.id; if (beamC[k]) return beamC[k];
+    var G = sh.grid, x = Math.round((T.hx0 + T.hx1) / 2), z = T.zw + 6, lo = -1, hi = -1, sy = T.base ? T.base.sy : 2 * T.cy;
+    for (var y = 0; y < sy && lo < 0; y++) if (G.get(x, y, z) > 0) lo = y;
+    for (y = sy - 1; y >= 0 && hi < 0; y--) if (G.get(x, y, z) > 0) hi = y;
+    return (beamC[k] = lo >= 0 && hi > lo ? (hi - lo) / 2 : 40);
+  }
+  function shipW(sh, x, y, z) { var M = sh.M; return [M[0] * x + M[4] * y + M[8] * z + M[12], M[1] * x + M[5] * y + M[9] * z + M[13], M[2] * x + M[6] * y + M[10] * z + M[14]]; }
+  function pupRing(p, sh) { var T = sh.T, k = p.k % 3; return { a: (T.hx1 - T.hx0) / 2 + 45 + 14 * k, b: beamOf(sh) + 30 + 12 * k }; }
+  /** 那一口要咬的地方（船長方向 fx、靠鏡頭那一舷的船殼外 1 m、水線）。 */
+  function pupAimW(P) {
+    var sh = P.sh, T = sh.T, x = T.hx0 + (T.hx1 - T.hx0) * P.fx, b = beamOf(sh) + 10, eye = C.cam.get().eye;
+    var L = shipW(sh, x, T.cy - b, T.zw), R = shipW(sh, x, T.cy + b, T.zw);
+    if (!eye) return L;
+    return Math.hypot(L[0] - eye[0], L[2] - eye[2]) < Math.hypot(R[0] - eye[0], R[2] - eye[2]) ? L : R;
+  }
+  function pupFrame() {
+    var BT = I.BT, n = FN && (BT.phase === 'fight' || BT.phase === 'hold') ? I.pupsNow() : 0;
+    var foes = n ? C.ships().filter(function (sh) { return sh.team === 'red' && sh.bsi && !sh.sunk && !C.isOut(sh) && sh.M && sh.grid; }) : [];
+    if (!foes.length) n = 0;
+    while (pups.length > n) pups.pop().e.remove();
+    while (pups.length < n) { var e = I.h('div', 'bsi-fin pup', I.img('fx/fin', FIN, 'fx-fin')); e.style.opacity = '0'; FN.appendChild(e); pups.push({ e: e, k: pups.length, ph: Math.random() * 6.283, w: null, sh: null }); }
+    if (!n) { pupT = -1; return; }
+    var t = C.state().t, sdt = pupT < 0 ? 0 : I.clamp(t - pupT, 0, 0.5), eye = C.cam.get().eye; pupT = t;
+    pups.forEach(function (p) {
+      var sh = p.dash ? p.dash.sh : foes[p.k % foes.length], R = pupRing(p, sh), T = sh.T, dir = p.k % 2 ? 1 : -1;
+      p.sh = sh;                                                        // 換船（那艘出局了）⇒ 照同一個角度游到新那艘的圈上
+      p.ph += dir * sdt * PUP_SPD / (0.1 * Math.sqrt((R.a * R.a + R.b * R.b) / 2));   // 繞圈：線速度 PUP_SPD m/s
+      var goal = p.dash && !p.dash.done ? p.dash.w : shipW(sh, T.cx + Math.cos(p.ph) * R.a, T.cy + Math.sin(p.ph) * R.b, T.zw);
+      if (!p.w) p.w = goal.slice();
+      else {
+        var dx = goal[0] - p.w[0], dz = goal[2] - p.w[2], d = Math.hypot(dx, dz), mx = (p.dash && !p.dash.done ? PUP_DASH : PUP_SPD * 2.2) * sdt;
+        if (d > mx) { dx *= mx / d; dz *= mx / d; }
+        p.w[0] += dx; p.w[2] += dz; if (Math.abs(dx) + Math.abs(dz) > 1e-4) p.vw = [dx, dz];
+      }
+      if (p.dash && t >= p.dash.up) p.dash = null;
+      p.w[1] = C.seaY(p.w[0], p.w[2]);
+      var q = C.project(p.w[0], p.w[1], p.w[2]), hide = !q || q.x < -60 || q.y < -60 || q.x > innerWidth + 60 || q.y > innerHeight + 60;
+      if (hide) { p.e.style.opacity = '0'; return; }
+      var c = C.center(sh), back = eye && c ? Math.hypot(p.w[0] - eye[0], p.w[2] - eye[2]) - Math.hypot(c[0] - eye[0], c[2] - eye[2]) : 0;
+      var op = I.clamp(1 - back / (0.1 * R.b * 0.8), 0, 1) * (p.dash && p.dash.done ? 0 : 1);
+      var sz = I.clamp(2200 / q.d, 12, 44), q2 = p.vw && C.project(p.w[0] + p.vw[0] * 10, p.w[1], p.w[2] + p.vw[1] * 10), right = q2 && q2.x > q.x;
+      p.e.style.width = sz.toFixed(0) + 'px'; p.e.style.opacity = op.toFixed(2);
+      p.e.style.transform = 'translate(' + q.x.toFixed(0) + 'px,' + q.y.toFixed(0) + 'px) translate(-50%,-85%)' + (right ? ' scaleX(-1)' : '');   // 鰭的前緣畫在左邊 ⇒ 往右游就翻過來
+    });
+  }
+  I.on('pupAim', function (P) {                                         // 離咬的那一點最近、沒在衝的那片衝過去
+    var w = pupAimW(P), best = null, bd = Infinity;
+    pups.forEach(function (p) { if (p.dash || !p.w) return; var d = Math.hypot(p.w[0] - w[0], p.w[2] - w[2]); if (d < bd) { bd = d; best = p; } });
+    if (best) { best.dash = { sh: P.sh, w: w, P: P, up: C.state().t + I.BAL.pupLunge + PUP_DIVE }; }
+  });
+  function pupDive(P) { pups.forEach(function (p) { if (p.dash && p.dash.P === P) p.dash.done = true; }); }
+  I.on('pupBite', function (o) { pupDive(o.P); });
+  I.on('pupMiss', function (P) { pupDive(P); });
+  I.on('zoneLoad', function () { pups.forEach(function (p) { p.e.remove(); }); pups = []; pupT = -1; });
+
   var camT = 0, camHold = 0, userT = 0, camSeq = 0;
   I.fxFrame = function (dt) {
     kegFrame();
     if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); HTML.classList.toggle('bsi-wpn', !!I.weaponOn()); HTML.classList.toggle('bsi-frz', I.frenzyOn()); }   // 游標不動、船在動；拿著特殊武器 ⇒ 準星；狂潮 ⇒ 畫面邊緣發藍光
     finFrame(dt);
+    pupFrame();
     if (CB && CB.classList.contains('on')) {                              // 連咬：剩幾秒會斷（那一條）；斷了收起來
       var cl = I.comboLeft(), cbar = CB.querySelector('i');
       if (cl <= 0) CB.className = 'bsi-combo'; else if (cbar) cbar.style.setProperty('--left', (cl / I.BAL.comboGap * 100).toFixed(0) + '%');
@@ -48826,6 +48917,7 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
   var pkShown = null, pkT = 0;
   function perkTxt(c) {
     if (c.t === 'upg') { var u = I.upgDef(c.id); return { ico: I.img('upg/' + u.id, u.ico), name: u.name + ' +' + c.n + ' 級', desc: '免費升級（Lv ' + I.lv(c.id) + ' → ' + (I.lv(c.id) + c.n) + '）<br>' + I.esc(u.desc) }; }
+    if (c.t === 'draw') { var du = I.upgDef(c.id); return { ico: I.img('upg/' + du.id, du.ico), name: du.name + ' +' + c.n, desc: '<b class="g">只有抽得到<\/b><br>Lv ' + I.lv(c.id) + ' → ' + (I.lv(c.id) + c.n) + (du.max ? '（上限 ' + du.max + '）' : '') + '<br>' + I.esc(du.desc) }; }
     if (c.t === 'buff') { var b = I.buffDef(c.id); return { ico: I.img('buff/' + b.id, b.ico), name: b.name, desc: I.esc(b.desc) + '<br>接下來 ' + c.n + ' 場' }; }
     if (c.t === 'loot') return { ico: I.img('perk/loot', '💰'), name: '沉船寶藏', desc: '立刻 <b class="g">+' + I.fmt(c.amt) + '<\/b> 格' };
     if (c.t === 'cd') return { ico: I.img('perk/cd', '⚡'), name: '鯊魚直覺', desc: '所有技能的冷卻立刻歸零' };
@@ -49030,9 +49122,10 @@ window.BSI.IMGW = {"app/logo":"0204a2cf","fx/mega":"3706a779","key/atlantis":"10
       var s = sec(B, t.name);
       I.UPG.filter(function (u) { return u.tab === t.id; }).forEach(function (u) {
         var L = I.lv(u.id), maxed = I.upgMaxed(u), lock = I.upgLocked(u), n = qty === Infinity ? Math.max(1, I.upgAfford(u)) : qty, cost = I.upgCostN(u, n);
-        var r = h('div', 'row upg' + (lock ? ' lock' : ''), '<span class="ico">' + (lock ? '🔒' : I.img('upg/' + u.id, u.ico)) + '<\/span><div class="mid"><b>' + u.name + '<\/b><span class="lv">Lv ' + L + (u.max ? ' / ' + u.max : '') + '<\/span><span class="spec">' + u.desc + '<\/span>' + (lock ? '' : '<span class="now">' + UPG_TXT[u.id]() + '<\/span>') + '<\/div>');
-        if (lock) r.appendChild(h('span', 'tag', '第 ' + u.zone + ' 海域解鎖'));   // 20_econ.js upgLocked
+        var r = h('div', 'row upg' + (lock ? ' lock' : '') + (u.draw ? ' draw' : ''), '<span class="ico">' + (lock ? '🔒' : I.img('upg/' + u.id, u.ico)) + '<\/span><div class="mid"><b>' + u.name + '<\/b><span class="lv">Lv ' + L + (u.max ? ' / ' + u.max : '') + '<\/span><span class="spec">' + u.desc + '<\/span>' + (lock ? '' : '<span class="now">' + UPG_TXT[u.id]() + '<\/span>') + '<\/div>');
+        if (lock) r.appendChild(h('span', 'tag', '第 ' + u.zone + ' 海域' + (u.draw ? '起抽得到' : '解鎖')));   // 20_econ.js upgLocked
         else if (maxed) r.appendChild(h('span', 'tag', '滿了'));
+        else if (u.draw) r.appendChild(h('span', 'tag draw', '🎴 只能抽到<small>強化三選一<\/small>'));   // 抽到的升級（10_data.js draw）：不賣
         else { var b = costBtn(cost, I.S.blocks >= cost, qty === 1 ? '' : '×' + n, function () { I.buyUpg(u.id, n); }); b.dataset.upg = u.id; b.dataset.n = n; r.appendChild(b); }
         s.appendChild(r);
       });

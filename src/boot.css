@@ -1,0 +1,9 @@
+/* ───────────────────────── 方舷放置：開機那幾秒（shell.json head_css ⇒ 放在 <head>，核心還在下載、執行的時候就生效）─────────────────────────
+   Tim 2026-10-30：「目前載入時都會跳出Blockside主選單 是否可以隱藏」⇒ idle.css 跟外殼的 js 都接在 3 MB 的核心後面，最後才到；
+   在那之前核心的主選單（#cover）、HUD 照它自己的樣子畫出來 ⇒ 這裡先藏（跟 idle.css 第一段同一批），外殼的標題畫面出來之前只看到深海色跟一行字。 */
+#cover, #end, #spk, #gfxov, #flab, #stage > :not(#cv) { display: none !important; }
+html, body { background: #04101c; }
+html:not(.bsi-on) body::after {
+  content: '🦈 方舷放置 · 載入中…'; position: fixed; left: 0; right: 0; top: 50%; transform: translateY(-50%); z-index: 99;
+  text-align: center; color: #9fc4de; font: 600 18px/1.4 system-ui, -apple-system, "Segoe UI", "Microsoft JhengHei", "PingFang TC", sans-serif; letter-spacing: .08em;
+}

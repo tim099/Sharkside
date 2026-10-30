@@ -110,16 +110,19 @@
     for (var i = 0; i < L.length; i++) if ((x -= L[i].w) < 0) return min + i;
     return I.RARITY.length - 1;
   }
-  /** 一張：{ t：upg 免費升級／buff 增益／loot 沉船寶藏／cd 技能冷卻歸零／bless 祝福, r：稀有度, id, n, amt }；同一次的三張不重複。 */
+  /** 一張：{ t：upg 免費升級／draw 抽到的升級／buff 增益／loot 沉船寶藏／cd 技能冷卻歸零／bless 祝福, r：稀有度, id, n, amt }；同一次的三張不重複。 */
   function perkCard(r, ref, used) {
     var R = I.RARITY[r], kinds = [['upg', 40], ['buff', 34], ['loot', 16]];
+    var D = I.UPG.filter(function (u) { return u.draw && !I.upgMaxed(u) && !I.upgLocked(u); });
+    if (D.length) kinds.push(['draw', I.DRAW_W]);
     if (I.S.bestZone >= I.ABIL[0].zone) kinds.push(['cd', 10]);
     if (r === I.RARITY.length - 1) kinds.push(['bless', 40]);
     var tot = kinds.reduce(function (a, k) { return a + k[1]; }, 0);
     for (var tries = 0; tries < 24; tries++) {
       var x = Math.random() * tot, t = kinds[0][0], c = null;
       for (var j = 0; j < kinds.length; j++) if ((x -= kinds[j][1]) < 0) { t = kinds[j][0]; break; }
-      if (t === 'upg') { var U = I.UPG.filter(function (u) { return !I.upgMaxed(u) && !I.upgLocked(u); }); if (U.length) { var u = I.pick(U); c = { t: t, id: u.id, n: u.max > 0 ? Math.min(R.lv, u.max - I.lv(u.id)) : R.lv }; } }
+      if (t === 'upg') { var U = I.UPG.filter(function (u) { return !u.draw && !I.upgMaxed(u) && !I.upgLocked(u); }); if (U.length) { var u = I.pick(U); c = { t: t, id: u.id, n: u.max > 0 ? Math.min(R.lv, u.max - I.lv(u.id)) : R.lv }; } }
+      else if (t === 'draw') { var du = I.pick(D), dn = R.dlv || 1; c = { t: t, id: du.id, n: du.max > 0 ? Math.min(dn, du.max - I.lv(du.id)) : dn }; }
       else if (t === 'buff') c = { t: t, id: I.pick(I.BUFF).id, n: R.n };
       else if (t === 'loot') c = { t: t, amt: R.loot * ref };
       else if (t === 'bless') c = { t: t, id: I.pick(I.BLESS).id };
@@ -136,15 +139,15 @@
     I.S.perk = { zone: N, cards: L, at: I.now() };
     I.emit('perk', I.S.perk);
   };
-  /** 沒選就自動選的那一張：最稀有的；一樣稀有照 升級 > 祝福 > 增益 > 寶藏 > 冷卻。 */
+  /** 沒選就自動選的那一張：最稀有的；一樣稀有照 抽到的升級 > 升級 > 祝福 > 增益 > 寶藏 > 冷卻。 */
   I.perkBest = function (P) {
-    var ord = ['upg', 'bless', 'buff', 'loot', 'cd'], b = 0;
+    var ord = ['draw', 'upg', 'bless', 'buff', 'loot', 'cd'], b = 0;
     P.cards.forEach(function (c, i) { var o = P.cards[b]; if (c.r > o.r || c.r === o.r && ord.indexOf(c.t) < ord.indexOf(o.t)) b = i; });
     return b;
   };
   I.perkTake = function (i, auto) {
     var S = I.S, P = S.perk, c = P && P.cards[i]; if (!c) return false;
-    if (c.t === 'upg') { S.upg[c.id] = I.lv(c.id) + c.n; I.emit('buy', 'upg', c.id, c.n); }
+    if (c.t === 'upg' || c.t === 'draw') { S.upg[c.id] = I.lv(c.id) + c.n; I.emit('buy', 'upg', c.id, c.n); }
     else if (c.t === 'buff') I.buffAdd(c.id, { n: c.n });
     else if (c.t === 'loot') I.gain(c.amt, 'perk');
     else if (c.t === 'cd') S.cd = {};
@@ -216,10 +219,10 @@
   I.upgMaxed = function (u) { return u.max > 0 && I.lv(u.id) >= u.max; };
   /** 還沒解鎖（u.zone：到過那個海域才買得到；強化三選一、自動航海士也跳過）。 */
   I.upgLocked = function (u) { return !!u.zone && I.S.bestZone < u.zone; };
-  /** 買 n 級（Infinity ＝ 買得起的全部）；回買了幾級。 */
+  /** 買 n 級（Infinity ＝ 買得起的全部）；回買了幾級。抽到的升級（u.draw）不賣 ⇒ 0。 */
   I.buyUpg = function (id, n) {
     var u = I.upgDef(id), k = 0;
-    while (k < n && !I.upgMaxed(u) && !I.upgLocked(u)) {
+    while (k < n && !u.draw && !I.upgMaxed(u) && !I.upgLocked(u)) {
       var c = I.upgCost(u); if (!I.spend(c)) break;
       I.S.upg[id] = I.lv(id) + 1; k++;
     }
@@ -300,7 +303,7 @@
   I.mateTick = function () {
     if (!I.tlv('mate') || !I.S.mate) return;
     var best = null, bc = Infinity;
-    I.UPG.forEach(function (u) { if (I.upgMaxed(u) || I.upgLocked(u)) return; var c = I.upgCost(u); if (c < bc) { bc = c; best = u; } });
+    I.UPG.forEach(function (u) { if (u.draw || I.upgMaxed(u) || I.upgLocked(u)) return; var c = I.upgCost(u); if (c < bc) { bc = c; best = u; } });
     if (best && I.S.blocks >= bc) I.buyUpg(best.id, 1);
   };
 })(window.BSI = window.BSI || {});

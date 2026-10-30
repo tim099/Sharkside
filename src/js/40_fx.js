@@ -323,11 +323,74 @@
     fins.forEach(function (L, sh) { if (!live.has(sh)) { L.forEach(function (e) { e.remove(); }); fins.delete(sh); } });
   }
 
+  // ── 鯊魚寶寶的背鰭（Tim 2026-10-30「鯊魚寶寶 可以嘗試在海面上顯示游動的鯊魚鰭」）：一隻一片，在敵艦旁邊沿著船身繞橢圓游、浮在浪上 ──
+  //   船的座標（核心 sh.M，一欄一軸）：第一欄 ＝ 船長方向、第二欄 ＝ 船寬、第三欄 ＝ 上，一格 0.1 m；橢圓 ＝ 船長一半＋4.5 m、船寬一半＋3 m（一隻比一隻外圈一點、繞的方向交錯）。
+  //   咬：30_battle.js 先發 pupAim（船、沿著船長的位置）⇒ 離那一點最近的那片衝過去（B.pupLunge 秒內到）；pupBite ⇒ 潛下去 PUP_DIVE 秒，在水下照樣往回游、再冒出來。
+  //   ⛔ 鰭是疊在畫面上的 DOM、擋不住 ⇒ 比船心離鏡頭遠的那半圈淡掉（不然像鰭插在船身上）；鏡頭後面、畫面外的不畫。
+  var pups = [], pupT = -1, PUP_SPD = 5, PUP_DASH = 26, PUP_DIVE = 1.4, beamC = {};
+  /** 船寬的一半（格）：船身中間那一段、水線上一點，從兩舷往裡找第一格船殼（一型量一次）。 */
+  function beamOf(sh) {
+    var T = sh.T, k = T.id; if (beamC[k]) return beamC[k];
+    var G = sh.grid, x = Math.round((T.hx0 + T.hx1) / 2), z = T.zw + 6, lo = -1, hi = -1, sy = T.base ? T.base.sy : 2 * T.cy;
+    for (var y = 0; y < sy && lo < 0; y++) if (G.get(x, y, z) > 0) lo = y;
+    for (y = sy - 1; y >= 0 && hi < 0; y--) if (G.get(x, y, z) > 0) hi = y;
+    return (beamC[k] = lo >= 0 && hi > lo ? (hi - lo) / 2 : 40);
+  }
+  function shipW(sh, x, y, z) { var M = sh.M; return [M[0] * x + M[4] * y + M[8] * z + M[12], M[1] * x + M[5] * y + M[9] * z + M[13], M[2] * x + M[6] * y + M[10] * z + M[14]]; }
+  function pupRing(p, sh) { var T = sh.T, k = p.k % 3; return { a: (T.hx1 - T.hx0) / 2 + 45 + 14 * k, b: beamOf(sh) + 30 + 12 * k }; }
+  /** 那一口要咬的地方（船長方向 fx、靠鏡頭那一舷的船殼外 1 m、水線）。 */
+  function pupAimW(P) {
+    var sh = P.sh, T = sh.T, x = T.hx0 + (T.hx1 - T.hx0) * P.fx, b = beamOf(sh) + 10, eye = C.cam.get().eye;
+    var L = shipW(sh, x, T.cy - b, T.zw), R = shipW(sh, x, T.cy + b, T.zw);
+    if (!eye) return L;
+    return Math.hypot(L[0] - eye[0], L[2] - eye[2]) < Math.hypot(R[0] - eye[0], R[2] - eye[2]) ? L : R;
+  }
+  function pupFrame() {
+    var BT = I.BT, n = FN && (BT.phase === 'fight' || BT.phase === 'hold') ? I.pupsNow() : 0;
+    var foes = n ? C.ships().filter(function (sh) { return sh.team === 'red' && sh.bsi && !sh.sunk && !C.isOut(sh) && sh.M && sh.grid; }) : [];
+    if (!foes.length) n = 0;
+    while (pups.length > n) pups.pop().e.remove();
+    while (pups.length < n) { var e = I.h('div', 'bsi-fin pup', I.img('fx/fin', FIN, 'fx-fin')); e.style.opacity = '0'; FN.appendChild(e); pups.push({ e: e, k: pups.length, ph: Math.random() * 6.283, w: null, sh: null }); }
+    if (!n) { pupT = -1; return; }
+    var t = C.state().t, sdt = pupT < 0 ? 0 : I.clamp(t - pupT, 0, 0.5), eye = C.cam.get().eye; pupT = t;
+    pups.forEach(function (p) {
+      var sh = p.dash ? p.dash.sh : foes[p.k % foes.length], R = pupRing(p, sh), T = sh.T, dir = p.k % 2 ? 1 : -1;
+      p.sh = sh;                                                        // 換船（那艘出局了）⇒ 照同一個角度游到新那艘的圈上
+      p.ph += dir * sdt * PUP_SPD / (0.1 * Math.sqrt((R.a * R.a + R.b * R.b) / 2));   // 繞圈：線速度 PUP_SPD m/s
+      var goal = p.dash && !p.dash.done ? p.dash.w : shipW(sh, T.cx + Math.cos(p.ph) * R.a, T.cy + Math.sin(p.ph) * R.b, T.zw);
+      if (!p.w) p.w = goal.slice();
+      else {
+        var dx = goal[0] - p.w[0], dz = goal[2] - p.w[2], d = Math.hypot(dx, dz), mx = (p.dash && !p.dash.done ? PUP_DASH : PUP_SPD * 2.2) * sdt;
+        if (d > mx) { dx *= mx / d; dz *= mx / d; }
+        p.w[0] += dx; p.w[2] += dz; if (Math.abs(dx) + Math.abs(dz) > 1e-4) p.vw = [dx, dz];
+      }
+      if (p.dash && t >= p.dash.up) p.dash = null;
+      p.w[1] = C.seaY(p.w[0], p.w[2]);
+      var q = C.project(p.w[0], p.w[1], p.w[2]), hide = !q || q.x < -60 || q.y < -60 || q.x > innerWidth + 60 || q.y > innerHeight + 60;
+      if (hide) { p.e.style.opacity = '0'; return; }
+      var c = C.center(sh), back = eye && c ? Math.hypot(p.w[0] - eye[0], p.w[2] - eye[2]) - Math.hypot(c[0] - eye[0], c[2] - eye[2]) : 0;
+      var op = I.clamp(1 - back / (0.1 * R.b * 0.8), 0, 1) * (p.dash && p.dash.done ? 0 : 1);
+      var sz = I.clamp(2200 / q.d, 12, 44), q2 = p.vw && C.project(p.w[0] + p.vw[0] * 10, p.w[1], p.w[2] + p.vw[1] * 10), right = q2 && q2.x > q.x;
+      p.e.style.width = sz.toFixed(0) + 'px'; p.e.style.opacity = op.toFixed(2);
+      p.e.style.transform = 'translate(' + q.x.toFixed(0) + 'px,' + q.y.toFixed(0) + 'px) translate(-50%,-85%)' + (right ? ' scaleX(-1)' : '');   // 鰭的前緣畫在左邊 ⇒ 往右游就翻過來
+    });
+  }
+  I.on('pupAim', function (P) {                                         // 離咬的那一點最近、沒在衝的那片衝過去
+    var w = pupAimW(P), best = null, bd = Infinity;
+    pups.forEach(function (p) { if (p.dash || !p.w) return; var d = Math.hypot(p.w[0] - w[0], p.w[2] - w[2]); if (d < bd) { bd = d; best = p; } });
+    if (best) { best.dash = { sh: P.sh, w: w, P: P, up: C.state().t + I.BAL.pupLunge + PUP_DIVE }; }
+  });
+  function pupDive(P) { pups.forEach(function (p) { if (p.dash && p.dash.P === P) p.dash.done = true; }); }
+  I.on('pupBite', function (o) { pupDive(o.P); });
+  I.on('pupMiss', function (P) { pupDive(P); });
+  I.on('zoneLoad', function () { pups.forEach(function (p) { p.e.remove(); }); pups = []; pupT = -1; });
+
   var camT = 0, camHold = 0, userT = 0, camSeq = 0;
   I.fxFrame = function (dt) {
     kegFrame();
     if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); HTML.classList.toggle('bsi-wpn', !!I.weaponOn()); HTML.classList.toggle('bsi-frz', I.frenzyOn()); }   // 游標不動、船在動；拿著特殊武器 ⇒ 準星；狂潮 ⇒ 畫面邊緣發藍光
     finFrame(dt);
+    pupFrame();
     if (CB && CB.classList.contains('on')) {                              // 連咬：剩幾秒會斷（那一條）；斷了收起來
       var cl = I.comboLeft(), cbar = CB.querySelector('i');
       if (cl <= 0) CB.className = 'bsi-combo'; else if (cbar) cbar.style.setProperty('--left', (cl / I.BAL.comboGap * 100).toFixed(0) + '%');
