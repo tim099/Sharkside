@@ -19,13 +19,13 @@
     if (!LY || I.BT.phase !== 'fight' || !b || !b.p || !sh || sh.team !== 'red' || !sh.bsi || !sh.bsi.pool) return;
     var own = C.ships()[b.owner], now = I.now();
     if (!own || own.team !== 'blue' || now - lastDrop < B.lootGap * 1000 || L.length >= B.lootMax) return;
-    if (Math.random() >= B.lootP * I.bmul('loot')) return;
+    if (Math.random() >= B.lootP * I.bmul('loot') * (sh.bsi.gold ? B.goldLoot : 1)) return;   // 黃金寶船：掉得多、寶箱多
     lastDrop = now; drop(sh, b.p.slice());
   });
-  function roll() { var x = Math.random(); return x < 0.12 ? 'chest' : x < 0.4 ? 'bottle' : 'barrel'; }
+  function roll(gold) { var x = Math.random(); return x < (gold ? 0.35 : 0.12) ? 'chest' : x < (gold ? 0.55 : 0.4) ? 'bottle' : 'barrel'; }
   /** 中彈那一點往船外推 3 公尺、往外漂（越漂越慢）。 */
   function drop(sh, p) {
-    var c = C.center(sh) || p, dx = p[0] - c[0], dz = p[2] - c[2], dl = Math.hypot(dx, dz) || 1, k = roll();
+    var c = C.center(sh) || p, dx = p[0] - c[0], dz = p[2] - c[2], dl = Math.hypot(dx, dz) || 1, k = roll(sh.bsi.gold);
     dx /= dl; dz /= dl;
     var e = I.h('div', 'bsi-lt ' + k, '<i class="glow"></i><div class="bob">' + KIND[k].svg + '</div>');
     var it = { k: k, x: p[0] + dx * 3, z: p[2] + dz * 3, vx: dx * 2.4 + (Math.random() - 0.5), vz: dz * 2.4 + (Math.random() - 0.5), t0: I.now(), pool: sh.bsi.pool, e: e };

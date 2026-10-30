@@ -65,6 +65,11 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .znav #bsi-zauto.on { border-color: rgba(91, 227, 161, .5); color: var(--good); }
 #bsi .farm { font-size: 11px; color: var(--warn); margin-top: 6px; }
 #bsi .farm:empty { display: none; }
+#bsi .zmod { margin: 6px 0 2px; padding: 4px 8px; border-radius: 8px; font-size: 12px; background: rgba(79, 209, 255, .08); border: 1px solid rgba(79, 209, 255, .2); }
+#bsi .zmod:empty { display: none; }
+#bsi .zmod b { color: var(--sea); margin: 0 6px 0 3px; }
+#bsi .zmod span { color: var(--dim); }
+#bsi .bsi-banner small.bmod { color: var(--sea); margin-top: 4px; }
 
 /* ── 左邊的面板 ── */
 #bsi .bsi-panel { position: absolute; left: 12px; top: 74px; bottom: 96px; width: 372px; display: flex; flex-direction: column; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); backdrop-filter: blur(6px); overflow: hidden; }
@@ -184,23 +189,24 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .bsi-chomp.big { width: 300px; height: 260px; margin: -130px 0 0 -150px; }
 #bsi .bsi-chomp .jaw { position: absolute; left: 0; right: 0; height: 50%; }
 #bsi .bsi-chomp .jaw svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .55)); }
-#bsi .bsi-chomp .jaw.up { top: 0; animation: bsiJawUp .7s cubic-bezier(.5, 0, .6, 1) forwards; }
-#bsi .bsi-chomp .jaw.lo { bottom: 0; animation: bsiJawLo .7s cubic-bezier(.5, 0, .6, 1) forwards; }
+#bsi .bsi-chomp .jaw.up { top: 0; animation: bsiJawUp .45s cubic-bezier(.5, 0, .6, 1) forwards; }
+#bsi .bsi-chomp .jaw.lo { bottom: 0; animation: bsiJawLo .45s cubic-bezier(.5, 0, .6, 1) forwards; }
 #bsi .bsi-chomp .jaw.lo svg { transform: scaleY(-1) translateX(4%); }
 #bsi .bsi-chomp .fl { position: absolute; left: 50%; top: 50%; width: 150px; height: 150px; margin: -75px 0 0 -75px; border-radius: 50%; opacity: 0;
-  background: radial-gradient(closest-side, #fff, rgba(190, 240, 255, .85) 35%, rgba(79, 209, 255, .3) 65%, transparent); animation: bsiFlash .7s ease-out forwards; }
-#bsi .bsi-chomp .rg { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, .9); box-shadow: 0 0 14px rgba(79, 209, 255, .8); opacity: 0; animation: bsiRing .7s ease-out forwards; }
+  background: radial-gradient(closest-side, #fff, rgba(190, 240, 255, .85) 35%, rgba(79, 209, 255, .3) 65%, transparent); animation: bsiFlash .45s ease-out forwards; }
+#bsi .bsi-chomp .rg { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, .9); box-shadow: 0 0 14px rgba(79, 209, 255, .8); opacity: 0; animation: bsiRing .5s ease-out forwards; }
 #bsi .bsi-chomp.big .fl, #bsi .bsi-chomp.big .rg { width: 260px; height: 260px; margin: -130px 0 0 -130px; }
 #bsi .bsi-chomp .wd { position: absolute; left: 50%; top: -8px; white-space: nowrap; font: 900 26px/1 "Arial Black", system-ui, sans-serif; letter-spacing: .04em; color: #fff; -webkit-text-stroke: 2px #8a1023;
-  text-shadow: 0 0 10px rgba(255, 80, 80, .8), 0 3px 0 #3a0610; opacity: 0; animation: bsiWord .95s ease-out forwards; }
+  text-shadow: 0 0 10px rgba(255, 80, 80, .8), 0 3px 0 #3a0610; opacity: 0; animation: bsiWord .8s ease-out forwards; }
 #bsi .bsi-chomp.big .wd { font-size: 44px; top: -24px; }
-@keyframes bsiJawUp { 0% { opacity: 0; transform: translateY(-62%) scale(1.2); } 8% { opacity: 1; transform: translateY(-46%) scale(1.12); } 22% { transform: translateY(2%) scale(1); } 30% { transform: translateY(-7%) scale(1); } 70% { opacity: 1; transform: translateY(-4%); } 100% { opacity: 0; transform: translateY(-18%); } }
-@keyframes bsiJawLo { 0% { opacity: 0; transform: translateY(62%) scale(1.2); } 8% { opacity: 1; transform: translateY(46%) scale(1.12); } 22% { transform: translateY(-2%) scale(1); } 30% { transform: translateY(7%) scale(1); } 70% { opacity: 1; transform: translateY(4%); } 100% { opacity: 0; transform: translateY(18%); } }
-@keyframes bsiFlash { 0%, 18% { opacity: 0; transform: scale(.3); } 24% { opacity: 1; transform: scale(.9); } 100% { opacity: 0; transform: scale(1.6); } }
-@keyframes bsiRing { 0%, 20% { opacity: 0; transform: scale(.2); } 26% { opacity: 1; } 100% { opacity: 0; transform: scale(2.2); } }
-@keyframes bsiWord { 0%, 18% { opacity: 0; transform: translateX(-50%) scale(.3) rotate(-14deg); } 30% { opacity: 1; transform: translateX(-50%) scale(1.25) rotate(-8deg); } 40% { transform: translateX(-50%) scale(1) rotate(-6deg); } 80% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -26px) rotate(-6deg); } }
+/* 0.45 秒：張到最開（10%）→ 咬合（34% ≈ 0.15 秒，音效、畫面震對齊這一下）→ 馬上往兩邊拉開、淡掉 ⇒ 看得清楚咬掉的格子（Tim 2026-10-30） */
+@keyframes bsiJawUp { 0% { opacity: 0; transform: translateY(-62%) scale(1.2); } 10% { opacity: 1; transform: translateY(-46%) scale(1.12); } 34% { transform: translateY(2%) scale(1); } 46% { opacity: 1; transform: translateY(-6%) scale(1); } 100% { opacity: 0; transform: translateY(-45%) scale(1.05); } }
+@keyframes bsiJawLo { 0% { opacity: 0; transform: translateY(62%) scale(1.2); } 10% { opacity: 1; transform: translateY(46%) scale(1.12); } 34% { transform: translateY(-2%) scale(1); } 46% { opacity: 1; transform: translateY(6%) scale(1); } 100% { opacity: 0; transform: translateY(45%) scale(1.05); } }
+@keyframes bsiFlash { 0%, 28% { opacity: 0; transform: scale(.3); } 36% { opacity: .75; transform: scale(.8); } 100% { opacity: 0; transform: scale(1.4); } }
+@keyframes bsiRing { 0%, 26% { opacity: 0; transform: scale(.2); } 34% { opacity: 1; } 100% { opacity: 0; transform: scale(2.2); } }
+@keyframes bsiWord { 0%, 12% { opacity: 0; transform: translateX(-50%) scale(.3) rotate(-14deg); } 22% { opacity: 1; transform: translateX(-50%) scale(1.25) rotate(-8deg); } 32% { transform: translateX(-50%) scale(1) rotate(-6deg); } 70% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -30px) rotate(-6deg); } }
 /* 畫面震（咬合那一下才震） */
-#cv.bsi-shake { animation: bsiShake .3s linear .14s; }
+#cv.bsi-shake { animation: bsiShake .3s linear .14s; }                    /* 咬合那一下才震（牙 34% ≈ 0.15 秒） */
 #cv.bsi-shake2 { animation: bsiShake2 .55s linear .1s; }
 @keyframes bsiShake { 0%, 100% { transform: none; } 15% { transform: translate(-5px, 3px); } 30% { transform: translate(5px, -3px); } 45% { transform: translate(-4px, -2px); } 60% { transform: translate(3px, 2px); } 80% { transform: translate(-2px, 1px); } }
 @keyframes bsiShake2 { 0%, 100% { transform: none; } 10% { transform: translate(-12px, 6px) rotate(-.4deg); } 22% { transform: translate(11px, -7px) rotate(.4deg); } 36% { transform: translate(-9px, -4px); } 50% { transform: translate(8px, 5px); } 66% { transform: translate(-5px, 3px); } 82% { transform: translate(3px, -2px); } }
@@ -243,6 +249,9 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .bsi-mark.foe:hover .nm::after { content: ' 🦈'; }
 #bsi .bsi-mark.boss .nm { color: var(--gold); font-size: 13px; }
 #bsi .bsi-mark.lock .nm::before { content: '🎯 '; }
+#bsi .bsi-mark.gold .nm { color: var(--gold); text-shadow: 0 0 10px rgba(255, 200, 60, .9), 0 1px 3px #000; }
+#bsi .bsi-mark.gold .val { font-size: 13px; font-weight: 800; animation: bsiPulse .7s infinite alternate; }
+#bsi .bsi-mark.gold .bar { box-shadow: 0 0 0 1px rgba(255, 209, 102, .9), 0 0 12px rgba(255, 200, 60, .8); }
 #bsi .bsi-mark.lock .bar { box-shadow: 0 0 0 1px rgba(255, 209, 102, .7), 0 0 8px rgba(255, 209, 102, .5); }
 #bsi .bsi-mark.out { opacity: .55; }
 
@@ -270,6 +279,27 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .bsi-toast.ach, #bsi .bsi-toast.bp { border-color: rgba(255, 209, 102, .5); }
 #bsi .bsi-toast.note.blue { border-left: 3px solid var(--sea); } #bsi .bsi-toast.note.red { border-left: 3px solid var(--coral); }
 #bsi .bsi-toast.loot { border-color: rgba(140, 255, 210, .5); } #bsi .bsi-toast.perk { border-color: rgba(195, 140, 255, .55); }
+#bsi .bsi-toast.gold { border-color: rgba(255, 209, 102, .8); box-shadow: 0 0 16px rgba(255, 200, 60, .35); } #bsi .bsi-toast.quest { border-color: rgba(91, 227, 161, .6); }
+
+/* ── 連咬（右邊的計數；40_fx.js comboShow）── */
+#bsi .bsi-combo { position: absolute; right: 30px; top: 44%; z-index: 4; text-align: center; pointer-events: none; opacity: 0; transform: scale(.8); transition: opacity .2s, transform .2s; }
+#bsi .bsi-combo.on { opacity: 1; transform: none; }
+#bsi .bsi-combo b { display: block; font: 900 46px/1 "Arial Black", system-ui, sans-serif; color: #fff; -webkit-text-stroke: 2px #8a1023; text-shadow: 0 0 14px rgba(255, 90, 60, .8); }
+#bsi .bsi-combo.crit b { color: #ffe08a; -webkit-text-stroke: 2px #a3330a; }
+#bsi .bsi-combo.pop b { animation: bsiComboPop .25s ease-out; }
+#bsi .bsi-combo small { display: block; margin-top: 2px; font-size: 12px; color: #ffd0c0; letter-spacing: .08em; text-shadow: 0 1px 3px #000; }
+#bsi .bsi-combo i { display: block; width: 84px; height: 4px; margin: 5px auto 0; border-radius: 2px; background: rgba(255, 255, 255, .15); overflow: hidden; }
+#bsi .bsi-combo i::after { content: ''; display: block; height: 100%; width: var(--left, 100%); background: linear-gradient(90deg, #ff6b3a, #ffd166); }
+@keyframes bsiComboPop { from { transform: scale(1.6); } to { transform: none; } }
+#bsi .bsi-chomp.crit { width: 230px; height: 200px; margin: -100px 0 0 -115px; }
+#bsi .bsi-chomp.crit .wd { font-size: 36px; color: #ffe08a; -webkit-text-stroke: 2px #a3330a; }
+#bsi .bsi-fl.bite.crit { font-size: 22px; color: #ffe08a; }
+
+/* ── 賞金任務（面板「任務」）── */
+#bsi .row.quest .qbar { width: 100%; height: 6px; margin: 4px 0 2px; border-radius: 3px; background: rgba(0, 0, 0, .35); overflow: hidden; }
+#bsi .row.quest .qbar i { display: block; height: 100%; background: linear-gradient(90deg, var(--sea2), var(--good)); }
+#bsi .row.quest.t1 { border-color: rgba(79, 209, 255, .3); }
+#bsi .row.quest.t2 { border-color: rgba(195, 140, 255, .45); background: rgba(195, 140, 255, .06); }
 @keyframes bsiIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
 
 /* ── 結果橫幅 ── */
@@ -330,4 +360,5 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   #bsi .pk-card b, #bsi .pk-card small { grid-column: 2; }
   #bsi .pk-card.best::after { top: auto; bottom: 6px; left: 12px; }
   #bsi .bsi-mega .wd { font-size: 34px; }
+  #bsi .bsi-combo { right: 10px; top: 30%; } #bsi .bsi-combo b { font-size: 34px; }
 }

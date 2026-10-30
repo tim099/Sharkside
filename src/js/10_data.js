@@ -41,7 +41,12 @@
     //   lootLife 秒沒撿就自動撿、只拿 lootAuto 倍。木桶、寶箱 ＝ 那艘身價的 barrelK、chestK；瓶中信 ＝ 隨機一種增益 bottleSec 秒
     lootP: 0.045, lootGap: 2.4, lootMax: 4, lootLife: 16, lootAuto: 0.5,
     barrelK: 0.05, chestK: 0.2, bottleSec: 30,
-    perkAuto: 15              // 強化三選一：幾秒沒選就自動選（設定可以改成一跳出來就自動選）
+    perkAuto: 15,             // 強化三選一：幾秒沒選就自動選（設定可以改成一跳出來就自動選）
+    // 黃金寶船（30_battle.js spawnGold）：不是守將的海域，每場 goldP 的機率在開打後幾秒冒出來（沉船海域 ×2）；身價 × goldK、火力很弱，打中掉寶 × goldLoot
+    goldP: 0.14, goldK: 5, goldLoot: 4,
+    // 連咬（30_battle.js bite）：上一口之後 comboGap 秒內再咬 ⇒ 連咬 +1，獎勵 ×（1 ＋ comboStep ×（連咬 − 1））最多 comboMax；每 comboCrit 口暴擊一次（咬得大 1.6 倍、獎勵 ×2）
+    comboGap: 1.6, comboStep: 0.15, comboMax: 3, comboCrit: 10,
+    wreckY: -12               // 沉沒了還在往下沉的船：水面下這麼深（公尺）以內還看得到、咬得到
   };
 
   /** 海域（一區 10 個，第 10 個是守將）。pool：照順序越後面越常出現；wx：天氣；map／site：海圖（Blockside maps/<map>，Blocksail tools/export_chunks.cjs 匯出）與開戰點 ——
@@ -132,6 +137,35 @@
     { id: 'inc', ico: '🐚', name: '人魚之歌', desc: '收入 ×1.15' }
   ];
 
+  /** 海況（20_econ.js zone：每個海域一種，照海域號碼與轉生次數定 ⇒ 這一輪同一個海域都一樣；守將海域沒有）：
+   *  k ＝ 跟增益一起乘的倍率（bmul）、foe ＝ 多幾艘敵艦（照這個海域原本的敵艦再抄）、bounty ＝ 擊沉俘獲賞金、boom ＝ 殉爆賞金、
+   *  powder ＝ 敵艦火藥桶的耐打、foeDmg ＝ 敵彈傷害、gold ＝ 黃金寶船的機率。 */
+  I.SEAMOD = [
+    { id: 'calm', w: 30, ico: '🌤️', name: '風平浪靜', desc: '沒什麼特別的' },
+    { id: 'wind', w: 10, ico: '💨', name: '順風', desc: '我方航速、靈活 ×1.3', k: { speed: 1.3 } },
+    { id: 'shark', w: 10, ico: '🦈', name: '鯊群出沒', desc: '咬一口 ×2、漂流寶物 ×1.5', k: { bite: 2, loot: 1.5 } },
+    { id: 'wreck', w: 9, ico: '⚱️', name: '沉船海域', desc: '漂流寶物 ×2.5、黃金寶船的機率 ×2', k: { loot: 2.5 }, gold: 2 },
+    { id: 'pirate', w: 10, ico: '☠️', name: '海盜窩', desc: '敵艦多一艘、擊沉俘獲賞金 ×1.6', foe: 1, bounty: 1.6 },
+    { id: 'powder', w: 8, ico: '🌋', name: '火藥運輸線', desc: '敵艦的火藥桶更脆、殉爆賞金 ×2', powder: 0.6, boom: 2 },
+    { id: 'fog', w: 10, ico: '🌫️', name: '濃霧', desc: '雙方傷害 ×0.85、收入 ×1.3', k: { dmg: 0.85, income: 1.3 }, foeDmg: 0.85 },
+    { id: 'tide', w: 10, ico: '✨', name: '黃金潮汐', desc: '收入 ×1.25', k: { income: 1.25 } },
+    { id: 'morale', w: 3, ico: '😰', name: '士氣低落', desc: '敵艦死傷少兩成就降旗、俘獲賞金 ×1.3', k: { fear: 0.8 }, bounty: 1.3 }
+  ];
+
+  /** 賞金任務（45_quest.js：同時三張，做完自動領、換一張新的）：n ＝ 小／中／大要做幾次；max ＝ 算最高的一次（連咬）。 */
+  I.QUESTS = [
+    { id: 'sink', ico: '⚓', name: '擊沉', unit: '艘', n: [4, 8, 16] },
+    { id: 'cap', ico: '🏳️', name: '俘獲（讓敵艦降旗）', unit: '艘', n: [2, 4, 8] },
+    { id: 'bite', ico: '🦷', name: '咬', unit: '口', n: [25, 60, 120] },
+    { id: 'loot', ico: '🛢️', name: '撿漂流寶物', unit: '件', n: [5, 12, 25] },
+    { id: 'boom', ico: '💥', name: '讓敵艦殉爆', unit: '次', n: [1, 2, 4] },
+    { id: 'zone', ico: '🗺️', name: '打下新的海域', unit: '個', n: [3, 5, 8] },
+    { id: 'gold', ico: '💰', name: '拿下黃金寶船', unit: '艘', n: [1, 1, 2] },
+    { id: 'combo', ico: '🔥', name: '連咬', unit: '口', n: [8, 15, 25], max: true }
+  ];
+  /** 任務的大小：權重、獎勵幾場份的收入（45_quest.js questRef）、另外給隨機增益幾場。 */
+  I.QUEST_TIER = [{ name: '小', w: 55, k: 2, buff: 0 }, { name: '中', w: 33, k: 4, buff: 3 }, { name: '大', w: 12, k: 8, buff: 5 }];
+
   I.SPEEDS = [1, 2, 3, 4];
 
   /** 成就：每一個收入 ×1.03（乘起來）。 */
@@ -166,7 +200,11 @@
     { id: 'underdog', ico: '🐟', name: '以小博大', desc: '火力比不到 0.6 還打贏', t: function (S) { return !!S.st.under; } },
     { id: 'loot50', ico: '🛢️', name: '撿破爛', desc: '撿 50 件漂流寶物', t: function (S) { return S.st.loot >= 50; } },
     { id: 'chest10', ico: '🧰', name: '金銀島', desc: '撈起 10 個寶箱', t: function (S) { return S.st.chest >= 10; } },
-    { id: 'perk30', ico: '🎴', name: '挑三揀四', desc: '選過 30 次強化', t: function (S) { return S.st.perks >= 30; } }
+    { id: 'perk30', ico: '🎴', name: '挑三揀四', desc: '選過 30 次強化', t: function (S) { return S.st.perks >= 30; } },
+    { id: 'gold1', ico: '💰', name: '寶船獵人', desc: '拿下第一艘黃金寶船', t: function (S) { return S.st.gold >= 1; } },
+    { id: 'gold10', ico: '👑', name: '劫寶船隊', desc: '拿下 10 艘黃金寶船', t: function (S) { return S.st.gold >= 10; } },
+    { id: 'combo20', ico: '🔥', name: '狂咬', desc: '連咬 20 口', t: function (S) { return S.st.comboMax >= 20; } },
+    { id: 'quest10', ico: '📜', name: '懸賞榜常客', desc: '完成 10 個賞金任務', t: function (S) { return S.st.quests >= 10; } }
   ];
 
   /** 載入時的一句話（本鯊魚說的）。 */
@@ -179,6 +217,10 @@
     '敵艦中彈會漂出木桶、寶箱、瓶中信，點一下撿起來；放著不管只撿得到一半。',
     '打下新的海域可以挑一個強化：免費升級、增益、沉船寶藏……史詩卡還有祝福。',
     '鏡頭鎖定一艘敵艦；咬哪艘就換看哪艘，Tab 換下一艘。',
+    '每個海域有自己的海況：濃霧、海盜窩、鯊群出沒……看海域卡。',
+    '黃金寶船出現了就快咬！身價是平常的五倍，又打不太還手。',
+    '一口接一口咬（1.6 秒內）會連咬，每第 10 口暴擊。',
+    '賞金任務做完自動領 —— 面板的「任務」分頁看進度。',
     '打不過就退一個海域練一下，本鯊魚會自己回去挑戰的。',
     '轉生（潛回亞特蘭提斯）會重來，可是碎片的加成永遠留著。',
     '藍鯊號是本鯊魚的船，打過第 15 海域就送妳。'

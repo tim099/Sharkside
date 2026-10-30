@@ -10,8 +10,8 @@
       zone: 1, maxZone: 1, bestZone: 1, farm: 0,                   // 現在的海域、這一輪最遠、有史以來最遠；farm ＝ 打輸退下來之後贏了幾場
       upg: {}, slots: 1, fleet: ['flyingfish'], own: { flyingfish: 1 }, bp: { flyingfish: 1 },   // own：會造的船；bp：拿到的藍圖（擊敗過那一型）
       doctrine: 'sink', shards: 0, shardsAll: 0, tech: {}, ach: {},
-      buffs: [], bless: {}, perk: null,                            // 增益（{ id, left：還剩幾場 } 或 { id, until：到哪一刻 }）、祝福（這一輪疊了幾層）、還沒選的強化三選一
-      st: { sunk: 0, cap: 0, boom: 0, bites: 0, battles: 0, wins: 0, losses: 0, pres: 0, playSec: 0, clean: 0, blitz: 0, under: 0, loot: 0, chest: 0, perks: 0 },
+      buffs: [], bless: {}, perk: null, quests: [],                // 增益（{ id, left：還剩幾場 } 或 { id, until：到哪一刻 }）、祝福（這一輪疊了幾層）、還沒選的強化三選一、賞金任務（45_quest.js）
+      st: { sunk: 0, cap: 0, boom: 0, bites: 0, battles: 0, wins: 0, losses: 0, pres: 0, playSec: 0, clean: 0, blitz: 0, under: 0, loot: 0, chest: 0, perks: 0, gold: 0, comboMax: 0, quests: 0 },
       auto: true, speed: 1, gfx: 'mid', mute: false, bgm: 0.35, cam: 'foe', camV: 2, mate: true, perkAuto: false, seen: 0,
       rate: 0, lastSeen: 0, created: Date.now()
     };
@@ -81,8 +81,13 @@
   I.buffDef = function (id) { return I.BUFF.filter(function (b) { return b.id === id; })[0]; };
   /** 現在有效的增益。 */
   I.buffsNow = function () { var now = I.now(); return I.S.buffs.filter(function (b) { return b.until ? b.until > now : b.left > 0; }); };
-  /** k（dmg、hard、reload、income、fear、speed、bite、loot）上所有有效增益的倍率乘起來。 */
-  I.bmul = function (k) { var m = 1; I.buffsNow().forEach(function (b) { var d = I.buffDef(b.id); if (d && d.k === k) m *= d.m; }); return m; };
+  /** k（dmg、hard、reload、income、fear、speed、bite、loot）上所有有效增益的倍率乘起來，再乘這一場的海況（10_data.js SEAMOD 的 k）。 */
+  I.bmul = function (k) {
+    var m = 1; I.buffsNow().forEach(function (b) { var d = I.buffDef(b.id); if (d && d.k === k) m *= d.m; });
+    var Z = I.BT && I.BT.Z, mk = Z && Z.mod && Z.mod.k;
+    if (mk && mk[k]) m *= mk[k];
+    return m;
+  };
   /** 加一個增益：o.n 場、或 o.sec 秒；同一種、同一類（場／秒）已經有 ⇒ 加長，不再乘一次。 */
   I.buffAdd = function (id, o) {
     var S = I.S, now = I.now(), cur = S.buffs.filter(function (b) { return b.id === id && (o.sec ? b.until > now : b.left > 0); })[0];
@@ -157,6 +162,8 @@
   I.zoneLv = function (N) { return Math.pow(B.lvGrow, N - 1) * (N % 10 === 0 ? B.bossLv : 1) * Math.min(1, B.early0 + (1 - B.early0) * (N - 1) / 10); };   // 新手海：前 10 個海域敵艦弱一點
   I.blockVal = function (N) { return Math.pow(B.vGrow, N - 1); };
   function seeded(s) { return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
+  /** mulberry32：連續的種子第一個數也分得開（⛔ 上面那個 LCG 用等差的種子，第一個數也是等差 ⇒ 海況 60 個海域只抽到 4 種）。 */
+  function mulberry(a) { return function () { a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
   /** 一個海域的編成（照海域號碼定 ⇒ 同一個海域每次都是同一批）。 */
   I.zone = function (N) {
     var R = I.region(N), boss = N % 10 === 0, k = (N - 1) % 10, rg = Math.floor((N - 1) / 10), rnd = seeded(N * 7919 + 13);
@@ -168,7 +175,14 @@
       while (j < P.length - 1 && (x -= w[j]) > 0) j++;
       foes.push(P[j]);
     }
-    return { n: N, R: R, region: rg, boss: boss, foes: foes, lv: I.zoneLv(N), wx: R.wx, map: R.map || '', site: R.site || 0, timeout: B.timeout0 + B.timeoutPer * foes.length };
+    // 海況：另一組亂數（照海域號碼與轉生次數）⇒ 編成照舊；海盜窩多的那艘照這個海域原本的抄一艘（不出現新的船型 ⇒ 藍圖、造價照舊）
+    var mod = null;
+    if (!boss) {
+      var rm = mulberry(N * 7919 + (I.S.st.pres || 0) * 104729 + 17), x2 = rm() * I.SEAMOD.reduce(function (a, m) { return a + m.w; }, 0);
+      for (var j2 = 0; j2 < I.SEAMOD.length && !mod; j2++) if ((x2 -= I.SEAMOD[j2].w) < 0) mod = I.SEAMOD[j2];
+      for (var f2 = 0; mod && f2 < (mod.foe || 0); f2++) foes.push(foes[Math.floor(rm() * foes.length)]);
+    }
+    return { n: N, R: R, region: rg, boss: boss, foes: foes, mod: mod, lv: I.zoneLv(N), wx: R.wx, map: R.map || '', site: R.site || 0, timeout: B.timeout0 + B.timeoutPer * foes.length };
   };
   /** 那一型第一次在哪個海域出現（藍圖、造價照它）。 */
   var FZ = null;

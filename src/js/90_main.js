@@ -11,6 +11,7 @@
 
   I.initHulls();
   I.load();
+  I.questFill();
   I.uiInit();
   C.gfx(I.S.gfx); C.sound({ mute: I.S.mute, bgm: I.S.bgm });
   document.documentElement.classList.add('bsi-on');

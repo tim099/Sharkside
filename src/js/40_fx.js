@@ -3,11 +3,11 @@
   'use strict';
   var C = I.core;
   if (!C) return;
-  var FL, MK, TS, FX, marks = new Map(), HTML = document.documentElement;
+  var FL, MK, TS, FX, CB, marks = new Map(), HTML = document.documentElement;
 
   I.fxInit = function (root) {
-    FL = I.h('div', 'bsi-float'); MK = I.h('div', 'bsi-marks'); TS = I.h('div', 'bsi-toasts'); FX = I.h('div', 'bsi-fx');
-    root.appendChild(MK); root.appendChild(FL); root.appendChild(TS); root.appendChild(FX);
+    FL = I.h('div', 'bsi-float'); MK = I.h('div', 'bsi-marks'); TS = I.h('div', 'bsi-toasts'); FX = I.h('div', 'bsi-fx'); CB = I.h('div', 'bsi-combo');
+    root.appendChild(MK); root.appendChild(FL); root.appendChild(TS); root.appendChild(FX); root.appendChild(CB);
   };
 
   // ── 飄字 ──
@@ -88,15 +88,23 @@
   }
   var JAW = null, WORDS = ['CHOMP!', 'CRUNCH!', '咬！', 'NOM!'];
   /** anc：{ sh, off（咬的那一點 − 船心，世界座標）, dx, dy（點的那一點 − 那一點的投影）} ⇒ 演出跟著船走（鏡頭換過去看那艘的時候不會留在畫面原地）。 */
-  I.chomp = function (x, y, big, anc) {
+  /** cls：'' ／ 'big'（巨齒鯊）／ 'crit'（暴擊）；word：牙上面那個字（沒給 ⇒ 隨便挑一個）。
+   *  牙咬合之後很快拉開、淡掉（0.45 秒；Tim：「特效可以消失得更快一些 這樣方便看清楚破壞的格子」），字在上面多留一下。 */
+  I.chomp = function (x, y, cls, anc, word) {
     if (!FX) return;
     JAW = JAW || jawSvg();
-    var e = I.h('div', 'bsi-chomp' + (big ? ' big' : ''), '<i class="fl"></i><i class="rg"></i><div class="jaw up">' + JAW + '</div><div class="jaw lo">' + JAW + '</div><b class="wd">' + (big ? 'MEGA CHOMP!' : I.pick(WORDS)) + '</b>');
+    var e = I.h('div', 'bsi-chomp' + (cls ? ' ' + cls : ''), '<i class="fl"></i><i class="rg"></i><div class="jaw up">' + JAW + '</div><div class="jaw lo">' + JAW + '</div><b class="wd">' + I.esc(word || I.pick(WORDS)) + '</b>');
     e.style.left = x.toFixed(0) + 'px'; e.style.top = y.toFixed(0) + 'px'; e.bsiA = anc || null;
     FX.appendChild(e);
     while (FX.childElementCount > 12) FX.firstChild.remove();
-    setTimeout(function () { e.remove(); }, 950);
+    setTimeout(function () { e.remove(); }, 850);
   };
+  /** 連咬的計數（右邊）：第幾口、倍率；斷了就收（fxFrame 照剩幾秒畫那一條）。 */
+  function comboShow(o) {
+    if (!CB) return;
+    CB.innerHTML = '<b>' + o.combo + '</b><small>連咬 ' + I.mulTxt(o.cm / (o.crit ? 2 : 1)) + (o.crit ? '・暴擊 ×2' : '') + '</small><i></i>';
+    CB.className = 'bsi-combo on' + (o.crit ? ' crit' : ''); void CB.offsetWidth; CB.classList.add('pop');
+  }
   var shT = 0;
   function shake(big) {
     var cv = I.$('cv'); if (!cv) return;
@@ -110,11 +118,13 @@
     if (c && p && x !== undefined) anc = { sh: o.sh, off: [o.w[0] - c[0], o.w[1] - c[1], o.w[2] - c[2]], dx: x - p.x, dy: y - p.y };
     if (!o.big && (I.S.cam === 'foe' || I.S.cam === 'auto')) { lockOn(o.sh); camHold = I.now() + 8000; }   // 咬到哪艘，鏡頭就看哪艘（巨齒鯊一口氣咬全部 ⇒ 不跟，免得一直跳）
     if (x !== undefined) {
-      I.chomp(x, y, o.big, anc);
-      I.floatAt(x, y - (o.big ? 80 : 54), '🦈 ' + (o.g > 0 ? '+' + I.fmt(o.g) : o.n + ' 格'), 'bite' + (o.big ? ' big' : ''));
+      var cls = o.big ? 'big' : o.crit ? 'crit' : '';
+      I.chomp(x, y, cls, anc, o.big ? 'MEGA CHOMP!' : o.crit ? 'CRITICAL!' : o.combo >= 2 ? 'COMBO ×' + o.combo : null);
+      I.floatAt(x, y - (o.big ? 80 : 54), '🦈 ' + (o.g > 0 ? '+' + I.fmt(o.g) : o.n + ' 格'), 'bite' + (cls ? ' ' + cls : ''));
     }
-    shake(o.big);
-    if (!o.big) setTimeout(function () { I.sfx('chomp'); }, 110);      // 跟咬合那一下（動畫 22%）對齊
+    if (o.combo >= 2) comboShow(o);
+    shake(o.big || o.crit);
+    if (!o.big) setTimeout(function () { I.sfx('chomp'); }, 110);      // 跟咬合那一下（動畫 34%，0.15 秒）對齊
     HTML.classList.add('bsi-chomp'); clearTimeout(chompT); chompT = setTimeout(function () { HTML.classList.remove('bsi-chomp'); }, 170);
   });
   // 巨齒鯊：一條大鯊魚從畫面游過去（30_battle.js 接著一艘一艘咬）
@@ -122,6 +132,13 @@
     '<path d="M396 94C372 72 322 60 262 58L232 12L214 60C160 64 112 74 80 84L26 30L48 92L32 146L84 104C130 114 190 120 236 120L212 154L264 118C322 116 370 108 396 94Z" fill="url(#bsiSk)" stroke="#0c1a26" stroke-width="3" stroke-linejoin="round"/>' +
     '<path d="M396 94L340 102L382 108Z" fill="#5a0d1c"/><path d="M350 102l4 5l4-5l4 5l4-5l4 5l4-5l4 4" stroke="#fff" stroke-width="2" fill="none"/>' +
     '<circle cx="350" cy="80" r="4.5" fill="#05080c"/><circle cx="351.5" cy="78.5" r="1.4" fill="#fff"/><path d="M300 76q-4 12 0 22M310 75q-4 12 0 22M320 75q-4 12 0 22" stroke="#173247" stroke-width="2.4" fill="none"/></svg>';
+  // 黃金寶船（30_battle.js spawnGold）：喊一聲、鎖定敵艦的鏡頭換過去
+  I.on('gold', function (sh) {
+    I.toast('💰 <b>黃金寶船 ' + I.esc(sh.name) + '</b> 出現了！身價 ×' + I.BAL.goldK + '、幾乎不還手，打中會掉更多寶物 —— 快咬！', 'gold', 7000);
+    I.floatShip(sh, '💰 黃金寶船！', 'kill', 16);
+    I.sfx('chest');
+    if (I.S.cam === 'foe') lockOn(sh);
+  });
   I.on('mega', function () {
     if (!FX) return;
     var e = I.h('div', 'bsi-mega', '<i class="dark"></i><div class="shark">' + SHARK + '</div><b class="wd">🦈 巨齒鯊！</b>');
@@ -145,7 +162,7 @@
   var mx = -1, my = -1, curOn = false, curT = 0, curAcc = 0;
   function curCheck() {
     var on = false;
-    if (mx >= 0 && I.BT.phase === 'fight') { var h = C.pick(mx, my); on = !!(h && h.sh.team === 'red' && !h.sh.sunk); }
+    if (mx >= 0 && (I.BT.phase === 'fight' || I.BT.phase === 'hold')) on = I.biteable(C.pick(mx, my));   // 水面下、打贏之後還在沉的也算（30_battle.js biteable）
     if (on !== curOn) { curOn = on; HTML.classList.toggle('bsi-bite', on); }
   }
   document.addEventListener('pointermove', function (e) {
@@ -157,8 +174,9 @@
   // ── 戰鬥的事件 ⇒ 飄字、訊息 ──
   I.on('float', function (sh, g) { I.floatShip(sh, '+' + I.fmt(g), g > I.BT.income * 0.08 ? 'big' : ''); });
   I.on('kill', function (sh, how, g) {
-    I.floatShip(sh, (how === 'cap' ? '🏳️ 俘獲 ' : '⚓ 擊沉 ') + '+' + I.fmt(g), 'kill ' + how, 14);
-    I.toast((how === 'cap' ? '🏳️ <b>' + I.esc(sh.name) + '</b> 降旗了 —— 俘獲賞金' : '⚓ <b>' + I.esc(sh.name) + '</b> 沉了 —— 賞金') + ' <span class="g">+' + I.fmt(g) + '</span>', how);
+    var gd = sh.bsi && sh.bsi.gold ? '💰 黃金寶船 ' : '';
+    I.floatShip(sh, gd + (how === 'cap' ? '🏳️ 俘獲 ' : '⚓ 擊沉 ') + '+' + I.fmt(g), 'kill ' + how, 14);
+    I.toast((how === 'cap' ? '🏳️ <b>' + gd + I.esc(sh.name) + '</b> 降旗了 —— 俘獲賞金' : '⚓ <b>' + gd + I.esc(sh.name) + '</b> 沉了 —— 賞金') + ' <span class="g">+' + I.fmt(g) + '</span>', how + (gd ? ' gold' : ''));
     I.camEvent(sh, 7000);
   });
   I.on('boom', function (sh, g) { I.floatShip(sh, '💥 殉爆！+' + I.fmt(g), 'boom', 18); I.toast('💥 <b>' + I.esc(sh.name) + '</b> 彈藥庫殉爆！額外賞金 <span class="g">+' + I.fmt(g) + '</span>', 'boom'); I.camEvent(sh, 9000); });
@@ -166,17 +184,34 @@
   I.on('bp', function (id, gift) { I.toast(gift ? '🎁 亞特蘭提斯的禮物：<b>' + I.esc(I.nameOf(id)) + '</b> 的藍圖！（船塢）' : '📜 拿到藍圖：<b>' + I.esc(I.nameOf(id)) + '</b>（' + I.esc(I.AUTHORS[id] || '') + ' 造）—— 船塢可以造了', 'bp', 6000); });
   I.on('ach', function (a) { I.toast('🏆 成就：<b>' + a.ico + ' ' + I.esc(a.name) + '</b>（收入 ×1.03）', 'ach', 6000); });
   I.on('lootTake', function (it, click) { if (click) I.sfx(it.k === 'chest' ? 'chest' : it.k === 'bottle' ? 'bottle' : 'coin'); });
+  /** 核心的廣播帶了 HTML（<b style="color:…">起火！</b>）⇒ 只留 b／i／strong／em／span 與它們的字色，其他標記拿掉、字照樣跳脫。
+   *  ⛔ 直接 esc ⇒ 標記整串印出來（Tim 2026-10-30 截圖）；⛔ 直接塞 innerHTML ⇒ 核心哪天帶了別的標記也照單全收。DOMParser 解析不跑程式、不載圖。 */
+  function richText(html) {
+    var out = '';
+    (function walk(n) {
+      [].forEach.call(n.childNodes, function (c) {
+        if (c.nodeType === 3) { out += I.esc(c.nodeValue); return; }
+        if (c.nodeType !== 1) return;
+        var t = c.tagName.toLowerCase(), keep = /^(b|i|strong|em|span)$/.test(t), col = keep && c.style ? c.style.color : '';
+        if (keep) out += '<' + t + (col && /^[#a-z0-9(),.\s%]+$/i.test(col) ? ' style="color:' + col + '"' : '') + '>';
+        walk(c);
+        if (keep) out += '</' + t + '>';
+      });
+    })(new DOMParser().parseFromString('<body>' + html, 'text/html').body);
+    return out;
+  }
+  I.richText = richText;
   I.on('note', function (sh, text) {
-    if (!/桅|起火|殉爆|斷|援軍|全員倒下/.test(text)) return;   // 只挑看得到的大事
-    I.toast((sh.team === 'blue' ? '🔵 ' : '🔴 ') + I.esc(sh.name) + '：' + I.esc(text), 'note ' + sh.team, 3500);
+    if (!/桅|起火|殉爆|斷|援軍|全員倒下/.test(String(text).replace(/<[^>]*>/g, ''))) return;   // 只挑看得到的大事（照純文字判）
+    I.toast((sh.team === 'blue' ? '🔵 ' : '🔴 ') + I.esc(sh.name) + '：' + richText(text), 'note ' + sh.team, 3500);
   });
 
   // ── 船上的標記（敵艦：名字、身價、浮力條，點了咬一口；我方：小名牌）──
   function mark(sh) {
     var m = marks.get(sh);
     if (m) return m;
-    var red = sh.team === 'red', e = I.h('div', 'bsi-mark ' + (red ? 'foe' : 'mine') + (sh.bsi && sh.bsi.boss ? ' boss' : ''));
-    e.innerHTML = '<div class="nm">' + (sh.bsi && sh.bsi.boss ? '👑 ' : '') + I.esc(sh.name) + '</div>' + (red && sh.bsi && sh.bsi.pool ? '<div class="val">💰 ' + I.fmt(sh.bsi.pool * I.valueMul() * I.incomeMul()) + '</div>' : '') +
+    var red = sh.team === 'red', gold = sh.bsi && sh.bsi.gold, e = I.h('div', 'bsi-mark ' + (red ? 'foe' : 'mine') + (sh.bsi && sh.bsi.boss ? ' boss' : '') + (gold ? ' gold' : ''));
+    e.innerHTML = '<div class="nm">' + (sh.bsi && sh.bsi.boss ? '👑 ' : '') + (gold ? '💰 ' : '') + I.esc(sh.name) + '</div>' + (red && sh.bsi && sh.bsi.pool ? '<div class="val">💰 ' + I.fmt(sh.bsi.pool * I.valueMul() * I.incomeMul()) + '</div>' : '') +
       '<div class="bar"><i></i></div>' + (red ? '<div class="sub"></div>' : '');
     if (red) e.addEventListener('pointerdown', function (ev) { ev.preventDefault(); ev.stopPropagation(); I.biteShip(sh, ev.clientX, ev.clientY); });   // 名牌在船上面 ⇒ 往船的中心找船身咬
     MK.appendChild(e);
@@ -190,6 +225,10 @@
   var camT = 0, camHold = 0, userT = 0, camSeq = 0;
   I.fxFrame = function (dt) {
     if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); }                // 游標不動、船在動
+    if (CB && CB.classList.contains('on')) {                              // 連咬：剩幾秒會斷（那一條）；斷了收起來
+      var cl = I.comboLeft(), cbar = CB.querySelector('i');
+      if (cl <= 0) CB.className = 'bsi-combo'; else if (cbar) cbar.style.setProperty('--left', (cl / I.BAL.comboGap * 100).toFixed(0) + '%');
+    }
     if (FX) [].forEach.call(FX.children, function (e) {                   // 咬一口的演出跟著被咬的那艘
       var a = e.bsiA, c = a && C.center(a.sh), p = c && C.project(c[0] + a.off[0], c[1] + a.off[1], c[2] + a.off[2]);
       if (p) { e.style.left = (p.x + a.dx).toFixed(0) + 'px'; e.style.top = (p.y + a.dy).toFixed(0) + 'px'; }

@@ -15,8 +15,8 @@
   //   增益（20_econ.js bmul）：砲手狂熱 ⇒ 我方這一顆更兇；鐵木船殼 ⇒ 敵方這一顆打我方更輕。洞的上限顧效能（體積 ∝ 半徑³）
   C.on('rptShot', function (sh, g, b) {
     if (BT.phase !== 'fight' || !b) return;
-    var mine = sh.team === 'blue', bd = I.bmul('dmg'), bh = I.bmul('hard');
-    if (b.dmg > 0) b.dmg *= mine ? BT.myDmg * bd : BT.foeDmg / bh;
+    var mine = sh.team === 'blue', bd = I.bmul('dmg'), bh = I.bmul('hard'), md = BT.Z && BT.Z.mod;
+    if (b.dmg > 0) b.dmg *= mine ? BT.myDmg * bd : BT.foeDmg / bh * (md && md.foeDmg || 1);   // 海況（濃霧）：敵彈也打折
     b.hole = Math.min(B.holeMax * 1.25, (b.big ? 1.25 : b.hole || 1) * (mine ? BT.myHole * Math.pow(bd, 0.3) : BT.foeHole * Math.pow(bh, -0.3))); b.big = false;
   });
   // 殉爆（核心 73_slowmo 的慢動作同一個事件）
@@ -54,6 +54,7 @@
         BT.myLost0 = 0; BT.phase = 'fight'; BT.startWall = I.now();
         I.S.st.battles++;
         I.emit('zoneStart', Z);
+        if (!Z.boss && Math.random() < B.goldP * (Z.mod && Z.mod.gold || 1)) setTimeout(function () { if (seq === BT.seq && BT.phase === 'fight') spawnGold(); }, 5000 + Math.random() * 10000);
       });
     }).catch(function (e) { console.error(e); BT.phase = 'error'; I.emit('error', e); });
   };
@@ -78,7 +79,7 @@
     sh.bsi.cfg0 = { flood: sh.cfg.flood, pump: sh.cfg.pump, hard: sh.cfg.hard, speed: sh.cfg.speed, agile: sh.cfg.agile };   // 增益每一格照這份重乘（battleTick）
   }
   function powderSoft(sh) {
-    var k = I.powderK(); if (k >= 1) return;
+    var k = I.powderK() * (BT.Z && BT.Z.mod && BT.Z.mod.powder || 1); if (k >= 1) return;   // 海況（火藥運輸線）再乘
     (sh.models || []).forEach(function (m) { if (m.kind === 'powder' && !m.bsiSoft) { m.bsiSoft = true; m.hp = Math.max(1, Math.round(m.hp * k)); m.hpMax = Math.max(1, Math.round((m.hpMax || m.hp) * k)); } });
   }
 
@@ -123,22 +124,23 @@
   function onOut(sh) {
     sh.bsi.out = true;
     var how = sh.struck && !sh.sinkingFinal && !sh.sunk ? 'cap' : 'sink', S = I.S, id = sh.T.id;
-    var g = I.gain(sh.bsi.pool * B.outShare * (how === 'cap' ? B.captureK : 1) * I.bountyMul() * I.incomeMul(), how);
+    var g = I.gain(sh.bsi.pool * B.outShare * (how === 'cap' ? B.captureK : 1) * I.bountyMul() * I.incomeMul() * (BT.Z.mod && BT.Z.mod.bounty || 1), how);
     BT.income += g; BT.kills.push({ id: id, how: how, g: g });
     if (how === 'cap') S.st.cap++; else S.st.sunk++;
+    if (sh.bsi.gold) S.st.gold++;
     if (!S.bp[id] && I.firstZone(id) < 99) { S.bp[id] = 1; I.emit('bp', id); }
     I.emit('kill', sh, how, g);
   }
   function onBoom(sh) {
     if (sh.bsi.boomed) return; sh.bsi.boomed = true;
-    var g = I.gain(sh.bsi.pool * B.boomShare * I.boomMul() * I.bountyMul() * I.incomeMul(), 'boom');
+    var g = I.gain(sh.bsi.pool * B.boomShare * I.boomMul() * I.bountyMul() * I.incomeMul() * (BT.Z.mod && BT.Z.mod.boom || 1), 'boom');
     BT.income += g; I.S.st.boom++;
     I.emit('boom', sh, g);
   }
+  function mid(L) { var x = 0, z = 0; L.forEach(function (o) { x += o.px; z += o.pz; }); return L.length ? [x / L.length, z / L.length] : [0, 0]; }
   /** 下一波：在敵方剩下的那一側、離我方艦隊中心 280 m 的地方進場（有海圖 ⇒ 不超出開戰點的開闊水域）。 */
   function spawnWave(ships) {
     var mine = ships.filter(function (s) { return s.team === 'blue' && !C.isOut(s); }), foes = ships.filter(function (s) { return s.team === 'red'; });
-    function mid(L) { var x = 0, z = 0; L.forEach(function (o) { x += o.px; z += o.pz; }); return L.length ? [x / L.length, z / L.length] : [0, 0]; }
     var Mc = mid(mine), Ec = mid(foes), dx = Ec[0] - Mc[0], dz = Ec[1] - Mc[1], dl = Math.hypot(dx, dz) || 1; dx /= dl; dz /= dl;
     var take = BT.wave.splice(0, B.fieldFoes); BT.waveN++;
     take.forEach(function (h, i) {
@@ -147,6 +149,20 @@
       var sh = C.add({ team: 'red', hull: h, x: x, z: z }); if (sh) apply(sh);
     });
     I.emit('wave', BT.waveN, take.length);
+  }
+  /** 黃金寶船：這個海域最大的那一型（開打前就載好了），從敵方那一側斜斜地進場；身價 × goldK、幾乎不還手（裝填 45 秒）、船殼軟一點；這一場多給一艘的時間。 */
+  function spawnGold() {
+    var Z = BT.Z, ships = C.ships(), mine = ships.filter(function (s) { return s.team === 'blue' && !C.isOut(s); }), foes = ships.filter(function (s) { return s.team === 'red' && !C.isOut(s); });
+    if (!mine.length) return;
+    var hull = Z.foes.slice().sort(function (a, b) { return I.tons(b) - I.tons(a); })[0], Mc = mid(mine), Ec = foes.length ? mid(foes) : null, a = Math.random() * 6.283;
+    var dx = Ec ? Ec[0] - Mc[0] : Math.cos(a), dz = Ec ? Ec[1] - Mc[1] : Math.sin(a), dl = Math.hypot(dx, dz) || 1, sd = Math.random() < 0.5 ? 1 : -1; dx /= dl; dz /= dl;
+    var x = Mc[0] + dx * 230 - dz * 140 * sd, z = Mc[1] + dz * 230 + dx * 140 * sd, r = Math.hypot(x, z);
+    if (Z.map && r > 420) { x *= 420 / r; z *= 420 / r; }
+    var sh = C.add({ team: 'red', hull: hull, x: x, z: z }); if (!sh) return;
+    apply(sh);
+    sh.bsi.gold = true; sh.bsi.pool *= B.goldK; sh.reloadT = 45; sh.cfg.hard *= 0.6;
+    Z.timeout += B.timeoutPer;
+    I.emit('gold', sh);
   }
 
   function finish(kind) {
@@ -179,22 +195,30 @@
   I.goZone = function (N) { var S = I.S; S.zone = I.clamp(N, 1, S.maxZone); S.farm = 0; I.startZone(S.zone); };
 
   // ── 咬一口（點敵艦哪裡就咬哪裡；巨齒鯊）──
-  var biteAt = 0;
+  var biteAt = 0, combo = 0, comboT = 0;
+  /** 連咬：現在連到第幾口（斷了 ⇒ 0）、還剩幾秒會斷。 */
+  I.comboLeft = function () { return Math.max(0, comboT + B.comboGap * 1000 - I.now()) / 1000; };
+  I.comboNow = function () { return I.comboLeft() > 0 ? combo : 0; };
   /** o：{ at, dir }（核心 pick 的 p、d ⇒ 咬在那一點；cx、cy ＝ 點的那一點，演出放那裡）、{ big }（巨齒鯊：對著鏡頭那一舷的水線上一大口）；
    *  都沒有 ⇒ 對著鏡頭那一舷、水線上一點點的地方。回咬掉幾格。 */
   I.bite = function (sh, o) {
     o = o || {};
-    if (!sh || BT.phase !== 'fight' || sh.team !== 'red' || sh.sunk) return 0;
-    if (!o.big) { if (I.now() - biteAt < 250) return 0; biteAt = I.now(); }
-    var r = o.big ? 10 + I.lv('teeth') : I.biteR();
+    if (!sh || !sh.bsi || sh.team !== 'red' || (BT.phase !== 'fight' && BT.phase !== 'hold')) return 0;   // 打贏之後（hold）還在沉的照樣咬得到
+    if (sh.sunk && !o.at) return 0;                                    // 沉沒了還在往下沉的：點得到才咬（tapBite 照深度判）
+    var now = I.now(), nc = o.big ? combo : now - comboT < B.comboGap * 1000 ? combo + 1 : 1, crit = !o.big && nc % B.comboCrit === 0;
+    if (!o.big) { if (now - biteAt < 250) return 0; biteAt = now; }
+    var r = o.big ? 10 + I.lv('teeth') : Math.round(I.biteR() * (crit ? 1.6 : 1));
     var res = o.at ? C.bite(sh, o.at, r, o.dir) : C.bite(sh, { fx: 0.2 + Math.random() * 0.6, side: 0, dz: o.big ? 0 : 1 }, r);
     if (!res) return 0;
+    if (!o.big) { combo = nc; comboT = now; if (combo > I.S.st.comboMax) I.S.st.comboMax = combo; }
     I.S.st.bites++;
     // 咬下來的格照常算進打下來的格（輪詢那一份）；另外一份咬的獎勵：一口 ≈ 身價的 biteK（咬得越大 ∝ √格數）× 利齒，一艘最多領身價的三成
     //   ⛔ 照「格數 ÷ 那艘的 5%」算（打下來的格那條曲線）⇒ 一口 100 格只有身價的 0.16%，點了跟沒點一樣（2026-10-30 量的：第 1 海域一口 +8.7）
-    var b = sh.bsi, bonus = Math.min(b.pool * 0.3 - b.biteGot, b.pool * B.biteK * Math.sqrt(res.n / 100) * I.biteMul()), g = 0;
+    //   連咬：× 1 ＋ comboStep ×（連咬 − 1）（最多 comboMax），暴擊再 ×2
+    var cm = o.big ? 1 : Math.min(B.comboMax, 1 + B.comboStep * (combo - 1)) * (crit ? 2 : 1);
+    var b = sh.bsi, bonus = Math.min(b.pool * 0.3 - b.biteGot, b.pool * B.biteK * Math.sqrt(res.n / 100) * I.biteMul() * cm), g = 0;
     if (bonus > 0) { b.biteGot += bonus; g = I.gain(bonus * I.valueMul() * I.incomeMul(), 'bite'); BT.income += g; }
-    I.emit('bite', { sh: sh, n: res.n, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy });
+    I.emit('bite', { sh: sh, n: res.n, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy, combo: o.big ? 0 : combo, crit: crit, cm: cm });
     return res.n;
   };
   /** 畫面那一點沒點到那艘的船身（點到名牌、手機點偏了）⇒ 從那一點往它的中心走，第一個點得到它的地方。 */
@@ -213,10 +237,12 @@
     var h = I.hullAt(sh, cx, cy);
     return I.bite(sh, h ? { at: h.p, dir: h.d } : {});
   };
+  /** 核心 pick 打到的那一點咬得咬不到：敵艦；沉沒了還在往下沉的 ⇒ 水面下 BAL.wreckY 以內（再深就看不到了）。水面本身不擋。 */
+  I.biteable = function (h) { return !!(h && h.sh.team === 'red' && h.sh.bsi && (!h.sh.sunk || h.w[1] > B.wreckY)); };
   /** 點一下畫面（外殼的 tap 掛鉤）：點到敵艦 ⇒ 咬那一點；點偏了 ⇒ 最近那艘往中心找。 */
   I.tapBite = function (cx, cy) {
     var h = C.pick(cx, cy);
-    if (h && h.sh.team === 'red' && !h.sh.sunk) return I.bite(h.sh, { at: h.p, dir: h.d, cx: cx, cy: cy });
+    if (I.biteable(h)) return I.bite(h.sh, { at: h.p, dir: h.d, cx: cx, cy: cy });
     var sh = I.foeAt(cx, cy);
     return sh ? I.biteShip(sh, cx, cy) : 0;
   };
