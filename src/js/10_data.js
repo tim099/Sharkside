@@ -69,7 +69,11 @@
     teethGrow: 15, teethFast: 0.95,
     // 軍火箱（35_loot.js 的漂流寶物多一種；一般的 armsP、黃金寶船 armsGold 的機率）：點一下撿才有（自動撿 ⇒ 沉下去了）⇒ 接下來那把武器的 dur 秒點敵艦換成它（I.WEAPONS）
     armsP: 0.16, armsGold: 0.2,
-    wreckY: -12               // 沉沒了還在往下沉的船：水面下這麼深（公尺）以內還看得到、咬得到
+    wreckY: -12,              // 沉沒了還在往下沉的船：水面下這麼深（公尺）以內還看得到、咬得到
+    // 打不沉的破船（30_battle.js battleTick；Tim 2026-10-30：越嶺號「幾乎打不沉的情況(幾乎都在水線下)」「其他吃水太淺的船可能也有類似問題」）：
+    //   核心開始沉的線不低於 4.2 m ⇒ 吃水淺的船灌滿水了木頭還浮著、泡在水面停住，砲彈打不到水下 ⇒ 卡到時間到（降旗改成 100% 起之後更常見：剩一個人就不降）
+    //   ⇒ 砲全啞、頂層甲板泡進水裡 wreckDeck 公尺以上（沒有甲板資料 ⇒ 浮力條 < wreckFloat）連續 wreckSec 秒（模擬秒）⇒ 叫它開始沉（核心 scuttle）
+    wreckDeck: 0.3, wreckFloat: 0.7, wreckSec: 6
   };
 
   /** 海域（一區 10 個，第 10 個是守將）。pool：照順序越後面越常出現；wx：天氣；map／site：海圖（Blockside maps/<map>，Blocksail tools/export_chunks.cjs 匯出）與開戰點 ——

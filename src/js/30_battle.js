@@ -111,6 +111,11 @@
       if (BT.phase === 'fight' && !sh.struck && !sh.sunk && !sh.sinkingFinal && sh.crew0 > 0 && 1 - sh.able / sh.crew0 >= strike) {
         C.strike(sh, '降旗（死傷 ' + Math.round((1 - sh.able / sh.crew0) * 100) + '%）—— 骷髏旗嚇壞他們了');
       }
+      if (BT.phase === 'fight' && !C.isOut(sh)) {                       // 打不沉的破船：砲全啞、甲板泡在水裡 BAL.wreckSec 秒 ⇒ 開始沉（BAL wreckDeck 那一段）
+        var ws = C.stat(sh), awash = ws && (ws.deck !== null && ws.deck !== undefined ? ws.sink > Math.max(0, ws.deck) + B.wreckDeck : ws.float < B.wreckFloat);
+        if (ws && ws.guns <= 0 && awash) { if (!sh.bsi.wreckT) sh.bsi.wreckT = st.t; else if (st.t - sh.bsi.wreckT > B.wreckSec) C.scuttle(sh, '船身泡在水裡撐不住，開始沉了'); }
+        else sh.bsi.wreckT = 0;
+      }
       if (!sh.bsi.out && C.isOut(sh)) onOut(sh);
       if (!C.isOut(sh)) redUp++;
       if (now - (sh.bsi.pwT || 0) > 2000) { sh.bsi.pwT = now; powderSoft(sh); }   // 火藥桶有的是開打之後才擺（彈藥庫的站）
