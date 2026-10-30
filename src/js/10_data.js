@@ -73,7 +73,8 @@
     // 打不沉的破船（30_battle.js battleTick；Tim 2026-10-30：越嶺號「幾乎打不沉的情況(幾乎都在水線下)」「其他吃水太淺的船可能也有類似問題」）：
     //   核心開始沉的線不低於 4.2 m ⇒ 吃水淺的船灌滿水了木頭還浮著、泡在水面停住，砲彈打不到水下 ⇒ 卡到時間到（降旗改成 100% 起之後更常見：剩一個人就不降）
     //   ⇒ 砲全啞、頂層甲板泡進水裡 wreckDeck 公尺以上（沒有甲板資料 ⇒ 浮力條 < wreckFloat）連續 wreckSec 秒（模擬秒）⇒ 叫它開始沉（核心 scuttle）
-    wreckDeck: 0.3, wreckFloat: 0.7, wreckSec: 6
+    wreckDeck: 0.3, wreckFloat: 0.7, wreckSec: 6,
+    dbgQuiet: 8                  // 除錯紀錄（50_ui.js dbgTick）：對得到目標卻幾秒沒開火算一段（核心 83_testlog.js TLOG_QUIET，字跟著它）
   };
 
   /** 海域（一區 10 個，第 10 個是守將）。pool：照順序越後面越常出現；wx：天氣；map／site：海圖（Blockside maps/<map>，Blocksail tools/export_chunks.cjs 匯出）與開戰點 ——

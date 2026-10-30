@@ -346,6 +346,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
 #bsi .bsi-toast.note.blue { border-left: 3px solid var(--sea); } #bsi .bsi-toast.note.red { border-left: 3px solid var(--coral); }
 #bsi .bsi-toast.loot { border-color: rgba(140, 255, 210, .5); } #bsi .bsi-toast.perk { border-color: rgba(195, 140, 255, .55); }
 #bsi .bsi-toast.gold { border-color: rgba(255, 209, 102, .8); box-shadow: 0 0 16px rgba(255, 200, 60, .35); } #bsi .bsi-toast.quest { border-color: rgba(91, 227, 161, .6); }
+#bsi .bsi-toast.warn { border-color: rgba(255, 107, 107, .6); }
 
 /* ── 連咬（右邊的計數；40_fx.js comboShow）── */
 #bsi .bsi-combo { position: absolute; right: 30px; top: 44%; z-index: 4; text-align: center; pointer-events: none; opacity: 0; transform: scale(.8); transition: opacity .2s, transform .2s; }

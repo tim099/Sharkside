@@ -445,6 +445,39 @@
     else textRow(g, '全螢幕', /iPhone|iPod/.test(navigator.userAgent) ? 'iPhone 的 Safari 不給網頁全螢幕 ⇒ 點「分享」→「加入主畫面」，從主畫面的圖示開就沒有網址列' : '這裡不給全螢幕');
   }
 
+  // ── 除錯紀錄（核心 83_testlog.js 的測試模式；Tim 2026-10-30：「可以額外輸出資訊Debug用(包含水手移動路徑紀錄 & 炮開火紀錄」）──
+  //   開著 ⇒ 我方的船每 0.5 秒記每個水手的位置、職位、送藥手送哪門砲；每一發砲、每門砲的狀態（可開、裝填、沒人、等火藥、泡水、對不對得到目標）；
+  //   對得到目標卻 8 秒沒開火的那幾段另外標出來（新的一段跳一則提示）。匯出 ＝ 這一場＋同一張海圖的上一場、存檔摘要、物理設定，一個 JSON 檔。
+  //   換海域會重新載入頁面 ⇒ 記錄只留在這一頁；只讀，開著關著戰局一樣。
+  I.dbgApply = function () { C.tlog(I.S.dbg ? true : null, ['blue']); };
+  var dbgSeen = 0;
+  I.dbgTick = function () {
+    if (!I.S.dbg) return;
+    var f = C.tlogInfo(); if (!f) return;
+    if (f.quiet.length < dbgSeen) dbgSeen = 0;                         // 新的一場
+    for (; dbgSeen < f.quiet.length; dbgSeen++) {
+      var q = f.quiet[dbgSeen], sh = C.ships().filter(function (s) { return s.i === q.ship; })[0];
+      I.toast('🧪 ' + I.esc(sh ? sh.name : '我方') + ' ' + I.BAL.dbgQuiet + ' 秒沒開火（砲對得到目標）—— 已記下，⚙️ 設定 → 除錯紀錄 → 匯出', 'warn', 6000);
+    }
+  };
+  /** 打完一場（30_battle.js finish）：留一份，下一場開打之後還匯得出來。 */
+  I.dbgKeep = function () { if (I.S.dbg) I.dbgLast = C.tlogData(); };
+  function dbgSave() {
+    var S = I.S, Z = I.BT.Z, now = C.tlogData(), d = new Date(), p2 = function (v) { return (v < 10 ? '0' : '') + v; };
+    var o = { app: 'Sharkside', at: d.toISOString(), page: location.href, zone: S.zone, region: Z ? Z.name : null, fleet: S.fleet, doctrine: S.doctrine, upg: S.upg, tech: S.tech, buffs: S.buffs, bless: S.bless,
+      phx: C.phxInfo(), speed: S.speed, now: now, last: I.dbgLast && I.dbgLast !== now ? I.dbgLast : null };
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(o)], { type: 'application/json' }));
+    a.download = 'sharkside-debug-z' + S.zone + '-' + d.getFullYear() + p2(d.getMonth() + 1) + p2(d.getDate()) + '-' + p2(d.getHours()) + p2(d.getMinutes()) + p2(d.getSeconds()) + '.json';
+    document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+  function dbgRow(g, again) {
+    var S = I.S, c = chipRow(g, '🧪 除錯紀錄', [[false, '關'], [true, '開']], S.dbg, function (v) { S.dbg = v; I.dbgApply(); I.save(); }, again);
+    var f = C.tlogInfo(), b = h('button', 'chip', '匯出'); b.title = '水手路徑、每一發砲、每門砲的狀態，存成一個 JSON 檔';
+    b.disabled = !f && !I.dbgLast; b.onclick = dbgSave; c.appendChild(b);
+    if (S.dbg || f) textRow(g, '', f ? (f.on ? '記錄中' : '停了') + '：路徑 ' + I.fmt(f.points) + ' 點、事件 ' + I.fmt(f.ev) + ' 筆、開火 ' + I.fmt(f.shots) + ' 發、沒開火的段落 ' + f.quiet.length + ' 段' + (I.dbgLast ? '；另有上一場' : '') : '下一場開戰起記');
+  }
+
   function settings() {
     var S = I.S, M = modal('<h2>⚙️ 設定</h2>'), g = h('div', 'set');
     M.dataset.view = 'set';
@@ -458,6 +491,7 @@
     row('強化三選一', [[false, '我來選（' + I.BAL.perkAuto + ' 秒後自動）'], [true, '跳出來就自動選']], S.perkAuto, function (v) { S.perkAuto = v; });
     row('結算商店', [[true, I.BAL.shopAuto + ' 秒後自動出航'], [false, '等我按出航']], S.shopAuto, function (v) { S.shopAuto = v; });
     if (I.tlv('mate')) row('自動航海士', [[true, '開'], [false, '關']], S.mate, function (v) { S.mate = v; });
+    dbgRow(g, settings);
     M.appendChild(g);
     var io = h('div', 'srow col', '<span>存檔</span><textarea id="bsi-io" spellcheck="false" placeholder="匯出的存檔會出現在這裡；貼上別人的存檔再按「匯入」"></textarea>'), r2 = h('div', 'mbtns');
     var ex = h('button', '', '匯出'), im = h('button', '', '匯入'), wipe = h('button', 'danger', '全部重來'), ok = h('button', 'big', '好');
@@ -473,8 +507,10 @@
 
   // ── 每一格 ──
   var t5 = 0, t1 = 0;
+  var tDbg = 0;
   I.uiFrame = function (dt) {
     if (tab === 'upg' && qty === Infinity && (t1 += dt) > 1) { t1 = 0; dirty.panel = true; }   // 「最大」買得起幾級一直在變
+    if ((tDbg += dt) > 1) { tDbg = 0; I.dbgTick(); }
     var S = I.S;
     txt('bsi-blk', I.fmt(S.blocks));
     var r = rate(); txt('bsi-rate', r > 0 ? '+' + I.fmt(r) + '/秒' : '');

@@ -212,6 +212,7 @@
       if (S.auto && N > 1) { S.zone = N - 1; S.farm = 1; }
     }
     I.buffBattle();
+    I.dbgKeep();
     I.emit('result', kind, Z, BT.income);
     if (first) {
       I.perkRoll(N, Z.boss, Math.max(BT.income, (S.rate || 0) * 45));

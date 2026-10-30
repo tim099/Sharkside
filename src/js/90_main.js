@@ -14,7 +14,7 @@
   I.questFill();
   I.uiInit();
   if (I.IMG && I.IMG['app/favicon-32']) { var fav = document.createElement('link'); fav.rel = 'icon'; fav.type = 'image/png'; fav.href = 'img/app/favicon-32.png?v=' + I.IMG['app/favicon-32']; document.head.appendChild(fav); }   // 分頁圖示（主畫面的在 shell.json icon、manifest）
-  C.gfx(I.S.gfx); I.phxApply(); C.sound({ mute: I.S.mute, bgm: I.S.bgm });
+  C.gfx(I.S.gfx); I.phxApply(); I.dbgApply(); C.sound({ mute: I.S.mute, bgm: I.S.bgm });
   document.documentElement.classList.add('bsi-on');
 
   // ── 鍵盤：全部先攔下來（核心的鍵位在放置模式裡都不該動），只放行自己用的 ──
