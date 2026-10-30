@@ -254,16 +254,18 @@
     }
     return null;
   };
-  /** 咬那一艘（名牌、空白鍵）：畫面那一點（沒給 ⇒ 它的中心）往中心找船身。 */
+  /** 咬那一艘（名牌、空白鍵）：畫面那一點（沒給 ⇒ 它的中心）往中心找船身。拿著特殊武器 ⇒ 換成那把打那一點。 */
   I.biteShip = function (sh, cx, cy) {
-    if (cx === undefined) { var c = C.center(sh), p = c && C.project(c[0], c[1], c[2]); if (!p) return I.bite(sh); cx = p.x; cy = p.y; }
+    if (cx === undefined) { var c = C.center(sh), p = c && C.project(c[0], c[1], c[2]); if (!p) return I.weaponOn() ? 0 : I.bite(sh); cx = p.x; cy = p.y; }
+    if (I.weaponOn()) return I.weaponFire(cx, cy, sh);
     var h = I.hullAt(sh, cx, cy);
     return I.bite(sh, h ? { at: h.p, dir: h.d } : {});
   };
   /** 核心 pick 打到的那一點咬得咬不到：敵艦；沉沒了還在往下沉的 ⇒ 水面下 BAL.wreckY 以內（再深就看不到了）。水面本身不擋。 */
   I.biteable = function (h) { return !!(h && h.sh.team === 'red' && h.sh.bsi && (!h.sh.sunk || h.w[1] > B.wreckY)); };
-  /** 點一下畫面（外殼的 tap 掛鉤）：點到敵艦 ⇒ 咬那一點；點偏了 ⇒ 最近那艘往中心找。 */
+  /** 點一下畫面（外殼的 tap 掛鉤）：點到敵艦 ⇒ 咬那一點（拿著特殊武器 ⇒ 換成那把）；點偏了 ⇒ 最近那艘往中心找。 */
   I.tapBite = function (cx, cy) {
+    if (I.weaponOn()) return I.weaponFire(cx, cy);
     var h = C.pick(cx, cy);
     if (I.biteable(h)) return I.bite(h.sh, { at: h.p, dir: h.d, cx: cx, cy: cy });
     var sh = I.foeAt(cx, cy);
@@ -280,6 +282,38 @@
       if (d < lim && d < bd) { bd = d; best = sh; }
     });
     return best;
+  };
+
+  // ── 特殊武器（撿軍火箱拿到：35_loot.js；表在 10_data.js I.WEAPONS）──
+  var wpnAt = 0;
+  I.weaponDef = function (id) { return I.WEAPONS.filter(function (w) { return w.id === id; })[0]; };
+  /** 現在拿著哪一把（沒有、時間到了 ⇒ null）。 */
+  I.weaponOn = function () { var w = BT.wpn; return w && I.now() < w.until ? I.weaponDef(w.id) : null; };
+  I.weaponLeft = function () { return BT.wpn ? Math.max(0, BT.wpn.until - I.now()) / 1000 : 0; };
+  /** 撿到：換成這一把、從頭算時間（拿著別把 ⇒ 換掉）。 */
+  I.weaponGet = function (id) { var W = I.weaponDef(id); if (!W) return; BT.wpn = { id: id, until: I.now() + W.dur * 1000 }; I.emit('weapon', W); };
+  /** 打畫面那一點：點到敵艦的船身 ⇒ 那一點；沒點到 ⇒ 最近那艘（sh 給了 ⇒ 那艘）往中心找船身、找不到打船心。回打了沒。 */
+  I.weaponFire = function (cx, cy, sh) {
+    var W = I.weaponOn(), now = I.now(); if (!W || (BT.phase !== 'fight' && BT.phase !== 'hold') || now - wpnAt < W.gap * 1000) return 0;
+    var h = sh ? null : C.pick(cx, cy), to = null;
+    if (I.biteable(h)) { sh = h.sh; to = h.w; }
+    else { sh = sh || I.foeAt(cx, cy); if (!sh) return 0; var hh = I.hullAt(sh, cx, cy); to = hh ? hh.w : C.center(sh); }
+    if (!to) return 0;
+    var own = C.ships().filter(function (o) { return o.team === 'blue' && !C.isOut(o); })[0] || C.ships().filter(function (o) { return o.team === 'blue'; })[0];
+    var eye = C.cam.get().eye, L = I.lv('teeth'), dmg = W.dmg0 * (1 + W.dmgL * L) * BT.myDmg * I.bmul('dmg');
+    var ex = eye ? eye[0] - to[0] : 0, ez = eye ? eye[2] - to[2] : 1, el = Math.hypot(ex, ez) || 1;   // 往鏡頭那一側（水平）⇒ 看得到從哪裡打過來
+    ex /= el; ez /= el; wpnAt = now;
+    // 砲擊幾乎垂直落下（斜上方 60 m、往鏡頭那一側偏 10 m）⇒ 先砸到那一點上面的船身、甲板（⛔ 斜著來 ⇒ 點在水線附近時先碰到浪，爆裂彈一落水就沒了：量過 6 發中 2）
+    var fire = W.id === 'fire', V = fire ? 32 : 110, from = fire ? [to[0] + ex * 16, 0.4, to[2] + ez * 16] : [to[0] + ex * 10, to[1] + 60, to[2] + ez * 10];
+    var tf = Math.hypot(to[0] - from[0], to[1] - from[1], to[2] - from[2]) / V, vel = sh.vel || [0, 0, 0];
+    to = [to[0] + vel[0] * tf, to[1], to[2] + vel[2] * tf];             // 提前量：飛到那裡要 tf 秒（⛔ 照現在的位置打 ⇒ 船開走了、落在後面的海裡）
+    if (fire) {                                                         // 鯊魚噴火：從水面噴出好幾團，散在那一點附近
+      for (var i = 0, n = W.n0 + Math.floor(L / 5); i < n; i++) C.shot(from, [to[0] + (Math.random() - 0.5) * 3, to[1] + (Math.random() - 0.5) * 1.5, to[2] + (Math.random() - 0.5) * 3], { kind: 'fire', v: V, dmg: dmg, owner: own, fx: i === 0 });
+    } else {                                                            // 天降砲擊：斜上方憑空落下一顆
+      C.shot(from, to, { kind: 'shell', v: V, m: Math.min(300, W.m0 * (1 + W.mL * L)), dmg: dmg, owner: own });
+    }
+    I.emit('weaponFire', W, sh, to, cx, cy);                           // 演出、鏡頭鎖過去（40_fx.js）
+    return 1;
   };
 
   // ── 技能 ──

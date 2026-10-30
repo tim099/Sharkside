@@ -41,6 +41,7 @@
         '</div>' +
       '</div>' +
       '<div class="bsi-abil" id="bsi-abil"></div>' +
+      '<div class="bsi-wpn" id="bsi-wpn"><span class="ico" id="bsi-wpn-ico"></span><div class="mid"><b id="bsi-wpn-nm"></b><div class="bar"><i id="bsi-wpn-bar"></i></div></div><span class="s" id="bsi-wpn-s"></span></div>' +
       '<div class="bsi-banner" id="bsi-banner"></div>' +
       '<div class="bsi-perk" id="bsi-perk"><div class="pk-h" id="bsi-pk-h"></div><div class="pk-cards" id="bsi-pk-cards"></div><div class="pk-foot"><div class="pk-bar"><i id="bsi-pk-bar"></i></div><span id="bsi-pk-left"></span></div></div>' +
       '<div class="bsi-modal-bg" id="bsi-mbg"><div class="bsi-modal" id="bsi-modal"></div></div>';
@@ -409,6 +410,9 @@
       var left = Math.max(0, pkShown.at + I.BAL.perkAuto * 1000 - I.now()) / 1000;
       $('bsi-pk-bar').style.width = (left / I.BAL.perkAuto * 100).toFixed(1) + '%'; txt('bsi-pk-left', Math.ceil(left) + ' 秒後自動選 ★ 那張');
     }
+    var W = I.weaponOn(), we = $('bsi-wpn');                             // 拿著特殊武器：哪一把、還剩幾秒（每一格畫那一條才順）
+    we.classList.toggle('on', !!W);
+    if (W) { var wl = I.weaponLeft(); txt('bsi-wpn-ico', W.ico); txt('bsi-wpn-nm', W.name + '：點敵艦'); txt('bsi-wpn-s', wl.toFixed(1) + 's'); $('bsi-wpn-bar').style.width = (wl / W.dur * 100).toFixed(1) + '%'; }
     var BT = I.BT;
     if (BT.phase === 'hold' && BT.shop === 'none' && !S.perk && !pkShown && I.now() >= BT.resultAt + I.BAL.shopDelay * 1000) shopOpen();
     if ((t5 += dt) > 0.2) {

@@ -72,6 +72,9 @@
     else if (k === 'chest') [1046, 1318, 1568, 2093].forEach(function (f, i) { tone(A, t + i * 0.06, f, f, 0.2, 0.13, 'triangle'); });
     else if (k === 'bottle') { tone(A, t, 880, 1760, 0.14, 0.12); tone(A, t + 0.1, 1320, 2640, 0.18, 0.1); }
     else if (k === 'perk') [660, 880, 1320].forEach(function (f, i) { tone(A, t + i * 0.08, f, f, 0.24, 0.13, 'triangle'); });
+    else if (k === 'arms') { noise(A, t, 0.05, 0.3, ['bandpass', 3200, 2]); tone(A, t + 0.02, 520, 520, 0.12, 0.12, 'square'); [392, 523, 784].forEach(function (f, i) { tone(A, t + 0.1 + i * 0.07, f, f * 1.01, 0.2, 0.12, 'sawtooth'); }); }   // 軍火箱：鐵扣一響＋往上三聲
+    else if (k === 'flame') { noise(A, t, 0.45, 0.32, ['bandpass', 700, 0.7]); noise(A, t, 0.3, 0.16, ['highpass', 2500]); }   // 噴火：呼 ——
+    else if (k === 'whistle') tone(A, t, 1900, 520, 0.55, 0.07);           // 砲彈落下的哨音（爆炸聲是核心的）
   };
 
   // ── 咬一口的演出（畫面上的；船上的牙印、碎木、水花是核心挖的）：上下兩排牙衝過來咬合、閃一下、衝擊圈、字、畫面震 ──
@@ -132,6 +135,17 @@
     '<path d="M396 94C372 72 322 60 262 58L232 12L214 60C160 64 112 74 80 84L26 30L48 92L32 146L84 104C130 114 190 120 236 120L212 154L264 118C322 116 370 108 396 94Z" fill="url(#bsiSk)" stroke="#0c1a26" stroke-width="3" stroke-linejoin="round"/>' +
     '<path d="M396 94L340 102L382 108Z" fill="#5a0d1c"/><path d="M350 102l4 5l4-5l4 5l4-5l4 5l4-5l4 4" stroke="#fff" stroke-width="2" fill="none"/>' +
     '<circle cx="350" cy="80" r="4.5" fill="#05080c"/><circle cx="351.5" cy="78.5" r="1.4" fill="#fff"/><path d="M300 76q-4 12 0 22M310 75q-4 12 0 22M320 75q-4 12 0 22" stroke="#173247" stroke-width="2.4" fill="none"/></svg>';
+  // 特殊武器（30_battle.js weaponGet／weaponFire）：撿到喊一聲；打出去 ⇒ 聲音、點的那一點冒個字、鏡頭鎖過去（同咬）
+  I.on('weapon', function (W) {
+    I.toast(W.ico + ' 撿到 <b>' + I.esc(W.name) + '</b>！' + W.dur + ' 秒內點敵艦不咬，換成' + I.esc(W.name) + ' —— ' + I.esc(W.desc), 'gold', 5000);
+    I.banner(W.ico + ' ' + I.esc(W.name) + '<small>' + W.dur + ' 秒內點敵艦！威力照鯊魚利齒</small>', 'zone');
+    I.sfx('arms');
+  });
+  I.on('weaponFire', function (W, sh, to, cx, cy) {
+    if (I.S.cam === 'foe' || I.S.cam === 'auto') { lockOn(sh); camHold = I.now() + 8000; }
+    I.sfx(W.id === 'fire' ? 'flame' : 'whistle');
+    if (cx !== undefined) I.floatAt(cx, cy - 30, W.id === 'fire' ? '🔥' : '💣', 'bite');
+  });
   // 黃金寶船（30_battle.js reinforce）：喊一聲、鎖定敵艦的鏡頭換過去
   I.on('gold', function (sh) {
     I.toast('💰 <b>黃金寶船 ' + I.esc(sh.name) + '</b> 出現了！身價 ×' + I.BAL.goldK + '、幾乎不還手，打中會掉更多寶物 —— 快咬！', 'gold', 7000);
@@ -153,10 +167,14 @@
       '<path d="M4.5 10.5L7.5 ' + up + 'L10.5 9.5L13.5 ' + up + 'L16 9L18.5 ' + up + 'L21.5 9.5L24.5 ' + up + 'L27.5 10.5Z" fill="#fff"/>' +
       '<path d="M4.5 21.5L7.5 ' + lo + 'L10.5 22.5L13.5 ' + lo + 'L16 23L18.5 ' + lo + 'L21.5 22.5L24.5 ' + lo + 'L27.5 21.5Z" fill="#fff"/></svg>';
   }
+  /** 拿著特殊武器：準星（紅圈、十字、中間一點）。 */
+  var AIM = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="none" stroke="#000" stroke-width="4"/><circle cx="16" cy="16" r="10" fill="none" stroke="#ff5a3c" stroke-width="2"/>' +
+    '<path d="M16 1v9M16 22v9M1 16h9M22 16h9" stroke="#000" stroke-width="4"/><path d="M16 2v8M16 22v8M2 16h8M22 16h8" stroke="#fff" stroke-width="2"/><circle cx="16" cy="16" r="2" fill="#ffd166" stroke="#000"/></svg>';
   (function () {
     function cur(shut) { return 'url("data:image/svg+xml,' + encodeURIComponent(curSvg(shut)) + '") 16 16, crosshair'; }
     var st = document.createElement('style');
-    st.textContent = 'html.bsi-on.bsi-bite #cv,html.bsi-on #bsi .bsi-mark.foe{cursor:' + cur(false) + '}html.bsi-on.bsi-chomp #cv,html.bsi-on.bsi-chomp #bsi .bsi-mark.foe{cursor:' + cur(true) + '}';
+    st.textContent = 'html.bsi-on.bsi-bite #cv,html.bsi-on #bsi .bsi-mark.foe{cursor:' + cur(false) + '}html.bsi-on.bsi-chomp #cv,html.bsi-on.bsi-chomp #bsi .bsi-mark.foe{cursor:' + cur(true) + '}' +
+      'html.bsi-on.bsi-wpn.bsi-bite #cv,html.bsi-on.bsi-wpn #bsi .bsi-mark.foe{cursor:url("data:image/svg+xml,' + encodeURIComponent(AIM) + '") 16 16, crosshair}';
     document.head.appendChild(st);
   })();
   var mx = -1, my = -1, curOn = false, curT = 0, curAcc = 0;
@@ -224,7 +242,7 @@
 
   var camT = 0, camHold = 0, userT = 0, camSeq = 0;
   I.fxFrame = function (dt) {
-    if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); }                // 游標不動、船在動
+    if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); HTML.classList.toggle('bsi-wpn', !!I.weaponOn()); }   // 游標不動、船在動；拿著特殊武器 ⇒ 準星
     if (CB && CB.classList.contains('on')) {                              // 連咬：剩幾秒會斷（那一條）；斷了收起來
       var cl = I.comboLeft(), cbar = CB.querySelector('i');
       if (cl <= 0) CB.className = 'bsi-combo'; else if (cbar) cbar.style.setProperty('--left', (cl / I.BAL.comboGap * 100).toFixed(0) + '%');

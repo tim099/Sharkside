@@ -134,7 +134,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 
 /* ── 疊放順序：漂流寶物 < 名牌 < 資源列、海域卡、技能列 < 飄字、訊息 < 咬的演出、橫幅 < 強化三選一、結算商店 < 彈窗 ── */
 #bsi .bsi-loot { z-index: 0; } #bsi .bsi-marks { z-index: 1; }
-#bsi .bsi-top, #bsi .bsi-zone, #bsi .bsi-abil { z-index: 2; }
+#bsi .bsi-top, #bsi .bsi-zone, #bsi .bsi-abil, #bsi .bsi-wpn { z-index: 2; }
 #bsi .bsi-float, #bsi .bsi-toasts { z-index: 3; } #bsi .bsi-fx, #bsi .bsi-banner { z-index: 4; }
 #bsi .bsi-perk, #bsi .bsi-shop { z-index: 5; } #bsi .bsi-modal-bg { z-index: 6; }
 
@@ -182,6 +182,8 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .bsi-lt .bob svg { width: 100%; height: 100%; display: block; }
 #bsi .bsi-lt .glow { position: absolute; left: 50%; top: 64%; width: 64px; height: 22px; margin: -11px 0 0 -32px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 230, 140, .75), rgba(255, 200, 80, .25) 60%, transparent); animation: bsiGlow 1.6s ease-in-out infinite; }
 #bsi .bsi-lt.bottle .glow { background: radial-gradient(closest-side, rgba(140, 255, 210, .75), rgba(80, 220, 180, .25) 60%, transparent); }
+#bsi .bsi-lt.arms .glow { width: 74px; margin-left: -37px; background: radial-gradient(closest-side, rgba(255, 130, 80, .9), rgba(255, 80, 40, .3) 60%, transparent); }
+#bsi .bsi-lt .wico { position: absolute; right: -8px; top: -10px; font-size: 20px; line-height: 1; filter: drop-shadow(0 1px 2px #000); }
 #bsi .bsi-lt.chest .glow { width: 84px; margin-left: -42px; background: radial-gradient(closest-side, rgba(255, 215, 90, .95), rgba(255, 170, 40, .35) 60%, transparent); }
 #bsi .bsi-lt.chest .bob { animation: bsiBobL 1.6s ease-in-out infinite, bsiSpark 1.1s ease-in-out infinite; }
 #bsi .bsi-lt:hover .bob { filter: drop-shadow(0 0 8px #fff) drop-shadow(0 2px 3px rgba(0, 0, 0, .6)); }
@@ -245,6 +247,17 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .ab .cd { position: absolute; inset: 0; background: conic-gradient(rgba(0, 0, 0, .62) calc(var(--cd, 0) * 360deg), transparent 0); pointer-events: none; }
 #bsi .ab.wait { opacity: .75; }
 #bsi .ab.act { border-color: var(--gold) !important; box-shadow: 0 0 18px rgba(255, 209, 102, .5); }
+
+/* ── 拿著特殊武器（技能列上面；50_ui.js uiFrame）：哪一把、還剩幾秒 ── */
+#bsi .bsi-wpn { position: absolute; left: 50%; bottom: 112px; transform: translateX(-50%) scale(.9); display: flex; align-items: center; gap: 8px; min-width: 220px; padding: 6px 12px; border-radius: 14px;
+  background: rgba(40, 10, 6, .82); border: 1px solid rgba(255, 120, 70, .7); box-shadow: 0 0 22px rgba(255, 90, 40, .45); opacity: 0; visibility: hidden; transition: opacity .2s, transform .2s, visibility 0s .2s; pointer-events: none; }
+#bsi .bsi-wpn.on { opacity: 1; visibility: visible; transform: translateX(-50%); transition: opacity .2s, transform .2s; }
+#bsi .bsi-wpn .ico { font-size: 26px; line-height: 1; animation: bsiPulse .5s infinite alternate; }
+#bsi .bsi-wpn .mid { flex: 1; min-width: 0; }
+#bsi .bsi-wpn b { display: block; font-size: 13px; color: #ffd6c4; white-space: nowrap; }
+#bsi .bsi-wpn .bar { height: 5px; margin-top: 4px; border-radius: 3px; background: rgba(0, 0, 0, .45); overflow: hidden; }
+#bsi .bsi-wpn .bar i { display: block; height: 100%; background: linear-gradient(90deg, #ff5a3c, #ffd166); }
+#bsi .bsi-wpn .s { font-weight: 800; color: var(--gold); font-size: 15px; min-width: 40px; text-align: right; }
 
 /* ── 船上的標記 ── */
 #bsi .bsi-marks, #bsi .bsi-float { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
@@ -366,6 +379,9 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   #bsi .sh-zone button { padding: 6px 8px; }
   #bsi .bsi-toasts { left: 6px; right: 6px; width: auto; bottom: auto; top: 96px; }
   #bsi .bsi-abil { bottom: 8px; gap: 5px; }
+  #bsi .bsi-wpn { left: 6px; bottom: 92px; transform: scale(.9); min-width: 0; width: 160px; transform-origin: left bottom; }
+  #bsi .bsi-wpn.on { transform: none; }
+  #bsi .bsi-wpn b { font-size: 12px; }
   #bsi .ab { width: 60px; height: 58px; } #bsi .ab .nm { font-size: 10px; } #bsi .ab .ico { font-size: 20px; }
   #bsi .bsi-banner { font-size: 20px; top: 18%; }
   #bsi .pk-cards { flex-direction: column; gap: 8px; }
