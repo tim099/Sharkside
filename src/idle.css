@@ -430,6 +430,17 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
 #bsi .bsi-chomp.crit { width: 230px; height: 200px; margin: -100px 0 0 -115px; }
 #bsi .bsi-chomp.crit .wd { font-size: 36px; color: #ffe08a; -webkit-text-stroke: 2px #a3330a; }
 #bsi .bsi-fl.bite.crit { font-size: 22px; color: #ffe08a; }
+/* 鯊魚寶寶（40_fx.js pupBite）：小一號的嘴、小字 */
+#bsi .bsi-chomp.pup { transform: scale(.42); }
+#bsi .bsi-fl.bite.pup { font-size: 12px; color: #d6f6ff; }
+/* 新手引導（40_fx.js tutFrame）：還沒咬過 ⇒ 敵艦上一圈＋字；不擋點 */
+#bsi .bsi-tut { position: absolute; inset: calc(-1 * var(--sa-t, 0px)) calc(-1 * var(--sa-r, 0px)) calc(-1 * var(--sa-b, 0px)) calc(-1 * var(--sa-l, 0px)); z-index: 4; pointer-events: none; overflow: hidden; display: none; }
+#bsi .bsi-tut.on { display: block; }
+#bsi .bsi-tut .tw { position: absolute; left: 0; top: 0; }
+#bsi .bsi-tut .ring { position: absolute; left: -46px; top: -46px; width: 92px; height: 92px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 3px rgba(0, 0, 0, .35), 0 0 18px rgba(79, 209, 255, .9), inset 0 0 14px rgba(79, 209, 255, .6); animation: bsiTutPulse 1.2s ease-in-out infinite; }
+#bsi .bsi-tut b { position: absolute; left: 0; top: 56px; transform: translateX(-50%); white-space: nowrap; font-size: 18px; padding: 6px 14px; border-radius: 999px; background: rgba(8, 20, 34, .88); border: 1px solid rgba(127, 216, 255, .6); color: #fff; box-shadow: 0 4px 14px rgba(0, 0, 0, .5); }
+#bsi .bsi-tut small { position: absolute; left: 0; top: 96px; transform: translateX(-50%); white-space: nowrap; font-size: 12px; color: #d8e6f0; text-shadow: 0 1px 2px #000, 0 0 6px #000; }
+@keyframes bsiTutPulse { 0%, 100% { transform: scale(.9); opacity: .85; } 50% { transform: scale(1.12); opacity: 1; } }
 
 /* ── 賞金任務（面板「任務」）── */
 #bsi .row.quest .qbar { width: 100%; height: 6px; margin: 4px 0 2px; border-radius: 3px; background: rgba(0, 0, 0, .35); overflow: hidden; }

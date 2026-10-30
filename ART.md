@@ -26,10 +26,10 @@
 | App 圖示 | `img/app/` | 見 §3 | 主畫面、分頁 | `apple-touch-icon`（180）、`icon-192`、`icon-512`、`icon-maskable-512`、`favicon-32`（5） |
 | 標題字標 | `img/app/logo.png` | 1200×360 透明 | 標題寬約 300 px | 「方舷放置」＋「Sharkside」（1） |
 | 介面 | `img/ui/` | 128×128 透明 | 18～24 px | `blocks`（格）、`shards`（三叉戟碎片）、`mul`（收入倍率）、`speed`、`cam`、`sound`、`mute`、`settings`、`sail`（出航）（9） |
-| 升級 | `img/upg/` | 128×128 透明 | 32～40 px | `gun`、`reload`、`powder`、`hull`、`pump`、`sail`、`value`、`bounty`、`fear`、`teeth`（10） |
+| 升級 | `img/upg/` | 128×128 透明 | 32～40 px | `gun`、`reload`、`powder`、`hull`、`pump`、`sail`、`value`、`bounty`、`fear`、`teeth`、`pups`（鯊魚寶寶；同一張也是寶寶咬到時冒的小字 14 px ⇒ 還沒畫：圖示退回 🐟）（11） |
 | 深海科技 | `img/tech/` | 128×128 透明 | 32～40 px | `trident`、`coral`、`current`、`dream`、`chest`、`yard`、`tide`、`instinct`、`mate`（9） |
 | 技能 | `img/abil/` | 128×128 透明 | 技能鈕 44～56 px | `volley`、`frenzy`、`mega`、`repair`（4） |
-| 特殊武器 | `img/wpn/` | 128×128 透明 | 鈕、軍火箱角標 20～40 px | `fire`（鯊魚噴火）、`cannon`（天降砲擊）、`keg`（火藥桶；同一張也是丟出去在空中翻滾的桶 18～64 px、海上的水雷 16～52 px ⇒ 還沒畫：暫時借漂流木桶的圖，圖示退回 🧨）（3） |
+| 特殊武器 | `img/wpn/` | 128×128 透明 | 鈕、軍火箱角標 20～40 px | `fire`（鯊魚噴火）、`cannon`（天降砲擊）、`keg`（火藥桶；同一張也是丟出去在空中翻滾的桶 18～64 px、海上的水雷 16～52 px ⇒ 還沒畫：暫時借漂流木桶的圖，圖示退回 🧨）、`chain`（鏈彈：兩顆鐵球中間一條鐵鍊 ⇒ 還沒畫：圖示退回 ⛓️）（4） |
 | 強化卡框 | `img/perk/frame-<稀有度>.png` | 256×352 透明 | 卡片約 200 px 寬 | `common`、`rare`、`epic`（3） |
 | 增益 | `img/buff/` | 128×128 透明 | 卡面 48 px、列 20 px | `fury`、`oak`、`quick`、`gold`、`skull`、`wind`、`blood`、`compass`（8） |
 | 祝福 | `img/bless/` | 128×128 透明 | 卡面 48 px | `atk`、`def`、`inc`（3） |
@@ -38,7 +38,7 @@
 | 海區橫幅 | `img/region/banner-<同上>.png` | 960×300 不透明 | 海域卡底圖、進新海區的過場 | 同上（10） |
 | 海況 | `img/sea/` | 128×128 透明 | 海域卡 20 px | `calm`、`wind`、`shark`、`wreck`、`pirate`、`powder`、`fog`、`tide`、`morale`（9） |
 | 艦隊方針 | `img/doctrine/` | 128×128 透明 | 鈕 20 px | `sink`、`steady`、`mast`、`kill`、`gamble`（5） |
-| 成就徽章 | `img/ach/` | 128×128 透明 | 成就頁 40 px | `ACH` 的 35 個 id（`sink1`…`quest10`） |
+| 成就徽章 | `img/ach/` | 128×128 透明 | 成就頁 40 px | `ACH` 的 36 個 id（`sink1`…`quest10`、`pup500`） |
 | 懸賞任務 | `img/quest/` | 128×128 透明 | 任務列 24 px | `sink`、`cap`、`bite`、`loot`、`boom`、`zone`、`gold`、`combo`（8） |
 | 漂流寶物 | `img/loot/` | 128×128 透明 | 海面上 36～48 px | `barrel`、`chest`、`arms`、`bottle`、`goldmark`（黃金寶船名牌上的記號）（5） |
 | 鯊魚演出 | `img/fx/` | 見各單 | 全畫面演出 | `jaw-top`、`jaw-bottom`（咬一口的上下顎，512×192）、`mega`（巨齒鯊撲上來，1024×640）、`fin`（狂潮時繞船的鯊鰭，128×128）（4） |

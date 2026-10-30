@@ -11,7 +11,7 @@
       upg: {}, slots: 1, fleet: ['flyingfish'], own: { flyingfish: 1 }, bp: { flyingfish: 1 },   // own：會造的船；bp：拿到的藍圖（擊敗過那一型）
       doctrine: 'sink', shards: 0, shardsAll: 0, tech: {}, ach: {},
       buffs: [], bless: {}, perk: null, quests: [],                // 增益（{ id, left：還剩幾場 } 或 { id, until：到哪一刻 }）、祝福（這一輪疊了幾層）、還沒選的強化三選一、賞金任務（45_quest.js）
-      st: { sunk: 0, cap: 0, boom: 0, bites: 0, battles: 0, wins: 0, losses: 0, pres: 0, playSec: 0, clean: 0, blitz: 0, under: 0, loot: 0, chest: 0, perks: 0, gold: 0, comboMax: 0, quests: 0 },
+      st: { sunk: 0, cap: 0, boom: 0, bites: 0, battles: 0, wins: 0, losses: 0, pres: 0, playSec: 0, clean: 0, blitz: 0, under: 0, loot: 0, chest: 0, perks: 0, gold: 0, comboMax: 0, quests: 0, pups: 0 },
       auto: true, speed: 1, gfx: 'mid', phx: 'mid', phxC: null, mute: false, bgm: 0.35, cam: 'foe', camV: 2, mate: true, perkAuto: false, shopAuto: true, seen: 0, dbg: false,
       rate: 0, lastSeen: 0, created: Date.now()
     };
@@ -119,7 +119,7 @@
     for (var tries = 0; tries < 24; tries++) {
       var x = Math.random() * tot, t = kinds[0][0], c = null;
       for (var j = 0; j < kinds.length; j++) if ((x -= kinds[j][1]) < 0) { t = kinds[j][0]; break; }
-      if (t === 'upg') { var U = I.UPG.filter(function (u) { return !I.upgMaxed(u); }); if (U.length) { var u = I.pick(U); c = { t: t, id: u.id, n: u.max > 0 ? Math.min(R.lv, u.max - I.lv(u.id)) : R.lv }; } }
+      if (t === 'upg') { var U = I.UPG.filter(function (u) { return !I.upgMaxed(u) && !I.upgLocked(u); }); if (U.length) { var u = I.pick(U); c = { t: t, id: u.id, n: u.max > 0 ? Math.min(R.lv, u.max - I.lv(u.id)) : R.lv }; } }
       else if (t === 'buff') c = { t: t, id: I.pick(I.BUFF).id, n: R.n };
       else if (t === 'loot') c = { t: t, amt: R.loot * ref };
       else if (t === 'bless') c = { t: t, id: I.pick(I.BLESS).id };
@@ -214,10 +214,12 @@
   /** 第 L 級的價錢：c0 × g^L × e^(upgRamp × L(L−1)/2) ⇒ 每一級的漲幅 g × e^(upgRamp × L)，越後面漲得越兇（BAL.upgRamp）。 */
   I.upgCost = function (u, L) { if (L === undefined) L = I.lv(u.id); return Math.ceil(u.c0 * Math.pow(u.g, L) * Math.exp((u.ramp || B.upgRamp) * L * (L - 1) / 2)); };   // u.ramp：那一項自己的後段加價（沒寫 ⇒ BAL.upgRamp）
   I.upgMaxed = function (u) { return u.max > 0 && I.lv(u.id) >= u.max; };
+  /** 還沒解鎖（u.zone：到過那個海域才買得到；強化三選一、自動航海士也跳過）。 */
+  I.upgLocked = function (u) { return !!u.zone && I.S.bestZone < u.zone; };
   /** 買 n 級（Infinity ＝ 買得起的全部）；回買了幾級。 */
   I.buyUpg = function (id, n) {
     var u = I.upgDef(id), k = 0;
-    while (k < n && !I.upgMaxed(u)) {
+    while (k < n && !I.upgMaxed(u) && !I.upgLocked(u)) {
       var c = I.upgCost(u); if (!I.spend(c)) break;
       I.S.upg[id] = I.lv(id) + 1; k++;
     }
@@ -298,7 +300,7 @@
   I.mateTick = function () {
     if (!I.tlv('mate') || !I.S.mate) return;
     var best = null, bc = Infinity;
-    I.UPG.forEach(function (u) { if (I.upgMaxed(u)) return; var c = I.upgCost(u); if (c < bc) { bc = c; best = u; } });
+    I.UPG.forEach(function (u) { if (I.upgMaxed(u) || I.upgLocked(u)) return; var c = I.upgCost(u); if (c < bc) { bc = c; best = u; } });
     if (best && I.S.blocks >= bc) I.buyUpg(best.id, 1);
   };
 })(window.BSI = window.BSI || {});

@@ -3,11 +3,12 @@
   'use strict';
   var C = I.core;
   if (!C) return;
-  var FL, MK, TS, FX, CB, FN, marks = new Map(), HTML = document.documentElement;
+  var FL, MK, TS, FX, CB, FN, TUT, marks = new Map(), HTML = document.documentElement;
 
   I.fxInit = function (root) {
     FL = I.h('div', 'bsi-float'); MK = I.h('div', 'bsi-marks'); TS = I.h('div', 'bsi-toasts'); FX = I.h('div', 'bsi-fx'); CB = I.h('div', 'bsi-combo'); FN = I.h('div', 'bsi-fins');
     root.appendChild(FN); root.appendChild(MK); root.appendChild(FL); root.appendChild(TS); root.appendChild(FX); root.appendChild(CB);
+    TUT = I.h('div', 'bsi-tut', '<div class="tw"><i class="ring"></i><b>👆 點敵艦咬一口！</b><small>點哪裡就咬哪裡 · 底下的蓄力條滿了再咬最痛</small></div>'); root.appendChild(TUT);   // 新手引導（tutFrame）
     I.imgPre(['fx/jaw-top', 'fx/jaw-bottom', 'fx/fin', 'fx/mega']);    // 演出第一次就看得到圖（⛔ 不先抓 ⇒ 第一口咬下去 <img> 還在載，什麼都沒有）
   };
 
@@ -99,7 +100,7 @@
     if (!FX) return;
     JAW = JAW || jawSvg();
     var J = I.IMG && I.IMG['fx/jaw-top'] && I.IMG['fx/jaw-bottom'];    // 上下顎的圖（img/fx；兩張都有才換 ⇒ 不會一半圖一半 SVG；讀不到 ⇒ 那一片換回 SVG）
-    var e = I.h('div', 'bsi-chomp' + (cls ? ' ' + cls : ''), '<i class="fl"></i><i class="rg"></i><div class="jaw up">' + (J ? I.img('fx/jaw-top', JAW, 'fx-jaw') : JAW) + '</div><div class="jaw lo">' + (J ? I.img('fx/jaw-bottom', JAW, 'fx-jaw') : JAW) + '</div><b class="wd">' + I.esc(word || I.pick(WORDS)) + '</b>');
+    var e = I.h('div', 'bsi-chomp' + (cls ? ' ' + cls : ''), '<i class="fl"></i><i class="rg"></i><div class="jaw up">' + (J ? I.img('fx/jaw-top', JAW, 'fx-jaw') : JAW) + '</div><div class="jaw lo">' + (J ? I.img('fx/jaw-bottom', JAW, 'fx-jaw') : JAW) + '</div><b class="wd">' + (word === '' ? '' : I.esc(word || I.pick(WORDS))) + '</b>');   // word ''：不要字（鯊魚寶寶）
     e.style.left = x.toFixed(0) + 'px'; e.style.top = y.toFixed(0) + 'px'; e.bsiA = anc || null;
     FX.appendChild(e);
     while (FX.childElementCount > 12) FX.firstChild.remove();
@@ -134,6 +135,13 @@
     if (!o.big) setTimeout(function () { I.sfx('chomp'); }, 110);      // 跟咬合那一下（動畫 34%，0.15 秒）對齊
     HTML.classList.add('bsi-chomp'); clearTimeout(chompT); chompT = setTimeout(function () { HTML.classList.remove('bsi-chomp'); }, 170);
   });
+  // 鯊魚寶寶（30_battle.js pupTick）：小一號的嘴、沒有字，不搖畫面、不搶鏡頭（不然一群寶寶咬起來鏡頭跳來跳去）；有領到才冒字
+  I.on('pupBite', function (o) {
+    var p = o.w && C.project(o.w[0], o.w[1], o.w[2]); if (!p || p.x < 0 || p.y < 0 || p.x > innerWidth || p.y > innerHeight) return;
+    var c = C.center(o.sh), anc = c ? { sh: o.sh, off: [o.w[0] - c[0], o.w[1] - c[1], o.w[2] - c[2]], dx: 0, dy: 0 } : null;
+    I.chomp(p.x, p.y, 'pup', anc, '');
+    if (o.g > 0) I.floatAt(p.x, p.y - 26, I.img('upg/pups', '🐟') + ' +' + I.fmt(o.g), 'bite pup');
+  });
   // 巨齒鯊：一條大鯊魚從畫面游過去（30_battle.js 接著一艘一艘咬）
   var SHARK = '<svg viewBox="0 0 400 170"><defs><linearGradient id="bsiSk" x1="0" y1="0" x2="0" y2="1"><stop offset=".46" stop-color="#2d4f6b"/><stop offset=".64" stop-color="#d9e6ee"/></linearGradient></defs>' +
     '<path d="M396 94C372 72 322 60 262 58L232 12L214 60C160 64 112 74 80 84L26 30L48 92L32 146L84 104C130 114 190 120 236 120L212 154L264 118C322 116 370 108 396 94Z" fill="url(#bsiSk)" stroke="#0c1a26" stroke-width="3" stroke-linejoin="round"/>' +
@@ -148,7 +156,7 @@
   I.on('weaponFire', function (W, sh, to, cx, cy) {
     if (sh && (I.S.cam === 'foe' || I.S.cam === 'auto')) { lockOn(sh); camHold = I.now() + 8000; }   // 火藥桶丟在海上（水雷）⇒ 沒有船 ⇒ 鏡頭不動
     I.sfx(W.id === 'fire' ? 'flame' : 'whistle');
-    if (cx !== undefined) I.floatAt(cx, cy - 30, I.img('wpn/' + W.id, W.id === 'fire' ? '🔥' : '💣'), 'bite');
+    if (cx !== undefined) I.floatAt(cx, cy - 30, I.img('wpn/' + W.id, W.ico), 'bite');
   });
   // 火藥桶（30_battle.js kegThrow、kegTick）：飛過去的桶、海上的水雷（照世界座標投影；圖：wpn/keg，還沒有 ⇒ 漂流木桶的圖，再沒有 ⇒ 🧨）
   var kegEls = new Map(), mineEls = new Map();
@@ -228,7 +236,10 @@
   var mx = -1, my = -1, curOn = false, curT = 0, curAcc = 0;
   function curCheck() {
     var on = false;
-    if (mx >= 0 && (I.BT.phase === 'fight' || I.BT.phase === 'hold')) on = I.biteable(C.pick(mx, my));   // 水面下、打贏之後還在沉的也算（30_battle.js biteable）
+    if (mx >= 0 && (I.BT.phase === 'fight' || I.BT.phase === 'hold')) {
+      var W = I.weaponOn();
+      on = I.biteable(C.pick(mx, my)) || !!(W && W.id === 'chain' && I.rayFoe(mx, my));   // 水面下、打贏之後還在沉的也算（30_battle.js biteable）；拿著鏈彈 ⇒ 帆、桅杆上也算
+    }
     if (on !== curOn) { curOn = on; HTML.classList.toggle('bsi-bite', on); }
   }
   document.addEventListener('pointermove', function (e) {
@@ -345,7 +356,17 @@
     });
     marks.forEach(function (m, sh) { if (!live.has(sh)) { m.e.remove(); marks.delete(sh); } });
     camFrame(dt);
+    tutFrame();
   };
+  // ── 新手引導：還沒咬過（存檔 st.bites 0）⇒ 開打兩秒後，在鎖定的那艘（沒有 ⇒ 最近那艘）敵艦上冒一圈「點敵艦咬一口」；咬了第一口就永遠收掉 ──
+  //   字跟圈不擋點（idle.css pointer-events: none）；強化三選一、商店開著、拿著特殊武器的時候先收
+  function tutFrame() {
+    if (!TUT) return;
+    var BT = I.BT, on = I.S.st.bites === 0 && BT.phase === 'fight' && I.now() - BT.startWall > 2000 && !I.perkOpen() && !I.shopOpen() && !I.weaponOn();
+    var sh = on ? (lock && !lock.sunk && !C.isOut(lock) ? lock : nextFoe(null)) : null, p = sh && shipPt(sh, 2);
+    if (!p || p.x < 0 || p.y < 0 || p.x > innerWidth || p.y > innerHeight) { if (TUT.classList.contains('on')) TUT.classList.remove('on'); return; }
+    TUT.classList.add('on'); TUT.firstChild.style.transform = 'translate(' + p.x.toFixed(0) + 'px,' + p.y.toFixed(0) + 'px)';
+  }
 
   // ── 鏡頭（設定：foe 鎖定敵艦（預設）／auto 自動運鏡／flag 跟著旗艦／free 自己轉）──
   function alive(team) { return C.ships().filter(function (s) { return s.team === team && !C.isOut(s) && !s.sunk; }); }

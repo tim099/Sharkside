@@ -282,7 +282,8 @@
     value: function () { return '一格 ' + I.mulTxt(I.valueMul()); },
     bounty: function () { return '賞金 ' + I.mulTxt(I.bountyMul()); },
     fear: function () { return '死傷 ' + I.pct(I.strikeAt()) + ' 就降旗'; },
-    teeth: function () { return '咬 ' + I.biteR() + ' 格寬、' + I.mulTxt(I.biteMul()) + '、蓄滿 ' + I.biteChargeT().toFixed(2) + ' 秒'; }
+    teeth: function () { return '咬 ' + I.biteR() + ' 格寬、' + I.mulTxt(I.biteMul()) + '、蓄滿 ' + I.biteChargeT().toFixed(2) + ' 秒'; },
+    pups: function () { var n = I.lv('pups'), B = I.BAL; return n ? n + ' 隻 · 整群大約每 ' + Math.max(B.pupMin, B.pupGap / n).toFixed(1) + ' 秒咬一口、' + (B.pupR + Math.floor(I.teethLv() / 5)) + ' 格寬' : '還沒有寶寶'; }
   };
   function pUpg(B) {
     var q = h('div', 'qty');
@@ -291,9 +292,10 @@
     I.UPG_TABS.forEach(function (t) {
       var s = sec(B, t.name);
       I.UPG.filter(function (u) { return u.tab === t.id; }).forEach(function (u) {
-        var L = I.lv(u.id), maxed = I.upgMaxed(u), n = qty === Infinity ? Math.max(1, I.upgAfford(u)) : qty, cost = I.upgCostN(u, n);
-        var r = h('div', 'row upg', '<span class="ico">' + I.img('upg/' + u.id, u.ico) + '</span><div class="mid"><b>' + u.name + '</b><span class="lv">Lv ' + L + (u.max ? ' / ' + u.max : '') + '</span><span class="spec">' + u.desc + '</span><span class="now">' + UPG_TXT[u.id]() + '</span></div>');
-        if (maxed) r.appendChild(h('span', 'tag', '滿了'));
+        var L = I.lv(u.id), maxed = I.upgMaxed(u), lock = I.upgLocked(u), n = qty === Infinity ? Math.max(1, I.upgAfford(u)) : qty, cost = I.upgCostN(u, n);
+        var r = h('div', 'row upg' + (lock ? ' lock' : ''), '<span class="ico">' + (lock ? '🔒' : I.img('upg/' + u.id, u.ico)) + '</span><div class="mid"><b>' + u.name + '</b><span class="lv">Lv ' + L + (u.max ? ' / ' + u.max : '') + '</span><span class="spec">' + u.desc + '</span>' + (lock ? '' : '<span class="now">' + UPG_TXT[u.id]() + '</span>') + '</div>');
+        if (lock) r.appendChild(h('span', 'tag', '第 ' + u.zone + ' 海域解鎖'));   // 20_econ.js upgLocked
+        else if (maxed) r.appendChild(h('span', 'tag', '滿了'));
         else { var b = costBtn(cost, I.S.blocks >= cost, qty === 1 ? '' : '×' + n, function () { I.buyUpg(u.id, n); }); b.dataset.upg = u.id; b.dataset.n = n; r.appendChild(b); }
         s.appendChild(r);
       });
@@ -333,7 +335,7 @@
   function pStat(B) {
     var S = I.S, st = S.st, s = sec(B, '航海日誌');
     [[I.img('ui/blocks', '🧱', 'in') + ' 這一輪打下來', I.fmt(S.blocksRun) + ' 格'], [I.img('ui/blocks', '🧱', 'in') + ' 全部打下來', I.fmt(S.blocksAll) + ' 格'], ['🗺️ 有史以來最遠', '海域 ' + S.bestZone], ['⚔️ 開戰', st.battles + ' 場（贏 ' + st.wins + '、撤退 ' + st.losses + '）'],
-      ['⚓ 擊沉', st.sunk + ' 艘'], ['🏳️ 俘獲', st.cap + ' 艘'], ['💥 殉爆', st.boom + ' 次'], ['🦷 咬', st.bites + ' 口'], ['🛢️ 漂流寶物', st.loot + ' 件（寶箱 ' + st.chest + '）'], ['🎴 強化', st.perks + ' 次'], ['💰 黃金寶船', st.gold + ' 艘'], ['🔥 最長連咬', st.comboMax + ' 口'], ['📜 賞金任務', st.quests + ' 張'], ['🐚 潛回亞特蘭提斯', st.pres + ' 次'],
+      ['⚓ 擊沉', st.sunk + ' 艘'], ['🏳️ 俘獲', st.cap + ' 艘'], ['💥 殉爆', st.boom + ' 次'], ['🦷 咬', st.bites + ' 口'], ['🐟 鯊魚寶寶咬了', st.pups + ' 口'], ['🛢️ 漂流寶物', st.loot + ' 件（寶箱 ' + st.chest + '）'], ['🎴 強化', st.perks + ' 次'], ['💰 黃金寶船', st.gold + ' 艘'], ['🔥 最長連咬', st.comboMax + ' 口'], ['📜 賞金任務', st.quests + ' 張'], ['🐚 潛回亞特蘭提斯', st.pres + ' 次'],
       ['⏱️ 航行時間', I.fmtTime(st.playSec)], ['💤 離線效率', I.pct(I.offlineEff())], ['📈 平均收入', I.fmt(S.rate) + ' 格/秒']].forEach(function (x) {
       s.appendChild(h('div', 'kv', '<span>' + x[0] + '</span><b>' + x[1] + '</b>'));
     });

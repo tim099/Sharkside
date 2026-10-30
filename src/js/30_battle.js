@@ -6,7 +6,7 @@
 (function (I) {
   'use strict';
   var C = I.core, B = I.BAL;
-  var BT = I.BT = { phase: 'idle', Z: null, startWall: 0, holdUntil: 0, result: null, income: 0, wave: [], blueQ: [], build: { blue: 0, red: 0 }, spawnAt: 0, goldQ: false, frenzyUntil: 0, repairUntil: 0,
+  var BT = I.BT = { phase: 'idle', Z: null, startWall: 0, holdUntil: 0, result: null, income: 0, wave: [], blueQ: [], build: { blue: 0, red: 0 }, spawnAt: 0, goldQ: false, frenzyUntil: 0, repairUntil: 0, pupAt: 0, pupWall: 0,
     myDmg: 1, foeDmg: 1, myHard: 1, eHard: 1, myHole: 1, foeHole: 1, atkR: 1, defR: 1, myLost0: 0, kills: [], seq: 0 };
 
   if (!C) return;
@@ -35,7 +35,7 @@
   I.startZone = function (N) {
     var S = I.S, Z = I.zone(N), M = mapNow(), seq = ++BT.seq;
     if (Z.map !== M.map || (Z.map && Z.site !== M.site)) { BT.phase = 'reload'; I.emit('reload', Z); return; }
-    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false; BT.kegs = []; BT.mines = [];
+    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false; BT.kegs = []; BT.mines = []; BT.pupAt = 0;
     var mine = S.fleet.filter(function (id) { return S.own[id] && I.cardOf(id); }).slice(0, S.slots);
     if (!mine.length) mine = ['flyingfish'];
     I.emit('zoneLoad', Z);
@@ -88,6 +88,7 @@
   I.battleTick = function () {
     if (BT.phase !== 'fight' && BT.phase !== 'hold') return;
     kegTick();
+    if (BT.phase === 'fight') pupTick();
     var Z = BT.Z, ships = C.ships(), st = C.state(), now = I.now(), vm = I.valueMul() * I.incomeMul();
     var strike = I.strikeAt(), redUp = 0, blueUp = 0, myLost = 0, repairing = now < BT.repairUntil;
     var rT = I.reloadT() * I.bmul('reload'), hk = I.bmul('hard'), sk = I.bmul('speed');   // 增益（核心每次開火讀 reloadT、每一步讀 cfg）
@@ -267,6 +268,25 @@
     I.emit('bite', { sh: sh, n: nn, mdl: res.mdl || 0, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy, combo: o.big || !full ? 0 : combo, crit: crit, cm: cm, pw: pw, uw: uw });
     return nn;
   };
+  // ── 鯊魚寶寶（升級 pups；BAL pupGap 那一段）：整群照模擬時間輪流咬 —— 挑一艘還在打的敵艦，對著鏡頭那一舷、水線上一點點的地方，小口（核心 bite 的 { fx, side, dz }）──
+  //   獎勵照同樣格數的一口 × pupK，一艘最多領身價的 pupCap（跟玩家咬的那三成分開）；不算連咬、蓄力，也不算賞金任務的「咬」（事件另外叫 pupBite）
+  /** 現在有幾隻（升級的級數；鯊群出沒的海域 × 海況的 pups）。 */
+  I.pupsNow = function () { var md = BT.Z && BT.Z.mod; return I.lv('pups') * (md && md.pups || 1); };
+  function pupTick() {
+    var n = I.pupsNow(); if (!n) return;
+    var t = C.state().t, now = I.now(), gap = Math.max(B.pupMin, B.pupGap / n);
+    if (!BT.pupAt) { BT.pupAt = t + gap * (0.5 + Math.random()); return; }   // 開打後第一口錯開一點
+    if (t < BT.pupAt || now - BT.pupWall < 300) return;               // 實際時間也至少隔 0.3 秒（開 ×4 的時候）
+    BT.pupAt = t + gap * (0.7 + Math.random() * 0.6); BT.pupWall = now;
+    var L = C.ships().filter(function (sh) { return sh.team === 'red' && sh.bsi && !sh.sunk && !C.isOut(sh); }); if (!L.length) return;
+    var sh = I.pick(L), r = B.pupR + Math.floor(I.teethLv() / 5), dz = B.pupDz[0] + Math.random() * (B.pupDz[1] - B.pupDz[0]);
+    var res = C.bite(sh, { fx: 0.12 + Math.random() * 0.76, side: 0, dz: dz }, r); if (!res) return;   // 那裡沒有船殼（船頭船尾翹起來）⇒ 這一口落空，下一口再來
+    var nn = res.n + (res.mdl || 0) * B.biteMdl, b = sh.bsi, g = 0;
+    var bonus = Math.min(b.pool * B.pupCap - (b.pupGot || 0), b.pool * B.biteK * Math.sqrt(nn / 100) * I.biteMul() * B.pupK);
+    if (bonus > 0) { b.pupGot = (b.pupGot || 0) + bonus; g = I.gain(bonus * I.valueMul() * I.incomeMul(), 'pup'); BT.income += g; }
+    I.S.st.pups++;
+    I.emit('pupBite', { sh: sh, n: nn, g: g, w: res.w });
+  }
   /** 畫面那一點沒點到那艘的船身（點到名牌、手機點偏了）⇒ 從那一點往它的中心走，第一個點得到它的地方。 */
   I.hullAt = function (sh, cx, cy) {
     var c = C.center(sh), p = c && C.project(c[0], c[1], c[2]);
@@ -361,9 +381,14 @@
   I.weaponFire = function (cx, cy, sh) {
     var W = I.weaponOn(), now = I.now(); if (!W || (BT.phase !== 'fight' && BT.phase !== 'hold') || now - wpnAt < W.gap * 1000) return 0;
     if (W.id === 'keg') return kegThrow(W, cx, cy, sh);
-    var h = sh ? null : C.pick(cx, cy), to = null;
-    if (I.biteable(h)) { sh = h.sh; to = h.w; }
-    else { sh = sh || I.foeAt(cx, cy); if (!sh) return 0; var hh = I.hullAt(sh, cx, cy); to = hh ? hh.w : C.center(sh); }
+    var h = sh ? null : C.pick(cx, cy), to = null, chain = W.id === 'chain', onRay = false;
+    if (I.biteable(h)) { sh = h.sh; to = h.w; onRay = true; }
+    else {
+      if (chain && !sh) { var rf = rayFoe(cx, cy); if (rf) { sh = rf.sh; to = rf.p; onRay = true; } }   // 鏈彈：點在帆、桅杆上（pick 不算帆）⇒ 視線經過的那艘、視線上離它船心最近的那一點
+      sh = sh || I.foeAt(cx, cy); if (!sh) return 0;                    //   ⛔ 只照 foeAt（船心投影的距離）⇒ 點在高高的桅頂上算沒點到船
+      if (chain && !to) { var rn = rayNear(cx, cy, sh); if (rn) { to = rn.p; onRay = true; } }
+      if (!to) { var hh = I.hullAt(sh, cx, cy); to = hh ? hh.w : C.center(sh); }
+    }
     if (!to) return 0;
     var own = C.ships().filter(function (o) { return o.team === 'blue' && !C.isOut(o); })[0] || C.ships().filter(function (o) { return o.team === 'blue'; })[0];
     var eye = C.cam.get().eye, L = I.lv('teeth'), dmg = W.dmg0 * (1 + W.dmgL * L) * BT.myDmg * I.bmul('dmg');
@@ -372,7 +397,7 @@
     // 砲擊從鏡頭打出去（Tim：「從攝影機位置發射出去(然後射往瞄準點)」）：鏡頭看得到那一點 ⇒ 鏡頭到那一點的視線沒有東西擋，彈飛得快、弧只比視線高一點 ⇒ 點哪打哪
     //   ⛔ 視線被別的船擋住（沒點到船身、照最近那艘往中心找的時候）⇒ 改成那一點上方 60 m 幾乎垂直落下（斜著從低處來 ⇒ 點在水線附近先碰到浪，爆裂彈一落水就沒了：量過 6 發中 2）
     var fire = W.id === 'fire', V = fire ? 32 : 110, from = fire ? [to[0] + ex * 16, 0.4, to[2] + ez * 16] : [to[0] + ex * 10, to[1] + 60, to[2] + ez * 10];
-    if (!fire && eye && seen(sh, to)) {
+    if (!fire && eye && (chain ? onRay : seen(sh, to))) {                // 鏈彈的落點就在點的那條視線上 ⇒ 鏡頭看得到（⛔ seen：落點在半空 ⇒ pick 打不到那艘 ⇒ 會改成從上面掉下來）
       var dx = to[0] - eye[0], dy = to[1] - eye[1], dz = to[2] - eye[2], d = Math.hypot(dx, dy, dz) || 1;
       from = [eye[0] + dx / d * 5, eye[1] + dy / d * 5, eye[2] + dz / d * 5];   // 鏡頭前 5 m（再近 ⇒ 進了近裁切面、看不到彈出去）
       V = Math.max(150, d / 0.45);                                      // 遠 ⇒ 快：0.45 秒內到（⛔ 0.8 秒：中彈在沉、在歪的船 0.7 秒就往下掉一截，彈從上面飛過去落海，量過 6 發中 3）
@@ -381,12 +406,32 @@
     to = [to[0] + vel[0] * tf, to[1], to[2] + vel[2] * tf];             // 提前量：飛到那裡要 tf 秒（⛔ 照現在的位置打 ⇒ 船開走了、落在後面的海裡）
     if (fire) {                                                         // 鯊魚噴火：從水面噴出好幾團，散在那一點附近
       for (var i = 0, n = W.n0 + Math.floor(Math.min(L, B.teethGrow) / 5); i < n; i++) C.shot(from, [to[0] + (Math.random() - 0.5) * 3, to[1] + (Math.random() - 0.5) * 1.5, to[2] + (Math.random() - 0.5) * 3], { kind: 'fire', v: V, dmg: dmg, owner: own, fx: i === 0 });
+    } else if (chain) {                                                 // 鏈彈：一次幾發、上下錯開（帆一層一層掃）
+      for (var j = 0, nc = W.n0 + Math.floor(Math.min(L, B.teethGrow) / 8); j < nc; j++) {
+        var up = (j % 2 ? 1 : -1) * Math.ceil(j / 2) * 1.6;
+        C.shot([from[0], from[1] + up, from[2]], [to[0], to[1] + up, to[2]], { kind: 'chain', v: V, m: Math.min(300, W.m0 * (1 + W.mL * L)), dmg: dmg, owner: own, fx: j === 0 });
+      }
     } else {                                                            // 天降砲擊：憑空生一顆
       C.shot(from, to, { kind: 'shell', v: V, m: Math.min(300, W.m0 * (1 + W.mL * L)), dmg: dmg, owner: own });
     }
     I.emit('weaponFire', W, sh, to, cx, cy);                           // 演出、鏡頭鎖過去（40_fx.js）
     return 1;
   };
+  /** 畫面那一點的視線上離 sh 船心最近的那一點 p（世界座標）與 k ＝ 那一點離船心多遠 ÷ 那艘大概多大；比那艘的大小還遠、在鏡頭後面 ⇒ null（核心 C.ray）。 */
+  function rayNear(cx, cy, sh) {
+    var R = C.ray(cx, cy), c = C.center(sh); if (!R || !c) return null;
+    var o = R.o, d = R.d, t = (c[0] - o[0]) * d[0] + (c[1] - o[1]) * d[1] + (c[2] - o[2]) * d[2]; if (t <= 0) return null;
+    var p = [o[0] + d[0] * t, o[1] + d[1] * t, o[2] + d[2] * t], lim = 15 + 0.6 * Math.sqrt(I.tons(sh.T.id));    // 噸位 ⇒ 大概多大（含桅頂：85 噸 21 m、2,000 噸 42 m）
+    var k = Math.hypot(p[0] - c[0], p[1] - c[1], p[2] - c[2]) / lim;
+    return k < 1 ? { p: p, k: k } : null;
+  }
+  /** 視線經過的敵艦（還沒沉的）裡，視線離船心最近（照那艘的大小比）的那一艘：{ sh, p } 或 null。 */
+  function rayFoe(cx, cy) {
+    var best = null;
+    C.ships().forEach(function (sh) { if (sh.team !== 'red' || sh.sunk) return; var r = rayNear(cx, cy, sh); if (r && (!best || r.k < best.k)) best = { sh: sh, p: r.p, k: r.k }; });
+    return best;
+  }
+  I.rayFoe = rayFoe;                                                     // 游標（40_fx.js curCheck）：拿著鏈彈、滑到帆上也是準星
   /** 鏡頭看得到 sh 身上的那一點 p 嗎：投影回畫面、從那一點 pick，先打到的是 sh。 */
   function seen(sh, p) { var s = C.project(p[0], p[1], p[2]), h = s && C.pick(s.x, s.y); return !!(h && h.sh === sh); }
 
