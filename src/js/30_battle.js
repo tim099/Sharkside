@@ -254,17 +254,18 @@
     if (uw < 1) r = Math.max(2, Math.round(r * Math.sqrt(uw)));
     var res = o.at ? C.bite(sh, o.at, r, o.dir) : C.bite(sh, { fx: 0.2 + Math.random() * 0.6, side: 0, dz: o.big ? 0 : 1 }, r);
     if (!res) return 0;
+    var nn = res.n + (res.mdl || 0) * B.biteMdl;                      // 咬掉的模型（舵輪、砲…）折成格（BAL.biteMdl）
     if (!o.big && full) { combo = nc; comboT = now; if (combo > I.S.st.comboMax) I.S.st.comboMax = combo; }
     I.S.st.bites++;
     // 咬下來的格照常算進打下來的格（輪詢那一份）；另外一份咬的獎勵：一口 ≈ 身價的 biteK（咬得越大 ∝ √格數）× 利齒，一艘最多領身價的三成
     //   ⛔ 照「格數 ÷ 那艘的 5%」算（打下來的格那條曲線）⇒ 一口 100 格只有身價的 0.16%，點了跟沒點一樣（2026-10-30 量的：第 1 海域一口 +8.7）
     //   連咬：× 1 ＋ comboStep ×（連咬 − 1）（最多 comboMax），暴擊再 ×2
     var cm = o.big ? 1 : Math.min(B.comboMax, 1 + B.comboStep * (Math.max(1, nc) - 1)) * (crit ? 2 : 1);
-    var b = sh.bsi, bonus = Math.min(b.pool * 0.3 - b.biteGot, b.pool * B.biteK * Math.sqrt(res.n / 100) * Math.sqrt(pw) * I.biteMul() * cm), g = 0;
+    var b = sh.bsi, bonus = Math.min(b.pool * 0.3 - b.biteGot, b.pool * B.biteK * Math.sqrt(nn / 100) * Math.sqrt(pw) * I.biteMul() * cm), g = 0;
     if (bonus > 0) { b.biteGot += bonus; g = I.gain(bonus * I.valueMul() * I.incomeMul(), 'bite'); BT.income += g; }
     if (!o.big && I.frenzyOn()) { BT.frenzyBites = (BT.frenzyBites || 0) + 1; BT.frenzyGot = (BT.frenzyGot || 0) + g; }   // 狂潮那一波全力咬了幾口、咬下多少（50_ui.js 那一條、結束時的訊息）
-    I.emit('bite', { sh: sh, n: res.n, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy, combo: o.big || !full ? 0 : combo, crit: crit, cm: cm, pw: pw, uw: uw });
-    return res.n;
+    I.emit('bite', { sh: sh, n: nn, mdl: res.mdl || 0, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy, combo: o.big || !full ? 0 : combo, crit: crit, cm: cm, pw: pw, uw: uw });
+    return nn;
   };
   /** 畫面那一點沒點到那艘的船身（點到名牌、手機點偏了）⇒ 從那一點往它的中心走，第一個點得到它的地方。 */
   I.hullAt = function (sh, cx, cy) {
