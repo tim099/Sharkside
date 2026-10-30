@@ -4,7 +4,7 @@
   "tool": "built-in image_gen",
   "style_request": "日系可愛風，鯊魚特色",
   "selected": "concept-b-v2",
-  "name": "待gura命名（Tim委託）",
+  "name": "莎夏（Sasha）",
   "naming_authority": "Tim explicitly delegated naming to gura in this chat",
   "approved_upload_sha256": "856803eb9f034606448eabbf5a7bbaa59e847f96c526f5655a6fb82b159ac990",
   "concepts": [
@@ -190,8 +190,9 @@
   ],
   "processing": "normal copied byte-for-byte from approved upload. Expression RGB is image_gen output; alpha is intersection with the approved cutout alpha. No facial drawing or body RGB compositing in the script.",
   "pending": [
-    "gura chooses name",
     "gura desktop/375px integration",
     "missing-mascot fallback"
-  ]
+  ],
+  "display_name": "鯊魚船長莎夏",
+  "naming_evidence": "TASK-1129 comment #3, gura, 2026-10-30: Tim delegated naming; gura chose Sasha."
 }
