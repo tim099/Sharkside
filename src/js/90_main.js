@@ -27,6 +27,7 @@
     if (k === ' ') { e.preventDefault(); var L = C.ships().filter(function (s) { return s.team === 'red' && !C.isOut(s); }); if (L.length) I.biteShip(I.pick(L)); return; }
     if (k === 'escape') { I.modalClose(); return; }
     if (k === 'c') { $('bsi-cam').click(); return; }
+    if (k === 'tab') { e.preventDefault(); I.camNext(); return; }       // 鎖定下一艘敵艦
   }, true);
   window.addEventListener('keyup', function (e) { if (!/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) e.stopImmediatePropagation(); }, true);
   // 拖鏡頭 ⇒ 自動運鏡讓開；第一次點 ⇒ 開聲音

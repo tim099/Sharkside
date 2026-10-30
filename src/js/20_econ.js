@@ -12,7 +12,7 @@
       doctrine: 'sink', shards: 0, shardsAll: 0, tech: {}, ach: {},
       buffs: [], bless: {}, perk: null,                            // 增益（{ id, left：還剩幾場 } 或 { id, until：到哪一刻 }）、祝福（這一輪疊了幾層）、還沒選的強化三選一
       st: { sunk: 0, cap: 0, boom: 0, bites: 0, battles: 0, wins: 0, losses: 0, pres: 0, playSec: 0, clean: 0, blitz: 0, under: 0, loot: 0, chest: 0, perks: 0 },
-      auto: true, speed: 1, gfx: 'mid', mute: false, bgm: 0.35, cam: 'auto', mate: true, perkAuto: false, seen: 0,
+      auto: true, speed: 1, gfx: 'mid', mute: false, bgm: 0.35, cam: 'foe', camV: 2, mate: true, perkAuto: false, seen: 0,
       rate: 0, lastSeen: 0, created: Date.now()
     };
   }
@@ -29,6 +29,8 @@
     var o = I.store.get(I.SAVE_KEY);
     if (o && o.v === 1) I.S = merge(fresh(), o);
     var S = I.S;
+    if (o && o.v === 1 && o.camV !== 2) S.cam = 'foe';                  // 鏡頭預設改成鎖定敵艦（2026-10-30 Tim）：舊存檔（存的沒有 camV）換一次，之後照玩家選的
+    //   ⛔ 看合併過的 S.camV：fresh() 已經是 2、舊存檔沒這一格 ⇒ 合併完還是 2，永遠不換
     S.fleet = S.fleet.filter(function (id) { return S.own[id] && I.cardOf(id); }).slice(0, S.slots);
     if (!S.fleet.length) S.fleet = ['flyingfish'];
     return S;

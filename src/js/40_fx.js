@@ -87,11 +87,12 @@
       '<path d="' + t + '" fill="#fffdf2" stroke="#7d8a96" stroke-width="1.3" stroke-linejoin="round"/></svg>';
   }
   var JAW = null, WORDS = ['CHOMP!', 'CRUNCH!', '咬！', 'NOM!'];
-  I.chomp = function (x, y, big) {
+  /** anc：{ sh, off（咬的那一點 − 船心，世界座標）, dx, dy（點的那一點 − 那一點的投影）} ⇒ 演出跟著船走（鏡頭換過去看那艘的時候不會留在畫面原地）。 */
+  I.chomp = function (x, y, big, anc) {
     if (!FX) return;
     JAW = JAW || jawSvg();
     var e = I.h('div', 'bsi-chomp' + (big ? ' big' : ''), '<i class="fl"></i><i class="rg"></i><div class="jaw up">' + JAW + '</div><div class="jaw lo">' + JAW + '</div><b class="wd">' + (big ? 'MEGA CHOMP!' : I.pick(WORDS)) + '</b>');
-    e.style.left = x.toFixed(0) + 'px'; e.style.top = y.toFixed(0) + 'px';
+    e.style.left = x.toFixed(0) + 'px'; e.style.top = y.toFixed(0) + 'px'; e.bsiA = anc || null;
     FX.appendChild(e);
     while (FX.childElementCount > 12) FX.firstChild.remove();
     setTimeout(function () { e.remove(); }, 950);
@@ -104,10 +105,12 @@
   }
   var chompT = 0;
   I.on('bite', function (o) {
-    var x = o.cx, y = o.cy;
-    if (x === undefined && o.w) { var p = C.project(o.w[0], o.w[1], o.w[2]); if (p) { x = p.x; y = p.y; } }
+    var x = o.cx, y = o.cy, c = C.center(o.sh), p = o.w && C.project(o.w[0], o.w[1], o.w[2]), anc = null;
+    if (x === undefined && p) { x = p.x; y = p.y; }
+    if (c && p && x !== undefined) anc = { sh: o.sh, off: [o.w[0] - c[0], o.w[1] - c[1], o.w[2] - c[2]], dx: x - p.x, dy: y - p.y };
+    if (!o.big && (I.S.cam === 'foe' || I.S.cam === 'auto')) { lockOn(o.sh); camHold = I.now() + 8000; }   // 咬到哪艘，鏡頭就看哪艘（巨齒鯊一口氣咬全部 ⇒ 不跟，免得一直跳）
     if (x !== undefined) {
-      I.chomp(x, y, o.big);
+      I.chomp(x, y, o.big, anc);
       I.floatAt(x, y - (o.big ? 80 : 54), '🦈 ' + (o.g > 0 ? '+' + I.fmt(o.g) : o.n + ' 格'), 'bite' + (o.big ? ' big' : ''));
     }
     shake(o.big);
@@ -187,6 +190,10 @@
   var camT = 0, camHold = 0, userT = 0, camSeq = 0;
   I.fxFrame = function (dt) {
     if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); }                // 游標不動、船在動
+    if (FX) [].forEach.call(FX.children, function (e) {                   // 咬一口的演出跟著被咬的那艘
+      var a = e.bsiA, c = a && C.center(a.sh), p = c && C.project(c[0] + a.off[0], c[1] + a.off[1], c[2] + a.off[2]);
+      if (p) { e.style.left = (p.x + a.dx).toFixed(0) + 'px'; e.style.top = (p.y + a.dy).toFixed(0) + 'px'; }
+    });
     var ph = I.BT.phase;
     if (ph !== 'fight' && ph !== 'hold') { if (marks.size) I.marksClear(); return; }
     var live = new Set();
@@ -199,6 +206,7 @@
       m.bar.style.width = (f * 100).toFixed(1) + '%';
       m.bar.className = f > 0.6 ? '' : f > 0.3 ? 'mid' : 'low';
       m.e.classList.toggle('out', out);
+      m.e.classList.toggle('lock', sh === lock && I.S.cam === 'foe');
       if (m.sub) {
         var t = out ? (sh.struck && !sh.sinkingFinal ? '🏳️ 降旗' : '⚓ 沉沒中') : '👥 ' + Math.round(st.crew * 100) + '%　💣 ' + Math.round(st.guns * 100) + '%';
         if (t !== m.last) { m.sub.textContent = t; m.last = t; }
@@ -208,20 +216,47 @@
     camFrame(dt);
   };
 
-  // ── 自動運鏡（設定：auto 自動／flag 跟著旗艦／free 自己轉）──
+  // ── 鏡頭（設定：foe 鎖定敵艦（預設）／auto 自動運鏡／flag 跟著旗艦／free 自己轉）──
   function alive(team) { return C.ships().filter(function (s) { return s.team === team && !C.isOut(s) && !s.sunk; }); }
+  var lock = null, lockOut = 0;
+  /** 鎖定那一艘：鏡頭換過去看它（核心的「看這艘」：跟著它、繞著它轉，滑過去不是切）；遠近照現在的（核心 camSee 會設回 75）。 */
+  function lockOn(sh) {
+    if (!sh || sh.sunk || sh === lock) return;
+    var d = C.cam.get().dist; lock = sh; lockOut = 0;
+    C.cam.see(sh); C.cam.set({ dist: I.clamp(d, 45, 150) });
+  }
+  /** 下一艘要鎖的：還在打的敵艦裡離 from（沒給 ⇒ 我方旗艦）最近的那艘。 */
+  function nextFoe(from) {
+    var L = alive('red'), me = alive('blue')[0], c0 = from && C.center(from) || me && C.center(me), best = L[0] || null, bd = Infinity;
+    if (c0) L.forEach(function (s) { var c = C.center(s), d = c ? Math.hypot(c[0] - c0[0], c[2] - c0[2]) : Infinity; if (d < bd) { bd = d; best = s; } });
+    return best;
+  }
+  /** Tab：鎖定下一艘敵艦（不在鎖定敵艦 ⇒ 換成鎖定敵艦）。 */
+  I.camNext = function () {
+    if (I.S.cam !== 'foe') { I.S.cam = 'foe'; I.topBtns(); }
+    var L = alive('red'); if (!L.length) return;
+    var n = L[(L.indexOf(lock) + 1) % L.length]; lock = null; lockOn(n);
+  };
   I.camUser = function () { userT = I.now(); };                       // 使用者自己拖了鏡頭 ⇒ 自動運鏡讓 25 秒
   I.camEvent = function (sh, ms) {                                    // 大事（擊沉、殉爆）⇒ 切過去看
     if (I.S.cam !== 'auto' || I.now() - userT < 25000 || !sh || sh.sunk) return;
     C.cam.see(sh); C.cam.set({ dist: 70 + Math.random() * 30, pitch: 0.16 + Math.random() * 0.12 }); camHold = I.now() + ms;
   };
   I.camStart = function () {
-    camT = I.now() + 6000; camHold = 0; camSeq = 0;
+    camT = I.now() + 6000; camHold = 0; camSeq = 0; lock = null; lockOut = 0;
     if (I.S.cam === 'free') return;
+    if (I.S.cam === 'foe') { lockOn(nextFoe(null)); C.cam.set({ dist: 75, pitch: 0.18 }); return; }
     var me = alive('blue')[0]; if (me) { C.cam.see(me); C.cam.set({ dist: 85, pitch: 0.2 }); }
   };
   function camFrame(dt) {
     var mode = I.S.cam, now = I.now();
+    if (mode === 'foe') {                                              // 鎖定的那艘降旗、沉沒中 ⇒ 再看 3.5 秒，換離它最近的下一艘；還沒鎖 ⇒ 鎖
+      var ok = lock && !lock.sunk && C.ships().indexOf(lock) >= 0;
+      if (ok && C.isOut(lock)) { lockOut = lockOut || now; ok = now - lockOut < 3500; }
+      if (!ok) { var n = nextFoe(lock); if (n) { lock = null; lockOn(n); } }
+      if (I.BT.phase === 'fight' && now - userT > 25000) C.cam.orbit(dt * 5, 0);   // 沒在摸鏡頭 ⇒ 慢慢繞
+      return;
+    }
     if (mode !== 'auto' || now - userT < 25000) return;
     if (I.BT.phase === 'fight') C.cam.orbit(dt * 7, 0);               // 慢慢繞
     if (now < camHold || now < camT) return;

@@ -242,6 +242,8 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .bsi-mark.foe { padding: 4px 0; }                                  /* 游標：40_fx.js 的鯊魚嘴 */
 #bsi .bsi-mark.foe:hover .nm::after { content: ' 🦈'; }
 #bsi .bsi-mark.boss .nm { color: var(--gold); font-size: 13px; }
+#bsi .bsi-mark.lock .nm::before { content: '🎯 '; }
+#bsi .bsi-mark.lock .bar { box-shadow: 0 0 0 1px rgba(255, 209, 102, .7), 0 0 8px rgba(255, 209, 102, .5); }
 #bsi .bsi-mark.out { opacity: .55; }
 
 /* ── 飄字 ── */

@@ -18,7 +18,7 @@
           '<div class="res shd" id="bsi-shdBox" title="三叉戟碎片：深海科技的貨幣；累計的每一顆讓收入 +10%"><span class="ico">🔱</span><b id="bsi-shd">0</b></div>' +
           '<div class="mul" id="bsi-mul" title="收入倍率（成就 × 碎片 × 狂潮 × 增益 × 祝福）"></div>' +
         '</div>' +
-        '<div class="btns"><button id="bsi-spd" title="模擬速度"></button><button id="bsi-cam" title="鏡頭"></button><button id="bsi-mute" title="聲音"></button><button id="bsi-set" title="設定">⚙️</button></div>' +
+        '<div class="btns"><button id="bsi-spd" title="模擬速度"></button><button id="bsi-cam" title="鏡頭（C 換；鎖定敵艦時 Tab 換下一艘）"></button><button id="bsi-mute" title="聲音"></button><button id="bsi-set" title="設定">⚙️</button></div>' +
       '</div>' +
       '<div class="bsi-zone" id="bsi-zone">' +
         '<div class="zh"><span class="rico" id="bsi-rico"></span><div><div class="rname" id="bsi-rname"></div><div class="zn" id="bsi-zn"></div></div></div>' +
@@ -42,7 +42,7 @@
     I.fxInit(ROOT); I.lootInit(ROOT);
     tabsBuild(); abilBuild();
     $('bsi-spd').onclick = function () { var L = I.SPEEDS.filter(function (x) { return x <= I.speedMax(); }), i = (L.indexOf(I.S.speed) + 1) % L.length; I.S.speed = L[i]; C.speed(I.S.speed); topBtns(); };
-    $('bsi-cam').onclick = function () { var L = ['auto', 'flag', 'free']; I.S.cam = L[(L.indexOf(I.S.cam) + 1) % 3]; if (I.S.cam !== 'free') I.camStart(); topBtns(); };
+    $('bsi-cam').onclick = function () { var L = ['foe', 'auto', 'flag', 'free']; I.S.cam = L[(L.indexOf(I.S.cam) + 1) % L.length]; if (I.S.cam !== 'free') I.camStart(); topBtns(); };
     $('bsi-mute').onclick = function () { I.S.mute = !I.S.mute; C.sound({ mute: I.S.mute }); topBtns(); };
     $('bsi-set').onclick = settings;
     $('bsi-zprev').onclick = function () { if (I.S.zone > 1) { I.S.auto = false; I.goZone(I.S.zone - 1); } };
@@ -102,7 +102,7 @@
   // ── 上方 ──
   function topBtns() {
     txt('bsi-spd', '⏩ ×' + I.S.speed);
-    txt('bsi-cam', { auto: '🎥 自動', flag: '🎥 旗艦', free: '🎥 自由' }[I.S.cam]);
+    txt('bsi-cam', { foe: '🎯 鎖定', auto: '🎥 自動', flag: '🎥 旗艦', free: '🎥 自由' }[I.S.cam] || '🎥');
     txt('bsi-mute', I.S.mute ? '🔇' : '🔊');
   }
   I.topBtns = topBtns;
@@ -320,7 +320,7 @@
     row('畫質', [['low', '低'], ['mid', '中'], ['high', '高'], ['ultra', '全開']], S.gfx, function (v) { S.gfx = v; C.gfx(v); });
     row('聲音', [[false, '開'], [true, '靜音']], S.mute, function (v) { S.mute = v; C.sound({ mute: v }); topBtns(); });
     row('背景音樂', [[0, '關'], [0.2, '小'], [0.35, '中'], [0.6, '大']], S.bgm, function (v) { S.bgm = v; C.sound({ bgm: v }); });
-    row('鏡頭', [['auto', '自動運鏡'], ['flag', '看旗艦'], ['free', '自己轉']], S.cam, function (v) { S.cam = v; I.camStart(); topBtns(); });
+    row('鏡頭', [['foe', '鎖定敵艦'], ['auto', '自動運鏡'], ['flag', '看旗艦'], ['free', '自己轉']], S.cam, function (v) { S.cam = v; I.camStart(); topBtns(); });
     row('強化三選一', [[false, '我來選（' + I.BAL.perkAuto + ' 秒後自動）'], [true, '跳出來就自動選']], S.perkAuto, function (v) { S.perkAuto = v; });
     if (I.tlv('mate')) row('自動航海士', [[true, '開'], [false, '關']], S.mate, function (v) { S.mate = v; });
     M.appendChild(g);

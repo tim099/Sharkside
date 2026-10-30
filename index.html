@@ -487,7 +487,7 @@
   #err button:disabled{ opacity:.5; cursor:default; }
   #err label.chk{ display:inline-flex; align-items:center; gap:6px; margin:8px 0 0; font-size:13px; }
 </style>
-<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "5b8f2881dd5d27c0", "shell": "7d39cf2ed43a"}};</script></head>
+<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "5b8f2881dd5d27c0", "shell": "a795e7f186ee"}};</script></head>
 <body>
 <!-- 擬真沙盒（84_fleetlab.js；?lab=fleet，根目錄 fleetlab.html 轉過來）：body.flab 才顯示；看實景（body.flab3d）時俯視圖藏起來、底下的遊戲畫布露出來 -->
 <div id="flab">
@@ -46298,6 +46298,8 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .bsi-mark.foe { padding: 4px 0; }                                  /* 游標：40_fx.js 的鯊魚嘴 */
 #bsi .bsi-mark.foe:hover .nm::after { content: ' 🦈'; }
 #bsi .bsi-mark.boss .nm { color: var(--gold); font-size: 13px; }
+#bsi .bsi-mark.lock .nm::before { content: '🎯 '; }
+#bsi .bsi-mark.lock .bar { box-shadow: 0 0 0 1px rgba(255, 209, 102, .7), 0 0 8px rgba(255, 209, 102, .5); }
 #bsi .bsi-mark.out { opacity: .55; }
 
 /* ── 飄字 ── */
@@ -46611,6 +46613,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     '點敵艦哪裡就咬哪裡 —— 咬在水線上，會進水喔。',
     '敵艦中彈會漂出木桶、寶箱、瓶中信，點一下撿起來；放著不管只撿得到一半。',
     '打下新的海域可以挑一個強化：免費升級、增益、沉船寶藏……史詩卡還有祝福。',
+    '鏡頭鎖定一艘敵艦；咬哪艘就換看哪艘，Tab 換下一艘。',
     '打不過就退一個海域練一下，本鯊魚會自己回去挑戰的。',
     '轉生（潛回亞特蘭提斯）會重來，可是碎片的加成永遠留著。',
     '藍鯊號是本鯊魚的船，打過第 15 海域就送妳。'
@@ -46630,7 +46633,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
       doctrine: 'sink', shards: 0, shardsAll: 0, tech: {}, ach: {},
       buffs: [], bless: {}, perk: null,                            // 增益（{ id, left：還剩幾場 } 或 { id, until：到哪一刻 }）、祝福（這一輪疊了幾層）、還沒選的強化三選一
       st: { sunk: 0, cap: 0, boom: 0, bites: 0, battles: 0, wins: 0, losses: 0, pres: 0, playSec: 0, clean: 0, blitz: 0, under: 0, loot: 0, chest: 0, perks: 0 },
-      auto: true, speed: 1, gfx: 'mid', mute: false, bgm: 0.35, cam: 'auto', mate: true, perkAuto: false, seen: 0,
+      auto: true, speed: 1, gfx: 'mid', mute: false, bgm: 0.35, cam: 'foe', camV: 2, mate: true, perkAuto: false, seen: 0,
       rate: 0, lastSeen: 0, created: Date.now()
     };
   }
@@ -46647,6 +46650,8 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     var o = I.store.get(I.SAVE_KEY);
     if (o && o.v === 1) I.S = merge(fresh(), o);
     var S = I.S;
+    if (o && o.v === 1 && o.camV !== 2) S.cam = 'foe';                  // 鏡頭預設改成鎖定敵艦（2026-10-30 Tim）：舊存檔（存的沒有 camV）換一次，之後照玩家選的
+    //   ⛔ 看合併過的 S.camV：fresh() 已經是 2、舊存檔沒這一格 ⇒ 合併完還是 2，永遠不換
     S.fleet = S.fleet.filter(function (id) { return S.own[id] && I.cardOf(id); }).slice(0, S.slots);
     if (!S.fleet.length) S.fleet = ['flyingfish'];
     return S;
@@ -47320,11 +47325,12 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
       '<path d="' + t + '" fill="#fffdf2" stroke="#7d8a96" stroke-width="1.3" stroke-linejoin="round"/><\/svg>';
   }
   var JAW = null, WORDS = ['CHOMP!', 'CRUNCH!', '咬！', 'NOM!'];
-  I.chomp = function (x, y, big) {
+  /** anc：{ sh, off（咬的那一點 − 船心，世界座標）, dx, dy（點的那一點 − 那一點的投影）} ⇒ 演出跟著船走（鏡頭換過去看那艘的時候不會留在畫面原地）。 */
+  I.chomp = function (x, y, big, anc) {
     if (!FX) return;
     JAW = JAW || jawSvg();
     var e = I.h('div', 'bsi-chomp' + (big ? ' big' : ''), '<i class="fl"><\/i><i class="rg"><\/i><div class="jaw up">' + JAW + '<\/div><div class="jaw lo">' + JAW + '<\/div><b class="wd">' + (big ? 'MEGA CHOMP!' : I.pick(WORDS)) + '<\/b>');
-    e.style.left = x.toFixed(0) + 'px'; e.style.top = y.toFixed(0) + 'px';
+    e.style.left = x.toFixed(0) + 'px'; e.style.top = y.toFixed(0) + 'px'; e.bsiA = anc || null;
     FX.appendChild(e);
     while (FX.childElementCount > 12) FX.firstChild.remove();
     setTimeout(function () { e.remove(); }, 950);
@@ -47337,10 +47343,12 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   }
   var chompT = 0;
   I.on('bite', function (o) {
-    var x = o.cx, y = o.cy;
-    if (x === undefined && o.w) { var p = C.project(o.w[0], o.w[1], o.w[2]); if (p) { x = p.x; y = p.y; } }
+    var x = o.cx, y = o.cy, c = C.center(o.sh), p = o.w && C.project(o.w[0], o.w[1], o.w[2]), anc = null;
+    if (x === undefined && p) { x = p.x; y = p.y; }
+    if (c && p && x !== undefined) anc = { sh: o.sh, off: [o.w[0] - c[0], o.w[1] - c[1], o.w[2] - c[2]], dx: x - p.x, dy: y - p.y };
+    if (!o.big && (I.S.cam === 'foe' || I.S.cam === 'auto')) { lockOn(o.sh); camHold = I.now() + 8000; }   // 咬到哪艘，鏡頭就看哪艘（巨齒鯊一口氣咬全部 ⇒ 不跟，免得一直跳）
     if (x !== undefined) {
-      I.chomp(x, y, o.big);
+      I.chomp(x, y, o.big, anc);
       I.floatAt(x, y - (o.big ? 80 : 54), '🦈 ' + (o.g > 0 ? '+' + I.fmt(o.g) : o.n + ' 格'), 'bite' + (o.big ? ' big' : ''));
     }
     shake(o.big);
@@ -47420,6 +47428,10 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   var camT = 0, camHold = 0, userT = 0, camSeq = 0;
   I.fxFrame = function (dt) {
     if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); }                // 游標不動、船在動
+    if (FX) [].forEach.call(FX.children, function (e) {                   // 咬一口的演出跟著被咬的那艘
+      var a = e.bsiA, c = a && C.center(a.sh), p = c && C.project(c[0] + a.off[0], c[1] + a.off[1], c[2] + a.off[2]);
+      if (p) { e.style.left = (p.x + a.dx).toFixed(0) + 'px'; e.style.top = (p.y + a.dy).toFixed(0) + 'px'; }
+    });
     var ph = I.BT.phase;
     if (ph !== 'fight' && ph !== 'hold') { if (marks.size) I.marksClear(); return; }
     var live = new Set();
@@ -47432,6 +47444,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
       m.bar.style.width = (f * 100).toFixed(1) + '%';
       m.bar.className = f > 0.6 ? '' : f > 0.3 ? 'mid' : 'low';
       m.e.classList.toggle('out', out);
+      m.e.classList.toggle('lock', sh === lock && I.S.cam === 'foe');
       if (m.sub) {
         var t = out ? (sh.struck && !sh.sinkingFinal ? '🏳️ 降旗' : '⚓ 沉沒中') : '👥 ' + Math.round(st.crew * 100) + '%　💣 ' + Math.round(st.guns * 100) + '%';
         if (t !== m.last) { m.sub.textContent = t; m.last = t; }
@@ -47441,20 +47454,47 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     camFrame(dt);
   };
 
-  // ── 自動運鏡（設定：auto 自動／flag 跟著旗艦／free 自己轉）──
+  // ── 鏡頭（設定：foe 鎖定敵艦（預設）／auto 自動運鏡／flag 跟著旗艦／free 自己轉）──
   function alive(team) { return C.ships().filter(function (s) { return s.team === team && !C.isOut(s) && !s.sunk; }); }
+  var lock = null, lockOut = 0;
+  /** 鎖定那一艘：鏡頭換過去看它（核心的「看這艘」：跟著它、繞著它轉，滑過去不是切）；遠近照現在的（核心 camSee 會設回 75）。 */
+  function lockOn(sh) {
+    if (!sh || sh.sunk || sh === lock) return;
+    var d = C.cam.get().dist; lock = sh; lockOut = 0;
+    C.cam.see(sh); C.cam.set({ dist: I.clamp(d, 45, 150) });
+  }
+  /** 下一艘要鎖的：還在打的敵艦裡離 from（沒給 ⇒ 我方旗艦）最近的那艘。 */
+  function nextFoe(from) {
+    var L = alive('red'), me = alive('blue')[0], c0 = from && C.center(from) || me && C.center(me), best = L[0] || null, bd = Infinity;
+    if (c0) L.forEach(function (s) { var c = C.center(s), d = c ? Math.hypot(c[0] - c0[0], c[2] - c0[2]) : Infinity; if (d < bd) { bd = d; best = s; } });
+    return best;
+  }
+  /** Tab：鎖定下一艘敵艦（不在鎖定敵艦 ⇒ 換成鎖定敵艦）。 */
+  I.camNext = function () {
+    if (I.S.cam !== 'foe') { I.S.cam = 'foe'; I.topBtns(); }
+    var L = alive('red'); if (!L.length) return;
+    var n = L[(L.indexOf(lock) + 1) % L.length]; lock = null; lockOn(n);
+  };
   I.camUser = function () { userT = I.now(); };                       // 使用者自己拖了鏡頭 ⇒ 自動運鏡讓 25 秒
   I.camEvent = function (sh, ms) {                                    // 大事（擊沉、殉爆）⇒ 切過去看
     if (I.S.cam !== 'auto' || I.now() - userT < 25000 || !sh || sh.sunk) return;
     C.cam.see(sh); C.cam.set({ dist: 70 + Math.random() * 30, pitch: 0.16 + Math.random() * 0.12 }); camHold = I.now() + ms;
   };
   I.camStart = function () {
-    camT = I.now() + 6000; camHold = 0; camSeq = 0;
+    camT = I.now() + 6000; camHold = 0; camSeq = 0; lock = null; lockOut = 0;
     if (I.S.cam === 'free') return;
+    if (I.S.cam === 'foe') { lockOn(nextFoe(null)); C.cam.set({ dist: 75, pitch: 0.18 }); return; }
     var me = alive('blue')[0]; if (me) { C.cam.see(me); C.cam.set({ dist: 85, pitch: 0.2 }); }
   };
   function camFrame(dt) {
     var mode = I.S.cam, now = I.now();
+    if (mode === 'foe') {                                              // 鎖定的那艘降旗、沉沒中 ⇒ 再看 3.5 秒，換離它最近的下一艘；還沒鎖 ⇒ 鎖
+      var ok = lock && !lock.sunk && C.ships().indexOf(lock) >= 0;
+      if (ok && C.isOut(lock)) { lockOut = lockOut || now; ok = now - lockOut < 3500; }
+      if (!ok) { var n = nextFoe(lock); if (n) { lock = null; lockOn(n); } }
+      if (I.BT.phase === 'fight' && now - userT > 25000) C.cam.orbit(dt * 5, 0);   // 沒在摸鏡頭 ⇒ 慢慢繞
+      return;
+    }
     if (mode !== 'auto' || now - userT < 25000) return;
     if (I.BT.phase === 'fight') C.cam.orbit(dt * 7, 0);               // 慢慢繞
     if (now < camHold || now < camT) return;
@@ -47485,7 +47525,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
           '<div class="res shd" id="bsi-shdBox" title="三叉戟碎片：深海科技的貨幣；累計的每一顆讓收入 +10%"><span class="ico">🔱<\/span><b id="bsi-shd">0<\/b><\/div>' +
           '<div class="mul" id="bsi-mul" title="收入倍率（成就 × 碎片 × 狂潮 × 增益 × 祝福）"><\/div>' +
         '<\/div>' +
-        '<div class="btns"><button id="bsi-spd" title="模擬速度"><\/button><button id="bsi-cam" title="鏡頭"><\/button><button id="bsi-mute" title="聲音"><\/button><button id="bsi-set" title="設定">⚙️<\/button><\/div>' +
+        '<div class="btns"><button id="bsi-spd" title="模擬速度"><\/button><button id="bsi-cam" title="鏡頭（C 換；鎖定敵艦時 Tab 換下一艘）"><\/button><button id="bsi-mute" title="聲音"><\/button><button id="bsi-set" title="設定">⚙️<\/button><\/div>' +
       '<\/div>' +
       '<div class="bsi-zone" id="bsi-zone">' +
         '<div class="zh"><span class="rico" id="bsi-rico"><\/span><div><div class="rname" id="bsi-rname"><\/div><div class="zn" id="bsi-zn"><\/div><\/div><\/div>' +
@@ -47509,7 +47549,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     I.fxInit(ROOT); I.lootInit(ROOT);
     tabsBuild(); abilBuild();
     $('bsi-spd').onclick = function () { var L = I.SPEEDS.filter(function (x) { return x <= I.speedMax(); }), i = (L.indexOf(I.S.speed) + 1) % L.length; I.S.speed = L[i]; C.speed(I.S.speed); topBtns(); };
-    $('bsi-cam').onclick = function () { var L = ['auto', 'flag', 'free']; I.S.cam = L[(L.indexOf(I.S.cam) + 1) % 3]; if (I.S.cam !== 'free') I.camStart(); topBtns(); };
+    $('bsi-cam').onclick = function () { var L = ['foe', 'auto', 'flag', 'free']; I.S.cam = L[(L.indexOf(I.S.cam) + 1) % L.length]; if (I.S.cam !== 'free') I.camStart(); topBtns(); };
     $('bsi-mute').onclick = function () { I.S.mute = !I.S.mute; C.sound({ mute: I.S.mute }); topBtns(); };
     $('bsi-set').onclick = settings;
     $('bsi-zprev').onclick = function () { if (I.S.zone > 1) { I.S.auto = false; I.goZone(I.S.zone - 1); } };
@@ -47569,7 +47609,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   // ── 上方 ──
   function topBtns() {
     txt('bsi-spd', '⏩ ×' + I.S.speed);
-    txt('bsi-cam', { auto: '🎥 自動', flag: '🎥 旗艦', free: '🎥 自由' }[I.S.cam]);
+    txt('bsi-cam', { foe: '🎯 鎖定', auto: '🎥 自動', flag: '🎥 旗艦', free: '🎥 自由' }[I.S.cam] || '🎥');
     txt('bsi-mute', I.S.mute ? '🔇' : '🔊');
   }
   I.topBtns = topBtns;
@@ -47787,7 +47827,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     row('畫質', [['low', '低'], ['mid', '中'], ['high', '高'], ['ultra', '全開']], S.gfx, function (v) { S.gfx = v; C.gfx(v); });
     row('聲音', [[false, '開'], [true, '靜音']], S.mute, function (v) { S.mute = v; C.sound({ mute: v }); topBtns(); });
     row('背景音樂', [[0, '關'], [0.2, '小'], [0.35, '中'], [0.6, '大']], S.bgm, function (v) { S.bgm = v; C.sound({ bgm: v }); });
-    row('鏡頭', [['auto', '自動運鏡'], ['flag', '看旗艦'], ['free', '自己轉']], S.cam, function (v) { S.cam = v; I.camStart(); topBtns(); });
+    row('鏡頭', [['foe', '鎖定敵艦'], ['auto', '自動運鏡'], ['flag', '看旗艦'], ['free', '自己轉']], S.cam, function (v) { S.cam = v; I.camStart(); topBtns(); });
     row('強化三選一', [[false, '我來選（' + I.BAL.perkAuto + ' 秒後自動）'], [true, '跳出來就自動選']], S.perkAuto, function (v) { S.perkAuto = v; });
     if (I.tlv('mate')) row('自動航海士', [[true, '開'], [false, '關']], S.mate, function (v) { S.mate = v; });
     M.appendChild(g);
@@ -47848,6 +47888,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     if (k === ' ') { e.preventDefault(); var L = C.ships().filter(function (s) { return s.team === 'red' && !C.isOut(s); }); if (L.length) I.biteShip(I.pick(L)); return; }
     if (k === 'escape') { I.modalClose(); return; }
     if (k === 'c') { $('bsi-cam').click(); return; }
+    if (k === 'tab') { e.preventDefault(); I.camNext(); return; }       // 鎖定下一艘敵艦
   }, true);
   window.addEventListener('keyup', function (e) { if (!/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) e.stopImmediatePropagation(); }, true);
   // 拖鏡頭 ⇒ 自動運鏡讓開；第一次點 ⇒ 開聲音
