@@ -1,0 +1,25 @@
+{
+  "task": 1124,
+  "batch": "sea",
+  "cat": "sea",
+  "id": "pirate",
+  "kind": "icon",
+  "size": [
+    128,
+    128
+  ],
+  "transparent": true,
+  "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A charcoal pirate flag with a simple ivory skull on a short oak mast, one coral-red accent. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+  "refs": [
+    "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+    "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+    "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+  ],
+  "dep": null,
+  "preview": [
+    20,
+    32
+  ],
+  "path": "D:/GameDev/Sharkside/art/evidence/sea/source/sea-pirate.png",
+  "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-762f5053-c6bb-45f4-a472-da9693bbd116.png"
+}

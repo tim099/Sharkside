@@ -1,0 +1,16 @@
+{
+  "native_width": 512,
+  "top": [
+    0,
+    0
+  ],
+  "bottom": [
+    0,
+    48
+  ],
+  "canvas": [
+    512,
+    240
+  ],
+  "note": "Selected closer positioning after comparing offsets64/48/32/16. Small central tooth gaps remain; final full-screen closure criterion is pending gura animation review, not signed by art."
+}

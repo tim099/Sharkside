@@ -1,0 +1,14 @@
+{
+  "task": 1129,
+  "checked_by": "Sirius",
+  "date": "2026-10-30",
+  "comparison_only": true,
+  "comparison_profile": "https://hololive.hololivepro.com/en/talents/gawr-gura/",
+  "comparison_image": "https://hololive.hololivepro.com/wp-content/uploads/2024/05/Gawr-Gura_pr-img_01.png",
+  "method": "Official full-body image viewed in browser alongside the selected local portrait board. Official image was never downloaded or supplied as an image generation reference.",
+  "selected_traits": ["dusty purple hair", "burgundy tricorne with brass crescent clasp", "dark teal naval coat and copper lapels", "plum skirt, opaque leggings and brown boots", "handheld brass compass", "small fin ears and neck gills"],
+  "excluded_traits_absent": ["shark hood", "white hair with blue streak", "trident", "blue-white hoodie outfit", "exposed shark tail"],
+  "prompt_scan": "All actual concept/expression prompts checked: no Gawr/Gura/hololive/VTuber names. Actual reference images are material style icons or the user-approved original portrait.",
+  "approval": "Tim selected concept-b-v2 and supplied the canonical transparent portrait; Tim delegated naming to persona gura.",
+  "approved_sha256": "856803eb9f034606448eabbf5a7bbaa59e847f96c526f5655a6fb82b159ac990"
+}

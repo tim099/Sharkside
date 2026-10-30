@@ -1,0 +1,24 @@
+{
+  "task": 1127,
+  "batch": "fx",
+  "cat": "fx",
+  "id": "jaw-bottom",
+  "kind": "fx",
+  "size": [
+    512,
+    192
+  ],
+  "transparent": true,
+  "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE standalone transparent full-screen effect sprite, native512x192, complete silhouette with safe empty margins, no backdrop, no floor or cast shadow. Subject: ONLY the LOWER JAW BAR matching the attached upper jaw exactly in width, tooth style, skin and gum palette. Ivory triangular teeth point UP, coral gums and thick blue-gray skin along BOTTOM edge. No upper jaw, no face. Front-facing symmetrical mouth arc; interlocking teeth should close tightly with the upper-jaw reference. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+  "refs": [
+    "D:/GameDev/Sharkside/art/evidence/fx/source/fx-jaw-top.png",
+    "D:/GameDev/Sharkside/art/evidence/abil/source/abil-mega.png",
+    "D:/GameDev/Sharkside/art/evidence/style/source/app.png"
+  ],
+  "dep": "fx/jaw-top",
+  "preview": [
+    512
+  ],
+  "path": "D:/GameDev/Sharkside/art/evidence/fx/source/fx-jaw-bottom.png",
+  "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-4f341274-3df2-4bb9-8ec1-4d59bc57ff22.png"
+}

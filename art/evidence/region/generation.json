@@ -1,0 +1,1032 @@
+{
+  "task": 1123,
+  "author": "Sirius (Codex)",
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "region-1",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Caribbean shallows: A tropical palm islet, turquoise shallow water, warm ochre sand, a small cream-sailed Caribbean sloop. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        28,
+        40
+      ],
+      "path": "art\\evidence\\region\\source\\region-region-1.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-8902aa05-f271-4412-b451-bc11c09b7aa8.png",
+      "source_sha256": "050134d4c18ace2fab0ca3683f308c8c093805601ec204f2d6c94f82e37a00d9",
+      "white_master_sha256": "625e52767686d7ded0d2afd038afaeac749b1b05e0f4eadec936fc57afb48483",
+      "output": "img\\region\\region-1.png",
+      "output_sha256": "dd578a8823565ed3c1aea19ff0ec6c452ecebdac7e1e6fe431183c0f19c63c1c",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "banner-region-1",
+      "kind": "banner",
+      "size": [
+        960,
+        300
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Caribbean shallows landscape: A tropical palm islet, turquoise shallow water, warm ochre sand, a small cream-sailed Caribbean sloop. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/region/source/region-region-1.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "region/region-1",
+      "preview": [
+        375,
+        960
+      ],
+      "path": "art\\evidence\\region\\source\\region-banner-region-1.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-54fe5c33-2046-4fe6-bfc4-f1017e940dee.png",
+      "source_sha256": "5b415c6bb855b3a06c4632e1320b009c1d751fc3ba1edcb1310f8af5099ec1d3",
+      "white_master_sha256": "5b415c6bb855b3a06c4632e1320b009c1d751fc3ba1edcb1310f8af5099ec1d3",
+      "output": "img\\region\\banner-region-1.png",
+      "output_sha256": "60956d9daaa0442147a2e714332fc1f8230056c56ee69e885bd42df7a429d59e",
+      "actual_size": [
+        960,
+        300
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-region-1.png",
+          "sha256": "050134d4c18ace2fab0ca3683f308c8c093805601ec204f2d6c94f82e37a00d9"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "region-2",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Ancient sea route: White marble classical columns beside a cobalt strait, a red-sailed ancient oared galley. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        28,
+        40
+      ],
+      "path": "art\\evidence\\region\\source\\region-region-2.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-1efc6d41-1a35-45cc-9272-5f71e938256f.png",
+      "source_sha256": "bd78d608261a3f0b87f3e7744cecfcacd70e4334cd34b82ac611a65a9b91105c",
+      "white_master_sha256": "615a55733da70103cc969b7587b16ec62562db1bf1b0f198b63a402ee7c2305c",
+      "output": "img\\region\\region-2.png",
+      "output_sha256": "9e772da4bde53394c35142717424589ad580fbe5566f6fb917a65d67d3604447",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "banner-region-2",
+      "kind": "banner",
+      "size": [
+        960,
+        300
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Ancient sea route landscape: White marble classical columns beside a cobalt strait, a red-sailed ancient oared galley. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/region/source/region-region-2.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "region/region-2",
+      "preview": [
+        375,
+        960
+      ],
+      "path": "art\\evidence\\region\\source\\region-banner-region-2.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-0178efeb-2501-4da3-9e9e-400a9f9d9a35.png",
+      "source_sha256": "fb0e3d8c0e8fc5f7c646b3c240695827f4c72662cd6f5fee36389c5ca9afa869",
+      "white_master_sha256": "fb0e3d8c0e8fc5f7c646b3c240695827f4c72662cd6f5fee36389c5ca9afa869",
+      "output": "img\\region\\banner-region-2.png",
+      "output_sha256": "4e377d4c0d00a0e8f959d348a47e281c5a67f5438effeb9960a8b844729dadaf",
+      "actual_size": [
+        960,
+        300
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-region-2.png",
+          "sha256": "bd78d608261a3f0b87f3e7744cecfcacd70e4334cd34b82ac611a65a9b91105c"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "region-3",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Spanish Main: A warm sandstone coastal fortress above deep blue sea, a towering golden brown age-of-sail galleon with cream sails. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        28,
+        40
+      ],
+      "path": "art\\evidence\\region\\source\\region-region-3.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-b77a313f-a240-45cd-b4c7-e9a060653799.png",
+      "source_sha256": "fa0fdbd8bd092b1254ab1d836831641c05b1a90c19ffb10e66ae819a2c0d4f9c",
+      "white_master_sha256": "638033cfbb033c5646fe78773e293015db2da615c18aa5db798ca4edf380e408",
+      "output": "img\\region\\region-3.png",
+      "output_sha256": "0c034a7c34870d36774c4291dfd4be13aa6f714b433bf2ae1beba6fc7df7972b",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "banner-region-3",
+      "kind": "banner",
+      "size": [
+        960,
+        300
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Spanish Main landscape: A warm sandstone coastal fortress above deep blue sea, a towering golden brown age-of-sail galleon with cream sails. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/region/source/region-region-3.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "region/region-3",
+      "preview": [
+        375,
+        960
+      ],
+      "path": "art\\evidence\\region\\source\\region-banner-region-3.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-6c92dfec-d0ec-45df-ab3b-0722bb3ac654.png",
+      "source_sha256": "a43bd21bf903b79fe82e545da3bdf41818c2d78641fad9078ff7e1524e3941b3",
+      "white_master_sha256": "a43bd21bf903b79fe82e545da3bdf41818c2d78641fad9078ff7e1524e3941b3",
+      "output": "img\\region\\banner-region-3.png",
+      "output_sha256": "3a536d4d1f0a3e3d84bfe3cbaa12eded4c55ecd398fd484743adb13d5fc4b69c",
+      "actual_size": [
+        960,
+        300
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-region-3.png",
+          "sha256": "fa0fdbd8bd092b1254ab1d836831641c05b1a90c19ffb10e66ae819a2c0d4f9c"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "region-4",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of North Sea storm: Jagged dark slate cliffs, green-black storm waves, lightning under heavy clouds, a sturdy dark-sailed merchant vessel. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        28,
+        40
+      ],
+      "path": "art\\evidence\\region\\source\\region-region-4.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-a4f61ea7-2bc5-4e10-b235-d35ec2eb0dda.png",
+      "source_sha256": "b9d4a978443b2a4604dbd11f5820b90bc6830574e0bb959d38328961926087cc",
+      "white_master_sha256": "bbb60216654c9a2c6d37a3ce68259439a56acb4ba46a0eb5e997c5a4f9d65b22",
+      "output": "img\\region\\region-4.png",
+      "output_sha256": "b2fee5aab13a842e1f49a811274ff21b32341afa3b14f1e0b7f6b5f214779788",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "banner-region-4",
+      "kind": "banner",
+      "size": [
+        960,
+        300
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: North Sea storm landscape: Jagged dark slate cliffs, green-black storm waves, lightning under heavy clouds, a sturdy dark-sailed merchant vessel. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/region/source/region-region-4.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "region/region-4",
+      "preview": [
+        375,
+        960
+      ],
+      "path": "art\\evidence\\region\\source\\region-banner-region-4.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-2bbfd74f-7c98-49f3-8a1f-c0aa1f76da70.png",
+      "source_sha256": "0a1fc29356cf3daa5f4aa220b0fd6838faf063962e63eeb6874caf024950dcf2",
+      "white_master_sha256": "0a1fc29356cf3daa5f4aa220b0fd6838faf063962e63eeb6874caf024950dcf2",
+      "output": "img\\region\\banner-region-4.png",
+      "output_sha256": "9f0ce704ddc9e80ed6b917bbc37efd110e0ea7b0d2f654b4fa944ba76d5773d8",
+      "actual_size": [
+        960,
+        300
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-region-4.png",
+          "sha256": "b9d4a978443b2a4604dbd11f5820b90bc6830574e0bb959d38328961926087cc"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "region-5",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Ghost waters: Violet fog and black water, an eerie original black-sailed wooden ship with small green lanterns, distant crooked wreck masts. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        28,
+        40
+      ],
+      "path": "art\\evidence\\region\\source\\region-region-5.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-8ddfa0c8-1b0b-4092-9d55-b585044a85ff.png",
+      "source_sha256": "be338db8f12ab443090dab448ba5ea13d7b4f3166d6c3f38b6107ab228aafad8",
+      "white_master_sha256": "111efce81b9ba481666a46dc9bfcde11f0b02f2f372b1807a41b9b264f9b1b76",
+      "output": "img\\region\\region-5.png",
+      "output_sha256": "e7de9774fa999bc70d15fcae61633608b8d5b1066356306112e98f05dc07a524",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "banner-region-5",
+      "kind": "banner",
+      "size": [
+        960,
+        300
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Ghost waters landscape: Violet fog and black water, an eerie original black-sailed wooden ship with small green lanterns, distant crooked wreck masts. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/region/source/region-region-5.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "region/region-5",
+      "preview": [
+        375,
+        960
+      ],
+      "path": "art\\evidence\\region\\source\\region-banner-region-5.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-bf59e7b3-07d1-4344-89c0-f37791dd215a.png",
+      "source_sha256": "0f95a5a33c226c103cf0fc30c6846d282768517231e9955d3a4979d4fdaffc02",
+      "white_master_sha256": "0f95a5a33c226c103cf0fc30c6846d282768517231e9955d3a4979d4fdaffc02",
+      "output": "img\\region\\banner-region-5.png",
+      "output_sha256": "82efc17d6bbcd7c377b21614dc3d532d2cfb7969ebbf2dddabf4424e5f3d3b87",
+      "actual_size": [
+        960,
+        300
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-region-5.png",
+          "sha256": "be338db8f12ab443090dab448ba5ea13d7b4f3166d6c3f38b6107ab228aafad8"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "region-6",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Great sailing ships: A mighty original wooden three-decker ship with several rows of golden gunports and broad ivory sails on a bright open sea. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        28,
+        40
+      ],
+      "path": "art\\evidence\\region\\source\\region-region-6.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-c9a684a5-bea0-43cd-b20f-a6dff21b4062.png",
+      "source_sha256": "c6e461322c24992e56a2246faaf80699b1006273dd31d4b38a29dd7488e6fc2f",
+      "white_master_sha256": "2bb8a00346520441a050ddb255f52a7d45ee1aded8e8b437fb43f46af3ed0d2d",
+      "output": "img\\region\\region-6.png",
+      "output_sha256": "e84ec02f5d3ff2c9eb59787a92a1419aea080e08149675d470d7e66a3b1bae3b",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "banner-region-6",
+      "kind": "banner",
+      "size": [
+        960,
+        300
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Great sailing ships landscape: A mighty original wooden three-decker ship with several rows of golden gunports and broad ivory sails on a bright open sea. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/region/source/region-region-6.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "region/region-6",
+      "preview": [
+        375,
+        960
+      ],
+      "path": "art\\evidence\\region\\source\\region-banner-region-6.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-efde75a9-b1f7-440f-86c4-b6b68af730bc.png",
+      "source_sha256": "3f58a08979cb1c7fe387ce91824f10ade4c2cb04d2317ac6f45cfb73a601e470",
+      "white_master_sha256": "3f58a08979cb1c7fe387ce91824f10ade4c2cb04d2317ac6f45cfb73a601e470",
+      "output": "img\\region\\banner-region-6.png",
+      "output_sha256": "e781d85f8e4252650436ef42373e3283e836228f1c586a2bfa7c80379f3ab48b",
+      "actual_size": [
+        960,
+        300
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-region-6.png",
+          "sha256": "c6e461322c24992e56a2246faaf80699b1006273dd31d4b38a29dd7488e6fc2f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "region-7",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Ironclad era: A compact low ironclad turret ship and an angular armored steamship facing each other in smoky blue-gray harbor water, dark iron and copper. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        28,
+        40
+      ],
+      "path": "art\\evidence\\region\\source\\region-region-7.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-914ad489-e2be-4c5c-ae7e-43d6125ed396.png",
+      "source_sha256": "f4f0ba490614b4e363e98e8c291fef6bbf90b750a43e2c502578cb2197e21722",
+      "white_master_sha256": "dc74a67d077fafbe4659ceedf1a301e78645bcc6c97e49b4b05f59dd3555a5e5",
+      "output": "img\\region\\region-7.png",
+      "output_sha256": "d515171370c26fe7db590359b8db347b558210ce709af58f8a293d10af3ebeda",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "banner-region-7",
+      "kind": "banner",
+      "size": [
+        960,
+        300
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Ironclad era landscape: A compact low ironclad turret ship and an angular armored steamship facing each other in smoky blue-gray harbor water, dark iron and copper. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/region/source/region-region-7.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "region/region-7",
+      "preview": [
+        375,
+        960
+      ],
+      "path": "art\\evidence\\region\\source\\region-banner-region-7.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-67dbd298-f7bd-4e3e-abe6-052bbf5b848a.png",
+      "source_sha256": "681191a99f9ac8c029dccb5bd800ca36891b9a583c68ec5121cd94b8e3409587",
+      "white_master_sha256": "681191a99f9ac8c029dccb5bd800ca36891b9a583c68ec5121cd94b8e3409587",
+      "output": "img\\region\\banner-region-7.png",
+      "output_sha256": "ec733806a3cff0333268742d5999f6f9aa50904fa27e5db41617c94833bbd876",
+      "actual_size": [
+        960,
+        300
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-region-7.png",
+          "sha256": "f4f0ba490614b4e363e98e8c291fef6bbf90b750a43e2c502578cb2197e21722"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "region-8",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Far East fleet: A majestic original dark steel late19th-century warship, red ochre rising-sun sky without flag emblems, misty mountain island silhouettes. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        28,
+        40
+      ],
+      "path": "art\\evidence\\region\\source\\region-region-8.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-43341296-e0ba-44df-adad-f4ad46c08b91.png",
+      "source_sha256": "62b041489fbacd496179aff2e94b7154e25a9e40265fc559d800e47016f523f3",
+      "white_master_sha256": "cf58fa10270aec3d02cde93a1077cdadbb696ce171f4674290123fa044e0c6b5",
+      "output": "img\\region\\region-8.png",
+      "output_sha256": "efd88f2d3abe484f22910218b0e27cb0872774c30a7228b5ea7de788a16ccdf9",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "banner-region-8",
+      "kind": "banner",
+      "size": [
+        960,
+        300
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Far East fleet landscape: A majestic original dark steel late19th-century warship, red ochre rising-sun sky without flag emblems, misty mountain island silhouettes. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/region/source/region-region-8.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "region/region-8",
+      "preview": [
+        375,
+        960
+      ],
+      "path": "art\\evidence\\region\\source\\region-banner-region-8.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-79f2397e-edb6-4824-9179-f6ae8cbdc0eb.png",
+      "source_sha256": "303b699d147c650f0c919f48987359a279d5bad81e02117fac976a82f7ec04f9",
+      "white_master_sha256": "303b699d147c650f0c919f48987359a279d5bad81e02117fac976a82f7ec04f9",
+      "output": "img\\region\\banner-region-8.png",
+      "output_sha256": "14f87b3149c85d37c29f06eed5764a119f07d5190c3c0aa68a6608bbed80903e",
+      "actual_size": [
+        960,
+        300
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-region-8.png",
+          "sha256": "62b041489fbacd496179aff2e94b7154e25a9e40265fc559d800e47016f523f3"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "region-9",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Great maelstrom: A CLEAR HUGE SPIRAL WHIRLPOOL in icy turquoise water, an original powerful three-masted ship at its edge, distant jagged Nordic cliffs. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        28,
+        40
+      ],
+      "path": "art\\evidence\\region\\source\\region-region-9.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-a30ab028-051a-4e5b-8a47-259c464b0c2a.png",
+      "source_sha256": "cf6b0289c356733bd00bc71e9c1af8bf529ca5ee6f9e3325cf2d55d8a8d4c723",
+      "white_master_sha256": "c2f05375a07b1e713799ceca9f2e051e85e947f52e2e6a2ba081b24a9b2c9d9d",
+      "output": "img\\region\\region-9.png",
+      "output_sha256": "fca72330d889b264788e50d1e9f04a51b3b328c1cef703494ab1bfb63cd88666",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "banner-region-9",
+      "kind": "banner",
+      "size": [
+        960,
+        300
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Great maelstrom landscape: A CLEAR HUGE SPIRAL WHIRLPOOL in icy turquoise water, an original powerful three-masted ship at its edge, distant jagged Nordic cliffs. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/region/source/region-region-9.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "region/region-9",
+      "preview": [
+        375,
+        960
+      ],
+      "path": "art\\evidence\\region\\source\\region-banner-region-9.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-ae784d46-0adc-4417-ba5c-9e87e51976e1.png",
+      "source_sha256": "4b81e4b34003136f9c85cb8a418ac77270dcc1c10b40d94ebdae30ec75d324c2",
+      "white_master_sha256": "4b81e4b34003136f9c85cb8a418ac77270dcc1c10b40d94ebdae30ec75d324c2",
+      "output": "img\\region\\banner-region-9.png",
+      "output_sha256": "bb3f0163f7bc1de74939a6233763e6be040a9f02d70e8efd96a7bca4e10faf46",
+      "actual_size": [
+        960,
+        300
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-region-9.png",
+          "sha256": "cf6b0289c356733bd00bc71e9c1af8bf529ca5ee6f9e3325cf2d55d8a8d4c723"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "abyss",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of The abyss: An immense dark deep-ocean chasm framed by luminous violet crystals and a tiny blue-gray shark silhouette descending toward ancient sunken ruins. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        28,
+        40
+      ],
+      "path": "art\\evidence\\region\\source\\region-abyss.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-cf3b9fc5-20bf-4d69-8a9f-676eb33fa892.png",
+      "source_sha256": "6b61a82346c6dcc98a7770bf181c282a4a2291e46f6fc5bc48017843aab7270d",
+      "white_master_sha256": "fd80c8e408a63241081d368419ccd39461a04812ce4c3c242e66dcd7c42f1167",
+      "output": "img\\region\\abyss.png",
+      "output_sha256": "ff5d275d488c69546004049263e077dfe6385736f2105713638340034fb43c21",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1123,
+      "batch": "region",
+      "cat": "region",
+      "id": "banner-abyss",
+      "kind": "banner",
+      "size": [
+        960,
+        300
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: The abyss landscape: An immense dark deep-ocean chasm framed by luminous violet crystals and a tiny blue-gray shark silhouette descending toward ancient sunken ruins. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/region/source/region-abyss.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "region/abyss",
+      "preview": [
+        375,
+        960
+      ],
+      "path": "art\\evidence\\region\\source\\region-banner-abyss.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-21ca3d36-1751-453d-98e3-585b14d454a6.png",
+      "source_sha256": "25018f50762b3e3a7a6febeb026711f393d6f043d6a134e62b61ee751f289a7c",
+      "white_master_sha256": "25018f50762b3e3a7a6febeb026711f393d6f043d6a134e62b61ee751f289a7c",
+      "output": "img\\region\\banner-abyss.png",
+      "output_sha256": "f9dc0437d89a1f66ee6a9542fe8ee171eab78ef4f58a1424e00f05bc1d667929",
+      "actual_size": [
+        960,
+        300
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-abyss.png",
+          "sha256": "6b61a82346c6dcc98a7770bf181c282a4a2291e46f6fc5bc48017843aab7270d"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    }
+  ],
+  "processing": "Icons binary alpha and nearest-neighbour contain; transparent frame/effect contain with4px margin; opaque scenes center-cropped without distortion. All creative artwork comes from image_gen.",
+  "pending": [
+    "gura desktop/375px integration",
+    "missing-image fallback after integration"
+  ]
+}

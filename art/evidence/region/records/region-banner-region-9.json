@@ -1,0 +1,25 @@
+{
+  "task": 1123,
+  "batch": "region",
+  "cat": "region",
+  "id": "banner-region-9",
+  "kind": "banner",
+  "size": [
+    960,
+    300
+  ],
+  "transparent": false,
+  "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Great maelstrom landscape: A CLEAR HUGE SPIRAL WHIRLPOOL in icy turquoise water, an original powerful three-masted ship at its edge, distant jagged Nordic cliffs. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+  "refs": [
+    "D:/GameDev/Sharkside/art/evidence/region/source/region-region-9.png",
+    "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+    "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+  ],
+  "dep": "region/region-9",
+  "preview": [
+    375,
+    960
+  ],
+  "path": "D:/GameDev/Sharkside/art/evidence/region/source/region-banner-region-9.png",
+  "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-ae784d46-0adc-4417-ba5c-9e87e51976e1.png"
+}

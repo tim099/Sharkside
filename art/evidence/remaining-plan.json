@@ -1,0 +1,2401 @@
+[
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "perk",
+    "id": "frame-common",
+    "kind": "frame",
+    "size": [
+      256,
+      352
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE hollow ornamental vertical card BORDER only, native256x352 portrait rectangle, all four edges visible, very thin12px border, generous transparent central opening for UI text. Center80percent MUST BE FULLY TRANSPARENT, outside frame also transparent. No card fill, no background panel, no text, no icon inside opening. Subject: Plain weathered OAK wood frame with small bronze corner braces, simple squared corners. Low rarity, restrained brown/copper palette, NO crown or gemstones. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      32,
+      48
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "perk",
+    "id": "frame-rare",
+    "kind": "frame",
+    "size": [
+      256,
+      352
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE hollow ornamental vertical card BORDER only, native256x352 portrait rectangle, all four edges visible, very thin12px border, generous transparent central opening for UI text. Center80percent MUST BE FULLY TRANSPARENT, outside frame also transparent. No card fill, no background panel, no text, no icon inside opening. Subject: Refined BLUE-GRAY STEEL frame with turquoise crystal corners and small pearl inlays; same basic rectangular proportions as reference common frame, richer stepped corners. Medium rarity, cool blue. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "perk/frame-common",
+    "preview": [
+      32,
+      48
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "perk",
+    "id": "frame-epic",
+    "kind": "frame",
+    "size": [
+      256,
+      352
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE hollow ornamental vertical card BORDER only, native256x352 portrait rectangle, all four edges visible, very thin12px border, generous transparent central opening for UI text. Center80percent MUST BE FULLY TRANSPARENT, outside frame also transparent. No card fill, no background panel, no text, no icon inside opening. Subject: Ornate GOLD frame with vivid PURPLE CRYSTAL corners and an original three-pointed crown crest at top center. Same rectangular opening as reference common frame. Highest rarity, broad gold and violet silhouette. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "perk/frame-common",
+    "preview": [
+      32,
+      48
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "buff",
+    "id": "fury",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A bronze cannon muzzle surrounded by a compact scarlet-orange flame burst, fierce gunnery energy. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "buff",
+    "id": "oak",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A stout curved dark oak timber plate with iron bands and emerald-green edge highlights, enchanted strong wood. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "buff",
+    "id": "quick",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A compact silver hourglass with amber sand crossed by a short cannon rammer, pale blue speed streak. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "buff",
+    "id": "gold",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A large gold coin rising from one thick golden ocean wave, simple abundant-income silhouette. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "buff",
+    "id": "skull",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: An ivory skull hovering over a short charcoal black pirate pennant, violet-blue shadows, fear aura. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "buff",
+    "id": "wind",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A broad cream sail billowing strongly to the right with three thick cyan wind ribbons, no ship. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "buff",
+    "id": "blood",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One ivory shark tooth with a single large coral-red droplet beside it, compact blood-scent emblem, no gore. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "buff",
+    "id": "compass",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One squat brass treasure compass with a bright turquoise face and a single gold diamond spark above, no direction letters. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "bless",
+    "id": "atk",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A short golden trident tip wrapped in a compact violet crescent wave, blessing of naval attack. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      32,
+      48
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "bless",
+    "id": "def",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A broad heart-shaped coral cluster with pink branches and an emerald-green crystal at center, protective sea blessing. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      32,
+      48
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "bless",
+    "id": "inc",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One open pearlescent seashell with a golden pearl and three warm gold curved ripples, sea-song income blessing. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      32,
+      48
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "perk",
+    "id": "loot",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A compact shipwreck treasure chest spilling gold coins and a little teal seaweed, warm gold/oak dominant. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      32,
+      48
+    ]
+  },
+  {
+    "task": 1122,
+    "batch": "perk",
+    "cat": "perk",
+    "id": "cd",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One brass hourglass wrapped by a thick turquoise circular rewind arrow, blank face, cooldown reset. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      32,
+      48
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "region-1",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Caribbean shallows: A tropical palm islet, turquoise shallow water, warm ochre sand, a small cream-sailed Caribbean sloop. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      28,
+      40
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "banner-region-1",
+    "kind": "banner",
+    "size": [
+      960,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Caribbean shallows landscape: A tropical palm islet, turquoise shallow water, warm ochre sand, a small cream-sailed Caribbean sloop. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "region/region-1",
+    "preview": [
+      375,
+      960
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "region-2",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Ancient sea route: White marble classical columns beside a cobalt strait, a red-sailed ancient oared galley. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      28,
+      40
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "banner-region-2",
+    "kind": "banner",
+    "size": [
+      960,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Ancient sea route landscape: White marble classical columns beside a cobalt strait, a red-sailed ancient oared galley. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "region/region-2",
+    "preview": [
+      375,
+      960
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "region-3",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Spanish Main: A warm sandstone coastal fortress above deep blue sea, a towering golden brown age-of-sail galleon with cream sails. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      28,
+      40
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "banner-region-3",
+    "kind": "banner",
+    "size": [
+      960,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Spanish Main landscape: A warm sandstone coastal fortress above deep blue sea, a towering golden brown age-of-sail galleon with cream sails. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "region/region-3",
+    "preview": [
+      375,
+      960
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "region-4",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of North Sea storm: Jagged dark slate cliffs, green-black storm waves, lightning under heavy clouds, a sturdy dark-sailed merchant vessel. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      28,
+      40
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "banner-region-4",
+    "kind": "banner",
+    "size": [
+      960,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: North Sea storm landscape: Jagged dark slate cliffs, green-black storm waves, lightning under heavy clouds, a sturdy dark-sailed merchant vessel. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "region/region-4",
+    "preview": [
+      375,
+      960
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "region-5",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Ghost waters: Violet fog and black water, an eerie original black-sailed wooden ship with small green lanterns, distant crooked wreck masts. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      28,
+      40
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "banner-region-5",
+    "kind": "banner",
+    "size": [
+      960,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Ghost waters landscape: Violet fog and black water, an eerie original black-sailed wooden ship with small green lanterns, distant crooked wreck masts. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "region/region-5",
+    "preview": [
+      375,
+      960
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "region-6",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Great sailing ships: A mighty original wooden three-decker ship with several rows of golden gunports and broad ivory sails on a bright open sea. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      28,
+      40
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "banner-region-6",
+    "kind": "banner",
+    "size": [
+      960,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Great sailing ships landscape: A mighty original wooden three-decker ship with several rows of golden gunports and broad ivory sails on a bright open sea. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "region/region-6",
+    "preview": [
+      375,
+      960
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "region-7",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Ironclad era: A compact low ironclad turret ship and an angular armored steamship facing each other in smoky blue-gray harbor water, dark iron and copper. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      28,
+      40
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "banner-region-7",
+    "kind": "banner",
+    "size": [
+      960,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Ironclad era landscape: A compact low ironclad turret ship and an angular armored steamship facing each other in smoky blue-gray harbor water, dark iron and copper. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "region/region-7",
+    "preview": [
+      375,
+      960
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "region-8",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Far East fleet: A majestic original dark steel late19th-century warship, red ochre rising-sun sky without flag emblems, misty mountain island silhouettes. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      28,
+      40
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "banner-region-8",
+    "kind": "banner",
+    "size": [
+      960,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Far East fleet landscape: A majestic original dark steel late19th-century warship, red ochre rising-sun sky without flag emblems, misty mountain island silhouettes. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "region/region-8",
+    "preview": [
+      375,
+      960
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "region-9",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of Great maelstrom: A CLEAR HUGE SPIRAL WHIRLPOOL in icy turquoise water, an original powerful three-masted ship at its edge, distant jagged Nordic cliffs. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      28,
+      40
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "banner-region-9",
+    "kind": "banner",
+    "size": [
+      960,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: Great maelstrom landscape: A CLEAR HUGE SPIRAL WHIRLPOOL in icy turquoise water, an original powerful three-masted ship at its edge, distant jagged Nordic cliffs. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "region/region-9",
+    "preview": [
+      375,
+      960
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "abyss",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact emblem of The abyss: An immense dark deep-ocean chasm framed by luminous violet crystals and a tiny blue-gray shark silhouette descending toward ancient sunken ruins. Simplify to one dominant recognizable motif, no full landscape panorama. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      28,
+      40
+    ]
+  },
+  {
+    "task": 1123,
+    "batch": "region",
+    "cat": "region",
+    "id": "banner-abyss",
+    "kind": "banner",
+    "size": [
+      960,
+      300
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE ultra-wide3.2:1 naval landscape banner, native960x300, all key land/ship features inside central60percent horizontally for mobile cropping. Opaque pixel-art scenery, distinct readable silhouette and atmospheric depth. Subject: The abyss landscape: An immense dark deep-ocean chasm framed by luminous violet crystals and a tiny blue-gray shark silhouette descending toward ancient sunken ruins. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "region/abyss",
+    "preview": [
+      375,
+      960
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "sea",
+    "id": "calm",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A single smooth turquoise wave under a small warm gold sun, calm sea. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "sea",
+    "id": "wind",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: Three thick pale cyan wind ribbons bending one cream sail corner, favorable wind. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "sea",
+    "id": "shark",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: Three original blue-gray shark fins emerging from a compact turquoise wave. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "sea",
+    "id": "wreck",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A broken oak ship's bow with a snapped mast and one turquoise wave, shipwreck waters. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "sea",
+    "id": "pirate",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A charcoal pirate flag with a simple ivory skull on a short oak mast, one coral-red accent. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "sea",
+    "id": "powder",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A squat dark gunpowder keg with a short glowing orange fuse and a tiny gold spark. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "sea",
+    "id": "fog",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A small cream-sailed boat half hidden behind TWO broad pale gray-blue fog bands, compact simple silhouette. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "sea",
+    "id": "tide",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A gold coin emerging from a strong curved turquoise wave, golden tide. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "sea",
+    "id": "morale",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A small pale surrender flag drooping on a bent dark mast, blue-gray sad calm aura, no face or letters. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "doctrine",
+    "id": "sink",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A short wooden ship bow tilted downward into a dark cyan wave with a broad blue downward arrow. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "doctrine",
+    "id": "steady",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A simple brass balance scale with two equally level pans, one navy-blue keel shape under it, stability. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "doctrine",
+    "id": "mast",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One sturdy broad iron boarding axe crossing a snapped oak mast with a small torn cream sail scrap. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "doctrine",
+    "id": "kill",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: Two short age-of-sail steel cutlasses crossing with bright coral-red cloth knots, no gore. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1124,
+    "batch": "sea",
+    "cat": "doctrine",
+    "id": "gamble",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE ivory die showing dark round pips, beside a small brass gunpowder spark, bold simple gambler emblem. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      20,
+      32
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "sink1",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A broken wooden ship bow sinking beneath a turquoise wave. Tier design: plain bronze ring with one small turquoise gem. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "sink25",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A broken wooden ship bow sinking beneath a turquoise wave. Tier design: silver ring with blue crystal corner studs. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/sink1",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "sink250",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A broken wooden ship bow sinking beneath a turquoise wave. Tier design: gold laurel ring with a coral gemstone. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/sink1",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "sink2500",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A broken wooden ship bow sinking beneath a turquoise wave. Tier design: dark navy-gold ornate ring with a large violet crystal crown. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/sink1",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "cap1",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A pale surrender pennant above a captured miniature wooden ship. Tier design: plain bronze ring with one small turquoise gem. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "cap50",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A pale surrender pennant above a captured miniature wooden ship. Tier design: silver ring with blue crystal corner studs. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/cap1",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "boom1",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A gunpowder barrel within a compact orange starburst. Tier design: plain bronze ring with one small turquoise gem. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "boom25",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A gunpowder barrel within a compact orange starburst. Tier design: silver ring with blue crystal corner studs. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/boom1",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "bite100",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A single huge ivory shark tooth. Tier design: plain bronze ring with one small turquoise gem. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "bite2000",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A single huge ivory shark tooth. Tier design: silver ring with blue crystal corner studs. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/bite100",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "blk1e6",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: Three solid golden timber cubes stacked compactly. Tier design: plain bronze ring with one small turquoise gem. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "blk1e9",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: Three solid golden timber cubes stacked compactly. Tier design: silver ring with blue crystal corner studs. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/blk1e6",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "blk1e12",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: Three solid golden timber cubes stacked compactly. Tier design: gold laurel ring with a coral gemstone. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/blk1e6",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "blk1e18",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: Three solid golden timber cubes stacked compactly. Tier design: dark navy-gold ornate ring with a large violet crystal crown. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/blk1e6",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "z10",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A rolled parchment sea chart with a tiny compass and turquoise wave. Tier design: plain bronze ring with one small turquoise gem. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "z25",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A rolled parchment sea chart with a tiny compass and turquoise wave. Tier design: silver ring with blue crystal corner studs. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/z10",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "z50",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A rolled parchment sea chart with a tiny compass and turquoise wave. Tier design: gold laurel ring with a coral gemstone. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/z10",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "z90",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A rolled parchment sea chart with a tiny compass and turquoise wave. Tier design: dark navy-gold ornate ring with a large violet crystal crown. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/z10",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "z120",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A rolled parchment sea chart with a tiny compass and turquoise wave. Tier design: obsidian-violet luminous ring with golden laurel and a teal crystal crown. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/z10",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "fleet3",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A compact formation of cream-sailed wooden ships. Tier design: plain bronze ring with one small turquoise gem. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "fleet5",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A compact formation of cream-sailed wooden ships. Tier design: silver ring with blue crystal corner studs. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/fleet3",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "pres1",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A pearlescent sea shell around a small violet crystal. Tier design: plain bronze ring with one small turquoise gem. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "pres5",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A pearlescent sea shell around a small violet crystal. Tier design: silver ring with blue crystal corner studs. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/pres1",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "gold1",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A tiny golden treasure galleon above three gold coins. Tier design: plain bronze ring with one small turquoise gem. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "gold10",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact round achievement MEDAL. Central motif: A tiny golden treasure galleon above three gold coins. Tier design: silver ring with blue crystal corner studs. Keep the same core motif and silhouette as lower-tier reference; make tier recognizable from material/ornament alone, never text or digits. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "ach/gold1",
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "pinas",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact achievement MEDAL: A beautiful compact blue-gray shark crest in front of a small Dutch-style cream-sailed merchant ship, turquoise silver medal ring. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "trident",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact achievement MEDAL: An original majestic three-masted sailing ship with a golden three-pronged crest, violet gold medal ring. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "clean",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact achievement MEDAL: An intact shiny oak ship-hull plate with three small ivory diamond sparkles, silver and emerald medal ring. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "blitz",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact achievement MEDAL: A golden lightning bolt crossing a tiny cream-sailed ship, sharp silver medal ring. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "underdog",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact achievement MEDAL: A tiny brave blue-gray shark facing a much larger dark ship silhouette, bronze medal ring. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "loot50",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact achievement MEDAL: A stout floating oak barrel with a turquoise wave, bronze medal ring. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "chest10",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact achievement MEDAL: An open gold-filled treasure chest, warm gold medal ring. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "perk30",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact achievement MEDAL: Three small overlapping blank navy-gold enhancement cards with a purple crystal, ornate gold medal ring. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "combo20",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact achievement MEDAL: Three ivory shark teeth sweeping through a scarlet flame arc, gold coral medal ring. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "ach",
+    "id": "quest10",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE compact achievement MEDAL: A rolled bounty parchment with a plain red seal and simple ship silhouette, silver gold medal ring. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      40
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "quest",
+    "id": "sink",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A broken dark wooden ship bow sinking in one turquoise wave. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      24,
+      32
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "quest",
+    "id": "cap",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A simple cream surrender flag held above a short golden ship rail. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      24,
+      32
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "quest",
+    "id": "bite",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One bold ivory shark tooth with a short blue-gray root. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      24,
+      32
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "quest",
+    "id": "loot",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A small oak barrel and one gold coin within a turquoise wave. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      24,
+      32
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "quest",
+    "id": "boom",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A round dark cannonball inside a compact orange explosion star. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      24,
+      32
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "quest",
+    "id": "zone",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A rolled parchment map with one gold compass point, no lettering. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      24,
+      32
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "quest",
+    "id": "gold",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: A tiny golden treasure ship with one clear cream sail. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      24,
+      32
+    ]
+  },
+  {
+    "task": 1125,
+    "batch": "ach",
+    "cat": "quest",
+    "id": "combo",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: Three ivory shark teeth arranged as a tight diagonal streak with coral-red speed lines. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      24,
+      32
+    ]
+  },
+  {
+    "task": 1126,
+    "batch": "loot",
+    "cat": "loot",
+    "id": "barrel",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One sealed round golden oak floating barrel with dark iron hoops, slightly tilted, no water background. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      36,
+      48
+    ]
+  },
+  {
+    "task": 1126,
+    "batch": "loot",
+    "cat": "loot",
+    "id": "chest",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One sturdy golden-brown treasure chest with a half-open lid revealing large gold coins and a red jewel. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      36,
+      48
+    ]
+  },
+  {
+    "task": 1126,
+    "batch": "loot",
+    "cat": "loot",
+    "id": "arms",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One squat dark olive naval ammunition crate with copper corner braces, two crossed cannonballs and a fuse insignia, no lettering. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      36,
+      48
+    ]
+  },
+  {
+    "task": 1126,
+    "batch": "loot",
+    "cat": "loot",
+    "id": "bottle",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One translucent sea-green glass bottle tilted right with a cork, rolled ivory message visible inside, preserve glass reflections and clear outline. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      36,
+      48
+    ]
+  },
+  {
+    "task": 1126,
+    "batch": "loot",
+    "cat": "loot",
+    "id": "goldmark",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: One small golden age-of-sail treasure ship silhouette inside a simple laurel wreath, strong readable reward badge. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      36,
+      48
+    ]
+  },
+  {
+    "task": 1127,
+    "batch": "fx",
+    "cat": "fx",
+    "id": "jaw-top",
+    "kind": "fx",
+    "size": [
+      512,
+      192
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE standalone transparent full-screen effect sprite, native512x192, complete silhouette with safe empty margins, no backdrop, no floor or cast shadow. Subject: ONLY the UPPER JAW BAR of an original blue-gray shark, very wide horizontal mouth rim, ivory triangular teeth pointing DOWN, thick blue-gray skin along top edge, coral gums, no lower jaw, no eyes or head. Front-facing symmetrical mouth arc, teeth span almost full width, outer corners complete. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      512
+    ]
+  },
+  {
+    "task": 1127,
+    "batch": "fx",
+    "cat": "fx",
+    "id": "jaw-bottom",
+    "kind": "fx",
+    "size": [
+      512,
+      192
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE standalone transparent full-screen effect sprite, native512x192, complete silhouette with safe empty margins, no backdrop, no floor or cast shadow. Subject: ONLY the LOWER JAW BAR matching the attached upper jaw exactly in width, tooth style, skin and gum palette. Ivory triangular teeth point UP, coral gums and thick blue-gray skin along BOTTOM edge. No upper jaw, no face. Front-facing symmetrical mouth arc; interlocking teeth should close tightly with the upper-jaw reference. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "fx/jaw-top",
+    "preview": [
+      512
+    ]
+  },
+  {
+    "task": 1127,
+    "batch": "fx",
+    "cat": "fx",
+    "id": "mega",
+    "kind": "fx",
+    "size": [
+      1024,
+      640
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE standalone transparent full-screen effect sprite, native1024x640, complete silhouette with safe empty margins, no backdrop, no floor or cast shadow. Subject: ONE enormous original blue-gray megalodon lunging upward toward the viewer, full powerful head and short body visible, huge open red mouth with ivory teeth, amber eyes, fins intact, bright turquoise splash below. Same original shark design as references, dynamic wide sprite, no scenery. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      512
+    ]
+  },
+  {
+    "task": 1127,
+    "batch": "fx",
+    "cat": "fx",
+    "id": "fin",
+    "kind": "icon",
+    "size": [
+      128,
+      128
+    ],
+    "transparent": true,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE original blue-gray shark dorsal fin emerging diagonally from a compact turquoise ripple, clearly triangular silhouette, no whole shark or extra fins. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      32,
+      48
+    ]
+  },
+  {
+    "task": 1128,
+    "batch": "key",
+    "cat": "key",
+    "id": "title-land",
+    "kind": "scene",
+    "size": [
+      1920,
+      1080
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE original full-scene pixel-art key visual, native1920x1080, opaque edge-to-edge scene. Main subjects central60percent horizontally, deliberate negative space for game UI. No mascot or humanoid people. Subject: Original shark fleet at dawn: a blue-gray shark rises from a curling turquoise wave at lower-left within central60percent, a beautiful original ivory-sailed wooden flagship at lower-right within central60percent, tiny companion sails on horizon, gold sunrise and deep navy sky. Leave central upper-middle40percent QUIET DARK SKY for title/UI; hero subjects occupy lower third and do not cross title area. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      960,
+      375
+    ]
+  },
+  {
+    "task": 1128,
+    "batch": "key",
+    "cat": "key",
+    "id": "title-port",
+    "kind": "scene",
+    "size": [
+      1080,
+      1920
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE original full-scene pixel-art key visual, native1080x1920, opaque edge-to-edge scene. Main subjects central60percent horizontally, deliberate negative space for game UI. No mascot or humanoid people. Subject: PORTRAIT composition of the same original dawn shark fleet world as reference: a playful powerful blue-gray shark at lower-left, ivory-sailed original flagship lower-center-right, turquoise waves sweeping upward, golden dawn horizon. Leave center upper-middle quiet dark sky for title/menu overlay; all important subjects in central60percent width and lower half. No text or mascot. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": "key/title-land",
+    "preview": [
+      375
+    ]
+  },
+  {
+    "task": 1128,
+    "batch": "key",
+    "cat": "key",
+    "id": "atlantis",
+    "kind": "scene",
+    "size": [
+      1280,
+      720
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE original full-scene pixel-art key visual, native1280x720, opaque edge-to-edge scene. Main subjects central60percent horizontally, deliberate negative space for game UI. No mascot or humanoid people. Subject: A blue-gray shark descending through deep navy water toward ancient ORIGINAL sunken city gates, luminous violet crystal obelisks, weathered turquoise stone columns, golden coral traces, shafts of cool light from above. Center60percent contains the gate and shark, mystical welcoming return-home scene, no humanoid people or mascot. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      640,
+      375
+    ]
+  },
+  {
+    "task": 1128,
+    "batch": "key",
+    "cat": "key",
+    "id": "welcome",
+    "kind": "scene",
+    "size": [
+      960,
+      540
+    ],
+    "transparent": false,
+    "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE original full-scene pixel-art key visual, native960x540, opaque edge-to-edge scene. Main subjects central60percent horizontally, deliberate negative space for game UI. No mascot or humanoid people. Subject: A cozy warm lantern-lit age-of-sail harbor at evening, one small original ivory-sailed ship moored at a weathered oak pier, a neat treasure chest and golden coins beside a coiled rope in foreground, a small friendly blue-gray shark fin in calm turquoise water. Main objects central60percent, quiet upper-middle for offline-reward UI, no people or mascot. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "dep": null,
+    "preview": [
+      480,
+      375
+    ]
+  }
+]

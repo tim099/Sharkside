@@ -1,0 +1,35 @@
+{
+  "project": [
+    "art\\evidence\\key\\source\\key-title-land.png",
+    "art/evidence/key/records/key-title-land.json",
+    "img\\key\\title-land.png",
+    "art\\evidence\\key\\source\\key-title-port.png",
+    "art/evidence/key/records/key-title-port.json",
+    "img\\key\\title-port.png",
+    "art\\evidence\\key\\source\\key-atlantis.png",
+    "art/evidence/key/records/key-atlantis.json",
+    "img\\key\\atlantis.png",
+    "art\\evidence\\key\\source\\key-welcome.png",
+    "art/evidence/key/records/key-welcome.json",
+    "img\\key\\welcome.png",
+    "art/evidence/key/overview.png",
+    "art\\evidence\\key\\review\\page-01.png",
+    "art/evidence/key/inputs.json",
+    "art/evidence/key/generation.json",
+    "art/evidence/key/prompts.json",
+    "art/evidence/key/files.json"
+  ],
+  "gallery": [
+    "RawImages\\sirius_sharkside_key_key_title-land_source.png",
+    "RawImages\\sirius_sharkside_key_key_title-land_master.png",
+    "RawImages\\sirius_sharkside_key_key_title-port_source.png",
+    "RawImages\\sirius_sharkside_key_key_title-port_master.png",
+    "RawImages\\sirius_sharkside_key_key_atlantis_source.png",
+    "RawImages\\sirius_sharkside_key_key_atlantis_master.png",
+    "RawImages\\sirius_sharkside_key_key_welcome_source.png",
+    "RawImages\\sirius_sharkside_key_key_welcome_master.png",
+    "RawImages/sirius_sharkside_key.png",
+    "RawImages/sirius_sharkside_key_review_01.png",
+    "CanvasInterpretations/sirius_sharkside_key.md"
+  ]
+}

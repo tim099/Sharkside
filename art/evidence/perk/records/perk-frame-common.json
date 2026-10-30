@@ -1,0 +1,25 @@
+{
+  "task": 1122,
+  "batch": "perk",
+  "cat": "perk",
+  "id": "frame-common",
+  "kind": "frame",
+  "size": [
+    256,
+    352
+  ],
+  "transparent": true,
+  "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE hollow ornamental vertical card BORDER only, native256x352 portrait rectangle, all four edges visible, very thin12px border, generous transparent central opening for UI text. Center80percent MUST BE FULLY TRANSPARENT, outside frame also transparent. No card fill, no background panel, no text, no icon inside opening. Subject: Plain weathered OAK wood frame with small bronze corner braces, simple squared corners. Low rarity, restrained brown/copper palette, NO crown or gemstones. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+  "refs": [
+    "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+    "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+    "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+  ],
+  "dep": null,
+  "preview": [
+    32,
+    48
+  ],
+  "path": "D:/GameDev/Sharkside/art/evidence/perk/source/perk-frame-common.png",
+  "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-f08c8f5f-429d-405c-b665-ddba953ba895.png"
+}

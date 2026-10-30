@@ -1,0 +1,198 @@
+{
+  "task": 1127,
+  "author": "Sirius (Codex)",
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "task": 1127,
+      "batch": "fx",
+      "cat": "fx",
+      "id": "jaw-top",
+      "kind": "fx",
+      "size": [
+        512,
+        192
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE standalone transparent full-screen effect sprite, native512x192, complete silhouette with safe empty margins, no backdrop, no floor or cast shadow. Subject: ONLY the UPPER JAW BAR of an original blue-gray shark, very wide horizontal mouth rim, ivory triangular teeth pointing DOWN, thick blue-gray skin along top edge, coral gums, no lower jaw, no eyes or head. Front-facing symmetrical mouth arc, teeth span almost full width, outer corners complete. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/abil/source/abil-mega.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png"
+      ],
+      "dep": null,
+      "preview": [
+        512
+      ],
+      "path": "art\\evidence\\fx\\source\\fx-jaw-top.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-eaee1c50-747f-4717-a55a-f51cfaf8343c.png",
+      "source_sha256": "bbbf0129d59a67254e0822d2770f2e7183b81cc86f3a6ffc0593bb94e8c5d52c",
+      "white_master_sha256": "d9eb3121984fed486d8404e618db89f04cdaf3870006cafdca0b7df842c0f42b",
+      "output": "img\\fx\\jaw-top.png",
+      "output_sha256": "4f50fe71fc93fb3bf3af641012aaa9bd1467a3a027483d909ba15aaf7dd7bc2d",
+      "actual_size": [
+        512,
+        192
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/abil/source/abil-mega.png",
+          "sha256": "51ceecc28ab11e98aef26e5c98470876045a9abf9ee6d606394117c424275901"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        }
+      ]
+    },
+    {
+      "task": 1127,
+      "batch": "fx",
+      "cat": "fx",
+      "id": "jaw-bottom",
+      "kind": "fx",
+      "size": [
+        512,
+        192
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE standalone transparent full-screen effect sprite, native512x192, complete silhouette with safe empty margins, no backdrop, no floor or cast shadow. Subject: ONLY the LOWER JAW BAR matching the attached upper jaw exactly in width, tooth style, skin and gum palette. Ivory triangular teeth point UP, coral gums and thick blue-gray skin along BOTTOM edge. No upper jaw, no face. Front-facing symmetrical mouth arc; interlocking teeth should close tightly with the upper-jaw reference. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/fx/source/fx-jaw-top.png",
+        "D:/GameDev/Sharkside/art/evidence/abil/source/abil-mega.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png"
+      ],
+      "dep": "fx/jaw-top",
+      "preview": [
+        512
+      ],
+      "path": "art\\evidence\\fx\\source\\fx-jaw-bottom.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-4f341274-3df2-4bb9-8ec1-4d59bc57ff22.png",
+      "source_sha256": "966da64994b97fab8732cad7c551565b0b5106bdff52815bce6695cc641016dd",
+      "white_master_sha256": "3f1f6fc9c2bed81b866e53810fc03bc689b222f9eb8e1709c6c1faef40b0fb0c",
+      "output": "img\\fx\\jaw-bottom.png",
+      "output_sha256": "3ea98a96a4e1b81bf398e787f7b110f91a2a8a9de8b5309cbcc0ddb609abdfcc",
+      "actual_size": [
+        512,
+        192
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/fx/source/fx-jaw-top.png",
+          "sha256": "bbbf0129d59a67254e0822d2770f2e7183b81cc86f3a6ffc0593bb94e8c5d52c"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/abil/source/abil-mega.png",
+          "sha256": "51ceecc28ab11e98aef26e5c98470876045a9abf9ee6d606394117c424275901"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        }
+      ]
+    },
+    {
+      "task": 1127,
+      "batch": "fx",
+      "cat": "fx",
+      "id": "mega",
+      "kind": "fx",
+      "size": [
+        1024,
+        640
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE standalone transparent full-screen effect sprite, native1024x640, complete silhouette with safe empty margins, no backdrop, no floor or cast shadow. Subject: ONE enormous original blue-gray megalodon lunging upward toward the viewer, full powerful head and short body visible, huge open red mouth with ivory teeth, amber eyes, fins intact, bright turquoise splash below. Same original shark design as references, dynamic wide sprite, no scenery. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/abil/source/abil-mega.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png"
+      ],
+      "dep": null,
+      "preview": [
+        512
+      ],
+      "path": "art\\evidence\\fx\\source\\fx-mega.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-51d763fc-4624-4bd2-9daf-436a54d5f72c.png",
+      "source_sha256": "298b4251511d64b3ddb2e9890ca4ac4b3276c0abc4ce8fa57e81fd7b04481639",
+      "white_master_sha256": "3b5b505eaf091c20828780269f72f6a33fd3026d80e7f4c8705bc644fa09e96c",
+      "output": "img\\fx\\mega.png",
+      "output_sha256": "25a527ddc33857b288bd848ee2b8abc27ed0f61cfa4d83ee9829b9be48ddf34e",
+      "actual_size": [
+        1024,
+        640
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/abil/source/abil-mega.png",
+          "sha256": "51ceecc28ab11e98aef26e5c98470876045a9abf9ee6d606394117c424275901"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        }
+      ]
+    },
+    {
+      "task": 1127,
+      "batch": "fx",
+      "cat": "fx",
+      "id": "fin",
+      "kind": "icon",
+      "size": [
+        128,
+        128
+      ],
+      "transparent": true,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE compact standalone inventory icon, centered three-quarter view, simple bold silhouette, generous clear margin, native128x128 with main object104px, readable at20-40px. No ground, cast shadow, border or surrounding frame. Subject: ONE original blue-gray shark dorsal fin emerging diagonally from a compact turquoise ripple, clearly triangular silhouette, no whole shark or extra fins. TRUE clean transparent background, no vignette, no halo. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/abil/source/abil-mega.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png"
+      ],
+      "dep": null,
+      "preview": [
+        32,
+        48
+      ],
+      "path": "art\\evidence\\fx\\source\\fx-fin.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-ba2e694e-aaeb-469a-be02-14f6d3ac764d.png",
+      "source_sha256": "13b296c06928454cafb06e6672aabbc4f16bb3c70d6dccec91da3bf917fe621b",
+      "white_master_sha256": "6874c903d2e40f1b3482668b5db180a4d83a2129b12e035f3e7023e827ad945d",
+      "output": "img\\fx\\fin.png",
+      "output_sha256": "eb3415fe4fdb4014939ea9dbecde00a9bf1c818cdf0178321acec3ddcd801e5b",
+      "actual_size": [
+        128,
+        128
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/abil/source/abil-mega.png",
+          "sha256": "51ceecc28ab11e98aef26e5c98470876045a9abf9ee6d606394117c424275901"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        }
+      ]
+    }
+  ],
+  "processing": "Icons binary alpha and nearest-neighbour contain; transparent frame/effect contain with4px margin; opaque scenes center-cropped without distortion. All creative artwork comes from image_gen.",
+  "pending": [
+    "gura desktop/375px integration",
+    "missing-image fallback after integration"
+  ]
+}

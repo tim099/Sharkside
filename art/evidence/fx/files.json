@@ -1,0 +1,38 @@
+{
+  "project": [
+    "art\\evidence\\fx\\source\\fx-jaw-top.png",
+    "art/evidence/fx/records/fx-jaw-top.json",
+    "img\\fx\\jaw-top.png",
+    "art\\evidence\\fx\\source\\fx-jaw-bottom.png",
+    "art/evidence/fx/records/fx-jaw-bottom.json",
+    "img\\fx\\jaw-bottom.png",
+    "art\\evidence\\fx\\source\\fx-mega.png",
+    "art/evidence/fx/records/fx-mega.json",
+    "img\\fx\\mega.png",
+    "art\\evidence\\fx\\source\\fx-fin.png",
+    "art/evidence/fx/records/fx-fin.json",
+    "img\\fx\\fin.png",
+    "art/evidence/fx/overview.png",
+    "art\\evidence\\fx\\review\\page-01.png",
+    "art/evidence/fx/jaw-closed.png",
+    "art/evidence/fx/jaw-alignment.json",
+    "art/evidence/fx/inputs.json",
+    "art/evidence/fx/generation.json",
+    "art/evidence/fx/prompts.json",
+    "art/evidence/fx/files.json"
+  ],
+  "gallery": [
+    "RawImages\\sirius_sharkside_fx_fx_jaw-top_source.png",
+    "RawImages\\sirius_sharkside_fx_fx_jaw-top_master.png",
+    "RawImages\\sirius_sharkside_fx_fx_jaw-bottom_source.png",
+    "RawImages\\sirius_sharkside_fx_fx_jaw-bottom_master.png",
+    "RawImages\\sirius_sharkside_fx_fx_mega_source.png",
+    "RawImages\\sirius_sharkside_fx_fx_mega_master.png",
+    "RawImages\\sirius_sharkside_fx_fx_fin_source.png",
+    "RawImages\\sirius_sharkside_fx_fx_fin_master.png",
+    "RawImages/sirius_sharkside_fx.png",
+    "RawImages/sirius_sharkside_fx_review_01.png",
+    "RawImages/sirius_sharkside_fx_jaw_closed.png",
+    "CanvasInterpretations/sirius_sharkside_fx.md"
+  ]
+}

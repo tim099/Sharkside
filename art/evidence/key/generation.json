@@ -1,0 +1,200 @@
+{
+  "task": 1128,
+  "author": "Sirius (Codex)",
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "task": 1128,
+      "batch": "key",
+      "cat": "key",
+      "id": "title-land",
+      "kind": "scene",
+      "size": [
+        1920,
+        1080
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE original full-scene pixel-art key visual, native1920x1080, opaque edge-to-edge scene. Main subjects central60percent horizontally, deliberate negative space for game UI. No mascot or humanoid people. Subject: Original shark fleet at dawn: a blue-gray shark rises from a curling turquoise wave at lower-left within central60percent, a beautiful original ivory-sailed wooden flagship at lower-right within central60percent, tiny companion sails on horizon, gold sunrise and deep navy sky. Leave central upper-middle40percent QUIET DARK SKY for title/UI; hero subjects occupy lower third and do not cross title area. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        960,
+        375
+      ],
+      "path": "art\\evidence\\key\\source\\key-title-land.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-6d2fb4c3-67ff-42a9-a05b-1b6e0eaf7669.png",
+      "source_sha256": "f07ae164e2651ee90d616dbf290be4f38ae6c2f30555e9bc4fe8882498d97561",
+      "white_master_sha256": "f07ae164e2651ee90d616dbf290be4f38ae6c2f30555e9bc4fe8882498d97561",
+      "output": "img\\key\\title-land.png",
+      "output_sha256": "8bfb1534548c224869d884b805c7e2815df2b81e2e8c53821ba4d3732772020d",
+      "actual_size": [
+        1920,
+        1080
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1128,
+      "batch": "key",
+      "cat": "key",
+      "id": "title-port",
+      "kind": "scene",
+      "size": [
+        1080,
+        1920
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE original full-scene pixel-art key visual, native1080x1920, opaque edge-to-edge scene. Main subjects central60percent horizontally, deliberate negative space for game UI. No mascot or humanoid people. Subject: PORTRAIT composition of the same original dawn shark fleet world as reference: a playful powerful blue-gray shark at lower-left, ivory-sailed original flagship lower-center-right, turquoise waves sweeping upward, golden dawn horizon. Leave center upper-middle quiet dark sky for title/menu overlay; all important subjects in central60percent width and lower half. No text or mascot. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/key/source/key-title-land.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": "key/title-land",
+      "preview": [
+        375
+      ],
+      "path": "art\\evidence\\key\\source\\key-title-port.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-10973450-006d-49fe-96c2-91b83351f5e0.png",
+      "source_sha256": "a080e1f5f44be0ff156716b06a4820d269c6f7a8ecfb51024f8e990606bcbee0",
+      "white_master_sha256": "a080e1f5f44be0ff156716b06a4820d269c6f7a8ecfb51024f8e990606bcbee0",
+      "output": "img\\key\\title-port.png",
+      "output_sha256": "9e2a8501880c5a8781a180a0d36291c8b0aa1dc2e8fcb126304227c6be42da79",
+      "actual_size": [
+        1080,
+        1920
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/key/source/key-title-land.png",
+          "sha256": "f07ae164e2651ee90d616dbf290be4f38ae6c2f30555e9bc4fe8882498d97561"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1128,
+      "batch": "key",
+      "cat": "key",
+      "id": "atlantis",
+      "kind": "scene",
+      "size": [
+        1280,
+        720
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE original full-scene pixel-art key visual, native1280x720, opaque edge-to-edge scene. Main subjects central60percent horizontally, deliberate negative space for game UI. No mascot or humanoid people. Subject: A blue-gray shark descending through deep navy water toward ancient ORIGINAL sunken city gates, luminous violet crystal obelisks, weathered turquoise stone columns, golden coral traces, shafts of cool light from above. Center60percent contains the gate and shark, mystical welcoming return-home scene, no humanoid people or mascot. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        640,
+        375
+      ],
+      "path": "art\\evidence\\key\\source\\key-atlantis.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-d053d95a-c577-4663-b606-eb115ea0b6ac.png",
+      "source_sha256": "2378b3fe5e0ac2b09f10d4f59c632c321a35f1f78e4cb9eb1af7ac1a2b1b532a",
+      "white_master_sha256": "2378b3fe5e0ac2b09f10d4f59c632c321a35f1f78e4cb9eb1af7ac1a2b1b532a",
+      "output": "img\\key\\atlantis.png",
+      "output_sha256": "abf38dd8a71429963befcc61e5ddd2dd80eeaa15d841fa923411e290676b9049",
+      "actual_size": [
+        1280,
+        720
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "task": 1128,
+      "batch": "key",
+      "cat": "key",
+      "id": "welcome",
+      "kind": "scene",
+      "size": [
+        960,
+        540
+      ],
+      "transparent": false,
+      "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE original full-scene pixel-art key visual, native960x540, opaque edge-to-edge scene. Main subjects central60percent horizontally, deliberate negative space for game UI. No mascot or humanoid people. Subject: A cozy warm lantern-lit age-of-sail harbor at evening, one small original ivory-sailed ship moored at a weathered oak pier, a neat treasure chest and golden coins beside a coiled rope in foreground, a small friendly blue-gray shark fin in calm turquoise water. Main objects central60percent, quiet upper-middle for offline-reward UI, no people or mascot. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "dep": null,
+      "preview": [
+        480,
+        375
+      ],
+      "path": "art\\evidence\\key\\source\\key-welcome.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-187874c1-847f-495a-903b-33df5409324a.png",
+      "source_sha256": "4080fdc942cd6501b44faae5a24fab308bccb30876be52c71eb84cb7909e3440",
+      "white_master_sha256": "4080fdc942cd6501b44faae5a24fab308bccb30876be52c71eb84cb7909e3440",
+      "output": "img\\key\\welcome.png",
+      "output_sha256": "372b35a984122a85b50cb9aecb051b45d276e6eafd5f849bbd27f29126909e4e",
+      "actual_size": [
+        960,
+        540
+      ],
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+          "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    }
+  ],
+  "processing": "Icons binary alpha and nearest-neighbour contain; transparent frame/effect contain with4px margin; opaque scenes center-cropped without distortion. All creative artwork comes from image_gen.",
+  "pending": [
+    "gura desktop/375px integration",
+    "missing-image fallback after integration"
+  ]
+}

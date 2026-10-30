@@ -1,0 +1,24 @@
+{
+  "task": 1128,
+  "batch": "key",
+  "cat": "key",
+  "id": "welcome",
+  "kind": "scene",
+  "size": [
+    960,
+    540
+  ],
+  "transparent": false,
+  "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE original full-scene pixel-art key visual, native960x540, opaque edge-to-edge scene. Main subjects central60percent horizontally, deliberate negative space for game UI. No mascot or humanoid people. Subject: A cozy warm lantern-lit age-of-sail harbor at evening, one small original ivory-sailed ship moored at a weathered oak pier, a neat treasure chest and golden coins beside a coiled rope in foreground, a small friendly blue-gray shark fin in calm turquoise water. Main objects central60percent, quiet upper-middle for offline-reward UI, no people or mascot. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+  "refs": [
+    "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+    "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+  ],
+  "dep": null,
+  "preview": [
+    480,
+    375
+  ],
+  "path": "D:/GameDev/Sharkside/art/evidence/key/source/key-welcome.png",
+  "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-187874c1-847f-495a-903b-33df5409324a.png"
+}

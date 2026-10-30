@@ -1,0 +1,24 @@
+{
+  "task": 1128,
+  "batch": "key",
+  "cat": "key",
+  "id": "title-port",
+  "kind": "scene",
+  "size": [
+    1080,
+    1920
+  ],
+  "transparent": false,
+  "prompt": "Original refined 16/32-bit PIXEL ART for Sharkside, rich material colors, upper-left highlights, discrete shaded pixel clusters, crisp stepped contours and restrained dark navy outline. Attached images guide ONLY pixel-art material/style, never copy their objects or composition. ONE original full-scene pixel-art key visual, native1080x1920, opaque edge-to-edge scene. Main subjects central60percent horizontally, deliberate negative space for game UI. No mascot or humanoid people. Subject: PORTRAIT composition of the same original dawn shark fleet world as reference: a playful powerful blue-gray shark at lower-left, ivory-sailed original flagship lower-center-right, turquoise waves sweeping upward, golden dawn horizon. Leave center upper-middle quiet dark sky for title/menu overlay; all important subjects in central60percent width and lower half. No text or mascot. NO letters, words, numbers, captions, logo, watermark or existing franchise design.",
+  "refs": [
+    "D:/GameDev/Sharkside/art/evidence/key/source/key-title-land.png",
+    "D:/GameDev/Sharkside/art/evidence/style/source/app.png",
+    "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+  ],
+  "dep": "key/title-land",
+  "preview": [
+    375
+  ],
+  "path": "D:/GameDev/Sharkside/art/evidence/key/source/key-title-port.png",
+  "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-10973450-006d-49fe-96c2-91b83351f5e0.png"
+}

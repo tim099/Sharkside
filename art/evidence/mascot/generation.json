@@ -1,0 +1,197 @@
+{
+  "task": 1129,
+  "author": "Sirius (Codex)",
+  "tool": "built-in image_gen",
+  "style_request": "日系可愛風，鯊魚特色",
+  "selected": "concept-b-v2",
+  "name": "待gura命名（Tim委託）",
+  "naming_authority": "Tim explicitly delegated naming to gura in this chat",
+  "approved_upload_sha256": "856803eb9f034606448eabbf5a7bbaa59e847f96c526f5655a6fb82b159ac990",
+  "concepts": [
+    {
+      "id": "concept-a-v2",
+      "subject": "ONE original CUTE JAPANESE ANIME SHARK-GIRL CAPTAIN, young adult20, warm fair skin, large amber eyes, short INK-NAVY bob haircut with blunt uneven bangs and a CORAL-RED dorsal-fin-shaped hair clip. Tiny pointed shark tooth visible in a cheerful smile, two subtle blue-gray gill marks on each cheek, small fin-shaped blue-gray ears. Compact cute proportions about4.5heads tall. Charcoal tricorne with plain brass clasp, RUST-ORANGE knee-length naval coat with brass buttons, ivory linen shirt, navy shorts over opaque dark leggings and brown boots, little rolled chart at belt. No exposed tail. Friendly bright energetic personality.",
+      "batch": "mascot",
+      "cat": "mascot",
+      "prompt": "ONE original CUTE JAPANESE ANIME SHARK-GIRL CAPTAIN, young adult20, warm fair skin, large amber eyes, short INK-NAVY bob haircut with blunt uneven bangs and a CORAL-RED dorsal-fin-shaped hair clip. Tiny pointed shark tooth visible in a cheerful smile, two subtle blue-gray gill marks on each cheek, small fin-shaped blue-gray ears. Compact cute proportions about4.5heads tall. Charcoal tricorne with plain brass clasp, RUST-ORANGE knee-length naval coat with brass buttons, ivory linen shirt, navy shorts over opaque dark leggings and brown boots, little rolled chart at belt. No exposed tail. Friendly bright energetic personality. Full-body standalone original game mascot concept sprite for Sharkside. The main requirement is JAPANESE KAWAII ANIME CHARM: expressive large eyes, small nose, soft rounded cheeks, appealing youthful-adult face and lively confident posture. Fine refined PIXEL ART, crisp stair-step contours and discrete shaded clusters, upper-left light, restrained navy outline; attached object images guide ONLY material/pixel texture, never facial design. Three-quarter standing facing slightly screen right, complete hat, hands and boots, generous clear margin all sides. Portrait1024x1536. TRUE transparent background; no ground, shadow, text, labels, border. No hood or shark-shaped hood, no white hair or blue hair streak, no trident, no existing franchise character.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png"
+      ],
+      "path": "art\\evidence\\mascot\\source\\concept-a-v2.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-bb414839-931f-48de-9af9-6d0c60c0ba56.png",
+      "source_sha256": "6554df650122cc468cd1fc6c3e034921f62984dff1a4e3d8806f19d2bcdde250",
+      "white_master_sha256": "f9d7d311f4d808a96b9586765fd92e251776cb0ddf76fe2fdff45dd769a49ad5",
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        }
+      ]
+    },
+    {
+      "id": "concept-b-v2",
+      "subject": "ONE original CUTE JAPANESE ANIME SHARK-GIRL NAVIGATOR, young adult20, warm light brown skin, large teal eyes, fluffy chin-length DUSTY PLUM hair with side-swept bangs, a pair of small natural BLUE-GRAY FIN EARS, subtle neck gill marks, tiny shark teeth visible in a smug playful grin. Cute soft round face, about4.5heads tall. Small burgundy tricorne with brass crescent clasp, dark TEAL naval jacket with COPPER-ORANGE lapels, cream blouse, plum pleated knee-length skirt over dark opaque leggings and short brown boots, holds a brass compass low at waist. A small shark-tooth charm on belt, no exposed tail. Clever gentle mischievous personality.",
+      "batch": "mascot",
+      "cat": "mascot",
+      "prompt": "ONE original CUTE JAPANESE ANIME SHARK-GIRL NAVIGATOR, young adult20, warm light brown skin, large teal eyes, fluffy chin-length DUSTY PLUM hair with side-swept bangs, a pair of small natural BLUE-GRAY FIN EARS, subtle neck gill marks, tiny shark teeth visible in a smug playful grin. Cute soft round face, about4.5heads tall. Small burgundy tricorne with brass crescent clasp, dark TEAL naval jacket with COPPER-ORANGE lapels, cream blouse, plum pleated knee-length skirt over dark opaque leggings and short brown boots, holds a brass compass low at waist. A small shark-tooth charm on belt, no exposed tail. Clever gentle mischievous personality. Full-body standalone original game mascot concept sprite for Sharkside. The main requirement is JAPANESE KAWAII ANIME CHARM: expressive large eyes, small nose, soft rounded cheeks, appealing youthful-adult face and lively confident posture. Fine refined PIXEL ART, crisp stair-step contours and discrete shaded clusters, upper-left light, restrained navy outline; attached object images guide ONLY material/pixel texture, never facial design. Three-quarter standing facing slightly screen right, complete hat, hands and boots, generous clear margin all sides. Portrait1024x1536. TRUE transparent background; no ground, shadow, text, labels, border. No hood or shark-shaped hood, no white hair or blue hair streak, no trident, no existing franchise character.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png"
+      ],
+      "path": "art\\evidence\\mascot\\source\\concept-b-v2.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-ba814d13-361b-416e-a0de-8173b859de77.png",
+      "source_sha256": "70beb88cff32bb4d219bc808f9a30bdebad8b39b11cfd8de60c896739357640c",
+      "white_master_sha256": "8ca5550a1265203911fc201eec59fa404aaaba74632bf547ae19f2e2430d2e5b",
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        }
+      ]
+    },
+    {
+      "id": "concept-c-v2",
+      "subject": "ONE original CUTE JAPANESE ANIME SHARK-GIRL DECK CAPTAIN, young adult20, warm fair skin with pale blue-gray outer ears shaped like small fins, large CORAL-AMBER eyes, short wavy CHESTNUT hair tied into a tiny low ponytail, one blue-gray fin-shaped side hairpin, three subtle cheek gill marks, one triangular shark tooth in a shy cheerful smile. Petite cute proportions about4.5heads tall. Broad DARK BROWN tricorne with orange ribbon, cream linen shirt under a CORAL-RED waistcoat, short charcoal naval shoulder cape whose two corners resemble pectoral fins, dark brown knee trousers and tall boots. Holds a little folded chart at her waist, no exposed tail. Cozy slightly shy but brave personality.",
+      "batch": "mascot",
+      "cat": "mascot",
+      "prompt": "ONE original CUTE JAPANESE ANIME SHARK-GIRL DECK CAPTAIN, young adult20, warm fair skin with pale blue-gray outer ears shaped like small fins, large CORAL-AMBER eyes, short wavy CHESTNUT hair tied into a tiny low ponytail, one blue-gray fin-shaped side hairpin, three subtle cheek gill marks, one triangular shark tooth in a shy cheerful smile. Petite cute proportions about4.5heads tall. Broad DARK BROWN tricorne with orange ribbon, cream linen shirt under a CORAL-RED waistcoat, short charcoal naval shoulder cape whose two corners resemble pectoral fins, dark brown knee trousers and tall boots. Holds a little folded chart at her waist, no exposed tail. Cozy slightly shy but brave personality. Full-body standalone original game mascot concept sprite for Sharkside. The main requirement is JAPANESE KAWAII ANIME CHARM: expressive large eyes, small nose, soft rounded cheeks, appealing youthful-adult face and lively confident posture. Fine refined PIXEL ART, crisp stair-step contours and discrete shaded clusters, upper-left light, restrained navy outline; attached object images guide ONLY material/pixel texture, never facial design. Three-quarter standing facing slightly screen right, complete hat, hands and boots, generous clear margin all sides. Portrait1024x1536. TRUE transparent background; no ground, shadow, text, labels, border. No hood or shark-shaped hood, no white hair or blue hair streak, no trident, no existing franchise character.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png"
+      ],
+      "path": "art\\evidence\\mascot\\source\\concept-c-v2.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-e7c34394-9e61-4703-90de-9d4b1e899438.png",
+      "source_sha256": "109789f4c412c64cca2a03ffef95ea1cc7555e8e5f551adb74809dba5be8df0b",
+      "white_master_sha256": "5984524ae8083646d91178b3f9febc3cee885c7c902f29fb38b6c7c9e8791db6",
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        }
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "normal",
+      "path": "art\\evidence\\mascot\\source\\normal.png",
+      "prompt": "Tim selected the supplied transparent PNG in this chat: 用這張吧 辛苦了. Preserve it as the normal expression; no new generation.",
+      "refs": [],
+      "origin_concept": "concept-b-v2",
+      "generated_path": "D:\\GameDev\\Sharkside\\art\\evidence\\mascot\\source\\approved.png",
+      "source_sha256": "856803eb9f034606448eabbf5a7bbaa59e847f96c526f5655a6fb82b159ac990",
+      "output": "img\\mascot\\normal.png",
+      "output_sha256": "856803eb9f034606448eabbf5a7bbaa59e847f96c526f5655a6fb82b159ac990",
+      "white_master_sha256": "8ca5550a1265203911fc201eec59fa404aaaba74632bf547ae19f2e2430d2e5b",
+      "size": [
+        1024,
+        1536
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "references": []
+    },
+    {
+      "id": "smug",
+      "prompt": "Edit the attached APPROVED ORIGINAL SHARK-GIRL CAPTAIN sprite. Change ONLY the facial expression to a clearly SMUG and pleased expression: slightly half-lidded teal eyes, one eyebrow subtly raised, a small confident sideways grin showing one tiny shark fang. No blush. IDENTITY AND BODY LOCK: preserve exactly the same adult character, dusty-plum short hair, teal eyes, blue-gray fin ears, neck gill marks, burgundy tricorne and golden crescent clasp, teal/copper naval coat, cream blouse, plum skirt, opaque dark leggings, brown boots, brass compass in her left hand and other hand on hip, tooth charm, pose, full-body framing, pixel-art texture, upper-left lighting and palette. Keep all clothing, accessories, hands, silhouette and proportions unchanged; no new objects or words. Native1024x1536 portrait. Maintain TRUE clean transparent background, no dark/brown vignette, no ground, no halo, no external shadow, no border or text. Only edit her face, keep everything else as close as possible.",
+      "refs": [
+        "C:/Users/Tim/AppData/Local/Temp/codex-clipboard-c29f421c-639d-4a2d-9281-bcdf6a6f7571.png"
+      ],
+      "path": "art\\evidence\\mascot\\source\\smug.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-00ab6286-1b1e-4164-9558-9f839e55ab08.png",
+      "source_sha256": "cee369d16607be7068216060dcdeca8462235f85f1a2576e8bf98ad0414ca017",
+      "output": "img\\mascot\\smug.png",
+      "output_sha256": "e7d8b3b5b746b8310dddf4c83107bf3046edfbbfb177f9ae65a5381214a9f659",
+      "white_master_sha256": "ab91737a7bd64d7310d1ebd296c3e2d1fcb83d64694b6fe60d47a7fbda98c52f",
+      "size": [
+        1024,
+        1536
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "references": [
+        {
+          "path": "C:/Users/Tim/AppData/Local/Temp/codex-clipboard-c29f421c-639d-4a2d-9281-bcdf6a6f7571.png",
+          "sha256": "856803eb9f034606448eabbf5a7bbaa59e847f96c526f5655a6fb82b159ac990"
+        }
+      ]
+    },
+    {
+      "id": "angry",
+      "prompt": "Edit the attached APPROVED ORIGINAL SHARK-GIRL CAPTAIN sprite. Change ONLY the facial expression to a clearly ANGRY but cute expression: eyebrows angled downward toward the nose, teal eyes focused forward, cheeks slightly puffed, a small frustrated open mouth showing tiny shark teeth. Keep it playful and nonviolent, no symbols or anger marks. IDENTITY AND BODY LOCK: preserve exactly the same adult character, dusty-plum short hair, teal eyes, blue-gray fin ears, neck gill marks, burgundy tricorne and golden crescent clasp, teal/copper naval coat, cream blouse, plum skirt, opaque dark leggings, brown boots, brass compass in her left hand and other hand on hip, tooth charm, pose, full-body framing, pixel-art texture, upper-left lighting and palette. Keep all clothing, accessories, hands, silhouette and proportions unchanged; no new objects or words. Native1024x1536 portrait. Maintain TRUE clean transparent background, no dark/brown vignette, no ground, no halo, no external shadow, no border or text. Only edit her face, keep everything else as close as possible.",
+      "refs": [
+        "C:/Users/Tim/AppData/Local/Temp/codex-clipboard-c29f421c-639d-4a2d-9281-bcdf6a6f7571.png"
+      ],
+      "path": "art\\evidence\\mascot\\source\\angry.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-c6002187-fb51-401b-b3eb-d50fa7c9db3b.png",
+      "source_sha256": "968c86de52dd4f0944404fe00c076121c4fe785274f51421003bb07cdc082336",
+      "output": "img\\mascot\\angry.png",
+      "output_sha256": "7c0011351336fff09040db892d0b53c315599cc345a88a6a139748a08ded224a",
+      "white_master_sha256": "d07b73d0bf118bf48b7af2b8ce70ff26d413d2ac253206f1a488d05d91ca6860",
+      "size": [
+        1024,
+        1536
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "references": [
+        {
+          "path": "C:/Users/Tim/AppData/Local/Temp/codex-clipboard-c29f421c-639d-4a2d-9281-bcdf6a6f7571.png",
+          "sha256": "856803eb9f034606448eabbf5a7bbaa59e847f96c526f5655a6fb82b159ac990"
+        }
+      ]
+    },
+    {
+      "id": "flustered",
+      "prompt": "Edit the attached APPROVED ORIGINAL SHARK-GIRL CAPTAIN sprite. Change ONLY the facial expression to a clearly FLUSTERED SHY expression: warm rose blush across both cheeks, teal eyes glancing slightly aside, eyebrows softly raised, a small bashful smile with a tiny shark fang barely visible. No tears or symbols. IDENTITY AND BODY LOCK: preserve exactly the same adult character, dusty-plum short hair, teal eyes, blue-gray fin ears, neck gill marks, burgundy tricorne and golden crescent clasp, teal/copper naval coat, cream blouse, plum skirt, opaque dark leggings, brown boots, brass compass in her left hand and other hand on hip, tooth charm, pose, full-body framing, pixel-art texture, upper-left lighting and palette. Keep all clothing, accessories, hands, silhouette and proportions unchanged; no new objects or words. Native1024x1536 portrait. Maintain TRUE clean transparent background, no dark/brown vignette, no ground, no halo, no external shadow, no border or text. Only edit her face, keep everything else as close as possible.",
+      "refs": [
+        "C:/Users/Tim/AppData/Local/Temp/codex-clipboard-c29f421c-639d-4a2d-9281-bcdf6a6f7571.png"
+      ],
+      "path": "art\\evidence\\mascot\\source\\flustered.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-e4cef367-97da-48bc-a812-d20e5c73e9f5.png",
+      "source_sha256": "862724471b7d56d9b4ec61e60cbd2e1a96178eaf818b7c86af34b13d8b16c4ec",
+      "output": "img\\mascot\\flustered.png",
+      "output_sha256": "2b1c1dde9c6ae801b850c83d0f3890d12a78bfc13551377224f1e925cf73ef89",
+      "white_master_sha256": "855a8ac2e71a71ea659b672336fd59573396093799643d941ae4967fc16d5ad4",
+      "size": [
+        1024,
+        1536
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "references": [
+        {
+          "path": "C:/Users/Tim/AppData/Local/Temp/codex-clipboard-c29f421c-639d-4a2d-9281-bcdf6a6f7571.png",
+          "sha256": "856803eb9f034606448eabbf5a7bbaa59e847f96c526f5655a6fb82b159ac990"
+        }
+      ]
+    }
+  ],
+  "processing": "normal copied byte-for-byte from approved upload. Expression RGB is image_gen output; alpha is intersection with the approved cutout alpha. No facial drawing or body RGB compositing in the script.",
+  "pending": [
+    "gura chooses name",
+    "gura desktop/375px integration",
+    "missing-mascot fallback"
+  ]
+}

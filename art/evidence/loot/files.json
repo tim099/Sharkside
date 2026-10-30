@@ -1,0 +1,40 @@
+{
+  "project": [
+    "art\\evidence\\loot\\source\\loot-barrel.png",
+    "art/evidence/loot/records/loot-barrel.json",
+    "img\\loot\\barrel.png",
+    "art\\evidence\\loot\\source\\loot-chest.png",
+    "art/evidence/loot/records/loot-chest.json",
+    "img\\loot\\chest.png",
+    "art\\evidence\\loot\\source\\loot-arms.png",
+    "art/evidence/loot/records/loot-arms.json",
+    "img\\loot\\arms.png",
+    "art\\evidence\\loot\\source\\loot-bottle.png",
+    "art/evidence/loot/records/loot-bottle.json",
+    "img\\loot\\bottle.png",
+    "art\\evidence\\loot\\source\\loot-goldmark.png",
+    "art/evidence/loot/records/loot-goldmark.json",
+    "img\\loot\\goldmark.png",
+    "art/evidence/loot/overview.png",
+    "art\\evidence\\loot\\review\\page-01.png",
+    "art/evidence/loot/inputs.json",
+    "art/evidence/loot/generation.json",
+    "art/evidence/loot/prompts.json",
+    "art/evidence/loot/files.json"
+  ],
+  "gallery": [
+    "RawImages\\sirius_sharkside_loot_loot_barrel_source.png",
+    "RawImages\\sirius_sharkside_loot_loot_barrel_master.png",
+    "RawImages\\sirius_sharkside_loot_loot_chest_source.png",
+    "RawImages\\sirius_sharkside_loot_loot_chest_master.png",
+    "RawImages\\sirius_sharkside_loot_loot_arms_source.png",
+    "RawImages\\sirius_sharkside_loot_loot_arms_master.png",
+    "RawImages\\sirius_sharkside_loot_loot_bottle_source.png",
+    "RawImages\\sirius_sharkside_loot_loot_bottle_master.png",
+    "RawImages\\sirius_sharkside_loot_loot_goldmark_source.png",
+    "RawImages\\sirius_sharkside_loot_loot_goldmark_master.png",
+    "RawImages/sirius_sharkside_loot.png",
+    "RawImages/sirius_sharkside_loot_review_01.png",
+    "CanvasInterpretations/sirius_sharkside_loot.md"
+  ]
+}
