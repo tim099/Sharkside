@@ -1,0 +1,512 @@
+{
+  "task": 1117,
+  "author": "Sirius (Codex)",
+  "tool": "built-in image_gen",
+  "prompts": {
+    "app": "Create ONE original app icon for Sharkside, an age-of-sail shark naval idle game, square 1024x1024. Attached images are ONLY pixel-art material/style references, never copy their objects. Refined 16/32-bit pixel art: rich material colours, discrete shaded clusters, crisp stair-step outlines, restrained deep navy outline, strong upper-left highlights. A powerful blue-gray shark head in three-quarter profile surges diagonally up from a compact turquoise wave, jaws grinning with large ivory triangular teeth, one small golden age-of-sail ship silhouette tucked beside it for scale. Bold simple readable silhouette at 32 pixels; no tiny clutter, no text, no letters, no numbers, no character clothing or humanoid mascot. Gold and coral accents. FULL BLEED solid deep-sea navy #061220 background, opaque square, no rounded corners, no border. All shark/ship focal content inside the central 70-percent-diameter circle for Android maskable cropping. Original independent design.",
+    "gun": "ONE game upgrade inventory icon: age-of-sail naval gunnery training, one compact bronze cannon on a warm brown oak two-wheel naval carriage, cannon barrel pointing upper-left in three-quarter view, unmistakable wide dark round muzzle, blue-gray iron bands, one small cannonball tucked beside wheel. Original refined pixel art at native 128x128 visual resolution rendered large, big readable silhouette, max object extent 80% of canvas, generous empty margins. Attached images ONLY guide style/materials: saturated natural materials, upper-left highlights, discrete shaded pixel clusters, crisp stair-step edges, restrained deep dark outline, dimensional depth. Do not copy tools or hinges. TRUE transparent background, no ground, no cast shadow, no frame, no text, letters or numbers. Object readable at 32x32, not a photograph, not smooth vector. Subject gun, warm bronze dominant.",
+    "hull": "ONE original naval idle game upgrade icon, hull reinforcement: a compact curved section of an age-of-sail wooden ship hull, THREE broad warm chestnut oak planks curving into a pointed keel, held by TWO thick vertical blue-gray wrought iron straps with four clearly spaced bright rivets. A single exposed pale cut end shows solid timber thickness. Shield-like stout silhouette but clearly a ship-hull cross-section, no shield heraldry, no weapon, no ship scene. Reference images ONLY for refined pixel-art material style: saturated wood grain and dark iron, upper-left highlights, distinct discrete pixel shade clusters, crisp staircase contours, restrained dark navy outline, tactile dimensional depth. Three-quarter view, centered, generous transparent margins, intended native game image 128x128 with object 104px across and readable at 32px. TRUE transparent background, no ground or cast shadow, no border, no text, no letters, no numbers.",
+    "teeth": "ONE original game upgrade inventory icon: shark teeth, a single huge ivory triangular shark tooth with a broad blue-gray root and TWO much smaller triangular teeth nested behind at lower left and lower right. A slight coral-red crescent at the base suggests a living shark jaw, but dominant shape MUST be the one ivory triangle. No humanoid, no clothing, no necklace, no skull, no trident, no text or symbols. True transparent background, centered compact composition with generous margins, no ground or external shadow. Intended 128x128 sprite, readable at 32 pixels, object max 104px. Attached metal and tool images guide ONLY the fine 16/32-bit pixel-art craftsmanship: rich material colours, upper-left warm cream highlights, discrete shaded clusters, crisp stair-step contour, restrained deep navy outline. Cool pale blue shaded tooth sides, bright ivory front, muted blue-gray root, small coral accent. Tactile dimensional three-quarter view, independently designed silhouette.",
+    "logo": "Create ONE finished original bilingual game title wordmark on TRUE TRANSPARENT background, wide 10:3 composition (intended final 1200x360). Exact Traditional Chinese title top row: 「方舷放置」. Exact English title below: 「Sharkside」 (capital S then lowercase harkside). FOUR Traditional Chinese characters must be precisely legible, clean block letter shapes, NOT invented glyphs. English wide bold heavy nautical slab lettering, title centered. Refined crisp pixel-art typography with discrete stair-step bevels, deep navy outline, upper-left ivory highlights. Chinese row pale ivory with muted sea-blue shaded side planes; English row rich golden #ffd166 with warm copper shaded bevel. A small ORIGINAL blue-gray shark dorsal fin above the English S and a tiny turquoise wave underline integrate into the wordmark, no character mascot, no trident, no extra props. Strong legibility at 300px display width, clean transparent margins, avoid tiny decorative lines and excessive glow, no background panel, no gradient background, no border, no other words or numbers. Attached image only references pixel clusters and dimensional material shading; do not depict its objects."
+  },
+  "references": [
+    {
+      "path": "D:\\Unity\\Valhalla\\ArtGallery\\RawImages\\sirius_blocksail_goods_batch3_tools_master.png",
+      "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+    },
+    {
+      "path": "D:\\Unity\\Valhalla\\ArtGallery\\RawImages\\sirius_blocksail_goods_batch3_ironware_master.png",
+      "sha256": "74817e718645f7905310b85be998f7347a9172455813b2bb271c2b47c7e19b1e"
+    }
+  ],
+  "reference_roles": {
+    "app": [
+      "tools",
+      "ironware"
+    ],
+    "gun": [
+      "tools",
+      "ironware"
+    ],
+    "hull": [
+      "tools",
+      "ironware"
+    ],
+    "teeth": [
+      "tools",
+      "ironware"
+    ],
+    "logo": [
+      "tools"
+    ]
+  },
+  "sources": {
+    "app": {
+      "path": "art\\evidence\\style\\source\\app.png",
+      "sha256": "9b40552fe7dd25d4b2b610abbc12a787ca9d7527746c39422c9a2d5d1f7e3af7",
+      "size": [
+        1254,
+        1254
+      ]
+    },
+    "logo": {
+      "path": "art\\evidence\\style\\source\\logo.png",
+      "sha256": "047dc05bb2247a060636f4ca84dec02cc06dbcb4eb97400da3ae6548c738ab9b",
+      "size": [
+        2170,
+        725
+      ]
+    },
+    "gun": {
+      "path": "art\\evidence\\style\\source\\gun.png",
+      "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f",
+      "size": [
+        1254,
+        1254
+      ]
+    },
+    "hull": {
+      "path": "art\\evidence\\style\\source\\hull.png",
+      "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67",
+      "size": [
+        1254,
+        1254
+      ]
+    },
+    "teeth": {
+      "path": "art\\evidence\\style\\source\\teeth.png",
+      "sha256": "16e205c52d3b1aead44793c9c4d0de08517ade61b0706a90b54489482024ea57",
+      "size": [
+        1254,
+        1254
+      ]
+    }
+  },
+  "outputs": [
+    {
+      "path": "img\\app\\apple-touch-icon.png",
+      "sha256": "22b6687887b0e910461115169b1c1053b8c0f84ff93d78d8f2f065aff2b0de37",
+      "size": [
+        180,
+        180
+      ],
+      "alpha_values": [
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        180,
+        180
+      ]
+    },
+    {
+      "path": "img\\app\\icon-192.png",
+      "sha256": "88d7c44e93ab0a9d8ff942ccb784bc577edd64d6319f391abf5f7e6773eca65e",
+      "size": [
+        192,
+        192
+      ],
+      "alpha_values": [
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        192,
+        192
+      ]
+    },
+    {
+      "path": "img\\app\\icon-512.png",
+      "sha256": "dc132cb8b377b82e5ed5f1b2e9fae31d0d0fdce4a3c3e049a469017ee327ce09",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_values": [
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        512,
+        512
+      ]
+    },
+    {
+      "path": "img\\app\\favicon-32.png",
+      "sha256": "f885552f362ca977ea7b82dc9419c0b2ae3c5724c172d21d95b582ba91fead4e",
+      "size": [
+        32,
+        32
+      ],
+      "alpha_values": [
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        32,
+        32
+      ]
+    },
+    {
+      "path": "img\\app\\icon-maskable-512.png",
+      "sha256": "a5a7e29378ebbb21d3b76f694910df475ff00ec0ab6a71d2630f6b5788abad1c",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_values": [
+        255
+      ],
+      "bbox": [
+        0,
+        0,
+        512,
+        512
+      ]
+    },
+    {
+      "path": "img\\app\\logo.png",
+      "sha256": "3e7ef40bee6282b3b50e05ae769733bac40a0521284bb81bf2ca16a0b9aac83e",
+      "size": [
+        1200,
+        360
+      ],
+      "alpha_values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255
+      ],
+      "bbox": [
+        99,
+        22,
+        1115,
+        335
+      ]
+    },
+    {
+      "path": "img\\upg\\gun.png",
+      "sha256": "2a007cbd3fefd39b6321810936c07bb8371923072c8f437d244ebd47671213d6",
+      "size": [
+        128,
+        128
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "bbox": [
+        12,
+        21,
+        116,
+        107
+      ]
+    },
+    {
+      "path": "img\\upg\\hull.png",
+      "sha256": "021e8f1554b18c6103811b1d5ae5a16fb5d3dde83d2439960b884dd948e998b1",
+      "size": [
+        128,
+        128
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "bbox": [
+        12,
+        15,
+        116,
+        112
+      ]
+    },
+    {
+      "path": "img\\upg\\teeth.png",
+      "sha256": "8a613e6b78b0c7db56be43570478b7dd2b5376bab5547539cf8ef23080be0d8a",
+      "size": [
+        128,
+        128
+      ],
+      "alpha_values": [
+        0,
+        255
+      ],
+      "bbox": [
+        12,
+        12,
+        116,
+        115
+      ]
+    }
+  ],
+  "processing": "Mechanical nearest-neighbour resizing and alpha threshold 128 only. Generated transparent sources preserved. White masters are separate composites; app source is opaque.",
+  "maskable_safe_square": [
+    116,
+    116,
+    396,
+    396
+  ],
+  "maskable_max_corner_radius": 197.9898987322333,
+  "maskable_safe_radius": 204.8,
+  "pending": [
+    "Tim style approval",
+    "gura integration and iPhone home-screen check",
+    "fallback check after integration"
+  ]
+}
