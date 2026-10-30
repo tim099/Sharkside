@@ -88,7 +88,7 @@
   // ── 強化三選一（打下新的海域；20_econ.js perkRoll）──
   var pkShown = null, pkT = 0;
   function perkTxt(c) {
-    if (c.t === 'upg') { var u = I.upgDef(c.id); return { ico: u.ico, name: u.name + ' +' + c.n + ' 級', desc: '免費升級（Lv ' + I.lv(c.id) + ' → ' + (I.lv(c.id) + c.n) + '）<br>' + I.esc(u.desc) }; }
+    if (c.t === 'upg') { var u = I.upgDef(c.id); return { ico: I.img('upg/' + u.id, u.ico), name: u.name + ' +' + c.n + ' 級', desc: '免費升級（Lv ' + I.lv(c.id) + ' → ' + (I.lv(c.id) + c.n) + '）<br>' + I.esc(u.desc) }; }
     if (c.t === 'buff') { var b = I.buffDef(c.id); return { ico: b.ico, name: b.name, desc: I.esc(b.desc) + '<br>接下來 ' + c.n + ' 場' }; }
     if (c.t === 'loot') return { ico: '💰', name: '沉船寶藏', desc: '立刻 <b class="g">+' + I.fmt(c.amt) + '</b> 格' };
     if (c.t === 'cd') return { ico: '⚡', name: '鯊魚直覺', desc: '所有技能的冷卻立刻歸零' };
@@ -271,7 +271,7 @@
     value: function () { return '一格 ' + I.mulTxt(I.valueMul()); },
     bounty: function () { return '賞金 ' + I.mulTxt(I.bountyMul()); },
     fear: function () { return '死傷 ' + I.pct(I.strikeAt()) + ' 就降旗'; },
-    teeth: function () { return '咬 ' + I.biteR() + ' 格寬、' + I.mulTxt(I.biteMul()); }
+    teeth: function () { return '咬 ' + I.biteR() + ' 格寬、' + I.mulTxt(I.biteMul()) + '、蓄滿 ' + I.biteChargeT().toFixed(2) + ' 秒'; }
   };
   function pUpg(B) {
     var q = h('div', 'qty');
@@ -281,7 +281,7 @@
       var s = sec(B, t.name);
       I.UPG.filter(function (u) { return u.tab === t.id; }).forEach(function (u) {
         var L = I.lv(u.id), maxed = I.upgMaxed(u), n = qty === Infinity ? Math.max(1, I.upgAfford(u)) : qty, cost = I.upgCostN(u, n);
-        var r = h('div', 'row upg', '<span class="ico">' + u.ico + '</span><div class="mid"><b>' + u.name + '</b><span class="lv">Lv ' + L + (u.max ? ' / ' + u.max : '') + '</span><span class="spec">' + u.desc + '</span><span class="now">' + UPG_TXT[u.id]() + '</span></div>');
+        var r = h('div', 'row upg', '<span class="ico">' + I.img('upg/' + u.id, u.ico) + '</span><div class="mid"><b>' + u.name + '</b><span class="lv">Lv ' + L + (u.max ? ' / ' + u.max : '') + '</span><span class="spec">' + u.desc + '</span><span class="now">' + UPG_TXT[u.id]() + '</span></div>');
         if (maxed) r.appendChild(h('span', 'tag', '滿了'));
         else { var b = costBtn(cost, I.S.blocks >= cost, qty === 1 ? '' : '×' + n, function () { I.buyUpg(u.id, n); }); b.dataset.upg = u.id; b.dataset.n = n; r.appendChild(b); }
         s.appendChild(r);

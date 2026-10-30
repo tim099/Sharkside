@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-title" content="方舷放置 Sharkside">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="img/app/apple-touch-icon.png">
 <title>方舷放置 Sharkside</title>
 <style>
   :root{ --modeFs:13px; --ink:#f3ead8; --dim:#b9ae98; --gold:#e8c26a; --blue:#6f9bff; --red:#ff6f6f; --panel:rgba(14,18,24,.72); }
@@ -491,7 +491,7 @@
   #err button:disabled{ opacity:.5; cursor:default; }
   #err label.chk{ display:inline-flex; align-items:center; gap:6px; margin:8px 0 0; font-size:13px; }
 </style>
-<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "ad1378963bc9563f", "shell": "a1fb681c08d7"}};</script></head>
+<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "ad1378963bc9563f", "shell": "27f436074861"}};</script></head>
 <body>
 <!-- 擬真沙盒（84_fleetlab.js；?lab=fleet，根目錄 fleetlab.html 轉過來）：body.flab 才顯示；看實景（body.flab3d）時俯視圖藏起來、底下的遊戲畫布露出來 -->
 <div id="flab">
@@ -46362,6 +46362,11 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .row { display: flex; align-items: center; gap: 8px; padding: 7px 8px; margin: 4px 0; border-radius: 10px; background: rgba(255, 255, 255, .035); border: 1px solid transparent; }
 #bsi .row:hover { border-color: var(--line); }
 #bsi .row .ico { font-size: 20px; width: 26px; text-align: center; flex: none; }
+/* 正式美術（00_base.js I.img；精緻像素風 ⇒ 放大不糊）：跟著那一格的字級 */
+#bsi .bsi-img { display: inline-block; width: 1.5em; height: 1.5em; object-fit: contain; image-rendering: pixelated; vertical-align: middle; }
+#bsi .row .ico .bsi-img { width: 32px; height: 32px; margin: -4px -3px; }
+#bsi .title h1.logo-h { margin: 0 0 10px; letter-spacing: 0; }
+#bsi .title .bsi-img.logo { display: block; width: min(340px, 86%); height: auto; margin: 0 auto 2px; }
 #bsi .row .mid { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 6px; }
 #bsi .row .mid b { font-size: 13.5px; }
 #bsi .row .lv { color: var(--sea); font-size: 11px; }
@@ -46665,22 +46670,38 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   #bsi .cur { justify-content: flex-start; gap: 6px; }
   #bsi .res { padding: 3px 8px; } #bsi .res b { font-size: 17px; } #bsi .res .rate, #bsi .res .u, #bsi .mul { display: none; }   /* 375 寬：格數、碎片、四顆鍵擠一列 ⇒ 單位、收入倍率不放（⛔ 放了 ⇒ 鑽到速度鍵底下） */
   #bsi .btns button { padding: 4px 6px; font-size: 12px; }
-  #bsi .bsi-zone { top: auto; bottom: 92px; right: 6px; width: 200px; padding: 8px; font-size: 12px; }
-  #bsi .bsi-zone .ratio, #bsi .bsi-zone .dots { display: none; }
+  /* 下方一整條（Tim 2026-10-30：「把這個訊面板跟下方按鈕整合 整體縮在畫面下方 節省空間(手機板目前畫面空間吃緊)」）：
+   * 由下往上 技能鈕一列（--dk-ab）、蓄力條一列（--dk-ch）、海域資訊兩行，同一塊底色 ⇒ 看起來是一塊；說明那一行不放（電腦版才有） */
+  #bsi { --dk-b: 6px; --dk-ab: 48px; --dk-ch: 20px; }
+  #bsi .bsi-abil { left: 6px; right: 6px; bottom: var(--dk-b); transform: none; height: var(--dk-ab); justify-content: center; align-items: center; gap: 5px; padding: 0 6px; pointer-events: auto;
+    background: var(--panel); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 14px 14px; backdrop-filter: blur(6px); }
+  #bsi .bsi-abil .hint { display: none; }
+  #bsi .bsi-abil .chg { display: flex; bottom: 100%; left: -1px; right: -1px; transform: none; width: auto; height: var(--dk-ch); padding: 0 12px; border-radius: 0; border: 1px solid var(--line); border-top: 0; border-bottom: 0; background: var(--panel); }
+  #bsi .bsi-abil .chg:not(.on) > * { visibility: hidden; }
+  #bsi .chg.full, #bsi .chg.frz { box-shadow: none; border-color: var(--line); }
+  #bsi .bsi-zone { top: auto; left: 6px; right: 6px; width: auto; bottom: calc(var(--dk-b) + var(--dk-ab) + var(--dk-ch)); padding: 6px 10px 2px; font-size: 11px; border-bottom: 0; border-radius: 14px 14px 0 0;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; }
+  #bsi .bsi-zone .ratio, #bsi .bsi-zone .dots, #bsi .zmod span { display: none; }
+  #bsi .zh { gap: 6px; } #bsi .rico { font-size: 18px; } #bsi .zh > div { display: flex; align-items: baseline; gap: 6px; }
+  #bsi .rname { font-size: 11px; } #bsi .zn { font-size: 12px; } #bsi .zn b { font-size: 16px; } #bsi .zn .best { float: none; margin: 0 0 0 4px; }
+  #bsi .zmod { margin: 0; padding: 1px 6px; font-size: 11px; } #bsi .zmod b { margin: 0 0 0 3px; }
+  #bsi .bsi-zone .buffs { order: 1; margin: 0 0 0 auto; }   /* 增益放第一行最右邊（⛔ 照原本的順序 ⇒ 排在敵艦那一行後面，多佔一行） */
+  #bsi .zstat { order: 2; flex-basis: 100%; min-height: 0; font-size: 11px; color: var(--dim); }
+  #bsi .farm { order: 3; flex-basis: 100%; margin-top: 0; font-size: 10px; }
   #bsi .bsi-shop { left: 0; top: 0; width: 100%; height: 100%; border-radius: 0; border: 0; transform: translateY(3%); }
   #bsi .bsi-shop.on { transform: none; }
   #bsi .sh-head { padding: 10px 12px 8px; }
   #bsi .sh-head > b { font-size: 18px; }
   #bsi .sh-zone button { padding: 6px 8px; }
   #bsi .bsi-toasts { left: 6px; right: 6px; width: auto; bottom: auto; top: 96px; }
-  #bsi .bsi-abil { bottom: 8px; gap: 5px; }
-  #bsi .bsi-wpn { left: 6px; bottom: 92px; transform: scale(.9); min-width: 0; width: 160px; transform-origin: left bottom; }
-  #bsi .bsi-wpn.on { transform: none; }
+  #bsi .bsi-wpn { left: 50%; top: 58px; bottom: auto; min-width: 0; width: 230px; transform: translateX(-50%) scale(.9); transform-origin: center top; }   /* 下面那一條佔了 ⇒ 特殊武器、狂潮那一條放上面；兩條都有 ⇒ 狂潮往下一格 */
+  #bsi .bsi-wpn.on { transform: translateX(-50%); }
+  #bsi .bsi-wpn.on ~ .bsi-frz { top: 104px; }
   #bsi .bsi-wpn b { font-size: 12px; }
   #bsi .bsi-frz { left: 50%; top: 58px; bottom: auto; width: 230px; transform: translateX(-50%) scale(.9); transform-origin: center top; }
   #bsi .bsi-frz.on { transform: translateX(-50%); }
   #bsi .bsi-frzwave .wd { font-size: 32px; } #bsi .bsi-frzwave .wd small { font-size: 14px; }
-  #bsi .ab { width: 60px; height: 58px; } #bsi .ab .nm { font-size: 10px; } #bsi .ab .ico { font-size: 20px; }
+  #bsi .ab { flex: 1 1 0; flex-direction: row; gap: 3px; width: auto; min-width: 0; max-width: 96px; height: 38px; padding: 2px 4px; } #bsi .ab .nm { font-size: 11px; margin-top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } #bsi .ab .ico { font-size: 17px; flex: none; } #bsi .ab .key { display: none; }
   #bsi .bsi-banner { font-size: 20px; top: 18%; }
   #bsi .pk-cards { flex-direction: column; gap: 8px; }
   #bsi button.pk-card { display: grid; grid-template-columns: 44px 1fr; column-gap: 10px; row-gap: 2px; align-items: center; text-align: left; min-height: 0; padding: 10px 12px; }
@@ -46702,6 +46723,13 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   I.clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
   I.now = function () { return Date.now(); };
   I.pick = function (L) { return L[(Math.random() * L.length) | 0]; };
+  /** 正式美術（ART.md：img/<類>/<id>.png；有哪些圖照 05_img.js 的 I.IMG，build.py 掃 img/ 寫的）：有那張 ⇒ <img>；還沒畫 ⇒ fb（emoji 或 HTML）原樣回去（⇒ 不去要沒有的圖：不破圖、不 404）。
+   *  圖載入失敗（離線、網址錯）⇒ 換回 fb。網址帶內容雜湊（?v=）⇒ 換了圖不吃舊快取。 */
+  I.img = function (key, fb, cls) {
+    var v = I.IMG && I.IMG[key]; if (!v) return fb;
+    var a = String(fb).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/[<]/g, '&lt;').replace(/>/g, '&gt;');
+    return '<img class="bsi-img' + (cls ? ' ' + cls : '') + '" src="img/' + key + '.png?v=' + v + '" alt="" draggable="false" data-fb="' + a + '" onerror="this.outerHTML=this.dataset.fb">';
+  };
   I.esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/[<]/g, '&lt;').replace(/>/g, '&gt;'); };   // ⛔ 不寫成 /<\/g：admin.py shell 把內容裡的「<\/」換成「<\/」（免得提早關掉 script）⇒ 正規表示式就壞了
 
   // 大數字：照中文的萬進位（萬、億、兆、京…），再大就寫科學記號
@@ -46737,6 +46765,8 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   I.on = function (t, f) { (SUB[t] = SUB[t] || []).push(f); };
   I.emit = function (t, a, b, c) { (SUB[t] || []).forEach(function (f) { try { f(a, b, c); } catch (e) { console.error(e); } }); };
 })(window.BSI = window.BSI || {});
+</script><script data-shell="js/05_img.js">// 自動產生（build.py img_js）⛔ 不要手改：img/ 底下有哪些圖（ART.md）⇒ 00_base.js I.img 照它決定用圖還是 emoji；值 ＝ 內容雜湊前 8 碼（網址的 ?v=）
+window.BSI = window.BSI || {}; window.BSI.IMG = {"app/apple-touch-icon":"af27c14b","app/favicon-32":"d08fb1f9","app/icon-192":"6240b76f","app/icon-512":"a85b00f7","app/icon-maskable-512":"db16db2c","app/logo":"dc2a7ff9","upg/gun":"5c5736ed","upg/hull":"dc84329f","upg/teeth":"47e88a93"};
 </script><script data-shell="js/10_data.js">// ───────────────────────── 方舷放置：數值與內容表 ─────────────────────────
 // 調手感只改這一支：BAL 是所有公式的常數；海域、船、升級、深海科技、技能、成就都是表。
 (function (I) {
@@ -46772,7 +46802,8 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
     eFlood: 6, ePump: 0.4,
     eReload0: 7, eReloadMin: 3.6, eReloadPer: 0.012,
     myReload0: 5.5, myFlood: 0.7, myPump: 1.3,
-    strike0: 0.6, strikeMin: 0.25,   // 敵艦死傷到這個比例就降旗（骷髏旗升級往下壓）
+    strike0: 1.0, strikeMin: 0.5,    // 敵艦死傷到這個比例就降旗（骷髏旗升級往下壓：10 級 × 0.933 ⇒ 剛好 0.5）；Tim 2026-10-30：「初始可以是100%死傷才降旗」
+    //   ⛔ 以前最低壓到兩成五（骷髏旗 20 級 × 0.94，第 3 級就碰底）⇒ Tim 2026-10-30：「骷髏旗上限可以到50%就好 太快投降不好玩(因為追求的樂趣是Voxel破壞)」—— 增益、海況也壓不過五成
     dist: 70,                 // 開局兩邊船頭相距（m）
     timeout0: 150, timeoutPer: 45,   // 一場打多久還沒分出勝負就撤退（模擬秒）：底＋每艘敵艦
     hold: 4.5,                // 分出勝負之後再看幾秒（沉船）才換下一場
@@ -46803,6 +46834,8 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
     //   ⛔ 線性蓄力（biteCurve 1）⇒ 永遠是狂點划算（一口最短 0.25 秒 ⇒ 一秒四口 × 兩成就有 0.8 口全力，再加上蓄的那一點）；平方 ＋ 一秒蓄滿 ⇒ 狂點跟一秒一口全力差不多
     //   鯊魚狂潮的那幾秒蓄力一直是滿的（ABIL frenzy）⇒ 一秒四口全力 ＝ 以前狂點的威力
     biteCharge: 1.0, biteMin: 0.2, biteCurve: 2, biteFull: 0.92,
+    // 鯊魚利齒前 teethGrow 級：咬得更大（半徑 +1）、獎勵 ×1.25、特殊武器的噴火多團；再上去每一級蓄滿的時間 ×teethFast（30 級 ⇒ 0.95^15 ≈ 0.46 秒）
+    teethGrow: 15, teethFast: 0.95,
     // 軍火箱（35_loot.js 的漂流寶物多一種；一般的 armsP、黃金寶船 armsGold 的機率）：點一下撿才有（自動撿 ⇒ 沉下去了）⇒ 接下來那把武器的 dur 秒點敵艦換成它（I.WEAPONS）
     armsP: 0.16, armsGold: 0.2,
     wreckY: -12               // 沉沒了還在往下沉的船：水面下這麼深（公尺）以內還看得到、咬得到
@@ -46828,6 +46861,9 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
 
   /** 升級（花格）。tab：atk 攻擊／def 防禦／eco 經濟；eff：每一級的倍率；max 0 ＝ 沒上限。 */
   I.UPG = [
+    // 鯊魚利齒（Tim 2026-10-30：「鯊魚利齒應該放到攻擊分類 且放在最上面」「成長價格可以更高一點(現在太容易升滿了) 然後可以加更高的升級等級(後面等級可以加速蓄力)」）：
+    //   每一級漲 1.45 ⇒ 1.75、上限 15 ⇒ 30；前 BAL.teethGrow 級咬得更大、獎勵 ×eff，再上去只加快蓄力（20_econ.js biteChargeT）
+    { id: 'teeth', tab: 'atk', ico: '🦷', name: '鯊魚利齒', c0: 200, g: 1.75, max: 30, eff: 1.25, desc: '點敵艦哪裡就咬哪裡：咬得更大、咬下來的格 ×1.25；第 16 級起改成蓄力更快' },
     { id: 'gun', tab: 'atk', ico: '🎯', name: '砲術訓練', c0: 250, g: 1.25, max: 0, eff: 1.1, desc: '火力 ×1.1：砲彈更兇、洞更大、敵艦的船殼更脆' },
     { id: 'reload', tab: 'atk', ico: '⏱️', name: '裝填演練', c0: 600, g: 1.45, max: 24, eff: 0.95, desc: '裝填時間 ×0.95' },
     { id: 'powder', tab: 'atk', ico: '💥', name: '火藥專家', c0: 5000, g: 1.6, max: 15, eff: 0.88, desc: '敵艦的火藥桶更不耐打（更容易殉爆）、殉爆賞金 +20%' },
@@ -46836,8 +46872,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
     { id: 'sail', tab: 'def', ico: '⛵', name: '帆裝調校', c0: 2000, g: 1.65, max: 10, eff: 1.05, desc: '航速、靈活 ×1.05' },
     { id: 'value', tab: 'eco', ico: '🪙', name: '鑑價師', c0: 300, g: 1.5, max: 0, eff: 1.1, desc: '每一格的價值 ×1.1' },
     { id: 'bounty', tab: 'eco', ico: '🏴‍☠️', name: '賞金獵人', c0: 1000, g: 1.6, max: 0, eff: 1.15, desc: '擊沉、俘獲、殉爆的賞金 ×1.15' },
-    { id: 'fear', tab: 'eco', ico: '☠️', name: '骷髏旗', c0: 3000, g: 1.55, max: 20, eff: 0.94, desc: '敵艦死傷到更低的比例就降旗（俘獲賞金 ×1.5）' },
-    { id: 'teeth', tab: 'eco', ico: '🦷', name: '鯊魚利齒', c0: 200, g: 1.45, max: 15, eff: 1.25, desc: '點敵艦哪裡就咬哪裡：咬得更大、咬下來的格 ×1.25' }
+    { id: 'fear', tab: 'eco', ico: '☠️', name: '骷髏旗', c0: 3000, g: 1.55, max: 10, eff: 0.933, desc: '敵艦死傷到更低的比例就降旗（沒有骷髏旗要全員倒下才降；最低到五成；俘獲賞金 ×1.5）' }
   ];
   /** 物理模擬四檔（設定的「物理模擬」；C.phx 整組送過去）：值 ＝ 核心 09_phx.js PHX_ITEMS 那一項的第幾檔。照 Blockside 的四檔抄，模擬步長往下壓
    *  （Tim 2026-10-30：「物理模擬等級也可以開成可調整(目前會卡頓了)」「預設模擬步長也可以試著能調低點(以順暢遊戲優先)」）：step 0 ＝ 60 Hz、1 ＝ 30、2 ＝ 20、3 ＝ 15。
@@ -47072,11 +47107,13 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   I.valueMul = function () { return eff('value'); };
   I.bountyMul = function () { return eff('bounty'); };
   I.reloadT = function () { return B.myReload0 * eff('reload'); };
-  I.strikeAt = function () { return Math.max(0.15, Math.max(B.strikeMin, B.strike0 * eff('fear')) * I.bmul('fear')); };
+  I.strikeAt = function () { return Math.max(B.strikeMin, B.strike0 * eff('fear') * I.bmul('fear')); };   // 骷髏旗、增益、海況一起算，最低 strikeMin
   I.powderK = function () { return eff('powder'); };
   I.boomMul = function () { return 1 + 0.2 * I.lv('powder'); };
-  I.biteR = function () { return 5 + I.lv('teeth') + (I.bmul('bite') > 1 ? 3 : 0); };
-  I.biteMul = function () { return eff('teeth') * I.bmul('bite'); };
+  I.teethLv = function () { return Math.min(I.lv('teeth'), B.teethGrow); };   // 鯊魚利齒「咬得更大」的那幾級（再上去只加快蓄力）
+  I.biteR = function () { return 5 + I.teethLv() + (I.bmul('bite') > 1 ? 3 : 0); };
+  I.biteMul = function () { return Math.pow(I.upgDef('teeth').eff, I.teethLv()) * I.bmul('bite'); };
+  I.biteChargeT = function () { return B.biteCharge * Math.pow(B.teethFast, Math.max(0, I.lv('teeth') - B.teethGrow)); };   // 蓄滿要幾秒
   I.pumpK = function () { return eff('pump'); };
   I.floodK = function () { return Math.pow(0.96, I.lv('pump')); };
   I.sailK = function () { return eff('sail'); };
@@ -47531,7 +47568,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   /** 下一口的威力（0.2～1；BAL.biteCharge 那一段）：上一口之後自己蓄；鯊魚狂潮 ⇒ 一直是滿的。≥ BAL.biteFull 算蓄滿（連咬、暴擊、條上寫「全力」）。 */
   I.bitePow = function () {
     if (I.frenzyOn()) return 1;
-    var c = Math.min(1, Math.max(0, (I.now() - biteAt) / (B.biteCharge * 1000)));
+    var c = Math.min(1, Math.max(0, (I.now() - biteAt) / (I.biteChargeT() * 1000)));
     return B.biteMin + (1 - B.biteMin) * Math.pow(c, B.biteCurve);
   };
   /** o：{ at, dir }（核心 pick 的 p、d ⇒ 咬在那一點；cx、cy ＝ 點的那一點，演出放那裡）、{ big }（巨齒鯊：對著鏡頭那一舷的水線上一大口）；
@@ -47547,7 +47584,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
     var pw = o.big ? 1 : I.bitePow(), full = o.big || pw >= B.biteFull;
     var nc = o.big || !full ? I.comboNow() : now - comboT < B.comboGap * 1000 ? combo + 1 : 1, crit = !o.big && full && nc % B.comboCrit === 0;
     if (!o.big) biteAt = now;
-    var r = o.big ? 10 + I.lv('teeth') : Math.max(2, Math.round(I.biteR() * (crit ? 1.6 : 1) * Math.sqrt(pw)));
+    var r = o.big ? 10 + I.teethLv() : Math.max(2, Math.round(I.biteR() * (crit ? 1.6 : 1) * Math.sqrt(pw)));
     var res = o.at ? C.bite(sh, o.at, r, o.dir) : C.bite(sh, { fx: 0.2 + Math.random() * 0.6, side: 0, dz: o.big ? 0 : 1 }, r);
     if (!res) return 0;
     if (!o.big && full) { combo = nc; comboT = now; if (combo > I.S.st.comboMax) I.S.st.comboMax = combo; }
@@ -47632,7 +47669,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
     var tf = Math.hypot(to[0] - from[0], to[1] - from[1], to[2] - from[2]) / V, vel = sh.vel || [0, 0, 0];
     to = [to[0] + vel[0] * tf, to[1], to[2] + vel[2] * tf];             // 提前量：飛到那裡要 tf 秒（⛔ 照現在的位置打 ⇒ 船開走了、落在後面的海裡）
     if (fire) {                                                         // 鯊魚噴火：從水面噴出好幾團，散在那一點附近
-      for (var i = 0, n = W.n0 + Math.floor(L / 5); i < n; i++) C.shot(from, [to[0] + (Math.random() - 0.5) * 3, to[1] + (Math.random() - 0.5) * 1.5, to[2] + (Math.random() - 0.5) * 3], { kind: 'fire', v: V, dmg: dmg, owner: own, fx: i === 0 });
+      for (var i = 0, n = W.n0 + Math.floor(Math.min(L, B.teethGrow) / 5); i < n; i++) C.shot(from, [to[0] + (Math.random() - 0.5) * 3, to[1] + (Math.random() - 0.5) * 1.5, to[2] + (Math.random() - 0.5) * 3], { kind: 'fire', v: V, dmg: dmg, owner: own, fx: i === 0 });
     } else {                                                            // 天降砲擊：憑空生一顆
       C.shot(from, to, { kind: 'shell', v: V, m: Math.min(300, W.m0 * (1 + W.mL * L)), dmg: dmg, owner: own });
     }
@@ -48251,7 +48288,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   // ── 強化三選一（打下新的海域；20_econ.js perkRoll）──
   var pkShown = null, pkT = 0;
   function perkTxt(c) {
-    if (c.t === 'upg') { var u = I.upgDef(c.id); return { ico: u.ico, name: u.name + ' +' + c.n + ' 級', desc: '免費升級（Lv ' + I.lv(c.id) + ' → ' + (I.lv(c.id) + c.n) + '）<br>' + I.esc(u.desc) }; }
+    if (c.t === 'upg') { var u = I.upgDef(c.id); return { ico: I.img('upg/' + u.id, u.ico), name: u.name + ' +' + c.n + ' 級', desc: '免費升級（Lv ' + I.lv(c.id) + ' → ' + (I.lv(c.id) + c.n) + '）<br>' + I.esc(u.desc) }; }
     if (c.t === 'buff') { var b = I.buffDef(c.id); return { ico: b.ico, name: b.name, desc: I.esc(b.desc) + '<br>接下來 ' + c.n + ' 場' }; }
     if (c.t === 'loot') return { ico: '💰', name: '沉船寶藏', desc: '立刻 <b class="g">+' + I.fmt(c.amt) + '<\/b> 格' };
     if (c.t === 'cd') return { ico: '⚡', name: '鯊魚直覺', desc: '所有技能的冷卻立刻歸零' };
@@ -48434,7 +48471,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
     value: function () { return '一格 ' + I.mulTxt(I.valueMul()); },
     bounty: function () { return '賞金 ' + I.mulTxt(I.bountyMul()); },
     fear: function () { return '死傷 ' + I.pct(I.strikeAt()) + ' 就降旗'; },
-    teeth: function () { return '咬 ' + I.biteR() + ' 格寬、' + I.mulTxt(I.biteMul()); }
+    teeth: function () { return '咬 ' + I.biteR() + ' 格寬、' + I.mulTxt(I.biteMul()) + '、蓄滿 ' + I.biteChargeT().toFixed(2) + ' 秒'; }
   };
   function pUpg(B) {
     var q = h('div', 'qty');
@@ -48444,7 +48481,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
       var s = sec(B, t.name);
       I.UPG.filter(function (u) { return u.tab === t.id; }).forEach(function (u) {
         var L = I.lv(u.id), maxed = I.upgMaxed(u), n = qty === Infinity ? Math.max(1, I.upgAfford(u)) : qty, cost = I.upgCostN(u, n);
-        var r = h('div', 'row upg', '<span class="ico">' + u.ico + '<\/span><div class="mid"><b>' + u.name + '<\/b><span class="lv">Lv ' + L + (u.max ? ' / ' + u.max : '') + '<\/span><span class="spec">' + u.desc + '<\/span><span class="now">' + UPG_TXT[u.id]() + '<\/span><\/div>');
+        var r = h('div', 'row upg', '<span class="ico">' + I.img('upg/' + u.id, u.ico) + '<\/span><div class="mid"><b>' + u.name + '<\/b><span class="lv">Lv ' + L + (u.max ? ' / ' + u.max : '') + '<\/span><span class="spec">' + u.desc + '<\/span><span class="now">' + UPG_TXT[u.id]() + '<\/span><\/div>');
         if (maxed) r.appendChild(h('span', 'tag', '滿了'));
         else { var b = costBtn(cost, I.S.blocks >= cost, qty === 1 ? '' : '×' + n, function () { I.buyUpg(u.id, n); }); b.dataset.upg = u.id; b.dataset.n = n; r.appendChild(b); }
         s.appendChild(r);
@@ -48681,6 +48718,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   I.load();
   I.questFill();
   I.uiInit();
+  if (I.IMG && I.IMG['app/favicon-32']) { var fav = document.createElement('link'); fav.rel = 'icon'; fav.type = 'image/png'; fav.href = 'img/app/favicon-32.png?v=' + I.IMG['app/favicon-32']; document.head.appendChild(fav); }   // 分頁圖示（主畫面的在 shell.json icon、manifest）
   C.gfx(I.S.gfx); I.phxApply(); C.sound({ mute: I.S.mute, bgm: I.S.bgm });
   document.documentElement.classList.add('bsi-on');
 
@@ -48719,7 +48757,8 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   function title() {
     var S = I.S, M = I.modal('', true), first = !S.st.battles;
     M.className = 'bsi-modal title';
-    M.innerHTML = '<div class="logo">🦈<\/div><h1>方舷放置<small>Sharkside · 鯊魚艦隊的無盡海<\/small><\/h1>' +
+    M.innerHTML = (I.IMG && I.IMG['app/logo'] ? '<h1 class="logo-h">' + I.img('app/logo', '方舷放置', 'logo') + '<small>鯊魚艦隊的無盡海<\/small><\/h1>'   // 字標（TASK-1117）；載入失敗 ⇒ 換回字
+        : '<div class="logo">🦈<\/div><h1>方舷放置<small>Sharkside · 鯊魚艦隊的無盡海<\/small><\/h1>') +
       (first ? '<p>a~ 艦隊長，歡迎上船！這片海的每一艘船都是方塊一格一格雕出來的 —— 打掉一格就是一格 🧱。<br>升級砲術、造更大的船、一個海域一個海域打過去。打不過就退一步練練，本鯊魚會自己回去挑戰。<\/p>'
         : '<p>歡迎回來！現在在 <b>海域 ' + S.zone + '<\/b>（最遠 ' + S.maxZone + '），手上 <b>' + I.fmt(S.blocks) + '<\/b> 格。<\/p>') +
       (offl ? '<div class="offl">💤 妳不在的 <b>' + I.fmtTime(offl.sec) + '<\/b>，艦隊自己打了 <b class="g">+' + I.fmt(offl.gain) + '<\/b> 格<small>離線效率 ' + I.pct(I.offlineEff()) + '<\/small><\/div>' : '') +

@@ -225,7 +225,7 @@
   /** 下一口的威力（0.2～1；BAL.biteCharge 那一段）：上一口之後自己蓄；鯊魚狂潮 ⇒ 一直是滿的。≥ BAL.biteFull 算蓄滿（連咬、暴擊、條上寫「全力」）。 */
   I.bitePow = function () {
     if (I.frenzyOn()) return 1;
-    var c = Math.min(1, Math.max(0, (I.now() - biteAt) / (B.biteCharge * 1000)));
+    var c = Math.min(1, Math.max(0, (I.now() - biteAt) / (I.biteChargeT() * 1000)));
     return B.biteMin + (1 - B.biteMin) * Math.pow(c, B.biteCurve);
   };
   /** o：{ at, dir }（核心 pick 的 p、d ⇒ 咬在那一點；cx、cy ＝ 點的那一點，演出放那裡）、{ big }（巨齒鯊：對著鏡頭那一舷的水線上一大口）；
@@ -241,7 +241,7 @@
     var pw = o.big ? 1 : I.bitePow(), full = o.big || pw >= B.biteFull;
     var nc = o.big || !full ? I.comboNow() : now - comboT < B.comboGap * 1000 ? combo + 1 : 1, crit = !o.big && full && nc % B.comboCrit === 0;
     if (!o.big) biteAt = now;
-    var r = o.big ? 10 + I.lv('teeth') : Math.max(2, Math.round(I.biteR() * (crit ? 1.6 : 1) * Math.sqrt(pw)));
+    var r = o.big ? 10 + I.teethLv() : Math.max(2, Math.round(I.biteR() * (crit ? 1.6 : 1) * Math.sqrt(pw)));
     var res = o.at ? C.bite(sh, o.at, r, o.dir) : C.bite(sh, { fx: 0.2 + Math.random() * 0.6, side: 0, dz: o.big ? 0 : 1 }, r);
     if (!res) return 0;
     if (!o.big && full) { combo = nc; comboT = now; if (combo > I.S.st.comboMax) I.S.st.comboMax = combo; }
@@ -326,7 +326,7 @@
     var tf = Math.hypot(to[0] - from[0], to[1] - from[1], to[2] - from[2]) / V, vel = sh.vel || [0, 0, 0];
     to = [to[0] + vel[0] * tf, to[1], to[2] + vel[2] * tf];             // 提前量：飛到那裡要 tf 秒（⛔ 照現在的位置打 ⇒ 船開走了、落在後面的海裡）
     if (fire) {                                                         // 鯊魚噴火：從水面噴出好幾團，散在那一點附近
-      for (var i = 0, n = W.n0 + Math.floor(L / 5); i < n; i++) C.shot(from, [to[0] + (Math.random() - 0.5) * 3, to[1] + (Math.random() - 0.5) * 1.5, to[2] + (Math.random() - 0.5) * 3], { kind: 'fire', v: V, dmg: dmg, owner: own, fx: i === 0 });
+      for (var i = 0, n = W.n0 + Math.floor(Math.min(L, B.teethGrow) / 5); i < n; i++) C.shot(from, [to[0] + (Math.random() - 0.5) * 3, to[1] + (Math.random() - 0.5) * 1.5, to[2] + (Math.random() - 0.5) * 3], { kind: 'fire', v: V, dmg: dmg, owner: own, fx: i === 0 });
     } else {                                                            // 天降砲擊：憑空生一顆
       C.shot(from, to, { kind: 'shell', v: V, m: Math.min(300, W.m0 * (1 + W.mL * L)), dmg: dmg, owner: own });
     }

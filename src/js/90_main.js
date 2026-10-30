@@ -13,6 +13,7 @@
   I.load();
   I.questFill();
   I.uiInit();
+  if (I.IMG && I.IMG['app/favicon-32']) { var fav = document.createElement('link'); fav.rel = 'icon'; fav.type = 'image/png'; fav.href = 'img/app/favicon-32.png?v=' + I.IMG['app/favicon-32']; document.head.appendChild(fav); }   // 分頁圖示（主畫面的在 shell.json icon、manifest）
   C.gfx(I.S.gfx); I.phxApply(); C.sound({ mute: I.S.mute, bgm: I.S.bgm });
   document.documentElement.classList.add('bsi-on');
 
@@ -51,7 +52,8 @@
   function title() {
     var S = I.S, M = I.modal('', true), first = !S.st.battles;
     M.className = 'bsi-modal title';
-    M.innerHTML = '<div class="logo">🦈</div><h1>方舷放置<small>Sharkside · 鯊魚艦隊的無盡海</small></h1>' +
+    M.innerHTML = (I.IMG && I.IMG['app/logo'] ? '<h1 class="logo-h">' + I.img('app/logo', '方舷放置', 'logo') + '<small>鯊魚艦隊的無盡海</small></h1>'   // 字標（TASK-1117）；載入失敗 ⇒ 換回字
+        : '<div class="logo">🦈</div><h1>方舷放置<small>Sharkside · 鯊魚艦隊的無盡海</small></h1>') +
       (first ? '<p>a~ 艦隊長，歡迎上船！這片海的每一艘船都是方塊一格一格雕出來的 —— 打掉一格就是一格 🧱。<br>升級砲術、造更大的船、一個海域一個海域打過去。打不過就退一步練練，本鯊魚會自己回去挑戰。</p>'
         : '<p>歡迎回來！現在在 <b>海域 ' + S.zone + '</b>（最遠 ' + S.maxZone + '），手上 <b>' + I.fmt(S.blocks) + '</b> 格。</p>') +
       (offl ? '<div class="offl">💤 妳不在的 <b>' + I.fmtTime(offl.sec) + '</b>，艦隊自己打了 <b class="g">+' + I.fmt(offl.gain) + '</b> 格<small>離線效率 ' + I.pct(I.offlineEff()) + '</small></div>' : '') +

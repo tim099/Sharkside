@@ -101,6 +101,11 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .row { display: flex; align-items: center; gap: 8px; padding: 7px 8px; margin: 4px 0; border-radius: 10px; background: rgba(255, 255, 255, .035); border: 1px solid transparent; }
 #bsi .row:hover { border-color: var(--line); }
 #bsi .row .ico { font-size: 20px; width: 26px; text-align: center; flex: none; }
+/* 正式美術（00_base.js I.img；精緻像素風 ⇒ 放大不糊）：跟著那一格的字級 */
+#bsi .bsi-img { display: inline-block; width: 1.5em; height: 1.5em; object-fit: contain; image-rendering: pixelated; vertical-align: middle; }
+#bsi .row .ico .bsi-img { width: 32px; height: 32px; margin: -4px -3px; }
+#bsi .title h1.logo-h { margin: 0 0 10px; letter-spacing: 0; }
+#bsi .title .bsi-img.logo { display: block; width: min(340px, 86%); height: auto; margin: 0 auto 2px; }
 #bsi .row .mid { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 6px; }
 #bsi .row .mid b { font-size: 13.5px; }
 #bsi .row .lv { color: var(--sea); font-size: 11px; }
@@ -404,22 +409,38 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   #bsi .cur { justify-content: flex-start; gap: 6px; }
   #bsi .res { padding: 3px 8px; } #bsi .res b { font-size: 17px; } #bsi .res .rate, #bsi .res .u, #bsi .mul { display: none; }   /* 375 寬：格數、碎片、四顆鍵擠一列 ⇒ 單位、收入倍率不放（⛔ 放了 ⇒ 鑽到速度鍵底下） */
   #bsi .btns button { padding: 4px 6px; font-size: 12px; }
-  #bsi .bsi-zone { top: auto; bottom: 92px; right: 6px; width: 200px; padding: 8px; font-size: 12px; }
-  #bsi .bsi-zone .ratio, #bsi .bsi-zone .dots { display: none; }
+  /* 下方一整條（Tim 2026-10-30：「把這個訊面板跟下方按鈕整合 整體縮在畫面下方 節省空間(手機板目前畫面空間吃緊)」）：
+   * 由下往上 技能鈕一列（--dk-ab）、蓄力條一列（--dk-ch）、海域資訊兩行，同一塊底色 ⇒ 看起來是一塊；說明那一行不放（電腦版才有） */
+  #bsi { --dk-b: 6px; --dk-ab: 48px; --dk-ch: 20px; }
+  #bsi .bsi-abil { left: 6px; right: 6px; bottom: var(--dk-b); transform: none; height: var(--dk-ab); justify-content: center; align-items: center; gap: 5px; padding: 0 6px; pointer-events: auto;
+    background: var(--panel); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 14px 14px; backdrop-filter: blur(6px); }
+  #bsi .bsi-abil .hint { display: none; }
+  #bsi .bsi-abil .chg { display: flex; bottom: 100%; left: -1px; right: -1px; transform: none; width: auto; height: var(--dk-ch); padding: 0 12px; border-radius: 0; border: 1px solid var(--line); border-top: 0; border-bottom: 0; background: var(--panel); }
+  #bsi .bsi-abil .chg:not(.on) > * { visibility: hidden; }
+  #bsi .chg.full, #bsi .chg.frz { box-shadow: none; border-color: var(--line); }
+  #bsi .bsi-zone { top: auto; left: 6px; right: 6px; width: auto; bottom: calc(var(--dk-b) + var(--dk-ab) + var(--dk-ch)); padding: 6px 10px 2px; font-size: 11px; border-bottom: 0; border-radius: 14px 14px 0 0;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; }
+  #bsi .bsi-zone .ratio, #bsi .bsi-zone .dots, #bsi .zmod span { display: none; }
+  #bsi .zh { gap: 6px; } #bsi .rico { font-size: 18px; } #bsi .zh > div { display: flex; align-items: baseline; gap: 6px; }
+  #bsi .rname { font-size: 11px; } #bsi .zn { font-size: 12px; } #bsi .zn b { font-size: 16px; } #bsi .zn .best { float: none; margin: 0 0 0 4px; }
+  #bsi .zmod { margin: 0; padding: 1px 6px; font-size: 11px; } #bsi .zmod b { margin: 0 0 0 3px; }
+  #bsi .bsi-zone .buffs { order: 1; margin: 0 0 0 auto; }   /* 增益放第一行最右邊（⛔ 照原本的順序 ⇒ 排在敵艦那一行後面，多佔一行） */
+  #bsi .zstat { order: 2; flex-basis: 100%; min-height: 0; font-size: 11px; color: var(--dim); }
+  #bsi .farm { order: 3; flex-basis: 100%; margin-top: 0; font-size: 10px; }
   #bsi .bsi-shop { left: 0; top: 0; width: 100%; height: 100%; border-radius: 0; border: 0; transform: translateY(3%); }
   #bsi .bsi-shop.on { transform: none; }
   #bsi .sh-head { padding: 10px 12px 8px; }
   #bsi .sh-head > b { font-size: 18px; }
   #bsi .sh-zone button { padding: 6px 8px; }
   #bsi .bsi-toasts { left: 6px; right: 6px; width: auto; bottom: auto; top: 96px; }
-  #bsi .bsi-abil { bottom: 8px; gap: 5px; }
-  #bsi .bsi-wpn { left: 6px; bottom: 92px; transform: scale(.9); min-width: 0; width: 160px; transform-origin: left bottom; }
-  #bsi .bsi-wpn.on { transform: none; }
+  #bsi .bsi-wpn { left: 50%; top: 58px; bottom: auto; min-width: 0; width: 230px; transform: translateX(-50%) scale(.9); transform-origin: center top; }   /* 下面那一條佔了 ⇒ 特殊武器、狂潮那一條放上面；兩條都有 ⇒ 狂潮往下一格 */
+  #bsi .bsi-wpn.on { transform: translateX(-50%); }
+  #bsi .bsi-wpn.on ~ .bsi-frz { top: 104px; }
   #bsi .bsi-wpn b { font-size: 12px; }
   #bsi .bsi-frz { left: 50%; top: 58px; bottom: auto; width: 230px; transform: translateX(-50%) scale(.9); transform-origin: center top; }
   #bsi .bsi-frz.on { transform: translateX(-50%); }
   #bsi .bsi-frzwave .wd { font-size: 32px; } #bsi .bsi-frzwave .wd small { font-size: 14px; }
-  #bsi .ab { width: 60px; height: 58px; } #bsi .ab .nm { font-size: 10px; } #bsi .ab .ico { font-size: 20px; }
+  #bsi .ab { flex: 1 1 0; flex-direction: row; gap: 3px; width: auto; min-width: 0; max-width: 96px; height: 38px; padding: 2px 4px; } #bsi .ab .nm { font-size: 11px; margin-top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } #bsi .ab .ico { font-size: 17px; flex: none; } #bsi .ab .key { display: none; }
   #bsi .bsi-banner { font-size: 20px; top: 18%; }
   #bsi .pk-cards { flex-direction: column; gap: 8px; }
   #bsi button.pk-card { display: grid; grid-template-columns: 44px 1fr; column-gap: 10px; row-gap: 2px; align-items: center; text-align: left; min-height: 0; padding: 10px 12px; }

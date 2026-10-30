@@ -1,15 +1,19 @@
 """Sharkside（方舷放置）的建置：拿 Blockside 建好的成品（海戰核心）套 src/ 的外殼寫成 index.html，船檔、用到的海圖、圖示照抄一份
 ⇒ 這個資料夾整個就是網站（GitHub Pages：Deploy from a branch，main／根目錄）。
 
-  python -I build.py --core <Blockside 的工作副本>           建：index.html、ships/、maps/、icons/
+  python -I build.py --core <Blockside 的工作副本>           建：src/js/05_img.js、index.html、ships/、maps/
   python -I build.py --core <Blockside 的工作副本> --check   只比、不寫：跟那一份核心、src/ 對不上 ⇒ exit 1
 
 · 核心要有外殼 API（Blockside 的 src/js/91_shellapi.js；說明在它的 src/CORE_API.md §7）。
 · 套頁本身是 Blockside 的 admin.py shell：src/shell.json 沒寫 core ⇒ 套跑它的那一份的 index.html。
 · 船檔照抄整個 ships/（入口記著船檔清單與雜湊，兩邊要是同一次建置的）；海圖只抄 src/js/10_data.js 的海域表寫到的（核心從頁面旁邊讀 maps/<名字>/）。
+· 正式美術在 img/（ART.md）：先把 img/ 底下有哪些 png（git 追蹤的：還沒提交的不算）寫成 src/js/05_img.js（BSI.IMG ＝ { '<類>/<id>': 內容雜湊前 8 碼 }），遊戲照它決定用圖還是 emoji
+  ⇒ 還沒畫的不去要（不破圖、不 404）；換了圖 ⇒ 網址的 ?v= 跟著變（GitHub Pages 不吃舊快取）。圖示（App、主畫面）也在 img/app/，⛔ 不再抄核心的 icons/。
 """
 import argparse
 import filecmp
+import hashlib
+import json
 import os
 import re
 import shutil
@@ -18,8 +22,27 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, 'src')
-MANAGED = ('ships', 'maps', 'icons')                                 # 這三個資料夾整個照核心那一份（多的刪掉）
-ICONS = ('apple-touch-icon.png',)
+MANAGED = ('ships', 'maps')                                          # 這兩個資料夾整個照核心那一份（多的刪掉）
+IMG_JS = os.path.join(SRC, 'js', '05_img.js')
+
+
+def img_files():
+    """img/ 底下 git 追蹤的檔（相對於 img/）：⛔ 不照資料夾掃 ⇒ 別人還沒提交的圖會跑進這一次的成品（GitHub 上沒有那張 ⇒ 404）。不是 git 的工作副本 ⇒ 照資料夾。"""
+    p = subprocess.run(['git', '-C', HERE, 'ls-files', '-z', '--', 'img'], capture_output=True)
+    if p.returncode != 0:
+        d = os.path.join(HERE, 'img')
+        return sorted(files_under(d)) if os.path.isdir(d) else []
+    return sorted(f[4:] for f in p.stdout.decode('utf-8').split('\0') if f.startswith('img/') and os.path.isfile(os.path.join(HERE, f)))
+
+
+def img_js():
+    """img/ 底下的 png（git 追蹤的）⇒ 05_img.js 的全文（照路徑排序 ⇒ 同一批圖每次寫出來一樣）。"""
+    d, M = os.path.join(HERE, 'img'), {}
+    for r in img_files():
+        if r.endswith('.png'):
+            M[r[:-4]] = hashlib.sha1(open(os.path.join(d, r), 'rb').read()).hexdigest()[:8]
+    return ('// 自動產生（build.py img_js）⛔ 不要手改：img/ 底下有哪些圖（ART.md）⇒ 00_base.js I.img 照它決定用圖還是 emoji；值 ＝ 內容雜湊前 8 碼（網址的 ?v=）\n'
+            'window.BSI = window.BSI || {}; window.BSI.IMG = ' + json.dumps(M, ensure_ascii=False, sort_keys=True, separators=(',', ':')) + ';\n')
 
 
 def maps_used():
@@ -52,8 +75,6 @@ def want(core):
             for f in fs:
                 p = os.path.join(root, f)
                 W[os.path.relpath(p, core).replace(os.sep, '/')] = p
-    for f in ICONS:
-        W['icons/' + f] = os.path.join(core, 'icons', f)
     return W
 
 
@@ -96,6 +117,18 @@ def main():
     if not os.path.isfile(os.path.join(core, 'src', 'js', '91_shellapi.js')):
         sys.exit('✗ %s 的核心沒有外殼 API（src/js/91_shellapi.js）' % core)
     bad = False
+    # ⓪ 圖的清單（套頁之前：它是外殼的一支 js）
+    t = img_js()
+    old = open(IMG_JS, encoding='utf-8', newline='').read() if os.path.isfile(IMG_JS) else None
+    n = t.count('":"')
+    if old == t:
+        print('✓ src/js/05_img.js 是最新的（img/ %d 張）' % n)
+    elif o.check:
+        bad = True
+        print('✗ src/js/05_img.js 跟 img/ 對不上 ⇒ python -I build.py --core …（不帶 --check）')
+    else:
+        open(IMG_JS, 'w', encoding='utf-8', newline='\n').write(t)
+        print('✓ 寫了 src/js/05_img.js（img/ %d 張）' % n)
     # ① 套頁（Blockside 的 admin.py shell；它自己比得出舊了沒）
     p = subprocess.run([sys.executable, '-I', admin, 'shell', os.path.join(SRC, 'shell.json')] + (['--check'] if o.check else []),
                        capture_output=True, text=True, encoding='utf-8', errors='replace')
@@ -110,9 +143,9 @@ def main():
             bad = True
             print('✗ 抄來的檔跟核心對不上：%s' % '、'.join(diff[:8] + [x + '（多的）' for x in extra[:8]]) + ('…' if len(diff) + len(extra) > 16 else ''))
         else:
-            print('✓ ships/、maps/（%s）、icons/ 跟核心一樣（%d 個檔）' % ('、'.join(nm), len(W)))
+            print('✓ ships/、maps/（%s）跟核心一樣（%d 個檔）' % ('、'.join(nm), len(W)))
     else:
-        print('✓ ships/、maps/（%s）、icons/：%d 個檔，這次換了 %d 個、刪了 %d 個' % ('、'.join(nm), len(W), len(diff), len(extra)))
+        print('✓ ships/、maps/（%s）：%d 個檔，這次換了 %d 個、刪了 %d 個' % ('、'.join(nm), len(W), len(diff), len(extra)))
     if not os.path.isfile(os.path.join(HERE, '.nojekyll')):
         print('⚠ 少了 .nojekyll（GitHub Pages 會先跑 Jekyll）')
     sys.exit(1 if bad else 0)

@@ -2,10 +2,10 @@
   "out": "../index.html",
   "title": "方舷放置 Sharkside",
   "ships": "",
-  "icon": "icons/apple-touch-icon.png",
+  "icon": "img/app/apple-touch-icon.png",
   "manifest": "manifest.webmanifest",
   "css": ["idle.css"],
-  "js": ["js/00_base.js", "js/10_data.js", "js/20_econ.js", "js/30_battle.js", "js/35_loot.js", "js/40_fx.js", "js/45_quest.js", "js/50_ui.js", "js/90_main.js"],
+  "js": ["js/00_base.js", "js/05_img.js", "js/10_data.js", "js/20_econ.js", "js/30_battle.js", "js/35_loot.js", "js/40_fx.js", "js/45_quest.js", "js/50_ui.js", "js/90_main.js"],
   "opt": {
     "api": true,
     "q": { "prefs": "0", "mode": "eve", "blue": "flyingfish", "red": "swallow" }

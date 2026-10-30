@@ -9,6 +9,13 @@
   I.clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
   I.now = function () { return Date.now(); };
   I.pick = function (L) { return L[(Math.random() * L.length) | 0]; };
+  /** 正式美術（ART.md：img/<類>/<id>.png；有哪些圖照 05_img.js 的 I.IMG，build.py 掃 img/ 寫的）：有那張 ⇒ <img>；還沒畫 ⇒ fb（emoji 或 HTML）原樣回去（⇒ 不去要沒有的圖：不破圖、不 404）。
+   *  圖載入失敗（離線、網址錯）⇒ 換回 fb。網址帶內容雜湊（?v=）⇒ 換了圖不吃舊快取。 */
+  I.img = function (key, fb, cls) {
+    var v = I.IMG && I.IMG[key]; if (!v) return fb;
+    var a = String(fb).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/[<]/g, '&lt;').replace(/>/g, '&gt;');
+    return '<img class="bsi-img' + (cls ? ' ' + cls : '') + '" src="img/' + key + '.png?v=' + v + '" alt="" draggable="false" data-fb="' + a + '" onerror="this.outerHTML=this.dataset.fb">';
+  };
   I.esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/[<]/g, '&lt;').replace(/>/g, '&gt;'); };   // ⛔ 不寫成 /</g：admin.py shell 把內容裡的「</」換成「<\/」（免得提早關掉 script）⇒ 正規表示式就壞了
 
   // 大數字：照中文的萬進位（萬、億、兆、京…），再大就寫科學記號

@@ -65,11 +65,13 @@
   I.valueMul = function () { return eff('value'); };
   I.bountyMul = function () { return eff('bounty'); };
   I.reloadT = function () { return B.myReload0 * eff('reload'); };
-  I.strikeAt = function () { return Math.max(0.15, Math.max(B.strikeMin, B.strike0 * eff('fear')) * I.bmul('fear')); };
+  I.strikeAt = function () { return Math.max(B.strikeMin, B.strike0 * eff('fear') * I.bmul('fear')); };   // 骷髏旗、增益、海況一起算，最低 strikeMin
   I.powderK = function () { return eff('powder'); };
   I.boomMul = function () { return 1 + 0.2 * I.lv('powder'); };
-  I.biteR = function () { return 5 + I.lv('teeth') + (I.bmul('bite') > 1 ? 3 : 0); };
-  I.biteMul = function () { return eff('teeth') * I.bmul('bite'); };
+  I.teethLv = function () { return Math.min(I.lv('teeth'), B.teethGrow); };   // 鯊魚利齒「咬得更大」的那幾級（再上去只加快蓄力）
+  I.biteR = function () { return 5 + I.teethLv() + (I.bmul('bite') > 1 ? 3 : 0); };
+  I.biteMul = function () { return Math.pow(I.upgDef('teeth').eff, I.teethLv()) * I.bmul('bite'); };
+  I.biteChargeT = function () { return B.biteCharge * Math.pow(B.teethFast, Math.max(0, I.lv('teeth') - B.teethGrow)); };   // 蓄滿要幾秒
   I.pumpK = function () { return eff('pump'); };
   I.floodK = function () { return Math.pow(0.96, I.lv('pump')); };
   I.sailK = function () { return eff('sail'); };

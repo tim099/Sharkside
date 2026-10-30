@@ -15,7 +15,9 @@
 
 ## 2. 每一類的規格
 
-遊戲讀 `img/<類>/<id>.png`，**檔名 ＝ 遊戲資料表裡的 id**（`src/js/10_data.js`），一字不差。⛔ 不放進 `icons/`：那個資料夾是 `build.py` 從核心照抄的，多的會被刪掉。
+遊戲讀 `img/<類>/<id>.png`，**檔名 ＝ 遊戲資料表裡的 id**，一字不差（`src/js/10_data.js`）。
+
+- `build.py` 把 `img/` 底下 git 追蹤的 png 寫成 `src/js/05_img.js` 這份清單，遊戲照清單決定用圖還是 emoji。⇒ **圖要先提交、再重建**，才會換上；還沒提交的圖不會跑進成品。
 
 | 類 | 路徑 | 畫布 | 顯示大小 | id（數量） |
 |---|---|---|---|---|
@@ -49,7 +51,7 @@
 
 - 一張 1024×1024 原稿縮出：`apple-touch-icon` 180、`icon-192`、`icon-512`、`favicon-32`（縮小時重新整理像素，不要直接糊縮）。
 - `icon-maskable-512`：主體在中間 80% 的圓裡（Android 會裁成圓、方、水滴）、背景鋪滿不透明的深海藍。
-- 接上之後 `src/shell.json` 的 `icon` 與 `manifest.webmanifest` 的 `icons` 改指 `img/app/`（接圖的人做）。
+- 已經接上（TASK-1117）：主畫面圖示是 `src/shell.json` 的 `icon` 加上 `manifest.webmanifest` 的 `icons`，分頁圖示由 `90_main.js` 掛上，三者都指 `img/app/`。換圖只要換檔、提交、重建。
 
 ## 4. 原稿、證據、藝廊
 

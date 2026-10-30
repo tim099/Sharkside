@@ -39,7 +39,9 @@
 | 檔 | 管什麼 |
 |---|---|
 | `index.html` | 成品（⛔ 不要直接改；`build.py` 產生） |
-| `ships/`、`maps/`、`icons/` | 從核心照抄（船檔、用到的海圖、圖示；`build.py` 管，多的刪掉） |
+| `ships/`、`maps/` | 從核心照抄（船檔、用到的海圖；`build.py` 管，多的刪掉） |
+| `img/` | 正式美術（規格 `ART.md`）：App 圖示與字標在 `img/app/`，其他 `img/<類>/<id>.png` |
+| `src/js/05_img.js` | ⛔ `build.py` 產生：`img/` 底下 git 追蹤的圖＋內容雜湊（`I.img` 照它決定用圖還是 emoji，網址帶 `?v=`） |
 | `manifest.webmanifest` | 網頁 App 資訊（加入主畫面 ⇒ 全螢幕；外殼設定的 `manifest`）。iPhone 的 Safari 不給網頁全螢幕 ⇒「分享」→「加入主畫面」，從圖示開 |
 | `src/shell.json` | 外殼設定（Blockside 的 `admin.py shell`）：寫到 `../index.html`、`opt.q` 預設網址參數、`opt.api` 開外殼 API |
 | `src/idle.css` | 樣式；把核心的主選單、HUD 藏起來 |
