@@ -35,6 +35,18 @@
   window.addEventListener('keyup', function (e) { if (!/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) e.stopImmediatePropagation(); }, true);
   // 拖鏡頭 ⇒ 自動運鏡讓開；第一次點 ⇒ 開聲音
   document.addEventListener('pointerdown', function (e) { if (e.target && e.target.id === 'cv') I.camUser(); C.resume(); }, true);
+  // 按住的武器（高壓水柱；30_battle.js jetStart）：在畫面上按下 ⇒ 這一指歸水柱，核心收不到（不轉鏡頭、放開也不算點一下）；拖 ⇒ 跟著走；放開、取消 ⇒ 停
+  //   ⛔ 第二指照樣給核心（兩指縮放）；右鍵照樣給核心（平移）
+  var jetPid = null;
+  document.addEventListener('pointerdown', function (e) {
+    if (!e.target || e.target.id !== 'cv' || e.button !== 0 || jetPid !== null) return;
+    var W = I.weaponOn(); if (!W || !W.hold || !I.jetStart(e.clientX, e.clientY)) return;
+    jetPid = e.pointerId; e.stopPropagation(); e.preventDefault();
+    try { e.target.setPointerCapture(e.pointerId); } catch (x) { /* 抓不到也照樣噴 */ }
+  }, true);
+  document.addEventListener('pointermove', function (e) { if (e.pointerId !== jetPid) return; I.jetMove(e.clientX, e.clientY); e.stopPropagation(); }, true);
+  ['pointerup', 'pointercancel'].forEach(function (k) { document.addEventListener(k, function (e) { if (e.pointerId !== jetPid) return; jetPid = null; I.jetEnd(); e.stopPropagation(); }, true); });
+  I.on('jet', function (on) { if (!on) jetPid = null; });               // 時間到、場打完 ⇒ 這一指還按著也放掉
 
   // ── 換海圖：存檔、帶著網址重新載入，載好直接接著打 ──
   I.on('reload', function (Z) {

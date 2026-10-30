@@ -35,7 +35,7 @@
   I.startZone = function (N) {
     var S = I.S, Z = I.zone(N), M = mapNow(), seq = ++BT.seq;
     if (Z.map !== M.map || (Z.map && Z.site !== M.site)) { BT.phase = 'reload'; I.emit('reload', Z); return; }
-    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false; BT.kegs = []; BT.mines = []; BT.pupAt = 0; BT.pupPend = null;
+    BT.phase = 'loading'; BT.Z = Z; BT.result = null; BT.income = 0; BT.kills = []; BT.bossSeen = false; BT.kegs = []; BT.mines = []; BT.pupAt = 0; BT.pupPend = null; BT.jet = null;
     var mine = S.fleet.filter(function (id) { return S.own[id] && I.cardOf(id); }).slice(0, S.slots);
     if (!mine.length) mine = ['flyingfish'];
     I.emit('zoneLoad', Z);
@@ -88,6 +88,7 @@
   I.battleTick = function () {
     if (BT.phase !== 'fight' && BT.phase !== 'hold') return;
     kegTick();
+    jetTick();
     if (BT.phase === 'fight') pupTick();
     var Z = BT.Z, ships = C.ships(), st = C.state(), now = I.now(), vm = I.valueMul() * I.incomeMul();
     var strike = I.strikeAt(), redUp = 0, blueUp = 0, myLost = 0, repairing = now < BT.repairUntil;
@@ -378,6 +379,50 @@
       I.emit('mineBoom', m, hit);
     }
   }
+  // ── 高壓水柱（10_data.js WEAPONS jet；按住的武器）：按住 ⇒ BT.jet；每一格（模擬時間）打到的那一點往手指底下那艘的船身追、最多 spd 公尺／秒，
+  //   從噴口（那一點往鏡頭那一側 noz 公尺的海面）到上一點、這一點切一刀（核心 cut）；手指不在敵艦上 ⇒ 噴在海上、不切。演出、聲音在 40_fx.js（I.BT.jet）。
+  I.jetStart = function (cx, cy, tapSec) {
+    var W = I.weaponOn(); if (!W || !W.hold || (BT.phase !== 'fight' && BT.phase !== 'hold')) return false;
+    BT.jet = { cx: cx, cy: cy, t: -1, sh: null, hit: null, noz: null, end: null, until: tapSec ? I.now() + tapSec * 1000 : 0, n: 0 };
+    I.emit('jet', true);
+    return true;
+  };
+  I.jetMove = function (cx, cy) { if (BT.jet) { BT.jet.cx = cx; BT.jet.cy = cy; } };
+  I.jetEnd = function () { if (!BT.jet) return; var J = BT.jet; BT.jet = null; I.emit('jet', false, J); };
+  I.jetOn = function () { return !!BT.jet; };
+  function jetTick() {
+    var J = BT.jet; if (!J) return;
+    var W = I.weaponOn();
+    if (!W || !W.hold || (J.until && I.now() > J.until)) { I.jetEnd(); return; }
+    var t = C.state().t, dt = J.t < 0 ? 0 : I.clamp(t - J.t, 0, 0.25); J.t = t;
+    var h = C.pick(J.cx, J.cy), sh = I.biteable(h) && !h.sh.sunk ? h.sh : null, tgt = sh ? h.w : null;
+    if (!sh && J.sh && J.hit && !J.sh.sunk) {                           // 正在切、手指滑出船身（往龍骨底下、船頭外拖）⇒ 照視線上跟上一點一樣遠的那一點接著切（⛔ 一離開船身就停 ⇒ 永遠切不到龍骨）
+      var R = C.ray(J.cx, J.cy), c = C.center(J.sh), T = J.sh.T;
+      if (R && c) {
+        var dd = Math.hypot(J.hit[0] - R.o[0], J.hit[1] - R.o[1], J.hit[2] - R.o[2]), p = [R.o[0] + R.d[0] * dd, R.o[1] + R.d[1] * dd, R.o[2] + R.d[2] * dd];
+        if (Math.hypot(p[0] - c[0], p[1] - c[1], p[2] - c[2]) < 0.06 * (T.hx1 - T.hx0) + 4) { sh = J.sh; tgt = p; }   // 船長一半多 4 m 以內
+      }
+    }
+    if (!sh) { J.sh = null; J.hit = null; J.hl = null; J.end = C.seaAt(J.cx, J.cy); J.noz = J.end ? jetNoz(J.end, W) : null; return; }   // 噴在海上
+    // 打到的那一點、噴口都記在那艘船的座標裡（⛔ 記世界座標 ⇒ 船一直往前開，上一點在船身上往後滑，一刀拉成斜的一大片；量過：最慘那一截只少 27%）
+    //   ⇒ 這一刀的那一片固定在船上：船怎麼開、怎麼晃，切口都是平的
+    if (J.sh !== sh || !J.hl) { J.sh = sh; J.hl = shipL(sh, tgt); J.nl = shipL(sh, jetNoz(tgt, W)); J.hit = tgt.slice(); J.noz = jetNoz(tgt, W); J.end = J.hit; return; }   // 換了一艘 ⇒ 從那一點重新起刀
+    var tl = shipL(sh, tgt), dx = tl[0] - J.hl[0], dy = tl[1] - J.hl[1], dz = tl[2] - J.hl[2], d = Math.hypot(dx, dy, dz), mx = W.spd0 * (1 + W.spdL * I.lv('teeth')) * dt / 0.1;   // 格（0.1 m）
+    if (d > mx) { dx *= mx / d; dy *= mx / d; dz *= mx / d; }
+    var a = shipW(sh, J.hl), nl = [J.hl[0] + dx, J.hl[1] + dy, J.hl[2] + dz], b = shipW(sh, nl);
+    J.noz = shipW(sh, J.nl);
+    var res = C.cut(sh, J.noz, a, b, { w: W.w0, pen: W.pen });
+    J.hl = nl; J.hit = b; J.end = b;
+    if (res) { J.n += res.n; I.emit('jetCut', sh, res); if (res.broke) I.emit('jetSever', sh, res); }
+  }
+  /** 世界座標 ⇄ 船的格座標（核心 sh.M／sh.inv，一欄一軸）。 */
+  function shipW(sh, p) { var M = sh.M; return [M[0] * p[0] + M[4] * p[1] + M[8] * p[2] + M[12], M[1] * p[0] + M[5] * p[1] + M[9] * p[2] + M[13], M[2] * p[0] + M[6] * p[1] + M[10] * p[2] + M[14]]; }
+  function shipL(sh, p) { var M = sh.inv; return [M[0] * p[0] + M[4] * p[1] + M[8] * p[2] + M[12], M[1] * p[0] + M[5] * p[1] + M[9] * p[2] + M[13], M[2] * p[0] + M[6] * p[1] + M[10] * p[2] + M[14]]; }
+  /** 噴口：那一點往鏡頭那一側（水平）noz 公尺的海面。 */
+  function jetNoz(w, W) {
+    var eye = C.cam.get().eye, ex = eye ? eye[0] - w[0] : 0, ez = eye ? eye[2] - w[2] : 1, el = Math.hypot(ex, ez) || 1, x = w[0] + ex / el * W.noz, z = w[2] + ez / el * W.noz;
+    return [x, C.seaY(x, z), z];
+  }
   I.weaponDef = function (id) { return I.WEAPONS.filter(function (w) { return w.id === id; })[0]; };
   /** 現在拿著哪一把（沒有、時間到了 ⇒ null）。 */
   I.weaponOn = function () { var w = BT.wpn; return w && I.now() < w.until ? I.weaponDef(w.id) : null; };
@@ -386,7 +431,8 @@
   I.weaponGet = function (id) { var W = I.weaponDef(id); if (!W) return; BT.wpn = { id: id, until: I.now() + W.dur * 1000 }; I.emit('weapon', W); };
   /** 打畫面那一點：點到敵艦的船身 ⇒ 那一點；沒點到 ⇒ 最近那艘（sh 給了 ⇒ 那艘）往中心找船身、找不到打船心。回打了沒。 */
   I.weaponFire = function (cx, cy, sh) {
-    var W = I.weaponOn(), now = I.now(); if (!W || (BT.phase !== 'fight' && BT.phase !== 'hold') || now - wpnAt < W.gap * 1000) return 0;
+    var W = I.weaponOn(), now = I.now(); if (!W || (BT.phase !== 'fight' && BT.phase !== 'hold') || now - wpnAt < (W.gap || 0) * 1000) return 0;
+    if (W.hold) { if (sh && cx === undefined) { var c0 = C.center(sh), p0 = c0 && C.project(c0[0], c0[1], c0[2]); if (!p0) return 0; cx = p0.x; cy = p0.y; } I.jetStart(cx, cy, W.tap); return 1; }   // 按住的武器被點一下（名牌、空白鍵）⇒ 噴 tap 秒
     if (W.id === 'keg') return kegThrow(W, cx, cy, sh);
     var h = sh ? null : C.pick(cx, cy), to = null, chain = W.id === 'chain', onRay = false;
     if (I.biteable(h)) { sh = h.sh; to = h.w; onRay = true; }

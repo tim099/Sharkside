@@ -77,6 +77,8 @@
     else if (k === 'arms') { noise(A, t, 0.05, 0.3, ['bandpass', 3200, 2]); tone(A, t + 0.02, 520, 520, 0.12, 0.12, 'square'); [392, 523, 784].forEach(function (f, i) { tone(A, t + 0.1 + i * 0.07, f, f * 1.01, 0.2, 0.12, 'sawtooth'); }); }   // 軍火箱：鐵扣一響＋往上三聲
     else if (k === 'flame') { noise(A, t, 0.45, 0.32, ['bandpass', 700, 0.7]); noise(A, t, 0.3, 0.16, ['highpass', 2500]); }   // 噴火：呼 ——
     else if (k === 'whistle') tone(A, t, 1900, 520, 0.55, 0.07);           // 砲彈落下的哨音（爆炸聲是核心的）
+    else if (k === 'jet') { noise(A, t, 0.17, 0.13, ['bandpass', 2300, 0.8]); noise(A, t, 0.17, 0.07, ['highpass', 5200]); }   // 高壓水柱：一段一段疊成一直嘶 ——（jetFrame 每 0.11 秒一段）
+    else if (k === 'sever') { tone(A, t, 130, 38, 0.6, 0.5); noise(A, t, 0.5, 0.35, ['lowpass', 700]); noise(A, t + 0.05, 0.25, 0.3, ['bandpass', 1400, 0.7]); }   // 斬斷：龍骨斷開那一聲
     else if (k === 'frenzy') { noise(A, t, 0.75, 0.3, ['bandpass', 520, 0.6]); tone(A, t, 180, 720, 0.55, 0.1, 'triangle'); [523, 659, 784, 1046].forEach(function (f, i) { tone(A, t + 0.32 + i * 0.07, f, f, 0.24, 0.11, 'triangle'); }); }   // 鯊魚狂潮：浪湧上來＋往上四聲
   };
 
@@ -158,6 +160,39 @@
     I.sfx(W.id === 'fire' ? 'flame' : 'whistle');
     if (cx !== undefined) I.floatAt(cx, cy - 30, I.img('wpn/' + W.id, W.ico), 'bite');
   });
+  // 高壓水柱（30_battle.js jetTick；I.BT.jet）：噴口（海面）到打到的那一點畫一道往前收細的水柱＋那一點的水霧；噴著 ⇒ 一直嘶；切到哪艘鏡頭鎖哪艘；切斷龍骨 ⇒ 喊一聲、搖畫面
+  var JE = null, jetSndT = 0, SVGNS = 'http://www.w3.org/2000/svg';
+  function jetEl() {
+    var s = document.createElementNS(SVGNS, 'svg'); s.setAttribute('class', 'bsi-jet');
+    s.innerHTML = '<defs><linearGradient id="bsiJetG" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9fe6ff" stop-opacity=".55"/><stop offset=".7" stop-color="#e9fbff" stop-opacity=".9"/><stop offset="1" stop-color="#ffffff"/></linearGradient>' +
+      '<radialGradient id="bsiJetM"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".45" stop-color="#d8f6ff" stop-opacity=".6"/><stop offset="1" stop-color="#bdeeff" stop-opacity="0"/></radialGradient></defs>' +
+      '<polygon class="o" fill="url(#bsiJetG)"/><line class="c" stroke="#fff" stroke-linecap="round"/><circle class="m" fill="url(#bsiJetM)"/><circle class="d" fill="#fff"/><circle class="d" fill="#e6f9ff"/><circle class="d" fill="#fff"/>';
+    FN.appendChild(s); return s;
+  }
+  function jetFrame() {
+    var J = I.BT.jet, a = J && J.noz && C.project(J.noz[0], J.noz[1], J.noz[2]), b = J && J.end && C.project(J.end[0], J.end[1], J.end[2]);
+    if (!a || !b) { if (JE) JE.style.display = 'none'; return; }
+    JE = JE || jetEl(); JE.style.display = '';
+    var dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1, nx = -dy / d, ny = dx / d, wa = I.clamp(9000 / a.d, 4, 16), wb = I.clamp(3500 / b.d, 1.5, 6), j = 0.85 + Math.random() * 0.3;
+    var P = function (x, y) { return x.toFixed(1) + ',' + y.toFixed(1); };
+    JE.querySelector('.o').setAttribute('points', [P(a.x + nx * wa * j, a.y + ny * wa * j), P(b.x + nx * wb, b.y + ny * wb), P(b.x - nx * wb, b.y - ny * wb), P(a.x - nx * wa * j, a.y - ny * wa * j)].join(' '));
+    var g = JE.querySelector('#bsiJetG'); g.setAttribute('x1', a.x); g.setAttribute('y1', a.y); g.setAttribute('x2', b.x); g.setAttribute('y2', b.y);
+    var c = JE.querySelector('.c'); c.setAttribute('x1', (a.x + dx * 0.3).toFixed(1)); c.setAttribute('y1', (a.y + dy * 0.3).toFixed(1)); c.setAttribute('x2', b.x.toFixed(1)); c.setAttribute('y2', b.y.toFixed(1)); c.setAttribute('stroke-width', (wb * 0.7).toFixed(1));
+    var r = I.clamp(9000 / b.d, 8, 42) * (0.85 + Math.random() * 0.3), m = JE.querySelector('.m');
+    m.setAttribute('cx', b.x.toFixed(1)); m.setAttribute('cy', b.y.toFixed(1)); m.setAttribute('r', r.toFixed(1));
+    [].forEach.call(JE.querySelectorAll('.d'), function (e) {               // 濺開的水珠：往回噴（朝噴口那一側）、亂一點
+      var u = Math.random(), s = r * (0.6 + 1.2 * u);
+      e.setAttribute('cx', (b.x - dx / d * s + (Math.random() - 0.5) * r).toFixed(1)); e.setAttribute('cy', (b.y - dy / d * s - Math.random() * r * 0.8).toFixed(1)); e.setAttribute('r', (1 + Math.random() * r * 0.09).toFixed(1));
+    });
+    var now = I.now(); if (now - jetSndT > 110) { jetSndT = now; I.sfx('jet'); }
+  }
+  I.on('jetCut', function (sh) { if (I.S.cam === 'foe' || I.S.cam === 'auto') { lockOn(sh); camHold = I.now() + 8000; } });
+  I.on('jetSever', function (sh, res) {
+    var p = res.w && C.project(res.w[0], res.w[1], res.w[2]);
+    if (p) I.floatAt(p.x, p.y - 40, '✂️ 斬斷！', 'boom');
+    shake(true); I.sfx('sever');
+  });
+  I.on('jet', function (on) { if (!on && JE) JE.style.display = 'none'; });
   // 火藥桶（30_battle.js kegThrow、kegTick）：飛過去的桶、海上的水雷（照世界座標投影；圖：wpn/keg，還沒有 ⇒ 漂流木桶的圖，再沒有 ⇒ 🧨）
   var kegEls = new Map(), mineEls = new Map();
   function kegImg() { return I.img('wpn/keg', I.img('loot/barrel', '🧨')); }
@@ -391,6 +426,7 @@
     if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); HTML.classList.toggle('bsi-wpn', !!I.weaponOn()); HTML.classList.toggle('bsi-frz', I.frenzyOn()); }   // 游標不動、船在動；拿著特殊武器 ⇒ 準星；狂潮 ⇒ 畫面邊緣發藍光
     finFrame(dt);
     pupFrame();
+    jetFrame();
     if (CB && CB.classList.contains('on')) {                              // 連咬：剩幾秒會斷（那一條）；斷了收起來
       var cl = I.comboLeft(), cbar = CB.querySelector('i');
       if (cl <= 0) CB.className = 'bsi-combo'; else if (cbar) cbar.style.setProperty('--left', (cl / I.BAL.comboGap * 100).toFixed(0) + '%');

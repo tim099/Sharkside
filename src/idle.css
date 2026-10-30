@@ -310,6 +310,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
 #bsi .bsi-fin { position: absolute; left: 0; top: 0; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .55)); }
 #bsi .bsi-fin svg { display: block; width: 100%; height: auto; }
 #bsi .bsi-fin.pup { transition: opacity .25s; }                         /* 鯊魚寶寶（40_fx.js pupFrame）：潛下去、繞到船後面淡掉 */
+#bsi .bsi-jet { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; filter: drop-shadow(0 0 3px rgba(160, 230, 255, .8)); }   /* 高壓水柱（40_fx.js jetFrame） */
 #bsi .bsi-fin > .bsi-img { display: block; width: 160%; height: auto; margin: 0 -30%; transform: translateY(22%); }   /* 圖的下半是水花、鰭只佔中間一半 ⇒ 放大、往下挪到水面那一點 */
 #bsi .bsi-fl.frz { color: #9ff6ff; text-shadow: 0 0 10px rgba(79, 209, 255, .95), 0 2px 3px #000; }
 #bsi .bsi-fl.weak { font-size: 12px; opacity: .75; }

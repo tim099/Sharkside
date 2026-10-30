@@ -490,6 +490,8 @@
     var S = I.S, c = chipRow(g, '🧪 除錯紀錄', [[false, '關'], [true, '開']], S.dbg, function (v) { S.dbg = v; I.dbgApply(); I.save(); }, again);
     var f = C.tlogInfo(), b = h('button', 'chip', '匯出'); b.title = '水手路徑、每一發砲、每門砲的狀態，存成一個 JSON 檔';
     b.disabled = !f && !I.dbgLast; b.onclick = dbgSave; c.appendChild(b);
+    var hr = h('button', 'chip', '船體報告'); hr.title = '這一場每艘船的格子跟原本比：側視、俯視、龍骨、橫剖面，存成一個 HTML（55_hullrep.js）';   // 不用開記錄也能存
+    hr.disabled = !C.ships().length; hr.onclick = function () { I.hullSave(); }; c.appendChild(hr);
     var other = !!dbgOther(C.tlogData());
     if (S.dbg || f) textRow(g, '', f ? (f.on ? '記錄中' : '停了') + '：路徑 ' + I.fmt(f.points) + ' 點、事件 ' + I.fmt(f.ev) + ' 筆、開火 ' + I.fmt(f.shots) + ' 發、沒開火的段落 ' + f.quiet.length + ' 段' + (other ? '；另有上一場' : '') : '下一場開戰起記');
   }
