@@ -1,0 +1,101 @@
+[
+  {
+    "batch": "ui",
+    "id": "blocks",
+    "prompt": "Create ONE standalone original inventory icon for Sharkside, a shark/age-of-sail naval game. Attached images are APPROVED STYLE REFERENCES ONLY; borrow discrete pixel clusters, rich material colors, upper-left highlights, clear stair-step edges, restrained dark navy outlines and dimensional thickness, never copy their objects. Refined 16/32-bit pixel art, no smooth vector gradients or painterly blur. Subject: ONE chunky golden timber cube resource token, three clearly visible square faces, beveled block edges and one simple warm oak grain line on each face. Gold-orange top left face, dark amber side. Extremely simple bold cubical silhouette readable at 18 pixels. Centered compact three-quarter view, generous empty margins on all sides. Intended 128x128 RGBA game asset with main extent 104px. TRUE transparent background, no ground plane, no external cast shadow, no panel, no border, no text, letters or numbers, no watermark. Keep the requested silhouette dominant and different from the other assets.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-e4afd59a-c206-46eb-ab75-fd7cf0a5293e.png"
+  },
+  {
+    "batch": "ui",
+    "id": "shards",
+    "prompt": "Create ONE standalone original inventory icon for Sharkside, a shark/age-of-sail naval game. Attached images are APPROVED STYLE REFERENCES ONLY; borrow discrete pixel clusters, rich material colors, upper-left highlights, clear stair-step edges, restrained dark navy outlines and dimensional thickness, never copy their objects. Refined 16/32-bit pixel art, no smooth vector gradients or painterly blur. Subject: THREE compact violet crystal fragments from a broken ancient trident tip, ONE large pointed fork-shaped lavender shard and two tiny angular chips nestled at its base. Purple dominant, bright lavender upper left facet, very simple iconic silhouette readable at 18 pixels. No full trident. Centered compact three-quarter view, generous empty margins on all sides. Intended 128x128 RGBA game asset with main extent 104px. TRUE transparent background, no ground plane, no external cast shadow, no panel, no border, no text, letters or numbers, no watermark. Keep the requested silhouette dominant and different from the other assets.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-18b54cbd-aa5a-464f-b5b3-425026fe9eb5.png"
+  },
+  {
+    "batch": "ui",
+    "id": "mul",
+    "prompt": "Create ONE standalone original inventory icon for Sharkside, a shark/age-of-sail naval game. Attached images are APPROVED STYLE REFERENCES ONLY; borrow discrete pixel clusters, rich material colors, upper-left highlights, clear stair-step edges, restrained dark navy outlines and dimensional thickness, never copy their objects. Refined 16/32-bit pixel art, no smooth vector gradients or painterly blur. Subject: ONE single thick golden coin with TWO smaller gold coins stacked behind it rising toward the upper right, one broad sea-green upward arrow integrated beside the stack. Simple compact income-multiplier symbol, no letters, no digits, no multiplication mark. Readable at 18 pixels. Centered compact three-quarter view, generous empty margins on all sides. Intended 128x128 RGBA game asset with main extent 104px. TRUE transparent background, no ground plane, no external cast shadow, no panel, no border, no text, letters or numbers, no watermark. Keep the requested silhouette dominant and different from the other assets.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-d7733b21-0a94-475a-a530-bfa959935d64.png"
+  },
+  {
+    "batch": "ui",
+    "id": "speed",
+    "prompt": "Create ONE standalone original inventory icon for Sharkside, a shark/age-of-sail naval game. Attached images are APPROVED STYLE REFERENCES ONLY; borrow discrete pixel clusters, rich material colors, upper-left highlights, clear stair-step edges, restrained dark navy outlines and dimensional thickness, never copy their objects. Refined 16/32-bit pixel art, no smooth vector gradients or painterly blur. Subject: TWO broad turquoise chevron arrowheads pointing right, thick three-dimensional bevels, deep navy outline, small ivory upper-left highlights. One compact simple fast-forward symbol, no clock, no letters or digits. Readable at 18 pixels. Centered compact three-quarter view, generous empty margins on all sides. Intended 128x128 RGBA game asset with main extent 104px. TRUE transparent background, no ground plane, no external cast shadow, no panel, no border, no text, letters or numbers, no watermark. Keep the requested silhouette dominant and different from the other assets.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-6722c9af-eeef-4771-8d0b-45fa0ee76ebe.png"
+  },
+  {
+    "batch": "ui",
+    "id": "cam",
+    "prompt": "Create ONE standalone original inventory icon for Sharkside, a shark/age-of-sail naval game. Attached images are APPROVED STYLE REFERENCES ONLY; borrow discrete pixel clusters, rich material colors, upper-left highlights, clear stair-step edges, restrained dark navy outlines and dimensional thickness, never copy their objects. Refined 16/32-bit pixel art, no smooth vector gradients or painterly blur. Subject: ONE compact antique brass camera-viewfinder icon: blue-gray box-shaped nautical optical viewer with ONE very large round turquoise glass lens centered, tiny brass top ridge. Box silhouette and lens must be obvious at 18 pixels. No tripod, no scenery, no letters. Centered compact three-quarter view, generous empty margins on all sides. Intended 128x128 RGBA game asset with main extent 104px. TRUE transparent background, no ground plane, no external cast shadow, no panel, no border, no text, letters or numbers, no watermark. Keep the requested silhouette dominant and different from the other assets.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-25c524ae-78a2-4776-9188-4ee446646d6e.png"
+  },
+  {
+    "batch": "ui",
+    "id": "sound",
+    "prompt": "Create ONE standalone original inventory icon for Sharkside, a shark/age-of-sail naval game. Attached images are APPROVED STYLE REFERENCES ONLY; borrow discrete pixel clusters, rich material colors, upper-left highlights, clear stair-step edges, restrained dark navy outlines and dimensional thickness, never copy their objects. Refined 16/32-bit pixel art, no smooth vector gradients or painterly blur. Subject: ONE golden brass loudspeaker horn, flared bell facing right, with TWO broad separated turquoise sound arcs to its right. Simple strong speaker silhouette readable at 18 pixels. No notes, no letters or digits. Centered compact three-quarter view, generous empty margins on all sides. Intended 128x128 RGBA game asset with main extent 104px. TRUE transparent background, no ground plane, no external cast shadow, no panel, no border, no text, letters or numbers, no watermark. Keep the requested silhouette dominant and different from the other assets.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-8f8d6a8c-ac49-4e88-bdad-06f0f7d7d542.png"
+  },
+  {
+    "batch": "ui",
+    "id": "mute",
+    "prompt": "Create ONE standalone original inventory icon for Sharkside, a shark/age-of-sail naval game. Attached images are APPROVED STYLE REFERENCES ONLY; borrow discrete pixel clusters, rich material colors, upper-left highlights, clear stair-step edges, restrained dark navy outlines and dimensional thickness, never copy their objects. Refined 16/32-bit pixel art, no smooth vector gradients or painterly blur. Subject: ONE golden brass loudspeaker horn, flared bell facing right, overlaid with ONE bold coral-red diagonal slash crossing the whole horn. NO sound waves. Match sound icon construction, clear muted symbol readable at 18 pixels. No letters or digits. Centered compact three-quarter view, generous empty margins on all sides. Intended 128x128 RGBA game asset with main extent 104px. TRUE transparent background, no ground plane, no external cast shadow, no panel, no border, no text, letters or numbers, no watermark. Keep the requested silhouette dominant and different from the other assets.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-cbe4ae84-dd26-4287-a1fd-00d4bb441dcb.png"
+  },
+  {
+    "batch": "ui",
+    "id": "settings",
+    "prompt": "Create ONE standalone original inventory icon for Sharkside, a shark/age-of-sail naval game. Attached images are APPROVED STYLE REFERENCES ONLY; borrow discrete pixel clusters, rich material colors, upper-left highlights, clear stair-step edges, restrained dark navy outlines and dimensional thickness, never copy their objects. Refined 16/32-bit pixel art, no smooth vector gradients or painterly blur. Subject: ONE chunky blue-gray metal cogwheel, exactly eight broad teeth, one large open circular hole in center with warm brass inner rim. Clear symmetrical gear silhouette, bright upper-left metal facets, dark navy edge. Readable at 18 pixels, no other objects. Centered compact three-quarter view, generous empty margins on all sides. Intended 128x128 RGBA game asset with main extent 104px. TRUE transparent background, no ground plane, no external cast shadow, no panel, no border, no text, letters or numbers, no watermark. Keep the requested silhouette dominant and different from the other assets.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-e73620ad-6b39-43da-9648-ff5165519de9.png"
+  },
+  {
+    "batch": "ui",
+    "id": "sail",
+    "prompt": "Create ONE standalone original inventory icon for Sharkside, a shark/age-of-sail naval game. Attached images are APPROVED STYLE REFERENCES ONLY; borrow discrete pixel clusters, rich material colors, upper-left highlights, clear stair-step edges, restrained dark navy outlines and dimensional thickness, never copy their objects. Refined 16/32-bit pixel art, no smooth vector gradients or painterly blur. Subject: ONE small original age-of-sail boat, golden-brown hull and ONE broad cream triangular sail with coral-red pennant, ONE thick turquoise curved wave underneath. Extremely simple clear sailboat silhouette readable at 18 pixels. No ship rigging clutter, no text. Centered compact three-quarter view, generous empty margins on all sides. Intended 128x128 RGBA game asset with main extent 104px. TRUE transparent background, no ground plane, no external cast shadow, no panel, no border, no text, letters or numbers, no watermark. Keep the requested silhouette dominant and different from the other assets.",
+    "refs": [
+      "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+      "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+      "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+    ],
+    "path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-d865c4e4-45ca-4e42-ae11-eb9f6aaf3543.png"
+  }
+]
