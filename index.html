@@ -491,7 +491,7 @@
   #err button:disabled{ opacity:.5; cursor:default; }
   #err label.chk{ display:inline-flex; align-items:center; gap:6px; margin:8px 0 0; font-size:13px; }
 </style>
-<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "ad1378963bc9563f", "shell": "27f436074861"}};</script></head>
+<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "ad1378963bc9563f", "shell": "278c9bd2a7d1"}};</script></head>
 <body>
 <!-- 擬真沙盒（84_fleetlab.js；?lab=fleet，根目錄 fleetlab.html 轉過來）：body.flab 才顯示；看實景（body.flab3d）時俯視圖藏起來、底下的遊戲畫布露出來 -->
 <div id="flab">
@@ -46766,7 +46766,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   I.emit = function (t, a, b, c) { (SUB[t] || []).forEach(function (f) { try { f(a, b, c); } catch (e) { console.error(e); } }); };
 })(window.BSI = window.BSI || {});
 </script><script data-shell="js/05_img.js">// 自動產生（build.py img_js）⛔ 不要手改：img/ 底下有哪些圖（ART.md）⇒ 00_base.js I.img 照它決定用圖還是 emoji；值 ＝ 內容雜湊前 8 碼（網址的 ?v=）
-window.BSI = window.BSI || {}; window.BSI.IMG = {"app/apple-touch-icon":"af27c14b","app/favicon-32":"d08fb1f9","app/icon-192":"6240b76f","app/icon-512":"a85b00f7","app/icon-maskable-512":"db16db2c","app/logo":"dc2a7ff9","upg/gun":"5c5736ed","upg/hull":"dc84329f","upg/teeth":"47e88a93"};
+window.BSI = window.BSI || {}; window.BSI.IMG = {"app/apple-touch-icon":"af27c14b","app/favicon-32":"d08fb1f9","app/icon-192":"6240b76f","app/icon-512":"a85b00f7","app/icon-maskable-512":"db16db2c","app/logo":"dc2a7ff9","ui/blocks":"a85207f5","ui/cam":"4b42998c","ui/mul":"30b86b7c","ui/mute":"e3fdae93","ui/sail":"1d5a3350","ui/settings":"4e0b21b2","ui/shards":"9da72096","ui/sound":"d5ee5b1f","ui/speed":"7a76e8d5","upg/bounty":"f2ac08aa","upg/fear":"1e8539a8","upg/gun":"5c5736ed","upg/hull":"dc84329f","upg/powder":"4841bf7d","upg/pump":"ca72b178","upg/reload":"ea1dfc85","upg/sail":"744b9555","upg/teeth":"47e88a93","upg/value":"eb74b2ab"};
 </script><script data-shell="js/10_data.js">// ───────────────────────── 方舷放置：數值與內容表 ─────────────────────────
 // 調手感只改這一支：BAL 是所有公式的常數；海域、船、升級、深海科技、技能、成就都是表。
 (function (I) {
@@ -48322,10 +48322,12 @@ window.BSI = window.BSI || {}; window.BSI.IMG = {"app/apple-touch-icon":"af27c14
     txt('bsi-mute', I.S.mute ? '🔇' : '🔊');
   }
   I.topBtns = topBtns;
+  /** 上方的「+N/秒」：最近 RATE_SEC 秒實際入帳的格 ÷ RATE_SEC（Tim 2026-10-30：15 秒 ⇒「改成5秒試看看」：反應更快、跳得更兇）。 */
+  var RATE_SEC = 5;
   function rate() {
-    var now = I.now(), s = 0; while (rateLog.length && now - rateLog[0][0] > 15000) rateLog.shift();
+    var now = I.now(), s = 0; while (rateLog.length && now - rateLog[0][0] > RATE_SEC * 1000) rateLog.shift();
     rateLog.forEach(function (r) { s += r[1]; });
-    return s / 15;
+    return s / RATE_SEC;
   }
 
   // ── 海域卡 ──

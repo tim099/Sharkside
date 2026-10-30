@@ -122,10 +122,12 @@
     txt('bsi-mute', I.S.mute ? '🔇' : '🔊');
   }
   I.topBtns = topBtns;
+  /** 上方的「+N/秒」：最近 RATE_SEC 秒實際入帳的格 ÷ RATE_SEC（Tim 2026-10-30：15 秒 ⇒「改成5秒試看看」：反應更快、跳得更兇）。 */
+  var RATE_SEC = 5;
   function rate() {
-    var now = I.now(), s = 0; while (rateLog.length && now - rateLog[0][0] > 15000) rateLog.shift();
+    var now = I.now(), s = 0; while (rateLog.length && now - rateLog[0][0] > RATE_SEC * 1000) rateLog.shift();
     rateLog.forEach(function (r) { s += r[1]; });
-    return s / 15;
+    return s / RATE_SEC;
   }
 
   // ── 海域卡 ──
