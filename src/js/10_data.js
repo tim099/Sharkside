@@ -58,6 +58,12 @@
     goldP: 0.14, goldK: 5, goldLoot: 4,
     // 連咬（30_battle.js bite）：上一口之後 comboGap 秒內再咬 ⇒ 連咬 +1，獎勵 ×（1 ＋ comboStep ×（連咬 − 1））最多 comboMax；每 comboCrit 口暴擊一次（咬得大 1.6 倍、獎勵 ×2）
     comboGap: 1.6, comboStep: 0.15, comboMax: 3, comboCrit: 10,
+    // 咬的蓄力（30_battle.js bitePow；Tim 2026-10-30：「咬擊 可以加上蓄力條(自動續力 不用按住) 目前連點感覺有點太強 如果讓蓄力滿威力等於目前 空續力(高速連點) 威力只有目前20%」）：
+    //   上一口之後自己慢慢蓄，威力 ＝ biteMin ＋（1 − biteMin）×（過了幾秒 ÷ biteCharge）^biteCurve；咬掉的格 ∝ 威力（半徑 × √威力：船殼薄 ⇒ 格 ∝ 半徑²）、獎勵 ∝ 威力
+    //   ≥ biteFull 算蓄滿（給一點手感：大約 0.95 秒）：只有蓄滿的那一口算連咬、暴擊（⛔ 每口都算 ⇒ 狂點連咬一下就疊滿、暴擊多四倍）
+    //   ⛔ 線性蓄力（biteCurve 1）⇒ 永遠是狂點划算（一口最短 0.25 秒 ⇒ 一秒四口 × 兩成就有 0.8 口全力，再加上蓄的那一點）；平方 ＋ 一秒蓄滿 ⇒ 狂點跟一秒一口全力差不多
+    //   鯊魚狂潮的那幾秒蓄力一直是滿的（ABIL frenzy）⇒ 一秒四口全力 ＝ 以前狂點的威力
+    biteCharge: 1.0, biteMin: 0.2, biteCurve: 2, biteFull: 0.92,
     // 軍火箱（35_loot.js 的漂流寶物多一種；一般的 armsP、黃金寶船 armsGold 的機率）：點一下撿才有（自動撿 ⇒ 沉下去了）⇒ 接下來那把武器的 dur 秒點敵艦換成它（I.WEAPONS）
     armsP: 0.16, armsGold: 0.2,
     wreckY: -12               // 沉沒了還在往下沉的船：水面下這麼深（公尺）以內還看得到、咬得到
@@ -122,7 +128,7 @@
   /** 技能（主動）。zone：到過這個海域才解鎖。 */
   I.ABIL = [
     { id: 'volley', key: '1', ico: '🔥', name: '全艦齊射', cd: 40, zone: 3, desc: '全艦的砲立刻裝填完畢' },
-    { id: 'frenzy', key: '2', ico: '🌊', name: '鯊魚狂潮', cd: 120, dur: 20, zone: 7, desc: '20 秒內所有收入 ×3' },
+    { id: 'frenzy', key: '2', ico: '🌊', name: '鯊魚狂潮', cd: 120, dur: 20, zone: 7, desc: '20 秒內蓄力條一直是滿的：每一口都是全力，可以連續咬' },
     { id: 'mega', key: '3', ico: '🦈', name: '巨齒鯊', cd: 90, zone: 14, desc: '每艘敵艦都被狠狠咬一大口' },
     { id: 'repair', key: '4', ico: '🔧', name: '緊急搶修', cd: 120, dur: 25, zone: 24, desc: '25 秒內全艦抽水 ×4、不再進水' }
   ];
@@ -131,9 +137,10 @@
    *  漂流寶物的軍火箱撿到 ⇒ dur 秒內點敵艦（空白鍵：鎖定的那艘）不咬，換成這把；兩下之間至少 gap 秒。威力照鯊魚利齒的等級（L）：
    *  fire 鯊魚噴火：從點的那一點靠鏡頭那一側的水面噴出 n0 ＋ ⌊L ÷ 5⌋ 團希臘火（核心 C.shot kind 'fire'：潑開燒人、點著木頭延燒、燒穿）；燒人的傷害 dmg0 ×（1 ＋ dmgL × L）
    *  cannon 天降砲擊：從那一點的斜上方憑空落下一顆爆裂彈（kind 'shell'）；彈重 m0 ×（1 ＋ mL × L）kg（炸開的半徑 ∝ ∛彈重，上限 300 kg），傷害同上 */
+  // gap：兩發最短隔幾秒（Tim 2026-10-30：「射擊間格可以更短(不用等上一發命中)」⇒ 0.3／0.45 ⇒ 0.12／0.18）
   I.WEAPONS = [
-    { id: 'fire', ico: '🔥', name: '鯊魚噴火', dur: 10, gap: 0.3, n0: 2, dmg0: 2, dmgL: 0.2, desc: '從海裡噴出希臘火：點到哪裡燒到哪裡，木頭會延燒、燒穿' },
-    { id: 'cannon', ico: '💣', name: '天降砲擊', dur: 10, gap: 0.45, m0: 30, mL: 0.3, dmg0: 3, dmgL: 0.2, desc: '天上憑空落下一顆大爆裂彈：點到哪裡炸到哪裡' }
+    { id: 'fire', ico: '🔥', name: '鯊魚噴火', dur: 10, gap: 0.12, n0: 2, dmg0: 2, dmgL: 0.2, desc: '從海裡噴出希臘火：點到哪裡燒到哪裡，木頭會延燒、燒穿' },
+    { id: 'cannon', ico: '💣', name: '天降砲擊', dur: 10, gap: 0.18, m0: 30, mL: 0.3, dmg0: 3, dmgL: 0.2, desc: '憑空一顆大爆裂彈從你這邊打過去：點到哪裡炸到哪裡' }
   ];
 
   /** 艦隊方針（＝ 核心的砲長，51_captain.js CAPTAINS）：我方每艘照它挑瞄準。 */

@@ -3,8 +3,9 @@
 html.bsi-on #cover, html.bsi-on #end, html.bsi-on #spk, html.bsi-on #gfxov, html.bsi-on #flab { display: none !important; }
 html.bsi-on #stage > :not(#cv) { display: none !important; }
 
-/* 外殼的框 ＝ 核心的 #stage（裝置的安全區扣掉：瀏海、圓角、home 條；核心 template.html 的 --sa-*，橫放時底邊 0）⇒ C.project、點畫面的座標、畫在 #bsi 上的標記對得上畫布；
- * 從主畫面開（全螢幕）時 UI 不會鑽到瀏海、home 條底下。⛔ 裡面的元件別再加安全區（會算兩次），尺寸用 % 不用 100vw／100vh（那是整個視窗）。 */
+/* 外殼的框 ＝ 核心的 #stage（裝置的安全區扣掉：瀏海、圓角、home 條；核心 template.html 的 --sa-*，橫放時底邊 0）⇒ 從主畫面開（全螢幕）時 UI 不會鑽到瀏海、home 條底下。
+ * ⛔ 裡面的元件別再加安全區（會算兩次），尺寸用 % 不用 100vw／100vh（那是整個視窗）。
+ * ⚠ C.project、點畫面（tap）的座標是整個視窗的（client px）⇒ 照它擺東西的那幾層（名牌、飄字、寶物、演出、鯊鰭）撐回整個視窗，見下面「照世界座標擺的層」。 */
 #bsi {
   --ink: #e8f4ff; --dim: #8fb0c8; --line: rgba(130, 205, 255, 0.18); --panel: rgba(6, 20, 36, 0.78); --panel2: rgba(12, 34, 58, 0.72);
   --sea: #4fd1ff; --sea2: #2b8bd6; --gold: #ffd166; --coral: #ff6b6b; --good: #5be3a1; --warn: #ffb347; --shd: #b58cff;
@@ -230,6 +231,34 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 @keyframes bsiShake2 { 0%, 100% { transform: none; } 10% { transform: translate(-12px, 6px) rotate(-.4deg); } 22% { transform: translate(11px, -7px) rotate(.4deg); } 36% { transform: translate(-9px, -4px); } 50% { transform: translate(8px, 5px); } 66% { transform: translate(-5px, 3px); } 82% { transform: translate(3px, -2px); } }
 /* 巨齒鯊：畫面暗下來、一條大鯊魚游過去 */
 #bsi .bsi-mega { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+/* 鯊魚狂潮（Tim 2026-10-30：「目前鯊魚狂潮有點看不出效果」）：開下去一道浪掃過去＋大字；期間畫面邊緣發藍光、上面一條還剩幾秒與全力咬了幾口、咬的飄字變藍、敵艦旁邊鯊鰭繞著游（效果本身：蓄力全滿，30_battle.js bitePow） */
+#bsi .bsi-frzwave { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+#bsi .bsi-frzwave .wave { position: absolute; top: 0; bottom: 0; left: -70%; width: 70%; background: linear-gradient(90deg, transparent, rgba(79, 209, 255, .25) 35%, rgba(191, 246, 255, .55) 50%, rgba(79, 209, 255, .25) 65%, transparent); animation: bsiFrzWave 1.1s ease-in forwards; }
+#bsi .bsi-frzwave .wd { position: absolute; left: 50%; top: 30%; white-space: nowrap; text-align: center; font: 900 50px/1.1 system-ui, sans-serif; color: #fff; -webkit-text-stroke: 2px #0b3a5e; text-shadow: 0 0 24px rgba(79, 209, 255, .9), 0 4px 0 #04121f; animation: bsiFrzWd 2.1s ease-out forwards; }
+#bsi .bsi-frzwave .wd small { display: block; margin-top: 8px; font-size: 18px; -webkit-text-stroke: 0; color: var(--gold); text-shadow: 0 2px 4px #000; }
+@keyframes bsiFrzWave { to { left: 110%; } }
+@keyframes bsiFrzWd { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.6); } 15% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); } 25% { transform: translate(-50%, -50%) scale(1); } 80% { opacity: 1; transform: translate(-50%, -50%); } 100% { opacity: 0; transform: translate(-50%, -62%); } }
+html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; box-shadow: inset 0 0 110px 34px rgba(79, 209, 255, .5), inset 0 0 14px 3px rgba(200, 248, 255, .6); animation: bsiFrzEdge 1.1s ease-in-out infinite alternate; }
+@keyframes bsiFrzEdge { from { opacity: .5; } to { opacity: 1; } }
+#bsi .bsi-fins { position: absolute; pointer-events: none; overflow: hidden; }
+#bsi .bsi-fin { position: absolute; left: 0; top: 0; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .55)); }
+#bsi .bsi-fin svg { display: block; width: 100%; height: auto; }
+#bsi .bsi-fl.frz { color: #9ff6ff; text-shadow: 0 0 10px rgba(79, 209, 255, .95), 0 2px 3px #000; }
+#bsi .bsi-fl.weak { font-size: 12px; opacity: .75; }
+/* 咬的蓄力條（技能鈕上面；30_battle.js bitePow）：滿了發金光、狂潮發藍光 */
+#bsi .bsi-abil .chg { position: absolute; bottom: calc(100% + 26px); left: 50%; transform: translateX(-50%); display: none; align-items: center; gap: 6px; width: 200px; padding: 3px 8px; border-radius: 12px; background: rgba(0, 0, 0, .45); border: 1px solid var(--line); }
+#bsi .bsi-abil .chg.on { display: flex; }
+#bsi .chg b { font-size: 15px; line-height: 1; }
+#bsi .chg .bar { flex: 1; height: 7px; border-radius: 4px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+#bsi .chg .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #8a6a3a, #ffd166); }
+#bsi .chg span { min-width: 44px; text-align: right; font-size: 12px; font-weight: 800; color: var(--dim); }
+#bsi .chg.full { border-color: rgba(255, 209, 102, .7); box-shadow: 0 0 12px rgba(255, 209, 102, .45); }
+#bsi .chg.full span { color: var(--gold); }
+#bsi .chg.frz { border-color: rgba(79, 209, 255, .8); box-shadow: 0 0 16px rgba(79, 209, 255, .6); }
+#bsi .chg.frz .bar i { background: linear-gradient(90deg, #2b8bd6, #4fd1ff, #c8f8ff); }
+#bsi .chg.frz span { color: #9ff6ff; }
+/* 照世界座標擺的層（C.project、tap 的 client px）：撐回整個視窗 ⇒ 安全區不是 0 時（從主畫面開的 iPhone）也對得上船 */
+#bsi .bsi-marks, #bsi .bsi-float, #bsi .bsi-loot, #bsi .bsi-fx, #bsi .bsi-fins { inset: calc(-1 * var(--sa-t, 0px)) calc(-1 * var(--sa-r, 0px)) calc(-1 * var(--sa-b, 0px)) calc(-1 * var(--sa-l, 0px)); }
 #bsi .bsi-mega .dark { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 60%, rgba(0, 20, 40, .1), rgba(0, 8, 16, .78)); animation: bsiDark 1.9s ease-out forwards; }
 #bsi .bsi-mega .shark { position: absolute; left: 0; top: 34%; width: min(70vw, 900px); animation: bsiSwim 1.5s cubic-bezier(.35, .05, .45, 1) forwards; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, .6)); }
 #bsi .bsi-mega .shark svg { width: 100%; display: block; }
@@ -260,6 +289,9 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .bsi-wpn .bar { height: 5px; margin-top: 4px; border-radius: 3px; background: rgba(0, 0, 0, .45); overflow: hidden; }
 #bsi .bsi-wpn .bar i { display: block; height: 100%; background: linear-gradient(90deg, #ff5a3c, #ffd166); }
 #bsi .bsi-wpn .s { font-weight: 800; color: var(--gold); font-size: 15px; min-width: 40px; text-align: right; }
+#bsi .bsi-frz { top: 72px; bottom: auto; min-width: 260px; border-color: rgba(79, 209, 255, .6); box-shadow: 0 0 24px rgba(79, 209, 255, .35); }
+#bsi .bsi-frz b { color: #c8f8ff; }
+#bsi .bsi-frz .bar i { background: linear-gradient(90deg, #2b8bd6, #4fd1ff, #c8f8ff); }
 
 /* ── 船上的標記 ── */
 #bsi .bsi-marks, #bsi .bsi-float { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
@@ -384,6 +416,9 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   #bsi .bsi-wpn { left: 6px; bottom: 92px; transform: scale(.9); min-width: 0; width: 160px; transform-origin: left bottom; }
   #bsi .bsi-wpn.on { transform: none; }
   #bsi .bsi-wpn b { font-size: 12px; }
+  #bsi .bsi-frz { left: 50%; top: 58px; bottom: auto; width: 230px; transform: translateX(-50%) scale(.9); transform-origin: center top; }
+  #bsi .bsi-frz.on { transform: translateX(-50%); }
+  #bsi .bsi-frzwave .wd { font-size: 32px; } #bsi .bsi-frzwave .wd small { font-size: 14px; }
   #bsi .ab { width: 60px; height: 58px; } #bsi .ab .nm { font-size: 10px; } #bsi .ab .ico { font-size: 20px; }
   #bsi .bsi-banner { font-size: 20px; top: 18%; }
   #bsi .pk-cards { flex-direction: column; gap: 8px; }

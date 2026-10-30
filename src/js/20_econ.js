@@ -59,7 +59,7 @@
   I.shardMul = function () { return 1 + 0.1 * I.S.shardsAll; };
   I.frenzyOn = function () { return I.now() < (I.BT && I.BT.frenzyUntil || 0); };
   I.blessMul = function (k) { return Math.pow(1.15, I.S.bless[k] || 0); };
-  I.incomeMul = function () { return I.achMul() * I.shardMul() * (I.frenzyOn() ? 3 : 1) * I.bmul('income') * I.blessMul('inc'); };
+  I.incomeMul = function () { return I.achMul() * I.shardMul() * I.bmul('income') * I.blessMul('inc'); };   // 鯊魚狂潮以前是收入 ×3，改成蓄力全滿（30_battle.js bitePow）
   I.atk = function () { return eff('gun') * Math.pow(1.5, I.tlv('trident')) * I.blessMul('atk'); };
   I.def = function () { return eff('hull') * Math.pow(1.5, I.tlv('coral')) * I.blessMul('def'); };
   I.valueMul = function () { return eff('value'); };

@@ -222,26 +222,38 @@
   /** 連咬：現在連到第幾口（斷了 ⇒ 0）、還剩幾秒會斷。 */
   I.comboLeft = function () { return Math.max(0, comboT + B.comboGap * 1000 - I.now()) / 1000; };
   I.comboNow = function () { return I.comboLeft() > 0 ? combo : 0; };
+  /** 下一口的威力（0.2～1；BAL.biteCharge 那一段）：上一口之後自己蓄；鯊魚狂潮 ⇒ 一直是滿的。≥ BAL.biteFull 算蓄滿（連咬、暴擊、條上寫「全力」）。 */
+  I.bitePow = function () {
+    if (I.frenzyOn()) return 1;
+    var c = Math.min(1, Math.max(0, (I.now() - biteAt) / (B.biteCharge * 1000)));
+    return B.biteMin + (1 - B.biteMin) * Math.pow(c, B.biteCurve);
+  };
   /** o：{ at, dir }（核心 pick 的 p、d ⇒ 咬在那一點；cx、cy ＝ 點的那一點，演出放那裡）、{ big }（巨齒鯊：對著鏡頭那一舷的水線上一大口）；
    *  都沒有 ⇒ 對著鏡頭那一舷、水線上一點點的地方。回咬掉幾格。 */
   I.bite = function (sh, o) {
     o = o || {};
     if (!sh || !sh.bsi || sh.team !== 'red' || (BT.phase !== 'fight' && BT.phase !== 'hold')) return 0;   // 打贏之後（hold）還在沉的照樣咬得到
     if (sh.sunk && !o.at) return 0;                                    // 沉沒了還在往下沉的：點得到才咬（tapBite 照深度判）
-    var now = I.now(), nc = o.big ? combo : now - comboT < B.comboGap * 1000 ? combo + 1 : 1, crit = !o.big && nc % B.comboCrit === 0;
-    if (!o.big) { if (now - biteAt < 250) return 0; biteAt = now; }
-    var r = o.big ? 10 + I.lv('teeth') : Math.round(I.biteR() * (crit ? 1.6 : 1));
+    var now = I.now();
+    if (!o.big && now - biteAt < 250) return 0;
+    // 蓄力：咬掉的格 ∝ 威力 ⇒ 半徑 × √威力（船殼是薄薄一層：咬掉的格 ∝ 半徑²；⛔ × ∛威力 ⇒ 兩成威力咬掉的是全力的五成，量過）、獎勵 ∝ 威力（下面 √格數 再乘 √威力）
+    //   只有蓄滿（BAL.biteFull）的那一口算連咬、暴擊；沒蓄滿的不加、也不續（⛔ 每口都算 ⇒ 狂點一秒四口，連咬一下就疊滿、暴擊多四倍）
+    var pw = o.big ? 1 : I.bitePow(), full = o.big || pw >= B.biteFull;
+    var nc = o.big || !full ? I.comboNow() : now - comboT < B.comboGap * 1000 ? combo + 1 : 1, crit = !o.big && full && nc % B.comboCrit === 0;
+    if (!o.big) biteAt = now;
+    var r = o.big ? 10 + I.lv('teeth') : Math.max(2, Math.round(I.biteR() * (crit ? 1.6 : 1) * Math.sqrt(pw)));
     var res = o.at ? C.bite(sh, o.at, r, o.dir) : C.bite(sh, { fx: 0.2 + Math.random() * 0.6, side: 0, dz: o.big ? 0 : 1 }, r);
     if (!res) return 0;
-    if (!o.big) { combo = nc; comboT = now; if (combo > I.S.st.comboMax) I.S.st.comboMax = combo; }
+    if (!o.big && full) { combo = nc; comboT = now; if (combo > I.S.st.comboMax) I.S.st.comboMax = combo; }
     I.S.st.bites++;
     // 咬下來的格照常算進打下來的格（輪詢那一份）；另外一份咬的獎勵：一口 ≈ 身價的 biteK（咬得越大 ∝ √格數）× 利齒，一艘最多領身價的三成
     //   ⛔ 照「格數 ÷ 那艘的 5%」算（打下來的格那條曲線）⇒ 一口 100 格只有身價的 0.16%，點了跟沒點一樣（2026-10-30 量的：第 1 海域一口 +8.7）
     //   連咬：× 1 ＋ comboStep ×（連咬 − 1）（最多 comboMax），暴擊再 ×2
-    var cm = o.big ? 1 : Math.min(B.comboMax, 1 + B.comboStep * (combo - 1)) * (crit ? 2 : 1);
-    var b = sh.bsi, bonus = Math.min(b.pool * 0.3 - b.biteGot, b.pool * B.biteK * Math.sqrt(res.n / 100) * I.biteMul() * cm), g = 0;
+    var cm = o.big ? 1 : Math.min(B.comboMax, 1 + B.comboStep * (Math.max(1, nc) - 1)) * (crit ? 2 : 1);
+    var b = sh.bsi, bonus = Math.min(b.pool * 0.3 - b.biteGot, b.pool * B.biteK * Math.sqrt(res.n / 100) * Math.sqrt(pw) * I.biteMul() * cm), g = 0;
     if (bonus > 0) { b.biteGot += bonus; g = I.gain(bonus * I.valueMul() * I.incomeMul(), 'bite'); BT.income += g; }
-    I.emit('bite', { sh: sh, n: res.n, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy, combo: o.big ? 0 : combo, crit: crit, cm: cm });
+    if (!o.big && I.frenzyOn()) { BT.frenzyBites = (BT.frenzyBites || 0) + 1; BT.frenzyGot = (BT.frenzyGot || 0) + g; }   // 狂潮那一波全力咬了幾口、咬下多少（50_ui.js 那一條、結束時的訊息）
+    I.emit('bite', { sh: sh, n: res.n, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy, combo: o.big || !full ? 0 : combo, crit: crit, cm: cm, pw: pw });
     return res.n;
   };
   /** 畫面那一點沒點到那艘的船身（點到名牌、手機點偏了）⇒ 從那一點往它的中心走，第一個點得到它的地方。 */
@@ -331,7 +343,7 @@
     var a = I.ABIL.filter(function (x) { return x.id === id; })[0]; if (!a || !I.abilReady(a) || BT.phase !== 'fight') return false;
     var ships = C.ships();
     if (id === 'volley') ships.forEach(function (sh) { if (sh.team === 'blue' && !C.isOut(sh)) sh.guns.forEach(function (g) { if (g.alive && g.reload > 0.05) g.reload = 0.05; }); });
-    if (id === 'frenzy') BT.frenzyUntil = I.now() + a.dur * 1000;
+    if (id === 'frenzy') { BT.frenzyUntil = I.now() + a.dur * 1000; BT.frenzyGot = 0; BT.frenzyBites = 0; }
     if (id === 'mega') {                                              // 巨齒鯊：先游過畫面（40_fx.js），再一艘一艘咬下去
       var L = ships.filter(function (sh) { return sh.team === 'red' && !C.isOut(sh); });
       L.forEach(function (sh, i) { setTimeout(function () { I.bite(sh, { big: true }); }, 520 + i * 170); });

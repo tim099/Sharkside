@@ -491,7 +491,7 @@
   #err button:disabled{ opacity:.5; cursor:default; }
   #err label.chk{ display:inline-flex; align-items:center; gap:6px; margin:8px 0 0; font-size:13px; }
 </style>
-<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "ad1378963bc9563f", "shell": "188f03526f7a"}};</script></head>
+<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "ad1378963bc9563f", "shell": "a1fb681c08d7"}};</script></head>
 <body>
 <!-- 擬真沙盒（84_fleetlab.js；?lab=fleet，根目錄 fleetlab.html 轉過來）：body.flab 才顯示；看實景（body.flab3d）時俯視圖藏起來、底下的遊戲畫布露出來 -->
 <div id="flab">
@@ -46264,8 +46264,9 @@ addStaged: function (o) { return coreAddStaged(o); }
 html.bsi-on #cover, html.bsi-on #end, html.bsi-on #spk, html.bsi-on #gfxov, html.bsi-on #flab { display: none !important; }
 html.bsi-on #stage > :not(#cv) { display: none !important; }
 
-/* 外殼的框 ＝ 核心的 #stage（裝置的安全區扣掉：瀏海、圓角、home 條；核心 template.html 的 --sa-*，橫放時底邊 0）⇒ C.project、點畫面的座標、畫在 #bsi 上的標記對得上畫布；
- * 從主畫面開（全螢幕）時 UI 不會鑽到瀏海、home 條底下。⛔ 裡面的元件別再加安全區（會算兩次），尺寸用 % 不用 100vw／100vh（那是整個視窗）。 */
+/* 外殼的框 ＝ 核心的 #stage（裝置的安全區扣掉：瀏海、圓角、home 條；核心 template.html 的 --sa-*，橫放時底邊 0）⇒ 從主畫面開（全螢幕）時 UI 不會鑽到瀏海、home 條底下。
+ * ⛔ 裡面的元件別再加安全區（會算兩次），尺寸用 % 不用 100vw／100vh（那是整個視窗）。
+ * ⚠ C.project、點畫面（tap）的座標是整個視窗的（client px）⇒ 照它擺東西的那幾層（名牌、飄字、寶物、演出、鯊鰭）撐回整個視窗，見下面「照世界座標擺的層」。 */
 #bsi {
   --ink: #e8f4ff; --dim: #8fb0c8; --line: rgba(130, 205, 255, 0.18); --panel: rgba(6, 20, 36, 0.78); --panel2: rgba(12, 34, 58, 0.72);
   --sea: #4fd1ff; --sea2: #2b8bd6; --gold: #ffd166; --coral: #ff6b6b; --good: #5be3a1; --warn: #ffb347; --shd: #b58cff;
@@ -46491,6 +46492,34 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 @keyframes bsiShake2 { 0%, 100% { transform: none; } 10% { transform: translate(-12px, 6px) rotate(-.4deg); } 22% { transform: translate(11px, -7px) rotate(.4deg); } 36% { transform: translate(-9px, -4px); } 50% { transform: translate(8px, 5px); } 66% { transform: translate(-5px, 3px); } 82% { transform: translate(3px, -2px); } }
 /* 巨齒鯊：畫面暗下來、一條大鯊魚游過去 */
 #bsi .bsi-mega { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+/* 鯊魚狂潮（Tim 2026-10-30：「目前鯊魚狂潮有點看不出效果」）：開下去一道浪掃過去＋大字；期間畫面邊緣發藍光、上面一條還剩幾秒與全力咬了幾口、咬的飄字變藍、敵艦旁邊鯊鰭繞著游（效果本身：蓄力全滿，30_battle.js bitePow） */
+#bsi .bsi-frzwave { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+#bsi .bsi-frzwave .wave { position: absolute; top: 0; bottom: 0; left: -70%; width: 70%; background: linear-gradient(90deg, transparent, rgba(79, 209, 255, .25) 35%, rgba(191, 246, 255, .55) 50%, rgba(79, 209, 255, .25) 65%, transparent); animation: bsiFrzWave 1.1s ease-in forwards; }
+#bsi .bsi-frzwave .wd { position: absolute; left: 50%; top: 30%; white-space: nowrap; text-align: center; font: 900 50px/1.1 system-ui, sans-serif; color: #fff; -webkit-text-stroke: 2px #0b3a5e; text-shadow: 0 0 24px rgba(79, 209, 255, .9), 0 4px 0 #04121f; animation: bsiFrzWd 2.1s ease-out forwards; }
+#bsi .bsi-frzwave .wd small { display: block; margin-top: 8px; font-size: 18px; -webkit-text-stroke: 0; color: var(--gold); text-shadow: 0 2px 4px #000; }
+@keyframes bsiFrzWave { to { left: 110%; } }
+@keyframes bsiFrzWd { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.6); } 15% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); } 25% { transform: translate(-50%, -50%) scale(1); } 80% { opacity: 1; transform: translate(-50%, -50%); } 100% { opacity: 0; transform: translate(-50%, -62%); } }
+html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; box-shadow: inset 0 0 110px 34px rgba(79, 209, 255, .5), inset 0 0 14px 3px rgba(200, 248, 255, .6); animation: bsiFrzEdge 1.1s ease-in-out infinite alternate; }
+@keyframes bsiFrzEdge { from { opacity: .5; } to { opacity: 1; } }
+#bsi .bsi-fins { position: absolute; pointer-events: none; overflow: hidden; }
+#bsi .bsi-fin { position: absolute; left: 0; top: 0; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .55)); }
+#bsi .bsi-fin svg { display: block; width: 100%; height: auto; }
+#bsi .bsi-fl.frz { color: #9ff6ff; text-shadow: 0 0 10px rgba(79, 209, 255, .95), 0 2px 3px #000; }
+#bsi .bsi-fl.weak { font-size: 12px; opacity: .75; }
+/* 咬的蓄力條（技能鈕上面；30_battle.js bitePow）：滿了發金光、狂潮發藍光 */
+#bsi .bsi-abil .chg { position: absolute; bottom: calc(100% + 26px); left: 50%; transform: translateX(-50%); display: none; align-items: center; gap: 6px; width: 200px; padding: 3px 8px; border-radius: 12px; background: rgba(0, 0, 0, .45); border: 1px solid var(--line); }
+#bsi .bsi-abil .chg.on { display: flex; }
+#bsi .chg b { font-size: 15px; line-height: 1; }
+#bsi .chg .bar { flex: 1; height: 7px; border-radius: 4px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+#bsi .chg .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #8a6a3a, #ffd166); }
+#bsi .chg span { min-width: 44px; text-align: right; font-size: 12px; font-weight: 800; color: var(--dim); }
+#bsi .chg.full { border-color: rgba(255, 209, 102, .7); box-shadow: 0 0 12px rgba(255, 209, 102, .45); }
+#bsi .chg.full span { color: var(--gold); }
+#bsi .chg.frz { border-color: rgba(79, 209, 255, .8); box-shadow: 0 0 16px rgba(79, 209, 255, .6); }
+#bsi .chg.frz .bar i { background: linear-gradient(90deg, #2b8bd6, #4fd1ff, #c8f8ff); }
+#bsi .chg.frz span { color: #9ff6ff; }
+/* 照世界座標擺的層（C.project、tap 的 client px）：撐回整個視窗 ⇒ 安全區不是 0 時（從主畫面開的 iPhone）也對得上船 */
+#bsi .bsi-marks, #bsi .bsi-float, #bsi .bsi-loot, #bsi .bsi-fx, #bsi .bsi-fins { inset: calc(-1 * var(--sa-t, 0px)) calc(-1 * var(--sa-r, 0px)) calc(-1 * var(--sa-b, 0px)) calc(-1 * var(--sa-l, 0px)); }
 #bsi .bsi-mega .dark { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 60%, rgba(0, 20, 40, .1), rgba(0, 8, 16, .78)); animation: bsiDark 1.9s ease-out forwards; }
 #bsi .bsi-mega .shark { position: absolute; left: 0; top: 34%; width: min(70vw, 900px); animation: bsiSwim 1.5s cubic-bezier(.35, .05, .45, 1) forwards; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, .6)); }
 #bsi .bsi-mega .shark svg { width: 100%; display: block; }
@@ -46521,6 +46550,9 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .bsi-wpn .bar { height: 5px; margin-top: 4px; border-radius: 3px; background: rgba(0, 0, 0, .45); overflow: hidden; }
 #bsi .bsi-wpn .bar i { display: block; height: 100%; background: linear-gradient(90deg, #ff5a3c, #ffd166); }
 #bsi .bsi-wpn .s { font-weight: 800; color: var(--gold); font-size: 15px; min-width: 40px; text-align: right; }
+#bsi .bsi-frz { top: 72px; bottom: auto; min-width: 260px; border-color: rgba(79, 209, 255, .6); box-shadow: 0 0 24px rgba(79, 209, 255, .35); }
+#bsi .bsi-frz b { color: #c8f8ff; }
+#bsi .bsi-frz .bar i { background: linear-gradient(90deg, #2b8bd6, #4fd1ff, #c8f8ff); }
 
 /* ── 船上的標記 ── */
 #bsi .bsi-marks, #bsi .bsi-float { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
@@ -46645,6 +46677,9 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   #bsi .bsi-wpn { left: 6px; bottom: 92px; transform: scale(.9); min-width: 0; width: 160px; transform-origin: left bottom; }
   #bsi .bsi-wpn.on { transform: none; }
   #bsi .bsi-wpn b { font-size: 12px; }
+  #bsi .bsi-frz { left: 50%; top: 58px; bottom: auto; width: 230px; transform: translateX(-50%) scale(.9); transform-origin: center top; }
+  #bsi .bsi-frz.on { transform: translateX(-50%); }
+  #bsi .bsi-frzwave .wd { font-size: 32px; } #bsi .bsi-frzwave .wd small { font-size: 14px; }
   #bsi .ab { width: 60px; height: 58px; } #bsi .ab .nm { font-size: 10px; } #bsi .ab .ico { font-size: 20px; }
   #bsi .bsi-banner { font-size: 20px; top: 18%; }
   #bsi .pk-cards { flex-direction: column; gap: 8px; }
@@ -46762,6 +46797,12 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     goldP: 0.14, goldK: 5, goldLoot: 4,
     // 連咬（30_battle.js bite）：上一口之後 comboGap 秒內再咬 ⇒ 連咬 +1，獎勵 ×（1 ＋ comboStep ×（連咬 − 1））最多 comboMax；每 comboCrit 口暴擊一次（咬得大 1.6 倍、獎勵 ×2）
     comboGap: 1.6, comboStep: 0.15, comboMax: 3, comboCrit: 10,
+    // 咬的蓄力（30_battle.js bitePow；Tim 2026-10-30：「咬擊 可以加上蓄力條(自動續力 不用按住) 目前連點感覺有點太強 如果讓蓄力滿威力等於目前 空續力(高速連點) 威力只有目前20%」）：
+    //   上一口之後自己慢慢蓄，威力 ＝ biteMin ＋（1 − biteMin）×（過了幾秒 ÷ biteCharge）^biteCurve；咬掉的格 ∝ 威力（半徑 × √威力：船殼薄 ⇒ 格 ∝ 半徑²）、獎勵 ∝ 威力
+    //   ≥ biteFull 算蓄滿（給一點手感：大約 0.95 秒）：只有蓄滿的那一口算連咬、暴擊（⛔ 每口都算 ⇒ 狂點連咬一下就疊滿、暴擊多四倍）
+    //   ⛔ 線性蓄力（biteCurve 1）⇒ 永遠是狂點划算（一口最短 0.25 秒 ⇒ 一秒四口 × 兩成就有 0.8 口全力，再加上蓄的那一點）；平方 ＋ 一秒蓄滿 ⇒ 狂點跟一秒一口全力差不多
+    //   鯊魚狂潮的那幾秒蓄力一直是滿的（ABIL frenzy）⇒ 一秒四口全力 ＝ 以前狂點的威力
+    biteCharge: 1.0, biteMin: 0.2, biteCurve: 2, biteFull: 0.92,
     // 軍火箱（35_loot.js 的漂流寶物多一種；一般的 armsP、黃金寶船 armsGold 的機率）：點一下撿才有（自動撿 ⇒ 沉下去了）⇒ 接下來那把武器的 dur 秒點敵艦換成它（I.WEAPONS）
     armsP: 0.16, armsGold: 0.2,
     wreckY: -12               // 沉沒了還在往下沉的船：水面下這麼深（公尺）以內還看得到、咬得到
@@ -46826,7 +46867,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   /** 技能（主動）。zone：到過這個海域才解鎖。 */
   I.ABIL = [
     { id: 'volley', key: '1', ico: '🔥', name: '全艦齊射', cd: 40, zone: 3, desc: '全艦的砲立刻裝填完畢' },
-    { id: 'frenzy', key: '2', ico: '🌊', name: '鯊魚狂潮', cd: 120, dur: 20, zone: 7, desc: '20 秒內所有收入 ×3' },
+    { id: 'frenzy', key: '2', ico: '🌊', name: '鯊魚狂潮', cd: 120, dur: 20, zone: 7, desc: '20 秒內蓄力條一直是滿的：每一口都是全力，可以連續咬' },
     { id: 'mega', key: '3', ico: '🦈', name: '巨齒鯊', cd: 90, zone: 14, desc: '每艘敵艦都被狠狠咬一大口' },
     { id: 'repair', key: '4', ico: '🔧', name: '緊急搶修', cd: 120, dur: 25, zone: 24, desc: '25 秒內全艦抽水 ×4、不再進水' }
   ];
@@ -46835,9 +46876,10 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
    *  漂流寶物的軍火箱撿到 ⇒ dur 秒內點敵艦（空白鍵：鎖定的那艘）不咬，換成這把；兩下之間至少 gap 秒。威力照鯊魚利齒的等級（L）：
    *  fire 鯊魚噴火：從點的那一點靠鏡頭那一側的水面噴出 n0 ＋ ⌊L ÷ 5⌋ 團希臘火（核心 C.shot kind 'fire'：潑開燒人、點著木頭延燒、燒穿）；燒人的傷害 dmg0 ×（1 ＋ dmgL × L）
    *  cannon 天降砲擊：從那一點的斜上方憑空落下一顆爆裂彈（kind 'shell'）；彈重 m0 ×（1 ＋ mL × L）kg（炸開的半徑 ∝ ∛彈重，上限 300 kg），傷害同上 */
+  // gap：兩發最短隔幾秒（Tim 2026-10-30：「射擊間格可以更短(不用等上一發命中)」⇒ 0.3／0.45 ⇒ 0.12／0.18）
   I.WEAPONS = [
-    { id: 'fire', ico: '🔥', name: '鯊魚噴火', dur: 10, gap: 0.3, n0: 2, dmg0: 2, dmgL: 0.2, desc: '從海裡噴出希臘火：點到哪裡燒到哪裡，木頭會延燒、燒穿' },
-    { id: 'cannon', ico: '💣', name: '天降砲擊', dur: 10, gap: 0.45, m0: 30, mL: 0.3, dmg0: 3, dmgL: 0.2, desc: '天上憑空落下一顆大爆裂彈：點到哪裡炸到哪裡' }
+    { id: 'fire', ico: '🔥', name: '鯊魚噴火', dur: 10, gap: 0.12, n0: 2, dmg0: 2, dmgL: 0.2, desc: '從海裡噴出希臘火：點到哪裡燒到哪裡，木頭會延燒、燒穿' },
+    { id: 'cannon', ico: '💣', name: '天降砲擊', dur: 10, gap: 0.18, m0: 30, mL: 0.3, dmg0: 3, dmgL: 0.2, desc: '憑空一顆大爆裂彈從你這邊打過去：點到哪裡炸到哪裡' }
   ];
 
   /** 艦隊方針（＝ 核心的砲長，51_captain.js CAPTAINS）：我方每艘照它挑瞄準。 */
@@ -47024,7 +47066,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   I.shardMul = function () { return 1 + 0.1 * I.S.shardsAll; };
   I.frenzyOn = function () { return I.now() < (I.BT && I.BT.frenzyUntil || 0); };
   I.blessMul = function (k) { return Math.pow(1.15, I.S.bless[k] || 0); };
-  I.incomeMul = function () { return I.achMul() * I.shardMul() * (I.frenzyOn() ? 3 : 1) * I.bmul('income') * I.blessMul('inc'); };
+  I.incomeMul = function () { return I.achMul() * I.shardMul() * I.bmul('income') * I.blessMul('inc'); };   // 鯊魚狂潮以前是收入 ×3，改成蓄力全滿（30_battle.js bitePow）
   I.atk = function () { return eff('gun') * Math.pow(1.5, I.tlv('trident')) * I.blessMul('atk'); };
   I.def = function () { return eff('hull') * Math.pow(1.5, I.tlv('coral')) * I.blessMul('def'); };
   I.valueMul = function () { return eff('value'); };
@@ -47486,26 +47528,38 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   /** 連咬：現在連到第幾口（斷了 ⇒ 0）、還剩幾秒會斷。 */
   I.comboLeft = function () { return Math.max(0, comboT + B.comboGap * 1000 - I.now()) / 1000; };
   I.comboNow = function () { return I.comboLeft() > 0 ? combo : 0; };
+  /** 下一口的威力（0.2～1；BAL.biteCharge 那一段）：上一口之後自己蓄；鯊魚狂潮 ⇒ 一直是滿的。≥ BAL.biteFull 算蓄滿（連咬、暴擊、條上寫「全力」）。 */
+  I.bitePow = function () {
+    if (I.frenzyOn()) return 1;
+    var c = Math.min(1, Math.max(0, (I.now() - biteAt) / (B.biteCharge * 1000)));
+    return B.biteMin + (1 - B.biteMin) * Math.pow(c, B.biteCurve);
+  };
   /** o：{ at, dir }（核心 pick 的 p、d ⇒ 咬在那一點；cx、cy ＝ 點的那一點，演出放那裡）、{ big }（巨齒鯊：對著鏡頭那一舷的水線上一大口）；
    *  都沒有 ⇒ 對著鏡頭那一舷、水線上一點點的地方。回咬掉幾格。 */
   I.bite = function (sh, o) {
     o = o || {};
     if (!sh || !sh.bsi || sh.team !== 'red' || (BT.phase !== 'fight' && BT.phase !== 'hold')) return 0;   // 打贏之後（hold）還在沉的照樣咬得到
     if (sh.sunk && !o.at) return 0;                                    // 沉沒了還在往下沉的：點得到才咬（tapBite 照深度判）
-    var now = I.now(), nc = o.big ? combo : now - comboT < B.comboGap * 1000 ? combo + 1 : 1, crit = !o.big && nc % B.comboCrit === 0;
-    if (!o.big) { if (now - biteAt < 250) return 0; biteAt = now; }
-    var r = o.big ? 10 + I.lv('teeth') : Math.round(I.biteR() * (crit ? 1.6 : 1));
+    var now = I.now();
+    if (!o.big && now - biteAt < 250) return 0;
+    // 蓄力：咬掉的格 ∝ 威力 ⇒ 半徑 × √威力（船殼是薄薄一層：咬掉的格 ∝ 半徑²；⛔ × ∛威力 ⇒ 兩成威力咬掉的是全力的五成，量過）、獎勵 ∝ 威力（下面 √格數 再乘 √威力）
+    //   只有蓄滿（BAL.biteFull）的那一口算連咬、暴擊；沒蓄滿的不加、也不續（⛔ 每口都算 ⇒ 狂點一秒四口，連咬一下就疊滿、暴擊多四倍）
+    var pw = o.big ? 1 : I.bitePow(), full = o.big || pw >= B.biteFull;
+    var nc = o.big || !full ? I.comboNow() : now - comboT < B.comboGap * 1000 ? combo + 1 : 1, crit = !o.big && full && nc % B.comboCrit === 0;
+    if (!o.big) biteAt = now;
+    var r = o.big ? 10 + I.lv('teeth') : Math.max(2, Math.round(I.biteR() * (crit ? 1.6 : 1) * Math.sqrt(pw)));
     var res = o.at ? C.bite(sh, o.at, r, o.dir) : C.bite(sh, { fx: 0.2 + Math.random() * 0.6, side: 0, dz: o.big ? 0 : 1 }, r);
     if (!res) return 0;
-    if (!o.big) { combo = nc; comboT = now; if (combo > I.S.st.comboMax) I.S.st.comboMax = combo; }
+    if (!o.big && full) { combo = nc; comboT = now; if (combo > I.S.st.comboMax) I.S.st.comboMax = combo; }
     I.S.st.bites++;
     // 咬下來的格照常算進打下來的格（輪詢那一份）；另外一份咬的獎勵：一口 ≈ 身價的 biteK（咬得越大 ∝ √格數）× 利齒，一艘最多領身價的三成
     //   ⛔ 照「格數 ÷ 那艘的 5%」算（打下來的格那條曲線）⇒ 一口 100 格只有身價的 0.16%，點了跟沒點一樣（2026-10-30 量的：第 1 海域一口 +8.7）
     //   連咬：× 1 ＋ comboStep ×（連咬 − 1）（最多 comboMax），暴擊再 ×2
-    var cm = o.big ? 1 : Math.min(B.comboMax, 1 + B.comboStep * (combo - 1)) * (crit ? 2 : 1);
-    var b = sh.bsi, bonus = Math.min(b.pool * 0.3 - b.biteGot, b.pool * B.biteK * Math.sqrt(res.n / 100) * I.biteMul() * cm), g = 0;
+    var cm = o.big ? 1 : Math.min(B.comboMax, 1 + B.comboStep * (Math.max(1, nc) - 1)) * (crit ? 2 : 1);
+    var b = sh.bsi, bonus = Math.min(b.pool * 0.3 - b.biteGot, b.pool * B.biteK * Math.sqrt(res.n / 100) * Math.sqrt(pw) * I.biteMul() * cm), g = 0;
     if (bonus > 0) { b.biteGot += bonus; g = I.gain(bonus * I.valueMul() * I.incomeMul(), 'bite'); BT.income += g; }
-    I.emit('bite', { sh: sh, n: res.n, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy, combo: o.big ? 0 : combo, crit: crit, cm: cm });
+    if (!o.big && I.frenzyOn()) { BT.frenzyBites = (BT.frenzyBites || 0) + 1; BT.frenzyGot = (BT.frenzyGot || 0) + g; }   // 狂潮那一波全力咬了幾口、咬下多少（50_ui.js 那一條、結束時的訊息）
+    I.emit('bite', { sh: sh, n: res.n, g: g, w: res.w, big: !!o.big, cx: o.cx, cy: o.cy, combo: o.big || !full ? 0 : combo, crit: crit, cm: cm, pw: pw });
     return res.n;
   };
   /** 畫面那一點沒點到那艘的船身（點到名牌、手機點偏了）⇒ 從那一點往它的中心走，第一個點得到它的地方。 */
@@ -47595,7 +47649,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     var a = I.ABIL.filter(function (x) { return x.id === id; })[0]; if (!a || !I.abilReady(a) || BT.phase !== 'fight') return false;
     var ships = C.ships();
     if (id === 'volley') ships.forEach(function (sh) { if (sh.team === 'blue' && !C.isOut(sh)) sh.guns.forEach(function (g) { if (g.alive && g.reload > 0.05) g.reload = 0.05; }); });
-    if (id === 'frenzy') BT.frenzyUntil = I.now() + a.dur * 1000;
+    if (id === 'frenzy') { BT.frenzyUntil = I.now() + a.dur * 1000; BT.frenzyGot = 0; BT.frenzyBites = 0; }
     if (id === 'mega') {                                              // 巨齒鯊：先游過畫面（40_fx.js），再一艘一艘咬下去
       var L = ships.filter(function (sh) { return sh.team === 'red' && !C.isOut(sh); });
       L.forEach(function (sh, i) { setTimeout(function () { I.bite(sh, { big: true }); }, 520 + i * 170); });
@@ -47703,11 +47757,11 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   'use strict';
   var C = I.core;
   if (!C) return;
-  var FL, MK, TS, FX, CB, marks = new Map(), HTML = document.documentElement;
+  var FL, MK, TS, FX, CB, FN, marks = new Map(), HTML = document.documentElement;
 
   I.fxInit = function (root) {
-    FL = I.h('div', 'bsi-float'); MK = I.h('div', 'bsi-marks'); TS = I.h('div', 'bsi-toasts'); FX = I.h('div', 'bsi-fx'); CB = I.h('div', 'bsi-combo');
-    root.appendChild(MK); root.appendChild(FL); root.appendChild(TS); root.appendChild(FX); root.appendChild(CB);
+    FL = I.h('div', 'bsi-float'); MK = I.h('div', 'bsi-marks'); TS = I.h('div', 'bsi-toasts'); FX = I.h('div', 'bsi-fx'); CB = I.h('div', 'bsi-combo'); FN = I.h('div', 'bsi-fins');
+    root.appendChild(FN); root.appendChild(MK); root.appendChild(FL); root.appendChild(TS); root.appendChild(FX); root.appendChild(CB);
   };
 
   // ── 飄字 ──
@@ -47775,6 +47829,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     else if (k === 'arms') { noise(A, t, 0.05, 0.3, ['bandpass', 3200, 2]); tone(A, t + 0.02, 520, 520, 0.12, 0.12, 'square'); [392, 523, 784].forEach(function (f, i) { tone(A, t + 0.1 + i * 0.07, f, f * 1.01, 0.2, 0.12, 'sawtooth'); }); }   // 軍火箱：鐵扣一響＋往上三聲
     else if (k === 'flame') { noise(A, t, 0.45, 0.32, ['bandpass', 700, 0.7]); noise(A, t, 0.3, 0.16, ['highpass', 2500]); }   // 噴火：呼 ——
     else if (k === 'whistle') tone(A, t, 1900, 520, 0.55, 0.07);           // 砲彈落下的哨音（爆炸聲是核心的）
+    else if (k === 'frenzy') { noise(A, t, 0.75, 0.3, ['bandpass', 520, 0.6]); tone(A, t, 180, 720, 0.55, 0.1, 'triangle'); [523, 659, 784, 1046].forEach(function (f, i) { tone(A, t + 0.32 + i * 0.07, f, f, 0.24, 0.11, 'triangle'); }); }   // 鯊魚狂潮：浪湧上來＋往上四聲
   };
 
   // ── 咬一口的演出（畫面上的；船上的牙印、碎木、水花是核心挖的）：上下兩排牙衝過來咬合、閃一下、衝擊圈、字、畫面震 ──
@@ -47822,6 +47877,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     if (!o.big && (I.S.cam === 'foe' || I.S.cam === 'auto')) { lockOn(o.sh); camHold = I.now() + 8000; }   // 咬到哪艘，鏡頭就看哪艘（巨齒鯊一口氣咬全部 ⇒ 不跟，免得一直跳）
     if (x !== undefined) {
       var cls = o.big ? 'big' : o.crit ? 'crit' : '';
+      if (!o.big) cls += I.frenzyOn() ? ' frz' : o.pw < 0.6 ? ' weak' : '';   // 狂潮：藍色；沒蓄力就咬：小一號、淡一點
       I.chomp(x, y, cls, anc, o.big ? 'MEGA CHOMP!' : o.crit ? 'CRITICAL!' : o.combo >= 2 ? 'COMBO ×' + o.combo : null);
       I.floatAt(x, y - (o.big ? 80 : 54), '🦈 ' + (o.g > 0 ? '+' + I.fmt(o.g) : o.n + ' 格'), 'bite' + (cls ? ' ' + cls : ''));
     }
@@ -47853,6 +47909,14 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     I.sfx('chest');
     if (I.S.cam === 'foe') lockOn(sh);
   });
+  // 鯊魚狂潮（Tim 2026-10-30：「目前鯊魚狂潮有點看不出效果」）：開下去一道浪掃過畫面＋大字；結束時說這一波全力咬了幾口（效果：蓄力全滿，30_battle.js bitePow；50_ui.js 那一條、idle.css 的藍邊）
+  I.on('abil', function (a) {
+    if (a.id !== 'frenzy' || !FX) return;
+    var e = I.h('div', 'bsi-frzwave', '<i class="wave"><\/i><b class="wd">🌊 鯊魚狂潮！<small>' + a.dur + ' 秒蓄力全滿：連續全力咬！<\/small><\/b>');
+    FX.appendChild(e); setTimeout(function () { e.remove(); }, 2200);
+    I.sfx('frenzy');
+  });
+  I.on('frenzyEnd', function (n, got) { I.toast('🌊 鯊魚狂潮結束 —— 全力咬了 <b>' + n + '<\/b> 口' + (got > 0 ? '，咬下 <span class="g">+' + I.fmt(got) + '<\/span> 格' : ''), 'abil', 5000); });
   I.on('mega', function () {
     if (!FX) return;
     var e = I.h('div', 'bsi-mega', '<i class="dark"><\/i><div class="shark">' + SHARK + '<\/div><b class="wd">🦈 巨齒鯊！<\/b>');
@@ -47940,9 +48004,34 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   I.marksClear = function () { marks.forEach(function (m) { m.e.remove(); }); marks.clear(); };
   I.on('zoneLoad', function () { I.marksClear(); });
 
+  // ── 鯊魚狂潮：每艘敵艦旁邊兩片鯊鰭繞著游（照船在水面的那一點投影；遠的船繞小圈、鰭小一點；繞到船後面那半圈潛下去）──
+  var fins = new Map(), finT = 0;
+  var FIN = '<svg viewBox="0 0 40 30"><path d="M3 27C11 22 16 11 18 2C23 9 30 20 37 27Z" fill="#3a5266" stroke="#0b1622" stroke-width="2" stroke-linejoin="round"/>' +
+    '<path d="M18 4C20 11 24 19 31 26" stroke="#8aa3b8" stroke-width="2" fill="none" opacity=".7"/><path d="M0 28Q20 23 40 28" stroke="#e8fbff" stroke-width="2.6" fill="none" opacity=".9"/><\/svg>';
+  function finFrame(dt) {
+    var on = FN && I.frenzyOn() && (I.BT.phase === 'fight' || I.BT.phase === 'hold'), live = new Set();
+    if (on) {
+      finT += dt;
+      C.ships().forEach(function (sh) {
+        if (sh.team !== 'red' || sh.sunk || C.isOut(sh)) return;
+        var c = C.center(sh), p = c && C.project(c[0], 0, c[2]); if (!p) return;
+        var L = fins.get(sh); if (!L) { L = [I.h('div', 'bsi-fin', FIN), I.h('div', 'bsi-fin', FIN)]; L.forEach(function (e) { FN.appendChild(e); }); fins.set(sh, L); }
+        var rx = I.clamp(15000 / p.d, 40, 240), ry = rx * 0.26, sz = I.clamp(2800 / p.d, 16, 56);
+        live.add(sh);
+        L.forEach(function (e, k) {
+          var a = finT * 1.25 + k * Math.PI + sh.i, s = Math.sin(a), x = p.x + Math.cos(a) * rx, y = p.y + s * ry;   // 角度往大走 ⇒ 前半圈（下面、靠鏡頭）往左游
+          e.style.width = sz.toFixed(0) + 'px'; e.style.opacity = I.clamp(1 + 1.7 * s, 0, 1).toFixed(2);   // 繞到後面那半圈潛下去（⛔ 照樣畫 ⇒ 低鏡頭時疊在帆上，像鰭插在帆上）
+          e.style.transform = 'translate(' + x.toFixed(0) + 'px,' + y.toFixed(0) + 'px) translate(-50%,-85%)' + (s < 0 ? ' scaleX(-1)' : '');   // 鰭的前緣畫在左邊 ⇒ 往右游的那半圈翻過來
+        });
+      });
+    }
+    fins.forEach(function (L, sh) { if (!live.has(sh)) { L.forEach(function (e) { e.remove(); }); fins.delete(sh); } });
+  }
+
   var camT = 0, camHold = 0, userT = 0, camSeq = 0;
   I.fxFrame = function (dt) {
-    if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); HTML.classList.toggle('bsi-wpn', !!I.weaponOn()); }   // 游標不動、船在動；拿著特殊武器 ⇒ 準星
+    if ((curAcc += dt) > 0.15) { curAcc = 0; curCheck(); HTML.classList.toggle('bsi-wpn', !!I.weaponOn()); HTML.classList.toggle('bsi-frz', I.frenzyOn()); }   // 游標不動、船在動；拿著特殊武器 ⇒ 準星；狂潮 ⇒ 畫面邊緣發藍光
+    finFrame(dt);
     if (CB && CB.classList.contains('on')) {                              // 連咬：剩幾秒會斷（那一條）；斷了收起來
       var cl = I.comboLeft(), cbar = CB.querySelector('i');
       if (cl <= 0) CB.className = 'bsi-combo'; else if (cbar) cbar.style.setProperty('--left', (cl / I.BAL.comboGap * 100).toFixed(0) + '%');
@@ -48077,7 +48166,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 // 打仗時畫面上只有資源列、海域卡、技能列；升級、艦隊、任務…都在每一場打完的結算商店裡（Tim 2026-10-30：「遊戲中不用有常駐選單 因為手機上空間不夠」）。
 (function (I) {
   'use strict';
-  var C = I.core, $ = I.$, h = I.h, ROOT, qty = 1, tab = 'upg', dirty = { panel: true }, rateLog = [], lastTxt = {};
+  var C = I.core, $ = I.$, h = I.h, ROOT, qty = 1, tab = 'upg', dirty = { panel: true }, rateLog = [], lastTxt = {}, frzWas = false, FRZ = I.ABIL.filter(function (a) { return a.id === 'frenzy'; })[0];
 
   function txt(id, s) { if (lastTxt[id] === s) return; lastTxt[id] = s; var e = $(id); if (e) e.textContent = s; }
   function html(id, s) { if (lastTxt[id] === s) return; lastTxt[id] = s; var e = $(id); if (e) e.innerHTML = s; }
@@ -48091,7 +48180,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
         '<div class="cur">' +
           '<div class="res blk" title="格：打下來的每一格船殼"><span class="ico">🧱<\/span><b id="bsi-blk">0<\/b><span class="u">格<\/span><span class="rate" id="bsi-rate"><\/span><\/div>' +
           '<div class="res shd" id="bsi-shdBox" title="三叉戟碎片：深海科技的貨幣；累計的每一顆讓收入 +10%"><span class="ico">🔱<\/span><b id="bsi-shd">0<\/b><\/div>' +
-          '<div class="mul" id="bsi-mul" title="收入倍率（成就 × 碎片 × 狂潮 × 增益 × 祝福）"><\/div>' +
+          '<div class="mul" id="bsi-mul" title="收入倍率（成就 × 碎片 × 增益 × 祝福）"><\/div>' +
         '<\/div>' +
         '<div class="btns"><button id="bsi-spd" title="模擬速度"><\/button><button id="bsi-cam" title="鏡頭（C 換；鎖定敵艦時 Tab 換下一艘）"><\/button><button id="bsi-mute" title="聲音"><\/button><button id="bsi-set" title="設定">⚙️<\/button><\/div>' +
       '<\/div>' +
@@ -48116,6 +48205,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
       '<\/div>' +
       '<div class="bsi-abil" id="bsi-abil"><\/div>' +
       '<div class="bsi-wpn" id="bsi-wpn"><span class="ico" id="bsi-wpn-ico"><\/span><div class="mid"><b id="bsi-wpn-nm"><\/b><div class="bar"><i id="bsi-wpn-bar"><\/i><\/div><\/div><span class="s" id="bsi-wpn-s"><\/span><\/div>' +
+      '<div class="bsi-wpn bsi-frz" id="bsi-frz"><span class="ico">🌊<\/span><div class="mid"><b id="bsi-frz-nm"><\/b><div class="bar"><i id="bsi-frz-bar"><\/i><\/div><\/div><span class="s" id="bsi-frz-s"><\/span><\/div>' +
       '<div class="bsi-banner" id="bsi-banner"><\/div>' +
       '<div class="bsi-perk" id="bsi-perk"><div class="pk-h" id="bsi-pk-h"><\/div><div class="pk-cards" id="bsi-pk-cards"><\/div><div class="pk-foot"><div class="pk-bar"><i id="bsi-pk-bar"><\/i><\/div><span id="bsi-pk-left"><\/span><\/div><\/div>' +
       '<div class="bsi-modal-bg" id="bsi-mbg"><div class="bsi-modal" id="bsi-modal"><\/div><\/div>';
@@ -48412,7 +48502,8 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   // ── 技能列 ──
   function abilBuild() {
     var A = $('bsi-abil');
-    A.innerHTML = '<div class="hint" id="bsi-hint">🦈 點敵艦哪裡就咬哪裡 · 漂流寶物點一下撿<\/div>';
+    A.innerHTML = '<div class="chg" id="bsi-chg" title="蓄力：上一口之後自己蓄，滿了才是全力（狂點只有兩成）"><b>🦷<\/b><div class="bar"><i id="bsi-chg-bar"><\/i><\/div><span id="bsi-chg-t"><\/span><\/div>' +
+      '<div class="hint" id="bsi-hint">🦈 點敵艦哪裡就咬哪裡 · 漂流寶物點一下撿<\/div>';
     I.ABIL.forEach(function (a) {
       var b = h('button', 'ab', '<span class="ico">' + a.ico + '<\/span><span class="nm">' + a.name + '<\/span><span class="key">' + a.key + '<\/span><i class="cd"><\/i>');
       b.id = 'bsi-ab-' + a.id; b.title = a.desc + '（冷卻 ' + a.cd + ' 秒）';
@@ -48549,7 +48640,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     txt('bsi-blk', I.fmt(S.blocks));
     var r = rate(); txt('bsi-rate', r > 0 ? '+' + I.fmt(r) + '/秒' : '');
     $('bsi-shdBox').style.display = S.shardsAll > 0 ? '' : 'none'; txt('bsi-shd', I.fmt(S.shards));
-    var m = I.incomeMul(); txt('bsi-mul', m > 1.001 ? I.mulTxt(m) : ''); $('bsi-mul').classList.toggle('hot', I.frenzyOn() || I.bmul('income') > 1);
+    var m = I.incomeMul(); txt('bsi-mul', m > 1.001 ? I.mulTxt(m) : ''); $('bsi-mul').classList.toggle('hot', I.bmul('income') > 1);
     if (pkShown) {                                                    // 強化三選一的倒數
       var left = Math.max(0, pkShown.at + I.BAL.perkAuto * 1000 - I.now()) / 1000;
       $('bsi-pk-bar').style.width = (left / I.BAL.perkAuto * 100).toFixed(1) + '%'; txt('bsi-pk-left', Math.ceil(left) + ' 秒後自動選 ★ 那張');
@@ -48557,7 +48648,17 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
     var W = I.weaponOn(), we = $('bsi-wpn');                             // 拿著特殊武器：哪一把、還剩幾秒（每一格畫那一條才順）
     we.classList.toggle('on', !!W);
     if (W) { var wl = I.weaponLeft(); txt('bsi-wpn-ico', W.ico); txt('bsi-wpn-nm', W.name + '：點敵艦'); txt('bsi-wpn-s', wl.toFixed(1) + 's'); $('bsi-wpn-bar').style.width = (wl / W.dur * 100).toFixed(1) + '%'; }
-    var BT = I.BT;
+    var BT = I.BT, fz = I.frenzyOn(), fe = $('bsi-frz');                  // 鯊魚狂潮：還剩幾秒、這一波全力咬了幾口；結束那一下喊一聲（40_fx.js frenzyEnd）
+    if (fe.classList.contains('on') !== fz) fe.classList.toggle('on', fz);
+    if (fz) { var fl = (BT.frenzyUntil - I.now()) / 1000; txt('bsi-frz-nm', '鯊魚狂潮・蓄力全滿　全力咬了 ' + (BT.frenzyBites || 0) + ' 口'); txt('bsi-frz-s', fl.toFixed(1) + 's'); $('bsi-frz-bar').style.width = (fl / FRZ.dur * 100).toFixed(1) + '%'; }
+    if (frzWas && !fz) I.emit('frenzyEnd', BT.frenzyBites || 0, BT.frenzyGot || 0);
+    frzWas = fz;
+    var ce = $('bsi-chg');                                                // 咬的蓄力（30_battle.js bitePow）：打仗、沒拿特殊武器的時候才有
+    if (ce) {
+      var con = (BT.phase === 'fight' || BT.phase === 'hold') && !W, pw = con ? I.bitePow() : 0, full = pw >= I.BAL.biteFull;
+      if (ce.classList.contains('on') !== con) ce.classList.toggle('on', con);
+      if (con) { $('bsi-chg-bar').style.width = (pw * 100).toFixed(1) + '%'; txt('bsi-chg-t', fz ? '狂潮全滿' : full ? '全力' : Math.round(pw * 100) + '%'); ce.classList.toggle('full', full); ce.classList.toggle('frz', fz); }
+    }
     if (BT.phase === 'hold' && BT.shop === 'none' && !S.perk && !pkShown && I.now() >= BT.resultAt + I.BAL.shopDelay * 1000) shopOpen();
     if ((t5 += dt) > 0.2) {
       t5 = 0; zoneLive(); buffChips(); abilLive();

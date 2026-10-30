@@ -3,7 +3,7 @@
 // 打仗時畫面上只有資源列、海域卡、技能列；升級、艦隊、任務…都在每一場打完的結算商店裡（Tim 2026-10-30：「遊戲中不用有常駐選單 因為手機上空間不夠」）。
 (function (I) {
   'use strict';
-  var C = I.core, $ = I.$, h = I.h, ROOT, qty = 1, tab = 'upg', dirty = { panel: true }, rateLog = [], lastTxt = {};
+  var C = I.core, $ = I.$, h = I.h, ROOT, qty = 1, tab = 'upg', dirty = { panel: true }, rateLog = [], lastTxt = {}, frzWas = false, FRZ = I.ABIL.filter(function (a) { return a.id === 'frenzy'; })[0];
 
   function txt(id, s) { if (lastTxt[id] === s) return; lastTxt[id] = s; var e = $(id); if (e) e.textContent = s; }
   function html(id, s) { if (lastTxt[id] === s) return; lastTxt[id] = s; var e = $(id); if (e) e.innerHTML = s; }
@@ -17,7 +17,7 @@
         '<div class="cur">' +
           '<div class="res blk" title="格：打下來的每一格船殼"><span class="ico">🧱</span><b id="bsi-blk">0</b><span class="u">格</span><span class="rate" id="bsi-rate"></span></div>' +
           '<div class="res shd" id="bsi-shdBox" title="三叉戟碎片：深海科技的貨幣；累計的每一顆讓收入 +10%"><span class="ico">🔱</span><b id="bsi-shd">0</b></div>' +
-          '<div class="mul" id="bsi-mul" title="收入倍率（成就 × 碎片 × 狂潮 × 增益 × 祝福）"></div>' +
+          '<div class="mul" id="bsi-mul" title="收入倍率（成就 × 碎片 × 增益 × 祝福）"></div>' +
         '</div>' +
         '<div class="btns"><button id="bsi-spd" title="模擬速度"></button><button id="bsi-cam" title="鏡頭（C 換；鎖定敵艦時 Tab 換下一艘）"></button><button id="bsi-mute" title="聲音"></button><button id="bsi-set" title="設定">⚙️</button></div>' +
       '</div>' +
@@ -42,6 +42,7 @@
       '</div>' +
       '<div class="bsi-abil" id="bsi-abil"></div>' +
       '<div class="bsi-wpn" id="bsi-wpn"><span class="ico" id="bsi-wpn-ico"></span><div class="mid"><b id="bsi-wpn-nm"></b><div class="bar"><i id="bsi-wpn-bar"></i></div></div><span class="s" id="bsi-wpn-s"></span></div>' +
+      '<div class="bsi-wpn bsi-frz" id="bsi-frz"><span class="ico">🌊</span><div class="mid"><b id="bsi-frz-nm"></b><div class="bar"><i id="bsi-frz-bar"></i></div></div><span class="s" id="bsi-frz-s"></span></div>' +
       '<div class="bsi-banner" id="bsi-banner"></div>' +
       '<div class="bsi-perk" id="bsi-perk"><div class="pk-h" id="bsi-pk-h"></div><div class="pk-cards" id="bsi-pk-cards"></div><div class="pk-foot"><div class="pk-bar"><i id="bsi-pk-bar"></i></div><span id="bsi-pk-left"></span></div></div>' +
       '<div class="bsi-modal-bg" id="bsi-mbg"><div class="bsi-modal" id="bsi-modal"></div></div>';
@@ -338,7 +339,8 @@
   // ── 技能列 ──
   function abilBuild() {
     var A = $('bsi-abil');
-    A.innerHTML = '<div class="hint" id="bsi-hint">🦈 點敵艦哪裡就咬哪裡 · 漂流寶物點一下撿</div>';
+    A.innerHTML = '<div class="chg" id="bsi-chg" title="蓄力：上一口之後自己蓄，滿了才是全力（狂點只有兩成）"><b>🦷</b><div class="bar"><i id="bsi-chg-bar"></i></div><span id="bsi-chg-t"></span></div>' +
+      '<div class="hint" id="bsi-hint">🦈 點敵艦哪裡就咬哪裡 · 漂流寶物點一下撿</div>';
     I.ABIL.forEach(function (a) {
       var b = h('button', 'ab', '<span class="ico">' + a.ico + '</span><span class="nm">' + a.name + '</span><span class="key">' + a.key + '</span><i class="cd"></i>');
       b.id = 'bsi-ab-' + a.id; b.title = a.desc + '（冷卻 ' + a.cd + ' 秒）';
@@ -475,7 +477,7 @@
     txt('bsi-blk', I.fmt(S.blocks));
     var r = rate(); txt('bsi-rate', r > 0 ? '+' + I.fmt(r) + '/秒' : '');
     $('bsi-shdBox').style.display = S.shardsAll > 0 ? '' : 'none'; txt('bsi-shd', I.fmt(S.shards));
-    var m = I.incomeMul(); txt('bsi-mul', m > 1.001 ? I.mulTxt(m) : ''); $('bsi-mul').classList.toggle('hot', I.frenzyOn() || I.bmul('income') > 1);
+    var m = I.incomeMul(); txt('bsi-mul', m > 1.001 ? I.mulTxt(m) : ''); $('bsi-mul').classList.toggle('hot', I.bmul('income') > 1);
     if (pkShown) {                                                    // 強化三選一的倒數
       var left = Math.max(0, pkShown.at + I.BAL.perkAuto * 1000 - I.now()) / 1000;
       $('bsi-pk-bar').style.width = (left / I.BAL.perkAuto * 100).toFixed(1) + '%'; txt('bsi-pk-left', Math.ceil(left) + ' 秒後自動選 ★ 那張');
@@ -483,7 +485,17 @@
     var W = I.weaponOn(), we = $('bsi-wpn');                             // 拿著特殊武器：哪一把、還剩幾秒（每一格畫那一條才順）
     we.classList.toggle('on', !!W);
     if (W) { var wl = I.weaponLeft(); txt('bsi-wpn-ico', W.ico); txt('bsi-wpn-nm', W.name + '：點敵艦'); txt('bsi-wpn-s', wl.toFixed(1) + 's'); $('bsi-wpn-bar').style.width = (wl / W.dur * 100).toFixed(1) + '%'; }
-    var BT = I.BT;
+    var BT = I.BT, fz = I.frenzyOn(), fe = $('bsi-frz');                  // 鯊魚狂潮：還剩幾秒、這一波全力咬了幾口；結束那一下喊一聲（40_fx.js frenzyEnd）
+    if (fe.classList.contains('on') !== fz) fe.classList.toggle('on', fz);
+    if (fz) { var fl = (BT.frenzyUntil - I.now()) / 1000; txt('bsi-frz-nm', '鯊魚狂潮・蓄力全滿　全力咬了 ' + (BT.frenzyBites || 0) + ' 口'); txt('bsi-frz-s', fl.toFixed(1) + 's'); $('bsi-frz-bar').style.width = (fl / FRZ.dur * 100).toFixed(1) + '%'; }
+    if (frzWas && !fz) I.emit('frenzyEnd', BT.frenzyBites || 0, BT.frenzyGot || 0);
+    frzWas = fz;
+    var ce = $('bsi-chg');                                                // 咬的蓄力（30_battle.js bitePow）：打仗、沒拿特殊武器的時候才有
+    if (ce) {
+      var con = (BT.phase === 'fight' || BT.phase === 'hold') && !W, pw = con ? I.bitePow() : 0, full = pw >= I.BAL.biteFull;
+      if (ce.classList.contains('on') !== con) ce.classList.toggle('on', con);
+      if (con) { $('bsi-chg-bar').style.width = (pw * 100).toFixed(1) + '%'; txt('bsi-chg-t', fz ? '狂潮全滿' : full ? '全力' : Math.round(pw * 100) + '%'); ce.classList.toggle('full', full); ce.classList.toggle('frz', fz); }
+    }
     if (BT.phase === 'hold' && BT.shop === 'none' && !S.perk && !pkShown && I.now() >= BT.resultAt + I.BAL.shopDelay * 1000) shopOpen();
     if ((t5 += dt) > 0.2) {
       t5 = 0; zoneLive(); buffChips(); abilLive();
