@@ -1,12 +1,12 @@
 // ───────────────────────── 方舷放置：一場一場打（跟核心講話的都在這裡） ─────────────────────────
-// 一個海域 ＝ 一場：我方艦隊對那個海域的敵艦（同時在場最多 BAL.fieldFoes 艘，其他的一波一波補上）。
+// 一個海域 ＝ 一場：我方艦隊對那個海域的敵艦（同時在場我方 BAL.fieldMine 艘、敵方 BAL.fieldFoes 艘，其他的是候補：一艘出局就補一艘）。
 // 強度：火力比 atkR ＝ 我方火力 ÷ 海域強度、船堅比 defR ＝ 我方船堅 ÷ 海域強度 —— 數字可以一直變大，可是換成模擬裡的東西（硬度、每發傷害）都夾在範圍內，
 //   ⇒ 戰局永遠是正常的物理，只是跟得上的時候打得快、跟不上的時候打不穿。
 // 收入：每一格敵艦被打掉（核心的 sh.lost）就換成格；擊沉、俘獲、殉爆另外有賞金。
 (function (I) {
   'use strict';
   var C = I.core, B = I.BAL;
-  var BT = I.BT = { phase: 'idle', Z: null, startWall: 0, holdUntil: 0, result: null, income: 0, wave: [], spawnAt: 0, goldQ: false, frenzyUntil: 0, repairUntil: 0,
+  var BT = I.BT = { phase: 'idle', Z: null, startWall: 0, holdUntil: 0, result: null, income: 0, wave: [], blueQ: [], build: { blue: 0, red: 0 }, spawnAt: 0, goldQ: false, frenzyUntil: 0, repairUntil: 0,
     myDmg: 1, foeDmg: 1, myHard: 1, eHard: 1, myHole: 1, foeHole: 1, atkR: 1, defR: 1, myLost0: 0, kills: [], seq: 0 };
 
   if (!C) return;
@@ -45,9 +45,10 @@
       BT.myDmg = I.clamp(Math.pow(BT.atkR, B.atkExp), B.dmgMin, B.dmgMax); BT.eHard = I.clamp(Math.pow(BT.atkR, -B.atkExp), B.hardMin, B.hardMax);
       BT.myHard = I.clamp(Math.pow(BT.defR, B.defExp), B.hardMin, B.hardMax); BT.foeDmg = I.clamp(Math.pow(BT.defR, -B.defExp), B.dmgMin, B.dmgMax);
       BT.myHole = I.clamp(B.myHole * Math.pow(BT.atkR, B.holeExp), B.holeMin, B.holeMax); BT.foeHole = I.clamp(Math.pow(BT.defR, -B.holeExp), B.holeMin, B.holeMax);
-      var first = Z.foes.slice(0, B.fieldFoes); BT.wave = Z.foes.slice(B.fieldFoes); BT.spawnAt = 0; BT.goldQ = false;   // wave ＝ 候補（reinforce 一艘一艘補上）
-      var spec = mine.map(function (h) { return { team: 'blue', hull: h }; }).concat(first.map(function (h) { return { team: 'red', hull: h }; }));
-      return C.start(spec, { dist: B.dist, field: spec.length, weather: Z.wx, mode: 'eve', staged: true }).then(function () {
+      var first = Z.foes.slice(0, B.fieldFoes); BT.wave = Z.foes.slice(B.fieldFoes); BT.blueQ = mine.slice(B.fieldMine); BT.build = { blue: 0, red: 0 }; BT.spawnAt = 0; BT.goldQ = false;   // wave、blueQ ＝ 候補（reinforce 一艘一艘補上）
+      var spec = mine.slice(0, B.fieldMine).map(function (h) { return { team: 'blue', hull: h }; }).concat(first.map(function (h) { return { team: 'red', hull: h }; }));
+      // judge: false ⇒ 核心不判勝負（這裡自己判）：⛔ 照判 ⇒ 場上的敵艦都出局、候補還在做的那一刻核心就收場，候補加不進來
+      return C.start(spec, { dist: B.dist, field: spec.length, weather: Z.wx, mode: 'eve', staged: true, judge: false }).then(function () {
         if (seq !== BT.seq) return;
         C.ships().forEach(apply);
         C.speed(I.S.speed);
@@ -114,11 +115,11 @@
       if (!C.isOut(sh)) redUp++;
       if (now - (sh.bsi.pwT || 0) > 2000) { sh.bsi.pwT = now; powderSoft(sh); }   // 火藥桶有的是開打之後才擺（彈藥庫的站）
     });
-    if (BT.phase === 'hold') { if (now >= BT.holdUntil && !I.S.perk) next(); return; }   // 強化三選一還沒選 ⇒ 等（選了、或倒數完自動選）
+    if (BT.phase === 'hold') { if (now >= BT.holdUntil && !I.S.perk && BT.shop === 'done') next(); return; }   // 強化三選一還沒選 ⇒ 等（選了、或倒數完自動選）；結算商店還開著 ⇒ 等（按出航、或倒數完）
     BT.myLost = myLost;
-    if (!blueUp) return finish('lose');
-    if (!redUp && !BT.wave.length && !BT.goldQ) return finish('win');
-    reinforce(ships, redUp, now);
+    if (!blueUp && !BT.blueQ.length && !BT.build.blue) return finish('lose');
+    if (!redUp && !BT.wave.length && !BT.goldQ && !BT.build.red) return finish('win');
+    reinforce(ships, redUp, blueUp, now);
     if (st.t > Z.timeout) return finish('timeout');
   };
 
@@ -139,30 +140,41 @@
     I.emit('boom', sh, g);
   }
   function mid(L) { var x = 0, z = 0; L.forEach(function (o) { x += o.px; z += o.pz; }); return L.length ? [x / L.length, z / L.length] : [0, 0]; }
-  // ── 候補（照核心 52_fleet.js 的 reinforce／spawnReserve；Tim 2026-10-30：「目前有出現卡頓現象 是否可以參考原本的候補機制 讓船一艘一艘上場」）──
-  //   場上還在打的敵艦少於 BAL.fieldFoes ⇒ 候補（BT.wave）的下一艘進場；黃金寶船也排這一條；兩艘之間至少隔 BAL.reinfGap 秒 ⇒ 一次只開一艘。
-  //   ⛔ 以前一整波（最多 3 艘）等場上全出局才同一格 C.add：一艘 15～30 ms、那一型第一次開 70～95 ms（船型的快取）⇒ 一次卡 0.1～0.3 秒。
-  function reinforce(ships, redUp, now) {
+  // ── 候補（照核心 52_fleet.js 的 reinforce／spawnReserve；Tim 2026-10-30：「目前有出現卡頓現象 是否可以參考原本的候補機制 讓船一艘一艘上場」、「場上可以限制最多三台(我方一台)」）──
+  //   場上還在打的（加上正在做的）我方少於 BAL.fieldMine ⇒ 我方候補（BT.blueQ）先補；敵方少於 BAL.fieldFoes ⇒ 黃金寶船先、再來候補（BT.wave）。兩艘之間至少隔 BAL.reinfGap 秒 ⇒ 一次只做一艘。
+  //   船分段做（核心 C.addStaged：開船那十幾段一格做 4 ms、做完才放上場；BT.build 記正在做的）。
+  //   ⛔ 以前一整波（最多 3 艘）等場上全出局才同一格 C.add：一艘 15～30 ms、那一型第一次開 70～95 ms（船型的快取）⇒ 一次卡 0.1～0.3 秒；一艘一艘 C.add 還是每艘頓一下 40～70 ms。
+  function reinforce(ships, redUp, blueUp, now) {
     if (now < BT.spawnAt) return;
-    var gold = BT.goldQ, hull = gold ? goldHull() : redUp < B.fieldFoes && BT.wave.length ? BT.wave.shift() : null;
-    if (!hull) return;
-    BT.goldQ = false; BT.spawnAt = now + B.reinfGap * 1000;
-    var P = reservePos(ships), sh = C.add({ team: 'red', hull: hull, x: P[0], z: P[1] }); if (!sh) return;
-    apply(sh);
-    if (gold) {                                                       // 黃金寶船：身價 × goldK、幾乎不還手（裝填 45 秒）、船殼軟一點；這一場多給一艘的時間
-      sh.bsi.gold = true; sh.bsi.pool *= B.goldK; sh.reloadT = 45; sh.cfg.hard *= 0.6; BT.Z.timeout += B.timeoutPer;
-      I.emit('gold', sh);
-    } else I.emit('reserve', sh, BT.wave.length);
+    var team = null, hull = null, gold = false;
+    if (blueUp + BT.build.blue < B.fieldMine && BT.blueQ.length) { team = 'blue'; hull = BT.blueQ.shift(); }
+    else if (redUp + BT.build.red < B.fieldFoes) {
+      if (BT.goldQ) { gold = true; BT.goldQ = false; hull = goldHull(); } else if (BT.wave.length) hull = BT.wave.shift();
+      if (hull) team = 'red';
+    }
+    if (!team) return;
+    BT.spawnAt = now + B.reinfGap * 1000; BT.build[team]++;
+    var P = reservePos(ships, team), seq = BT.seq;
+    C.addStaged({ team: team, hull: hull, x: P[0], z: P[1] }).then(function (sh) {
+      if (seq !== BT.seq) return;                                     // 做的時候換了海域（核心重開 ⇒ 丟掉；計數跟著那一場清了）
+      BT.build[team]--;
+      if (!sh) return;
+      apply(sh);
+      if (gold) {                                                     // 黃金寶船：身價 × goldK、幾乎不還手（裝填 45 秒）、船殼軟一點；這一場多給一艘的時間
+        sh.bsi.gold = true; sh.bsi.pool *= B.goldK; sh.reloadT = 45; sh.cfg.hard *= 0.6; BT.Z.timeout += B.timeoutPer;
+        I.emit('gold', sh);
+      } else I.emit('reserve', sh, team === 'red' ? BT.wave.length : BT.blueQ.length);
+    });
   }
   /** 黃金寶船用這個海域最大的那一型（開打前就載好了）。 */
   function goldHull() { return BT.Z.foes.slice().sort(function (a, b) { return I.tons(b) - I.tons(a); })[0]; }
-  /** 進場的位置（照核心 spawnReserve）：敵方還在打的船的中心往「離我方中心」的方向再退 120 m（至少離我方中心 260 m），
-   *  左右每 80 m 錯開到離每一艘還浮著的船 70 m 以上；有海圖 ⇒ 不超出開戰點的開闊水域（420 m）。船頭照 C.add 的預設（對著我方還在打的船）。 */
-  function reservePos(ships) {
+  /** 進場的位置（照核心 spawnReserve）：team 那一方還在打的船的中心往「離對方中心」的方向再退 120 m（至少離對方中心 260 m），
+   *  左右每 80 m 錯開到離每一艘還浮著的船 70 m 以上；有海圖 ⇒ 不超出開戰點的開闊水域（420 m）。船頭照 C.addStaged 的預設（對著對方還在打的船）。 */
+  function reservePos(ships, team) {
     var afloat = ships.filter(function (o) { return !o.sunk; }), P = null;
     function m(L) { return L.length ? mid(L) : null; }
-    var E = m(afloat.filter(function (o) { return o.team === 'blue' && !C.isOut(o); })) || [0, 0];
-    var O = m(afloat.filter(function (o) { return o.team === 'red' && !C.isOut(o); })) || m(afloat.filter(function (o) { return o.team === 'red'; }));
+    var E = m(afloat.filter(function (o) { return o.team !== team && !C.isOut(o); })) || [0, 0];
+    var O = m(afloat.filter(function (o) { return o.team === team && !C.isOut(o); })) || m(afloat.filter(function (o) { return o.team === team; }));
     var dx = O ? O[0] - E[0] : 0, dz = O ? O[1] - E[1] : 0, dl = Math.hypot(dx, dz);
     if (dl < 1) { var a = Math.random() * 6.283; dx = Math.cos(a); dz = Math.sin(a); dl = 1; }
     dx /= dl; dz /= dl;
@@ -178,7 +190,7 @@
 
   function finish(kind) {
     var S = I.S, Z = BT.Z, N = Z.n, st = C.state(), first = kind === 'win' && N >= S.maxZone;   // first：第一次打下這個海域（這一輪）⇒ 強化三選一
-    BT.phase = 'hold'; BT.result = kind; BT.holdUntil = I.now() + B.hold * 1000;
+    BT.phase = 'hold'; BT.result = kind; BT.holdUntil = I.now() + B.hold * 1000; BT.resultAt = I.now(); BT.shop = 'none';   // 結算商店（50_ui.js）：none ⇒ 該開了、open ⇒ 開著、done ⇒ 出航
     var wallSec = Math.max(5, (I.now() - BT.startWall) / 1000 + B.hold), r = BT.income / wallSec;   // 這一場每秒賺多少（離線收益照它）
     S.rate = S.rate ? 0.75 * S.rate + 0.25 * r : r;
     if (kind === 'win') {

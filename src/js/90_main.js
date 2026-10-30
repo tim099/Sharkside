@@ -23,6 +23,7 @@
     if (!started) { if (e.key === 'Enter') go(); return; }
     var k = e.key.toLowerCase();
     if (I.perkOpen() && /^[123]$/.test(k)) { e.preventDefault(); I.perkTake(+k - 1); return; }   // 強化三選一開著：1～3 選卡（技能這時候本來就不能用）
+    if (I.shopOpen() && (k === 'enter' || k === ' ')) { e.preventDefault(); I.shopSail(); return; }   // 結算商店開著：Enter／空白鍵出航
     var a = I.ABIL.filter(function (x) { return x.key === k; })[0];
     if (a) { e.preventDefault(); I.useAbil(a.id); return; }
     if (k === ' ') { e.preventDefault(); var L = C.ships().filter(function (s) { return s.team === 'red' && !C.isOut(s); }); if (L.length) I.biteShip(I.pick(L)); return; }

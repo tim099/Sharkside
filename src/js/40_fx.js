@@ -180,7 +180,7 @@
     I.camEvent(sh, 7000);
   });
   I.on('boom', function (sh, g) { I.floatShip(sh, '💥 殉爆！+' + I.fmt(g), 'boom', 18); I.toast('💥 <b>' + I.esc(sh.name) + '</b> 彈藥庫殉爆！額外賞金 <span class="g">+' + I.fmt(g) + '</span>', 'boom'); I.camEvent(sh, 9000); });
-  I.on('reserve', function (sh, left) { I.toast('🚩 援軍進場：<b>' + I.esc(sh.name) + '</b>' + (left ? '（候補還有 ' + left + ' 艘）' : '（候補用完）'), 'wave', 3500); });
+  I.on('reserve', function (sh, left) { var me = sh.team === 'blue'; I.toast((me ? '⚓ 我方換上：<b>' : '🚩 援軍進場：<b>') + I.esc(sh.name) + '</b>' + (left ? '（候補還有 ' + left + ' 艘）' : '（候補用完）'), me ? 'note blue' : 'wave', 3500); });
   I.on('bp', function (id, gift) { I.toast(gift ? '🎁 亞特蘭提斯的禮物：<b>' + I.esc(I.nameOf(id)) + '</b> 的藍圖！（船塢）' : '📜 拿到藍圖：<b>' + I.esc(I.nameOf(id)) + '</b>（' + I.esc(I.AUTHORS[id] || '') + ' 造）—— 船塢可以造了', 'bp', 6000); });
   I.on('ach', function (a) { I.toast('🏆 成就：<b>' + a.ico + ' ' + I.esc(a.name) + '</b>（收入 ×1.03）', 'ach', 6000); });
   I.on('lootTake', function (it, click) { if (click) I.sfx(it.k === 'chest' ? 'chest' : it.k === 'bottle' ? 'bottle' : 'coin'); });

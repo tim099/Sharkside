@@ -1,8 +1,9 @@
-// ───────────────────────── 方舷放置：介面（上方資源列、海域卡、左邊的面板、技能列、彈窗） ─────────────────────────
+// ───────────────────────── 方舷放置：介面（上方資源列、海域卡、技能列、結算商店、彈窗） ─────────────────────────
 // 全部自己畫：核心的主選單、HUD 都藏起來（idle.css）。元素一律 bsi- 開頭，不跟核心的 id 撞。
+// 打仗時畫面上只有資源列、海域卡、技能列；升級、艦隊、任務…都在每一場打完的結算商店裡（Tim 2026-10-30：「遊戲中不用有常駐選單 因為手機上空間不夠」）。
 (function (I) {
   'use strict';
-  var C = I.core, $ = I.$, h = I.h, ROOT, qty = 1, tab = 'fleet', dirty = { panel: true }, rateLog = [], lastTxt = {};
+  var C = I.core, $ = I.$, h = I.h, ROOT, qty = 1, tab = 'upg', dirty = { panel: true }, rateLog = [], lastTxt = {};
 
   function txt(id, s) { if (lastTxt[id] === s) return; lastTxt[id] = s; var e = $(id); if (e) e.textContent = s; }
   function html(id, s) { if (lastTxt[id] === s) return; lastTxt[id] = s; var e = $(id); if (e) e.innerHTML = s; }
@@ -26,14 +27,18 @@
         '<div class="dots" id="bsi-dots"></div>' +
         '<div class="zstat" id="bsi-zstat"></div>' +
         '<div class="ratio" id="bsi-ratio"></div>' +
-        '<div class="znav"><button id="bsi-zprev" title="上一個海域">◀</button><button id="bsi-zauto"></button><button id="bsi-znext" title="下一個海域">▶</button></div>' +
         '<div class="farm" id="bsi-farm"></div>' +
         '<div class="buffs" id="bsi-buffs"></div>' +
       '</div>' +
-      '<button class="bsi-ptog" id="bsi-ptog">☰ 艦隊與升級</button>' +
-      '<div class="bsi-panel" id="bsi-panel">' +
+      '<div class="bsi-shop" id="bsi-shop">' +
+        '<div class="sh-head" id="bsi-sh-head"></div>' +
         '<div class="tabs" id="bsi-tabs"></div>' +
         '<div class="body" id="bsi-body"></div>' +
+        '<div class="sh-foot">' +
+          '<div class="sh-zone"><button id="bsi-zprev" title="上一個海域">◀</button><div class="sh-next" id="bsi-sh-next"></div><button id="bsi-znext" title="下一個海域">▶</button><button id="bsi-zauto"></button></div>' +
+          '<button class="big" id="bsi-sail"></button>' +
+          '<div class="sh-cd"><div class="pk-bar"><i id="bsi-sh-bar"></i></div><span id="bsi-sh-left"></span></div>' +
+        '</div>' +
       '</div>' +
       '<div class="bsi-abil" id="bsi-abil"></div>' +
       '<div class="bsi-banner" id="bsi-banner"></div>' +
@@ -46,10 +51,12 @@
     $('bsi-cam').onclick = function () { var L = ['foe', 'auto', 'flag', 'free']; I.S.cam = L[(L.indexOf(I.S.cam) + 1) % L.length]; if (I.S.cam !== 'free') I.camStart(); topBtns(); };
     $('bsi-mute').onclick = function () { I.S.mute = !I.S.mute; C.sound({ mute: I.S.mute }); topBtns(); };
     $('bsi-set').onclick = settings;
-    $('bsi-zprev').onclick = function () { if (I.S.zone > 1) { I.S.auto = false; I.goZone(I.S.zone - 1); } };
-    $('bsi-znext').onclick = function () { if (I.S.zone < I.S.maxZone) I.goZone(I.S.zone + 1); };
-    $('bsi-zauto').onclick = function () { I.S.auto = !I.S.auto; if (I.S.auto && I.S.zone < I.S.maxZone && !I.S.farm) I.goZone(I.S.maxZone); zoneCard(); };
-    $('bsi-ptog').onclick = function () { ROOT.classList.toggle('pOpen'); };
+    // 結算商店底下：下一場打哪個海域（出航才開打）
+    $('bsi-zprev').onclick = function () { var S = I.S; if (S.zone > 1) { S.auto = false; S.zone--; S.farm = 0; shopFoot(); } };
+    $('bsi-znext').onclick = function () { var S = I.S; if (S.zone < S.maxZone) { S.zone++; S.farm = 0; shopFoot(); } };
+    $('bsi-zauto').onclick = function () { var S = I.S; S.auto = !S.auto; if (S.auto && !S.farm) S.zone = S.maxZone; shopFoot(); };
+    $('bsi-sail').onclick = shopSail;
+    $('bsi-shop').addEventListener('pointerdown', function (e) { if (shopUntil && e.target.id !== 'bsi-sail') { shopUntil = 0; shopFoot(); } });   // 碰了商店 ⇒ 不自動出航，等按出航
     $('bsi-mbg').addEventListener('pointerdown', function (e) { if (e.target === this && !this.dataset.lock) modalClose(); });
     topBtns();
     ['buy', 'bp', 'fleet', 'prestige', 'ach'].forEach(function (k) { I.on(k, function () { I.dirty(); }); });
@@ -126,9 +133,6 @@
     html('bsi-zn', '海域 <b>' + Z.n + '</b>' + (Z.boss ? ' <span class="boss">👑 守將</span>' : '') + '<span class="best">最遠 ' + (S.maxZone) + '</span>');
     for (var i = 0; i < 10; i++) { var n = Z.n - k + i; d += '<i class="' + (n < S.maxZone ? 'done' : '') + (n === Z.n ? ' cur' : '') + (i === 9 ? ' boss' : '') + '"></i>'; }
     html('bsi-dots', d);
-    txt('bsi-zauto', S.auto ? '⏵ 自動推進' : '⏸ 原地練功');
-    $('bsi-zauto').classList.toggle('on', S.auto);
-    $('bsi-zprev').disabled = S.zone <= 1; $('bsi-znext').disabled = S.zone >= S.maxZone;
     txt('bsi-farm', S.farm ? '打輸了，先退一步練練：再贏 ' + Math.max(0, I.BAL.retryAfter + 1 - S.farm) + ' 場回去挑戰' : '');
     var md = Z.mod;                                                   // 海況（10_data.js SEAMOD）
     html('bsi-zmod', md ? md.ico + ' <b>' + I.esc(md.name) + '</b><span>' + I.esc(md.desc) + '</span>' : Z.boss ? '👑 <b>守將海域</b><span>強度 ×' + I.BAL.bossLv + '、身價 ×' + I.BAL.bossK + '</span>' : '');
@@ -162,8 +166,44 @@
   }
   I.banner = banner;
 
-  // ── 面板 ──
-  var TABS = [{ id: 'fleet', ico: '⚓', name: '艦隊' }, { id: 'upg', ico: '🎯', name: '升級' }, { id: 'quest', ico: '📜', name: '任務' }, { id: 'deep', ico: '🔱', name: '深海' }, { id: 'ach', ico: '🏆', name: '成就' }, { id: 'stat', ico: '📊', name: '紀錄' }];
+  // ── 結算商店：每一場打完，勝負橫幅亮 BAL.shopDelay 秒、強化三選一選完 ⇒ 跳出來；按出航（或 BAL.shopAuto 秒沒碰）⇒ 下一場（30_battle.js 等 BT.shop === 'done'）──
+  var shopUntil = 0;                                                   // 自動出航的時刻（0 ＝ 不自動：設定關了、或碰過商店）
+  function shopOpen() {
+    var BT = I.BT; BT.shop = 'open';
+    shopUntil = I.S.shopAuto ? I.now() + I.BAL.shopAuto * 1000 : 0;
+    shopHead(); shopFoot(); dirty.panel = true;
+    $('bsi-shop').className = 'bsi-shop on';
+  }
+  function shopSail() {
+    if (I.BT.shop !== 'open') return;
+    I.BT.shop = 'done'; shopUntil = 0; $('bsi-shop').className = 'bsi-shop';
+  }
+  I.shopOpen = function () { return I.BT.shop === 'open'; };
+  I.shopSail = shopSail;
+  function shopHead() {
+    var BT = I.BT, Z = BT.Z, k = { sink: 0, cap: 0 }, win = BT.result === 'win';
+    BT.kills.forEach(function (x) { k[x.how]++; });
+    html('bsi-sh-head', '<b class="' + (win ? 'win' : 'lose') + '">' + (win ? (Z.boss ? '👑 守將倒下了！' : '⚓ 海域 ' + Z.n + ' 拿下了！') : BT.result === 'timeout' ? '⌛ 僵持不下，撤退' : '🏳️ 艦隊撤退……') + '</b>' +
+      '<span>這一場 <b class="g">+' + I.fmt(BT.income) + '</b> 格' + (k.sink ? ' · 擊沉 ' + k.sink : '') + (k.cap ? ' · 俘獲 ' + k.cap : '') + '</span>');
+  }
+  /** 底下那一列：下一場的海域與強度比（買了升級就跟著變）、自動推進、出航。 */
+  function shopFoot() {
+    var S = I.S, Z = I.zone(S.zone), a = I.atk() / Z.lv, d = I.def() / Z.lv;
+    html('bsi-sh-next', '下一場 <b>海域 ' + Z.n + '</b>' + (Z.boss ? ' 👑' : '') + '<small><span class="' + rc(a) + '">🎯 火力比 ' + a.toFixed(2) + '</span><span class="' + rc(d) + '">🛡️ 船堅比 ' + d.toFixed(2) + '</span></small>');
+    txt('bsi-zauto', S.auto ? '⏵ 自動推進' : '⏸ 原地練功'); $('bsi-zauto').classList.toggle('on', S.auto);
+    $('bsi-zprev').disabled = S.zone <= 1; $('bsi-znext').disabled = S.zone >= S.maxZone;
+    txt('bsi-sail', '⚓ 出航' + (I.BT.Z && S.zone === I.BT.Z.n ? '（同一個海域再打一次）' : ''));
+  }
+  function shopLive() {
+    shopFoot();
+    var left = shopUntil ? Math.max(0, shopUntil - I.now()) / 1000 : 0;
+    if (shopUntil && left <= 0) { shopSail(); return; }
+    $('bsi-sh-bar').style.width = (shopUntil ? left / I.BAL.shopAuto * 100 : 0).toFixed(1) + '%';
+    txt('bsi-sh-left', shopUntil ? Math.ceil(left) + ' 秒後自動出航（碰一下就停）' : '看好了就按出航');
+  }
+
+  // ── 商店的分頁 ──
+  var TABS = [{ id: 'upg', ico: '🎯', name: '升級' }, { id: 'fleet', ico: '⚓', name: '艦隊' }, { id: 'quest', ico: '📜', name: '任務' }, { id: 'deep', ico: '🔱', name: '深海' }, { id: 'ach', ico: '🏆', name: '成就' }, { id: 'stat', ico: '📊', name: '紀錄' }];
   function tabsBuild() {
     var T = $('bsi-tabs');
     TABS.forEach(function (t) {
@@ -190,7 +230,7 @@
     return '<b>' + I.esc(I.nameOf(id)) + '</b><span class="by">' + I.esc(I.AUTHORS[id] || '') + '</span><span class="spec">' + I.fmt(c.tons || 0) + ' 噸 · ' + (c.guns || 0) + ' 門砲 · ' + (c.crew || 0) + ' 人</span>';
   }
   function pFleet(B) {
-    var S = I.S, s1 = sec(B, '我的艦隊', S.fleet.length + ' / ' + S.slots + ' 個位置 · 換船下一場生效');
+    var S = I.S, s1 = sec(B, '我的艦隊', S.fleet.length + ' / ' + S.slots + ' 個位置 · 一次上場一艘，出局了換下一艘');
     S.fleet.forEach(function (id, i) {
       var r = h('div', 'row slot' + (i === 0 ? ' flag' : ''), '<span class="ico">' + (i === 0 ? '🚩' : '⛵') + '</span><div class="mid">' + shipLine(id) + '</div>');
       var sel = h('select'); Object.keys(S.own).sort(function (a, b) { return I.tons(a) - I.tons(b); }).forEach(function (o) { var op = h('option', '', I.esc(I.nameOf(o))); op.value = o; op.selected = o === id; sel.appendChild(op); });
@@ -198,7 +238,7 @@
       r.appendChild(sel); s1.appendChild(r);
     });
     var sp = I.slotPrice();
-    if (isFinite(sp)) { var r2 = h('div', 'row add', '<span class="ico">➕</span><div class="mid"><b>再一個位置</b><span class="spec">艦隊多一艘船（放手上最大的那一型）</span></div>'); r2.appendChild(costBtn(sp, S.blocks >= sp, '', function () { I.buySlot(); })); s1.appendChild(r2); }
+    if (isFinite(sp)) { var r2 = h('div', 'row add', '<span class="ico">➕</span><div class="mid"><b>再一個位置</b><span class="spec">艦隊多一艘候補（放手上最大的那一型）</span></div>'); r2.appendChild(costBtn(sp, S.blocks >= sp, '', function () { I.buySlot(); })); s1.appendChild(r2); }
     var s2 = sec(B, '艦隊方針', '我方砲長照這個挑瞄哪裡'), ch = h('div', 'chips');
     I.DOCTRINE.forEach(function (d) {
       var lock = S.bestZone < d.zone, b = h('button', 'chip' + (S.doctrine === d.id ? ' on' : '') + (lock ? ' lock' : ''), d.ico + ' ' + d.name);
@@ -285,7 +325,7 @@
   }
   // 只更新按鈕買不買得起（每 0.2 秒；整個面板只有事件來了才重畫）
   function panelLive() {
-    [].forEach.call(ROOT.querySelectorAll('.bsi-panel button.cost'), function (b) {
+    [].forEach.call(ROOT.querySelectorAll('.bsi-shop button.cost'), function (b) {
       if (b.dataset.upg && qty === Infinity) return;               // 「最大」的量會變 ⇒ 交給重畫
       if (b.classList.contains('shd')) return;
       b.disabled = I.S.blocks < +b.dataset.cost;
@@ -326,7 +366,7 @@
   function prestigeAsk() {
     var g = I.shardsFor(I.S.maxZone), M = modal('<h2>🐚 潛回亞特蘭提斯</h2><p>艦隊要回家了。帶走 <b class="shd">🔱 ' + g + '</b> 顆三叉戟碎片，收入永遠 ' + I.mulTxt(1 + 0.1 * (I.S.shardsAll + g)) + '。</p><p class="dim">格、升級、海域、造好的船會重來；藍圖、成就、深海科技、碎片留著。</p>');
     var r = h('div', 'mbtns'), no = h('button', '', '再打一下'), yes = h('button', 'big', '潛回去');
-    no.onclick = modalClose; yes.onclick = function () { modalClose(); I.prestige(); I.save(); I.toast('🐚 回到亞特蘭提斯了。碎片 +' + g + '，重新出航！', 'ach', 6000); I.goZone(I.S.zone); };
+    no.onclick = modalClose; yes.onclick = function () { modalClose(); shopSail(); I.prestige(); I.save(); I.toast('🐚 回到亞特蘭提斯了。碎片 +' + g + '，重新出航！', 'ach', 6000); I.goZone(I.S.zone); };
     r.appendChild(no); r.appendChild(yes); M.appendChild(r);
   }
   function settings() {
@@ -341,6 +381,7 @@
     row('背景音樂', [[0, '關'], [0.2, '小'], [0.35, '中'], [0.6, '大']], S.bgm, function (v) { S.bgm = v; C.sound({ bgm: v }); });
     row('鏡頭', [['foe', '鎖定敵艦'], ['auto', '自動運鏡'], ['flag', '看旗艦'], ['free', '自己轉']], S.cam, function (v) { S.cam = v; I.camStart(); topBtns(); });
     row('強化三選一', [[false, '我來選（' + I.BAL.perkAuto + ' 秒後自動）'], [true, '跳出來就自動選']], S.perkAuto, function (v) { S.perkAuto = v; });
+    row('結算商店', [[true, I.BAL.shopAuto + ' 秒後自動出航'], [false, '等我按出航']], S.shopAuto, function (v) { S.shopAuto = v; });
     if (I.tlv('mate')) row('自動航海士', [[true, '開'], [false, '關']], S.mate, function (v) { S.mate = v; });
     M.appendChild(g);
     var io = h('div', 'srow col', '<span>存檔</span><textarea id="bsi-io" spellcheck="false" placeholder="匯出的存檔會出現在這裡；貼上別人的存檔再按「匯入」"></textarea>'), r2 = h('div', 'mbtns');
@@ -368,6 +409,11 @@
       var left = Math.max(0, pkShown.at + I.BAL.perkAuto * 1000 - I.now()) / 1000;
       $('bsi-pk-bar').style.width = (left / I.BAL.perkAuto * 100).toFixed(1) + '%'; txt('bsi-pk-left', Math.ceil(left) + ' 秒後自動選 ★ 那張');
     }
-    if ((t5 += dt) > 0.2) { t5 = 0; zoneLive(); buffChips(); abilLive(); if (dirty.panel) { dirty.panel = false; panel(); } else panelLive(); }
+    var BT = I.BT;
+    if (BT.phase === 'hold' && BT.shop === 'none' && !S.perk && !pkShown && I.now() >= BT.resultAt + I.BAL.shopDelay * 1000) shopOpen();
+    if ((t5 += dt) > 0.2) {
+      t5 = 0; zoneLive(); buffChips(); abilLive();
+      if (BT.shop === 'open') { shopLive(); if (dirty.panel) { dirty.panel = false; panel(); } else panelLive(); }   // 商店關著不畫（打開時整個重畫）
+    }
   };
 })(window.BSI = window.BSI || {});

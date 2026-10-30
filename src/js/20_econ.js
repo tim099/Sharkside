@@ -12,7 +12,7 @@
       doctrine: 'sink', shards: 0, shardsAll: 0, tech: {}, ach: {},
       buffs: [], bless: {}, perk: null, quests: [],                // 增益（{ id, left：還剩幾場 } 或 { id, until：到哪一刻 }）、祝福（這一輪疊了幾層）、還沒選的強化三選一、賞金任務（45_quest.js）
       st: { sunk: 0, cap: 0, boom: 0, bites: 0, battles: 0, wins: 0, losses: 0, pres: 0, playSec: 0, clean: 0, blitz: 0, under: 0, loot: 0, chest: 0, perks: 0, gold: 0, comboMax: 0, quests: 0 },
-      auto: true, speed: 1, gfx: 'mid', mute: false, bgm: 0.35, cam: 'foe', camV: 2, mate: true, perkAuto: false, seen: 0,
+      auto: true, speed: 1, gfx: 'mid', mute: false, bgm: 0.35, cam: 'foe', camV: 2, mate: true, perkAuto: false, shopAuto: true, seen: 0,
       rate: 0, lastSeen: 0, created: Date.now()
     };
   }
@@ -207,7 +207,8 @@
   I.pool = function (id, N, boss) { return I.blockVal(N) * B.poolK * Math.pow(Math.max(5, I.tons(id)), B.poolExp) * (boss ? B.bossK : 1); };
 
   // ── 升級 ──
-  I.upgCost = function (u, L) { return Math.ceil(u.c0 * Math.pow(u.g, L === undefined ? I.lv(u.id) : L)); };
+  /** 第 L 級的價錢：c0 × g^L × e^(upgRamp × L(L−1)/2) ⇒ 每一級的漲幅 g × e^(upgRamp × L)，越後面漲得越兇（BAL.upgRamp）。 */
+  I.upgCost = function (u, L) { if (L === undefined) L = I.lv(u.id); return Math.ceil(u.c0 * Math.pow(u.g, L) * Math.exp(B.upgRamp * L * (L - 1) / 2)); };
   I.upgMaxed = function (u) { return u.max > 0 && I.lv(u.id) >= u.max; };
   /** 買 n 級（Infinity ＝ 買得起的全部）；回買了幾級。 */
   I.buyUpg = function (id, n) {
