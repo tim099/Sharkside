@@ -1,0 +1,17 @@
+{
+  "project": [
+    "art/evidence/wpn/inputs.json",
+    "art/evidence/wpn/source/wpn-keg.png",
+    "img/wpn/keg.png",
+    "art/evidence/wpn/overview.png",
+    "art/evidence/wpn/generation.json",
+    "art/evidence/wpn/prompts.json",
+    "art/evidence/wpn/files.json"
+  ],
+  "gallery": [
+    "RawImages/sirius_sharkside_wpn_wpn_keg_source.png",
+    "RawImages/sirius_sharkside_wpn_wpn_keg_master.png",
+    "RawImages/sirius_sharkside_wpn.png",
+    "CanvasInterpretations/sirius_sharkside_wpn.md"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "project": [
+    "art/evidence/pups-chain/inputs.json",
+    "art/evidence/pups-chain/source/upg-pups.png",
+    "img/upg/pups.png",
+    "art/evidence/pups-chain/source/wpn-chain.png",
+    "img/wpn/chain.png",
+    "art/evidence/pups-chain/source/ach-pup500.png",
+    "img/ach/pup500.png",
+    "art/evidence/pups-chain/overview.png",
+    "art/evidence/pups-chain/generation.json",
+    "art/evidence/pups-chain/prompts.json",
+    "art/evidence/pups-chain/files.json"
+  ],
+  "gallery": [
+    "RawImages/sirius_sharkside_pups_chain_upg_pups_source.png",
+    "RawImages/sirius_sharkside_pups_chain_upg_pups_master.png",
+    "RawImages/sirius_sharkside_pups_chain_wpn_chain_source.png",
+    "RawImages/sirius_sharkside_pups_chain_wpn_chain_master.png",
+    "RawImages/sirius_sharkside_pups_chain_ach_pup500_source.png",
+    "RawImages/sirius_sharkside_pups_chain_ach_pup500_master.png",
+    "RawImages/sirius_sharkside_pups_chain.png",
+    "CanvasInterpretations/sirius_sharkside_pups_chain.md"
+  ]
+}
