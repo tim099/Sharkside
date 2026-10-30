@@ -3,10 +3,12 @@
 html.bsi-on #cover, html.bsi-on #end, html.bsi-on #spk, html.bsi-on #gfxov, html.bsi-on #flab { display: none !important; }
 html.bsi-on #stage > :not(#cv) { display: none !important; }
 
+/* 外殼的框 ＝ 核心的 #stage（裝置的安全區扣掉：瀏海、圓角、home 條；核心 template.html 的 --sa-*，橫放時底邊 0）⇒ C.project、點畫面的座標、畫在 #bsi 上的標記對得上畫布；
+ * 從主畫面開（全螢幕）時 UI 不會鑽到瀏海、home 條底下。⛔ 裡面的元件別再加安全區（會算兩次），尺寸用 % 不用 100vw／100vh（那是整個視窗）。 */
 #bsi {
   --ink: #e8f4ff; --dim: #8fb0c8; --line: rgba(130, 205, 255, 0.18); --panel: rgba(6, 20, 36, 0.78); --panel2: rgba(12, 34, 58, 0.72);
   --sea: #4fd1ff; --sea2: #2b8bd6; --gold: #ffd166; --coral: #ff6b6b; --good: #5be3a1; --warn: #ffb347; --shd: #b58cff;
-  position: fixed; inset: 0; z-index: 60; pointer-events: none; color: var(--ink);
+  position: fixed; top: var(--sa-t, 0px); right: var(--sa-r, 0px); bottom: var(--sa-b, 0px); left: var(--sa-l, 0px); z-index: 60; pointer-events: none; color: var(--ink);
   font: 14px/1.45 system-ui, "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif; font-variant-numeric: tabular-nums;
   -webkit-user-select: none; user-select: none;
 }
@@ -68,7 +70,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .bsi-banner small.bmod { color: var(--sea); margin-top: 4px; }
 
 /* ── 結算商店（每一場打完跳出來；50_ui.js shopOpen）：上面結果、中間分頁、下面下一場與出航 ── */
-#bsi .bsi-shop { position: absolute; left: 50%; top: 50%; width: min(720px, calc(100vw - 24px)); height: min(820px, calc(100vh - 24px)); transform: translate(-50%, -47%) scale(.97);
+#bsi .bsi-shop { position: absolute; left: 50%; top: 50%; width: min(720px, calc(100% - 24px)); height: min(820px, calc(100% - 24px)); transform: translate(-50%, -47%) scale(.97);
   display: flex; flex-direction: column; border-radius: 20px; overflow: hidden;
   background: linear-gradient(180deg, rgba(10, 32, 56, .96), rgba(6, 18, 32, .96)); border: 1px solid rgba(130, 205, 255, .35); box-shadow: 0 24px 70px rgba(0, 0, 0, .65);
   opacity: 0; visibility: hidden; transition: opacity .25s, transform .25s, visibility 0s .25s; }
@@ -78,7 +80,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .sh-head > b.win { color: var(--gold); }
 #bsi .sh-head > b.lose { color: var(--coral); }
 #bsi .sh-head span { color: var(--dim); font-size: 13px; }
-#bsi .sh-foot { padding: 10px 14px calc(12px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); background: rgba(0, 0, 0, .22); }
+#bsi .sh-foot { padding: 10px 14px 12px; border-top: 1px solid var(--line); background: rgba(0, 0, 0, .22); }
 #bsi .sh-zone { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
 #bsi .sh-zone button { padding: 6px 10px; }
 #bsi .sh-next { flex: 1; min-width: 0; text-align: center; font-size: 13px; line-height: 1.35; }
@@ -148,7 +150,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .bf.bl i { color: var(--shd); }
 
 /* ── 強化三選一 ── */
-#bsi .bsi-perk { position: absolute; left: 50%; top: 50%; width: min(760px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow-y: auto; transform: translate(-50%, -46%) scale(.96); padding: 16px 16px 12px; border-radius: 20px;
+#bsi .bsi-perk { position: absolute; left: 50%; top: 50%; width: min(760px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow-y: auto; transform: translate(-50%, -46%) scale(.96); padding: 16px 16px 12px; border-radius: 20px;
   background: linear-gradient(180deg, rgba(10, 32, 56, .95), rgba(6, 18, 32, .95)); border: 1px solid rgba(130, 205, 255, .35); box-shadow: 0 24px 70px rgba(0, 0, 0, .65);
   opacity: 0; visibility: hidden; transition: opacity .25s, transform .25s, visibility 0s .25s; }
 #bsi .bsi-perk.on { opacity: 1; visibility: visible; transform: translate(-50%, -50%); transition: opacity .25s, transform .25s; pointer-events: auto; }
@@ -341,7 +343,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 /* ── 彈窗 ── */
 #bsi .bsi-modal-bg { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(2, 8, 16, .55); backdrop-filter: blur(3px); }
 #bsi .bsi-modal-bg.on { display: flex; }
-#bsi .bsi-modal { width: min(460px, calc(100vw - 32px)); max-height: calc(100vh - 40px); overflow-y: auto; padding: 18px 20px; border-radius: 18px; background: linear-gradient(180deg, rgba(10, 32, 56, .96), rgba(6, 18, 32, .96)); border: 1px solid rgba(130, 205, 255, .3); box-shadow: 0 20px 60px rgba(0, 0, 0, .6); }
+#bsi .bsi-modal { width: min(460px, calc(100% - 32px)); max-height: calc(100% - 40px); overflow-y: auto; padding: 18px 20px; border-radius: 18px; background: linear-gradient(180deg, rgba(10, 32, 56, .96), rgba(6, 18, 32, .96)); border: 1px solid rgba(130, 205, 255, .3); box-shadow: 0 20px 60px rgba(0, 0, 0, .6); }
 #bsi .bsi-modal h2 { margin: 0 0 10px; font-size: 18px; }
 #bsi .bsi-modal p { margin: 0 0 10px; }
 #bsi .mbtns { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
@@ -351,7 +353,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .srow { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, .05); }
 #bsi .srow.col { flex-direction: column; align-items: stretch; }
 #bsi .srow textarea { width: 100%; height: 64px; resize: vertical; font: 11px/1.3 ui-monospace, monospace; color: var(--ink); background: rgba(0, 0, 0, .35); border: 1px solid var(--line); border-radius: 8px; padding: 6px; }
-#bsi .bsi-modal.title { text-align: center; width: min(520px, calc(100vw - 32px)); padding: 26px 26px 18px; }
+#bsi .bsi-modal.title { text-align: center; width: min(520px, calc(100% - 32px)); padding: 26px 26px 18px; }
 #bsi .title .logo { font-size: 56px; filter: drop-shadow(0 0 18px rgba(79, 209, 255, .7)); animation: bsiBob 2.6s ease-in-out infinite; }
 #bsi .title h1 { margin: 4px 0 12px; font-size: 30px; letter-spacing: .12em; }
 #bsi .title h1 small { display: block; font-size: 13px; letter-spacing: .2em; color: var(--sea); font-weight: 400; margin-top: 2px; }
@@ -374,7 +376,7 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
   #bsi .bsi-zone .ratio, #bsi .bsi-zone .dots { display: none; }
   #bsi .bsi-shop { left: 0; top: 0; width: 100%; height: 100%; border-radius: 0; border: 0; transform: translateY(3%); }
   #bsi .bsi-shop.on { transform: none; }
-  #bsi .sh-head { padding: calc(10px + env(safe-area-inset-top, 0px)) 12px 8px; }
+  #bsi .sh-head { padding: 10px 12px 8px; }
   #bsi .sh-head > b { font-size: 18px; }
   #bsi .sh-zone button { padding: 6px 8px; }
   #bsi .bsi-toasts { left: 6px; right: 6px; width: auto; bottom: auto; top: 96px; }

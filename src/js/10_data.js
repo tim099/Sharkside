@@ -94,6 +94,16 @@
     { id: 'fear', tab: 'eco', ico: '☠️', name: '骷髏旗', c0: 3000, g: 1.55, max: 20, eff: 0.94, desc: '敵艦死傷到更低的比例就降旗（俘獲賞金 ×1.5）' },
     { id: 'teeth', tab: 'eco', ico: '🦷', name: '鯊魚利齒', c0: 200, g: 1.45, max: 15, eff: 1.25, desc: '點敵艦哪裡就咬哪裡：咬得更大、咬下來的格 ×1.25' }
   ];
+  /** 物理模擬四檔（設定的「物理模擬」；C.phx 整組送過去）：值 ＝ 核心 09_phx.js PHX_ITEMS 那一項的第幾檔。照 Blockside 的四檔抄，模擬步長往下壓
+   *  （Tim 2026-10-30：「物理模擬等級也可以開成可調整(目前會卡頓了)」「預設模擬步長也可以試著能調低點(以順暢遊戲優先)」）：step 0 ＝ 60 Hz、1 ＝ 30、2 ＝ 20、3 ＝ 15。
+   *  模擬步長、進水下一場生效。細節面板（50_ui.js phxPanel）一項一項調、印得出整組 ⇒ Tim 調好貼回來就改這裡。 */
+  I.PHX_LV = {
+    low: { rig: 0, rigfar: 2, debris: 0, fx: 0, water: 0, flood: 0, sinkflood: 0, blastnb: 0, sailhit: 0, shiphit: 0, shipfric: 2, shipdmg: 0, step: 3 },
+    mid: { rig: 1, rigfar: 2, debris: 1, fx: 1, water: 1, flood: 1, sinkflood: 0, blastnb: 1, sailhit: 0, shiphit: 3, shipfric: 2, shipdmg: 1, step: 2 },
+    high: { rig: 2, rigfar: 1, debris: 2, fx: 2, water: 2, flood: 2, sinkflood: 1, blastnb: 1, sailhit: 0, shiphit: 3, shipfric: 2, shipdmg: 1, step: 1 },
+    full: { rig: 3, rigfar: 1, debris: 3, fx: 3, water: 3, flood: 3, sinkflood: 1, blastnb: 1, sailhit: 0, shiphit: 3, shipfric: 2, shipdmg: 1, step: 0 }
+  };
+  I.PHX_NAME = { low: '低', mid: '中', high: '高', full: '全開', custom: '自訂' };
   I.UPG_TABS = [{ id: 'atk', name: '攻擊' }, { id: 'def', name: '防禦' }, { id: 'eco', name: '經濟' }];
 
   /** 深海科技（花三叉戟碎片；轉生也留著）。 */

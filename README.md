@@ -40,6 +40,7 @@
 |---|---|
 | `index.html` | 成品（⛔ 不要直接改；`build.py` 產生） |
 | `ships/`、`maps/`、`icons/` | 從核心照抄（船檔、用到的海圖、圖示；`build.py` 管，多的刪掉） |
+| `manifest.webmanifest` | 網頁 App 資訊（加入主畫面 ⇒ 全螢幕；外殼設定的 `manifest`）。iPhone 的 Safari 不給網頁全螢幕 ⇒「分享」→「加入主畫面」，從圖示開 |
 | `src/shell.json` | 外殼設定（Blockside 的 `admin.py shell`）：寫到 `../index.html`、`opt.q` 預設網址參數、`opt.api` 開外殼 API |
 | `src/idle.css` | 樣式；把核心的主選單、HUD 藏起來 |
 | `src/js/00_base.js` | 小工具：中文大數字（萬、億、兆、京…）、存檔、外殼內的事件 |

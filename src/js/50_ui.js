@@ -250,7 +250,9 @@
     s2.appendChild(ch);
     var cur = I.DOCTRINE.filter(function (d) { return d.id === S.doctrine; })[0]; s2.appendChild(h('div', 'note', cur ? cur.tip : ''));
     var s3 = sec(B, '船塢', '擊敗過的那一型就拿得到藍圖');
-    I.shipList().forEach(function (id) {
+    // 還沒到手的排上面（Tim 2026-10-30：「艦隊編成頁面 可以把未解鎖的排序在最上面」）：有藍圖能造的 → 還沒拿到藍圖的（照第幾海域遇到）→ 已經會造的；其他照造價（shipList 本來的順序；sort 是穩定的）
+    var rank = function (id) { return S.own[id] ? 2 : S.bp[id] ? 0 : 1; };
+    I.shipList().sort(function (a, b) { return rank(a) - rank(b) || (rank(a) === 1 ? I.firstZone(a) - I.firstZone(b) : 0); }).forEach(function (id) {
       var own = S.own[id], bp = S.bp[id], fz = I.firstZone(id), p = I.shipPrice(id);
       var r = h('div', 'row ship' + (own ? ' own' : bp ? '' : ' lock'), '<span class="ico">' + (own ? '✅' : bp ? '📜' : '🔒') + '</span><div class="mid">' + (bp || own ? shipLine(id) : '<b>？？？</b><span class="spec">第 ' + fz + ' 海域' + (I.GIFTS[id] ? '的禮物' : '會遇到') + ' · 擊敗它拿藍圖</span>') + '</div>');
       if (bp && !own) r.appendChild(costBtn(p, S.blocks >= p, '造船', function () { I.buyShip(id); }));
@@ -358,7 +360,7 @@
 
   // ── 彈窗 ──
   function modal(inner, lock) {
-    var M = $('bsi-modal'), bg = $('bsi-mbg'); M.className = 'bsi-modal'; M.innerHTML = ''; if (typeof inner === 'string') M.innerHTML = inner; else M.appendChild(inner);
+    var M = $('bsi-modal'), bg = $('bsi-mbg'); M.className = 'bsi-modal'; delete M.dataset.view; M.innerHTML = ''; if (typeof inner === 'string') M.innerHTML = inner; else M.appendChild(inner);
     bg.className = 'bsi-modal-bg on'; if (lock) bg.dataset.lock = '1'; else delete bg.dataset.lock;
     return M;
   }
@@ -370,14 +372,82 @@
     no.onclick = modalClose; yes.onclick = function () { modalClose(); shopSail(); I.prestige(); I.save(); I.toast('🐚 回到亞特蘭提斯了。碎片 +' + g + '，重新出航！', 'ach', 6000); I.goZone(I.S.zone); };
     r.appendChild(no); r.appendChild(yes); M.appendChild(r);
   }
+  /** 設定的一排：label ＋ 一排選項（[值, 字, 滑過去的說明]）；點了 ⇒ fn(值)、again() 重畫那一頁。回那一排的選項框（要多塞按鈕的用）。 */
+  function chipRow(g, label, opts, cur, fn, again) {
+    var r = h('div', 'srow', '<span>' + label + '</span>'), c = h('div', 'chips');
+    opts.forEach(function (o) { var b = h('button', 'chip' + (o[0] === cur ? ' on' : ''), o[1]); if (o[2]) b.title = o[2]; b.onclick = function () { fn(o[0]); again(); }; c.appendChild(b); });
+    r.appendChild(c); g.appendChild(r);
+    return c;
+  }
+  function textRow(g, label, s) { g.appendChild(h('div', 'srow', '<span>' + label + '</span><div class="dim small">' + s + '</div>')); }
+
+  // ── 物理模擬（核心 09_phx.js；四檔在 10_data.js PHX_LV）──
+  /** 照存檔套到核心：四檔之一 ⇒ 那一組；自訂 ⇒ 細節面板調出來的那一組。 */
+  I.phxApply = function () { var S = I.S; return C.phx(S.phx === 'custom' && S.phxC ? S.phxC : I.PHX_LV[S.phx] || I.PHX_LV.mid); };
+  /** 核心現在的值（只留 PHX_ITEMS 那幾項）。 */
+  function phxNow() { var f = C.phxInfo(), o = {}; f.items.forEach(function (it) { o[it.k] = f.v[it.k]; }); return o; }
+  /** 一整組跟哪一檔一樣（都不一樣 ⇒ custom）。 */
+  function phxMatch(v) {
+    for (var l in I.PHX_LV) { var p = I.PHX_LV[l], ok = true; for (var k in p) if (v[k] !== p[k]) ok = false; if (ok) return l; }
+    return 'custom';
+  }
+  function phxPick(v) { var S = I.S; S.phx = v; S.phxC = null; I.phxApply(); I.save(); }
+  var PHX_ROW = [['low', '低'], ['mid', '中'], ['high', '高'], ['full', '全開']];
+  function phxRow(g, again) {
+    var S = I.S, c = chipRow(g, '物理模擬', PHX_ROW.concat(S.phx === 'custom' ? [['custom', '自訂', '細節面板調出來的那一組']] : []), S.phx, function (v) { if (v !== 'custom') phxPick(v); }, again);
+    var b = h('button', 'chip', '細節…'); b.title = '一項一項調（帆與繩、碎木、進水、模擬步長…）'; b.onclick = phxPanel; c.appendChild(b);
+  }
+  /** 物理細節（照 Blockside 主選單的「物理設定…」）：一項一項調、馬上套用；下面印出整組，Tim 調好了複製貼回來 ⇒ 改成那一檔的預設（10_data.js PHX_LV）。 */
+  function phxPanel() {
+    var S = I.S, f = C.phxInfo(), M = modal('<h2>⚙️ 物理細節</h2><p class="dim small">點了馬上套用；<b>模擬步長、進水</b>開戰時才定 ⇒ 下一場生效（這一場 ' + f.hz + ' Hz）。滑過選項看完整說明。</p>'), g = h('div', 'set');
+    M.dataset.view = 'phx';
+    phxRow(g, phxPanel);
+    f.items.forEach(function (it) {
+      chipRow(g, it.name + (it.k === 'step' || it.k === 'flood' ? ' <small class="dim">下一場</small>' : ''), it.opt.map(function (o, i) { return [i, o.replace(/（.*$/, ''), o]; }), f.v[it.k], function (v) {
+        var o = phxNow(); o[it.k] = v; C.phx(o);
+        S.phx = phxMatch(o); S.phxC = S.phx === 'custom' ? o : null; I.save();
+      }, phxPanel);
+    });
+    M.appendChild(g);
+    var cur = phxNow(), line = (S.phx === 'custom' ? '自訂' : I.PHX_NAME[S.phx] + '（' + S.phx + '）') + '：' + JSON.stringify(cur).replace(/"/g, '').replace(/,/g, ', ').replace(/:/g, ': ');
+    var out = h('div', 'srow col', '<span>這一組</span><textarea id="bsi-phxio" readonly spellcheck="false"></textarea>'), r2 = h('div', 'mbtns');
+    var cp = h('button', '', '複製'), back = h('button', '', '← 設定'), ok = h('button', 'big', '好');
+    cp.onclick = function () {
+      var t = $('bsi-phxio'); t.select();
+      var done = function () { cp.textContent = '複製好了'; };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(done, function () { try { document.execCommand('copy'); done(); } catch (e) { /* 選起來了，自己按複製 */ } });
+      else { try { document.execCommand('copy'); done(); } catch (e) { /* 選起來了，自己按複製 */ } }
+    };
+    back.onclick = settings; ok.onclick = modalClose;
+    [cp, back, ok].forEach(function (b) { r2.appendChild(b); });
+    M.appendChild(out); M.appendChild(r2);
+    $('bsi-phxio').value = line;
+  }
+  I.phxPanel = phxPanel;
+
+  // ── 全螢幕（照 Blockside 71_input.js：iPhone 的 Safari 不給網頁全螢幕 ⇒ 從主畫面的圖示開；Tim 2026-10-30「可以參考Blockside 支援iphone的全螢幕」）──
+  var FS_APP = navigator.standalone === true || !!(window.matchMedia && window.matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches);
+  function fsOn() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+  function fsCan() { return !!(document.fullscreenEnabled || document.webkitFullscreenEnabled); }
+  function fsSet(on) {
+    var d = document, e = d.documentElement;
+    if (!fsCan() || on === fsOn()) return;
+    try { var r = on ? (e.requestFullscreen || e.webkitRequestFullscreen).call(e, { navigationUI: 'hide' }) : (d.exitFullscreen || d.webkitExitFullscreen).call(d); if (r && r.catch) r.catch(function () { /* 被拒 ⇒ 照實際狀態 */ }); } catch (err) { /* 同上 */ }
+  }
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (ev) { document.addEventListener(ev, function () { var M = $('bsi-modal'); if (M && M.dataset.view === 'set' && $('bsi-mbg').classList.contains('on')) settings(); }); });   // 進出（含 Esc）⇒ 設定那一排跟著亮
+  function fsRow(g) {
+    if (FS_APP) textRow(g, '全螢幕', '從主畫面的圖示開的：本來就是全螢幕');
+    else if (fsCan()) chipRow(g, '全螢幕', [[true, '開'], [false, '關']], fsOn(), fsSet, function () { /* 換好了 fullscreenchange 會重畫 */ });
+    else textRow(g, '全螢幕', /iPhone|iPod/.test(navigator.userAgent) ? 'iPhone 的 Safari 不給網頁全螢幕 ⇒ 點「分享」→「加入主畫面」，從主畫面的圖示開就沒有網址列' : '這裡不給全螢幕');
+  }
+
   function settings() {
     var S = I.S, M = modal('<h2>⚙️ 設定</h2>'), g = h('div', 'set');
-    function row(label, opts, cur, fn) {
-      var r = h('div', 'srow', '<span>' + label + '</span>'), c = h('div', 'chips');
-      opts.forEach(function (o) { var b = h('button', 'chip' + (o[0] === cur ? ' on' : ''), o[1]); b.onclick = function () { fn(o[0]); settings(); }; c.appendChild(b); });
-      r.appendChild(c); g.appendChild(r);
-    }
+    M.dataset.view = 'set';
+    function row(label, opts, cur, fn) { chipRow(g, label, opts, cur, fn, settings); }
     row('畫質', [['low', '低'], ['mid', '中'], ['high', '高'], ['ultra', '全開']], S.gfx, function (v) { S.gfx = v; C.gfx(v); });
+    phxRow(g, settings);
+    fsRow(g);
     row('聲音', [[false, '開'], [true, '靜音']], S.mute, function (v) { S.mute = v; C.sound({ mute: v }); topBtns(); });
     row('背景音樂', [[0, '關'], [0.2, '小'], [0.35, '中'], [0.6, '大']], S.bgm, function (v) { S.bgm = v; C.sound({ bgm: v }); });
     row('鏡頭', [['foe', '鎖定敵艦'], ['auto', '自動運鏡'], ['flag', '看旗艦'], ['free', '自己轉']], S.cam, function (v) { S.cam = v; I.camStart(); topBtns(); });

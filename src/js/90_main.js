@@ -13,7 +13,7 @@
   I.load();
   I.questFill();
   I.uiInit();
-  C.gfx(I.S.gfx); C.sound({ mute: I.S.mute, bgm: I.S.bgm });
+  C.gfx(I.S.gfx); I.phxApply(); C.sound({ mute: I.S.mute, bgm: I.S.bgm });
   document.documentElement.classList.add('bsi-on');
 
   // ── 鍵盤：全部先攔下來（核心的鍵位在放置模式裡都不該動），只放行自己用的 ──
