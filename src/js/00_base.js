@@ -10,11 +10,32 @@
   I.now = function () { return Date.now(); };
   I.pick = function (L) { return L[(Math.random() * L.length) | 0]; };
   /** 正式美術（ART.md：img/<類>/<id>.png；有哪些圖照 05_img.js 的 I.IMG，build.py 掃 img/ 寫的）：有那張 ⇒ <img>；還沒畫 ⇒ fb（emoji 或 HTML）原樣回去（⇒ 不去要沒有的圖：不破圖、不 404）。
-   *  圖載入失敗（離線、網址錯）⇒ 換回 fb。網址帶內容雜湊（?v=）⇒ 換了圖不吃舊快取。 */
+   *  大張的有 WebP（I.IMGW，build.py 轉的）⇒ 先拿 WebP；讀不到（瀏覽器不支援、離線）⇒ 換 png ⇒ 再讀不到換回 fb。網址帶內容雜湊（?v=）⇒ 換了圖不吃舊快取。 */
   I.img = function (key, fb, cls) {
     var v = I.IMG && I.IMG[key]; if (!v) return fb;
-    var a = String(fb).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/[<]/g, '&lt;').replace(/>/g, '&gt;');
-    return '<img class="bsi-img' + (cls ? ' ' + cls : '') + '" src="img/' + key + '.png?v=' + v + '" alt="" draggable="false" data-fb="' + a + '" onerror="this.outerHTML=this.dataset.fb">';
+    var a = String(fb).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/[<]/g, '&lt;').replace(/>/g, '&gt;'), w = I.IMGW && I.IMGW[key];
+    return '<img class="bsi-img' + (cls ? ' ' + cls : '') + '" src="' + I.imgUrl(key) + '" alt="" draggable="false" data-fb="' + a + '"' + (w ? ' data-png="img/' + key + '.png?v=' + v + '"' : '') +
+      ' onerror="var p=this.dataset.png;if(p){this.removeAttribute(\'data-png\');this.src=p}else this.outerHTML=this.dataset.fb">';
+  };
+  /** 那張圖的網址（有 WebP ⇒ WebP）；沒有那張 ⇒ null。給要自己建 <img> 的地方（演出、場景插圖）。 */
+  I.imgUrl = function (key) {
+    var v = I.IMG && I.IMG[key]; if (!v) return null;
+    var w = I.IMGW && I.IMGW[key]; return w ? 'img/' + key + '.webp?v=' + w : 'img/' + key + '.png?v=' + v;
+  };
+  /** 先抓下來（演出、過場第一次出現就看得到圖，⛔ 不然 <img> 還在載的那一下什麼都沒有）；沒有那張 ⇒ 不抓。 */
+  I.imgPre = function (keys) { keys.forEach(function (k) { var u = I.imgUrl(k); if (u) { var im = new Image(); im.src = u; } }); };
+  /** CSS 鋪的圖（卡框、標題的主視覺）讀不到不會自己退回 ⇒ 另外載一次，讀不到 ⇒ fail()（呼叫的人把那個 class 拿掉，回到原本的樣子）。 */
+  I.imgCheck = function (url, fail) { if (!url) return; var im = new Image(); im.onerror = fail; im.src = url; };
+  /** 看板娘（ART.md §5；名字「莎夏」，Tim 2026-10-30 交給 gura 取）的頭像框：表情 normal／smug 得意／angry／flustered 害羞；缺那一張 ⇒ normal；整個資料夾沒有 ⇒ ''。
+   *  圖是 1024×1536 的全身，框只露頭（idle.css .bsi-mascot：x 300～780、y 0～480，四個表情的頭都在那裡）；載入失敗 ⇒ 框變空的、藏起來。 */
+  I.mascot = function (mood, cls) {
+    var k = 'mascot/' + mood; if (!(I.IMG && I.IMG[k])) k = 'mascot/normal';
+    return I.IMG && I.IMG[k] ? '<span class="bsi-mascot' + (cls ? ' ' + cls : '') + '">' + I.img(k, '', 'mascot') + '</span>' : '';
+  };
+  /** 看板娘說一句：頭像＋對話框（框上掛名字）；沒有頭像 ⇒ 只有 html（跟以前一樣）。html ＝ 對話框裡的內容（呼叫的人跳脫好）。 */
+  I.say = function (mood, html, cls) {
+    var m = I.mascot(mood);
+    return m ? '<div class="bsi-say' + (cls ? ' ' + cls : '') + '">' + m + '<div class="bub"><b class="who">莎夏</b>' + html + '</div></div>' : html;
   };
   I.esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/[<]/g, '&lt;').replace(/>/g, '&gt;'); };   // ⛔ 不寫成 /</g：admin.py shell 把內容裡的「</」換成「<\/」（免得提早關掉 script）⇒ 正規表示式就壞了
 

@@ -1,0 +1,82 @@
+{
+ "app/logo": {
+  "q": 90,
+  "src": "dc2a7ff9"
+ },
+ "fx/mega": {
+  "q": 90,
+  "src": "68680e76"
+ },
+ "key/atlantis": {
+  "q": 90,
+  "src": "b646e68c"
+ },
+ "key/title-land": {
+  "q": 90,
+  "src": "c2f8fb32"
+ },
+ "key/title-port": {
+  "q": 90,
+  "src": "28ae9285"
+ },
+ "key/welcome": {
+  "q": 90,
+  "src": "81915408"
+ },
+ "mascot/angry": {
+  "q": 90,
+  "src": "c08aca26"
+ },
+ "mascot/flustered": {
+  "q": 90,
+  "src": "c3fafb07"
+ },
+ "mascot/normal": {
+  "q": 90,
+  "src": "373eab9f"
+ },
+ "mascot/smug": {
+  "q": 90,
+  "src": "6a225966"
+ },
+ "region/banner-abyss": {
+  "q": 90,
+  "src": "5f395682"
+ },
+ "region/banner-region-1": {
+  "q": 90,
+  "src": "cbfc60b5"
+ },
+ "region/banner-region-2": {
+  "q": 90,
+  "src": "271de545"
+ },
+ "region/banner-region-3": {
+  "q": 90,
+  "src": "0f84746f"
+ },
+ "region/banner-region-4": {
+  "q": 90,
+  "src": "639bc185"
+ },
+ "region/banner-region-5": {
+  "q": 90,
+  "src": "b21da2fd"
+ },
+ "region/banner-region-6": {
+  "q": 90,
+  "src": "b47e28ed"
+ },
+ "region/banner-region-7": {
+  "q": 90,
+  "src": "7c459736"
+ },
+ "region/banner-region-8": {
+  "q": 90,
+  "src": "5f00f914"
+ },
+ "region/banner-region-9": {
+  "q": 90,
+  "src": "818b26f7"
+ }
+}

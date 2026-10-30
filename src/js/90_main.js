@@ -14,7 +14,7 @@
   I.questFill();
   I.uiInit();
   if (I.IMG && I.IMG['app/favicon-32']) { var fav = document.createElement('link'); fav.rel = 'icon'; fav.type = 'image/png'; fav.href = 'img/app/favicon-32.png?v=' + I.IMG['app/favicon-32']; document.head.appendChild(fav); }   // 分頁圖示（主畫面的在 shell.json icon、manifest）
-  C.gfx(I.S.gfx); I.phxApply(); I.dbgApply(); C.sound({ mute: I.S.mute, bgm: I.S.bgm });
+  C.gfx(I.S.gfx); I.phxApply(); I.dbgApply(true); C.sound({ mute: I.S.mute, bgm: I.S.bgm });
   document.documentElement.classList.add('bsi-on');
 
   // ── 鍵盤：全部先攔下來（核心的鍵位在放置模式裡都不該動），只放行自己用的 ──
@@ -52,15 +52,22 @@
   function title() {
     var S = I.S, M = I.modal('', true), first = !S.st.battles;
     M.className = 'bsi-modal title';
+    var kl = I.imgUrl('key/title-land'), kp = I.imgUrl('key/title-port'), bg = $('bsi-mbg');   // 主視覺（img/key）：橫的、直的照螢幕方向挑（idle.css .bsi-modal-bg.key）；標題框靠上，下半部留給鯊魚與船
+    if (kl || kp) { bg.classList.add('key'); bg.style.setProperty('--key-land', 'url("' + (kl || kp) + '")'); bg.style.setProperty('--key-port', 'url("' + (kp || kl) + '")'); I.imgCheck(window.matchMedia && window.matchMedia('(orientation: portrait)').matches ? kp || kl : kl || kp, function () { bg.classList.remove('key'); }); }   // 讀不到 ⇒ 回到原本的半透明底（看得到後面的海）
     M.innerHTML = (I.IMG && I.IMG['app/logo'] ? '<h1 class="logo-h">' + I.img('app/logo', '方舷放置', 'logo') + '<small>鯊魚艦隊的無盡海</small></h1>'   // 字標（TASK-1117）；載入失敗 ⇒ 換回字
         : '<div class="logo">🦈</div><h1>方舷放置<small>Sharkside · 鯊魚艦隊的無盡海</small></h1>') +
-      (first ? '<p>a~ 艦隊長，歡迎上船！這片海的每一艘船都是方塊一格一格雕出來的 —— 打掉一格就是一格 🧱。<br>升級砲術、造更大的船、一個海域一個海域打過去。打不過就退一步練練，本鯊魚會自己回去挑戰。</p>'
+      (first ? '<p>a~ 艦隊長，歡迎上船！這片海的每一艘船都是方塊一格一格雕出來的 —— 打掉一格就是一格 ' + I.img('ui/blocks', '🧱', 'in') + '。<br>升級砲術、造更大的船、一個海域一個海域打過去。打不過就退一步練練，本鯊魚會自己回去挑戰。</p>'
         : '<p>歡迎回來！現在在 <b>海域 ' + S.zone + '</b>（最遠 ' + S.maxZone + '），手上 <b>' + I.fmt(S.blocks) + '</b> 格。</p>') +
-      (offl ? '<div class="offl">💤 妳不在的 <b>' + I.fmtTime(offl.sec) + '</b>，艦隊自己打了 <b class="g">+' + I.fmt(offl.gain) + '</b> 格<small>離線效率 ' + I.pct(I.offlineEff()) + '</small></div>' : '') +
-      '<div class="load" id="bsi-load">' + I.pick(I.TIPS) + '</div>' +
+      (offl ? '<div class="offl">' + I.img('key/welcome', '', 'welcome') + '💤 妳不在的 <b>' + I.fmtTime(offl.sec) + '</b>，艦隊自己打了 <b class="g">+' + I.fmt(offl.gain) + '</b> 格<small>離線效率 ' + I.pct(I.offlineEff()) + '</small></div>' : '') +
+      '<div id="bsi-tip">' + tip() + '</div>' +
       '<button class="big go" id="bsi-go" disabled>⏳ 載入中…</button>' +
       '<div class="credit">海戰核心 Blockside（ame 與大家的船）× 外殼 gura</div>';
     $('bsi-go').onclick = go;
+  }
+  /** 看板娘講一句提示（表情照 I.TIP_MOOD）；#bsi-load 是對話框裡的字（核心載入中的進度 boot:say 寫它的 textContent）。 */
+  function tip() {
+    var i = (Math.random() * I.TIPS.length) | 0;
+    return I.say(I.TIP_MOOD[i] || 'normal', '<div class="load" id="bsi-load">' + I.esc(I.TIPS[i]).replace('🧱', I.img('ui/blocks', '🧱', 'in')) + '</div>');
   }
   function go() {
     if (started || !C.ready()) return;
@@ -73,8 +80,8 @@
   C.on('boot:say', function (s) { var e = $('bsi-load'); if (e && s && s.length < 60) e.textContent = s; });
   (function waitReady() {
     if (!C.ready()) { setTimeout(waitReady, 200); return; }
-    var b = $('bsi-go'); if (b) { b.disabled = false; b.textContent = I.S.st.battles ? '⚓ 繼續航行' : '⚓ 出航'; }
-    var e = $('bsi-load'); if (e) e.textContent = I.pick(I.TIPS);
+    var b = $('bsi-go'); if (b) { b.disabled = false; b.innerHTML = I.img('ui/sail', '⚓') + (I.S.st.battles ? ' 繼續航行' : ' 出航'); }
+    var e = $('bsi-tip'); if (e) e.innerHTML = tip();
     if (auto) go();
   })();
 

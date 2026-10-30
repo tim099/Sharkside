@@ -16,7 +16,7 @@
     bottle: { name: '瓶中信', ico: '🍾', svg: '<svg viewBox="0 0 48 48"><g transform="rotate(-38 24 24)"><rect x="20.5" y="4" width="7" height="6" rx="1.5" fill="#b07a44" stroke="#5a3a1a" stroke-width="1.2"/><path d="M19.5 10h9v5q8 4 8 12v12q0 4-4 4h-17q-4 0-4-4v-12q0-8 8-12z" fill="rgba(110,220,170,.5)" stroke="#e4fff3" stroke-width="1.6"/><rect x="17" y="24" width="14" height="14" rx="2" fill="#f6e7c1" stroke="#c9a96e" stroke-width="1"/><path d="M19.5 28h9M19.5 31.5h9M19.5 35h6" stroke="#a88a55" stroke-width="1.1"/><path d="M14 26q1-6 5-9" stroke="#fff" stroke-width="1.6" fill="none" opacity=".7"/></g></svg>' }
   };
 
-  I.lootInit = function (root) { LY = I.h('div', 'bsi-loot'); root.insertBefore(LY, root.firstChild); };   // 墊在面板底下：漂到面板後面的點不到
+  I.lootInit = function (root) { LY = I.h('div', 'bsi-loot'); root.insertBefore(LY, root.firstChild); I.imgPre(['loot/barrel', 'loot/chest', 'loot/arms', 'loot/bottle', 'wpn/fire', 'wpn/cannon']); };   // 墊在面板底下：漂到面板後面的點不到；圖先抓（第一個掉出來就看得到）
 
   C.on('rptHit', function (b, sh) {
     if (!LY || I.BT.phase !== 'fight' || !b || !b.p || !sh || sh.team !== 'red' || !sh.bsi || !sh.bsi.pool) return;
@@ -35,7 +35,7 @@
     var c = C.center(sh) || p, dx = p[0] - c[0], dz = p[2] - c[2], dl = Math.hypot(dx, dz) || 1, k = roll(sh.bsi.gold);
     dx /= dl; dz /= dl;
     var W = k === 'arms' ? I.pick(I.WEAPONS) : null;                    // 軍火箱：裡面是哪一把（掉出來就定，箱子上看得到）
-    var e = I.h('div', 'bsi-lt ' + k, '<i class="glow"></i><div class="bob">' + KIND[k].svg + (W ? '<span class="wico">' + W.ico + '</span>' : '') + '</div>');
+    var e = I.h('div', 'bsi-lt ' + k, '<i class="glow"></i><div class="bob">' + I.img('loot/' + k, KIND[k].svg) + (W ? '<span class="wico">' + I.img('wpn/' + W.id, W.ico) + '</span>' : '') + '</div>');
     var it = { k: k, w: W && W.id, x: p[0] + dx * 3, z: p[2] + dz * 3, vx: dx * 2.4 + (Math.random() - 0.5), vz: dz * 2.4 + (Math.random() - 0.5), t0: I.now(), pool: sh.bsi.pool, e: e };
     e.title = KIND[k].name + (W ? '（' + W.name + '）' : '') + '：點一下撿起來';
     e.addEventListener('pointerdown', function (ev) { ev.preventDefault(); ev.stopPropagation(); take(it, true); });
@@ -50,16 +50,16 @@
     if (it.k === 'arms') {                                              // 軍火箱：點的才拿到那把武器（30_battle.js weaponGet 喊、計時）；自動撿 ⇒ 沉了
       var W = I.weaponDef(it.w);
       if (click) I.weaponGet(it.w);
-      txt = click ? W.ico + ' ' + W.name : '📦 軍火箱沉了';
+      txt = click ? I.img('wpn/' + W.id, W.ico) + ' ' + W.name : I.img('loot/arms', KIND.arms.ico) + ' 軍火箱沉了';
     } else if (it.k === 'bottle') {
       var d = I.pick(I.BUFF), sec = Math.round(B.bottleSec * k);
       I.buffAdd(d.id, { sec: sec });
-      txt = '🍾 ' + d.ico + ' ' + d.name + ' ' + sec + ' 秒';
-      I.toast('🍾 瓶中信：<b>' + d.ico + ' ' + I.esc(d.name) + '</b> —— ' + I.esc(d.desc) + '（' + sec + ' 秒）' + (click ? '' : ' <span class="dim">自動撿：只有一半</span>'), 'loot', 4500);
+      txt = I.img('loot/bottle', KIND.bottle.ico) + ' ' + I.img('buff/' + d.id, d.ico) + ' ' + d.name + ' ' + sec + ' 秒';
+      I.toast(I.img('loot/bottle', KIND.bottle.ico) + ' 瓶中信：<b>' + I.img('buff/' + d.id, d.ico) + ' ' + I.esc(d.name) + '</b> —— ' + I.esc(d.desc) + '（' + sec + ' 秒）' + (click ? '' : ' <span class="dim">自動撿：只有一半</span>'), 'loot', 4500);
     } else {
       g = I.gain(it.pool * (it.k === 'chest' ? B.chestK : B.barrelK) * k * I.valueMul() * I.incomeMul(), 'loot');
       if (I.BT.phase === 'fight' || I.BT.phase === 'hold') I.BT.income += g;
-      txt = KIND[it.k].ico + ' +' + I.fmt(g);
+      txt = I.img('loot/' + it.k, KIND[it.k].ico) + ' +' + I.fmt(g);
       if (it.k === 'chest') S.st.chest++;
     }
     S.st.loot++;

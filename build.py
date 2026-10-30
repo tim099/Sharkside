@@ -9,6 +9,9 @@
 · 船檔照抄整個 ships/（入口記著船檔清單與雜湊，兩邊要是同一次建置的）；海圖只抄 src/js/10_data.js 的海域表寫到的（核心從頁面旁邊讀 maps/<名字>/）。
 · 正式美術在 img/（ART.md）：先把 img/ 底下有哪些 png（git 追蹤的：還沒提交的不算）寫成 src/js/05_img.js（BSI.IMG ＝ { '<類>/<id>': 內容雜湊前 8 碼 }），遊戲照它決定用圖還是 emoji
   ⇒ 還沒畫的不去要（不破圖、不 404）；換了圖 ⇒ 網址的 ?v= 跟著變（GitHub Pages 不吃舊快取）。圖示（App、主畫面）也在 img/app/，⛔ 不再抄核心的 icons/。
+· 大張的 png（≥ WEBP_MIN：場景插圖、立繪、字標）另外轉一份 WebP（img/<類>/<id>.webp，q WEBP_Q；Tim 2026-10-30「套用前可以先看一下實際容量」：
+  遊戲用的 150 張 22.8 MB，最大的 20 張轉完 19.6 ⇒ 3.5 MB）⇒ 05_img.js 多一份 BSI.IMGW（有 WebP 的那幾張），遊戲先拿 WebP、讀不到回 png、再回 emoji。
+  img/webp.json 記每一份是照哪一版 png 轉的 ⇒ png 沒換就不重轉（編碼器換版本不一定逐位元組相同）；需要 Pillow，沒有 ⇒ 那幾張先用 png。⛔ 不要手改 .webp。
 """
 import argparse
 import filecmp
@@ -24,6 +27,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, 'src')
 MANAGED = ('ships', 'maps')                                          # 這兩個資料夾整個照核心那一份（多的刪掉）
 IMG_JS = os.path.join(SRC, 'js', '05_img.js')
+WEBP_JSON = os.path.join(HERE, 'img', 'webp.json')
+WEBP_MIN, WEBP_Q = 150 * 1024, 90                                    # 這麼大（位元組）以上的 png 轉一份 WebP；品質（放大兩倍跟 png 看不出差，2026-10-30 比過臉、字標、橫幅、標題）
+WEBP_PNG_ONLY = re.compile(r'^app/(icon-|apple-touch-icon|favicon-)')   # App 圖示：主畫面、manifest 照用 png
 
 
 def img_files():
@@ -35,14 +41,82 @@ def img_files():
     return sorted(f[4:] for f in p.stdout.decode('utf-8').split('\0') if f.startswith('img/') and os.path.isfile(os.path.join(HERE, f)))
 
 
-def img_js():
-    """img/ 底下的 png（git 追蹤的）⇒ 05_img.js 的全文（照路徑排序 ⇒ 同一批圖每次寫出來一樣）。"""
-    d, M = os.path.join(HERE, 'img'), {}
+def sha8(p):
+    return hashlib.sha1(open(p, 'rb').read()).hexdigest()[:8]
+
+
+def png_list():
+    """img/ 底下的 png（git 追蹤的）：{ '<類>/<id>': (路徑, 內容雜湊前 8 碼, 位元組) }。"""
+    d, P = os.path.join(HERE, 'img'), {}
     for r in img_files():
         if r.endswith('.png'):
-            M[r[:-4]] = hashlib.sha1(open(os.path.join(d, r), 'rb').read()).hexdigest()[:8]
-    return ('// 自動產生（build.py img_js）⛔ 不要手改：img/ 底下有哪些圖（ART.md）⇒ 00_base.js I.img 照它決定用圖還是 emoji；值 ＝ 內容雜湊前 8 碼（網址的 ?v=）\n'
-            'window.BSI = window.BSI || {}; window.BSI.IMG = ' + json.dumps(M, ensure_ascii=False, sort_keys=True, separators=(',', ':')) + ';\n')
+            p = os.path.join(d, r)
+            P[r[:-4]] = (p, sha8(p), os.path.getsize(p))
+    return P
+
+
+def webp_sync(P, check):
+    """大張的 png 轉一份 WebP（img/<key>.webp）、img/webp.json 記來源（src ＝ png 的雜湊）：png 沒換、WebP 在 ⇒ 不重轉。
+    回 (W ＝ { key: WebP 內容雜湊前 8 碼 }, 對不上的說明)；check ⇒ 只比、不寫。"""
+    try:
+        side = json.load(open(WEBP_JSON, encoding='utf-8')) if os.path.isfile(WEBP_JSON) else {}
+    except ValueError:
+        print('⚠ img/webp.json 讀不懂 ⇒ 當作沒有，全部重轉')
+        side = {}
+    new, W, bad, Image = {}, {}, [], None
+    for k in sorted(k for k, v in P.items() if v[2] >= WEBP_MIN and not WEBP_PNG_ONLY.match(k)):
+        png, h, _ = P[k]
+        out, e = os.path.join(HERE, 'img', k + '.webp'), side.get(k)
+        if not (e and e.get('src') == h and e.get('q') == WEBP_Q and os.path.isfile(out)):
+            if check:
+                bad.append(k + '（png 換了或還沒轉）')
+                continue
+            if Image is None:
+                try:
+                    from PIL import Image
+                except ImportError:
+                    print('⚠ 沒有 Pillow ⇒ %s 先用 png（pip install pillow 之後再建一次）' % k)
+                    continue
+            im = Image.open(png)
+            im.load()
+            if im.mode not in ('RGB', 'RGBA'):
+                im = im.convert('RGBA' if 'A' in im.getbands() or 'transparency' in im.info else 'RGB')
+            im.save(out, 'WEBP', quality=WEBP_Q, method=6, alpha_quality=100)
+            e = {'src': h, 'q': WEBP_Q}
+        new[k] = e
+        W[k] = sha8(out)
+    d = os.path.join(HERE, 'img')                                    # 多的 WebP（png 換小了、拿掉了）⇒ 刪
+    for r in sorted(files_under(d)) if os.path.isdir(d) else []:
+        if r.endswith('.webp') and r[:-5] not in new:
+            if check:
+                bad.append(r + '（多的）')
+            else:
+                os.remove(os.path.join(d, r))
+    t = json.dumps(new, ensure_ascii=False, sort_keys=True, indent=1) + '\n'
+    old = open(WEBP_JSON, encoding='utf-8', newline='').read() if os.path.isfile(WEBP_JSON) else None
+    if old != t and (new or old is not None):
+        if check:
+            bad.append('img/webp.json')
+        else:
+            open(WEBP_JSON, 'w', encoding='utf-8', newline='\n').write(t)
+    if W:
+        p = subprocess.run(['git', '-C', HERE, 'ls-files', '--', 'img'], capture_output=True)
+        if p.returncode == 0:
+            tracked = set(p.stdout.decode('utf-8').split('\n'))
+            miss = [k + '.webp' for k in sorted(W) if 'img/' + k + '.webp' not in tracked] + ([] if 'img/webp.json' in tracked else ['webp.json'])
+            if miss and check:
+                bad.append('還沒提交：' + '、'.join(miss[:6]) + ('…' if len(miss) > 6 else ''))
+            elif miss:
+                print('⚠ 還沒提交的 WebP（推之前一起提交：git add img/webp.json img/**/*.webp）：%s' % '、'.join(miss[:6]) + ('…' if len(miss) > 6 else ''))
+    return W, bad
+
+
+def img_js(P, W):
+    """05_img.js 的全文（照路徑排序 ⇒ 同一批圖每次寫出來一樣）：IMG ＝ 每張 png，IMGW ＝ 有 WebP 的那幾張。"""
+    M = {k: v[1] for k, v in P.items()}
+    return ('// 自動產生（build.py img_js）⛔ 不要手改：img/ 底下有哪些圖（ART.md）⇒ 00_base.js I.img 照它決定用圖還是 emoji；值 ＝ 內容雜湊前 8 碼（網址的 ?v=）；IMGW ＝ 另外轉了 WebP 的那幾張（大張的）\n'
+            'window.BSI = window.BSI || {}; window.BSI.IMG = ' + json.dumps(M, ensure_ascii=False, sort_keys=True, separators=(',', ':')) + ';\n'
+            'window.BSI.IMGW = ' + json.dumps(W, ensure_ascii=False, sort_keys=True, separators=(',', ':')) + ';\n')
 
 
 def maps_used():
@@ -117,10 +191,19 @@ def main():
     if not os.path.isfile(os.path.join(core, 'src', 'js', '91_shellapi.js')):
         sys.exit('✗ %s 的核心沒有外殼 API（src/js/91_shellapi.js）' % core)
     bad = False
-    # ⓪ 圖的清單（套頁之前：它是外殼的一支 js）
-    t = img_js()
+    # ⓪ 大張的 png 轉 WebP、圖的清單（套頁之前：它是外殼的一支 js）
+    P = png_list()
+    W, wbad = webp_sync(P, o.check)
+    if wbad:
+        bad = True
+        print('✗ WebP 跟 img/ 對不上：%s ⇒ python -I build.py --core …（不帶 --check）' % '、'.join(wbad[:8]))
+    else:
+        mb = lambda n: n / 1048576
+        big = sum(P[k][2] for k in W)
+        print('✓ WebP %d 張（png %.1f MB ⇒ %.1f MB）' % (len(W), mb(big), mb(sum(os.path.getsize(os.path.join(HERE, 'img', k + '.webp')) for k in W))))
+    t = img_js(P, W)
     old = open(IMG_JS, encoding='utf-8', newline='').read() if os.path.isfile(IMG_JS) else None
-    n = t.count('":"')
+    n = len(P)
     if old == t:
         print('✓ src/js/05_img.js 是最新的（img/ %d 張）' % n)
     elif o.check:

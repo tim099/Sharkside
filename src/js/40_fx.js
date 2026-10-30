@@ -8,6 +8,7 @@
   I.fxInit = function (root) {
     FL = I.h('div', 'bsi-float'); MK = I.h('div', 'bsi-marks'); TS = I.h('div', 'bsi-toasts'); FX = I.h('div', 'bsi-fx'); CB = I.h('div', 'bsi-combo'); FN = I.h('div', 'bsi-fins');
     root.appendChild(FN); root.appendChild(MK); root.appendChild(FL); root.appendChild(TS); root.appendChild(FX); root.appendChild(CB);
+    I.imgPre(['fx/jaw-top', 'fx/jaw-bottom', 'fx/fin', 'fx/mega']);    // 演出第一次就看得到圖（⛔ 不先抓 ⇒ 第一口咬下去 <img> 還在載，什麼都沒有）
   };
 
   // ── 飄字 ──
@@ -97,7 +98,8 @@
   I.chomp = function (x, y, cls, anc, word) {
     if (!FX) return;
     JAW = JAW || jawSvg();
-    var e = I.h('div', 'bsi-chomp' + (cls ? ' ' + cls : ''), '<i class="fl"></i><i class="rg"></i><div class="jaw up">' + JAW + '</div><div class="jaw lo">' + JAW + '</div><b class="wd">' + I.esc(word || I.pick(WORDS)) + '</b>');
+    var J = I.IMG && I.IMG['fx/jaw-top'] && I.IMG['fx/jaw-bottom'];    // 上下顎的圖（img/fx；兩張都有才換 ⇒ 不會一半圖一半 SVG；讀不到 ⇒ 那一片換回 SVG）
+    var e = I.h('div', 'bsi-chomp' + (cls ? ' ' + cls : ''), '<i class="fl"></i><i class="rg"></i><div class="jaw up">' + (J ? I.img('fx/jaw-top', JAW, 'fx-jaw') : JAW) + '</div><div class="jaw lo">' + (J ? I.img('fx/jaw-bottom', JAW, 'fx-jaw') : JAW) + '</div><b class="wd">' + I.esc(word || I.pick(WORDS)) + '</b>');
     e.style.left = x.toFixed(0) + 'px'; e.style.top = y.toFixed(0) + 'px'; e.bsiA = anc || null;
     FX.appendChild(e);
     while (FX.childElementCount > 12) FX.firstChild.remove();
@@ -139,33 +141,33 @@
     '<circle cx="350" cy="80" r="4.5" fill="#05080c"/><circle cx="351.5" cy="78.5" r="1.4" fill="#fff"/><path d="M300 76q-4 12 0 22M310 75q-4 12 0 22M320 75q-4 12 0 22" stroke="#173247" stroke-width="2.4" fill="none"/></svg>';
   // 特殊武器（30_battle.js weaponGet／weaponFire）：撿到喊一聲；打出去 ⇒ 聲音、點的那一點冒個字、鏡頭鎖過去（同咬）
   I.on('weapon', function (W) {
-    I.toast(W.ico + ' 撿到 <b>' + I.esc(W.name) + '</b>！' + W.dur + ' 秒內點敵艦不咬，換成' + I.esc(W.name) + ' —— ' + I.esc(W.desc), 'gold', 5000);
-    I.banner(W.ico + ' ' + I.esc(W.name) + '<small>' + W.dur + ' 秒內點敵艦！威力照鯊魚利齒</small>', 'zone');
+    I.toast(I.img('wpn/' + W.id, W.ico) + ' 撿到 <b>' + I.esc(W.name) + '</b>！' + W.dur + ' 秒內點敵艦不咬，換成' + I.esc(W.name) + ' —— ' + I.esc(W.desc), 'gold', 5000);
+    I.banner(I.img('wpn/' + W.id, W.ico) + ' ' + I.esc(W.name) + '<small>' + W.dur + ' 秒內點敵艦！威力照鯊魚利齒</small>', 'zone');
     I.sfx('arms');
   });
   I.on('weaponFire', function (W, sh, to, cx, cy) {
     if (I.S.cam === 'foe' || I.S.cam === 'auto') { lockOn(sh); camHold = I.now() + 8000; }
     I.sfx(W.id === 'fire' ? 'flame' : 'whistle');
-    if (cx !== undefined) I.floatAt(cx, cy - 30, W.id === 'fire' ? '🔥' : '💣', 'bite');
+    if (cx !== undefined) I.floatAt(cx, cy - 30, I.img('wpn/' + W.id, W.id === 'fire' ? '🔥' : '💣'), 'bite');
   });
   // 黃金寶船（30_battle.js reinforce）：喊一聲、鎖定敵艦的鏡頭換過去
   I.on('gold', function (sh) {
-    I.toast('💰 <b>黃金寶船 ' + I.esc(sh.name) + '</b> 出現了！身價 ×' + I.BAL.goldK + '、幾乎不還手，打中會掉更多寶物 —— 快咬！', 'gold', 7000);
-    I.floatShip(sh, '💰 黃金寶船！', 'kill', 16);
+    I.toast(I.img('loot/goldmark', '💰') + ' <b>黃金寶船 ' + I.esc(sh.name) + '</b> 出現了！身價 ×' + I.BAL.goldK + '、幾乎不還手，打中會掉更多寶物 —— 快咬！', 'gold', 7000);
+    I.floatShip(sh, I.img('loot/goldmark', '💰') + ' 黃金寶船！', 'kill', 16);
     I.sfx('chest');
     if (I.S.cam === 'foe') lockOn(sh);
   });
   // 鯊魚狂潮（Tim 2026-10-30：「目前鯊魚狂潮有點看不出效果」）：開下去一道浪掃過畫面＋大字；結束時說這一波全力咬了幾口（效果：蓄力全滿，30_battle.js bitePow；50_ui.js 那一條、idle.css 的藍邊）
   I.on('abil', function (a) {
     if (a.id !== 'frenzy' || !FX) return;
-    var e = I.h('div', 'bsi-frzwave', '<i class="wave"></i><b class="wd">🌊 鯊魚狂潮！<small>' + a.dur + ' 秒蓄力全滿：連續全力咬！</small></b>');
+    var e = I.h('div', 'bsi-frzwave', '<i class="wave"></i><b class="wd">' + I.img('abil/frenzy', '🌊', 'wdi') + ' 鯊魚狂潮！<small>' + a.dur + ' 秒蓄力全滿：連續全力咬！</small></b>');
     FX.appendChild(e); setTimeout(function () { e.remove(); }, 2200);
     I.sfx('frenzy');
   });
-  I.on('frenzyEnd', function (n, got) { I.toast('🌊 鯊魚狂潮結束 —— 全力咬了 <b>' + n + '</b> 口' + (got > 0 ? '，咬下 <span class="g">+' + I.fmt(got) + '</span> 格' : ''), 'abil', 5000); });
+  I.on('frenzyEnd', function (n, got) { I.toast(I.img('abil/frenzy', '🌊') + ' 鯊魚狂潮結束 —— 全力咬了 <b>' + n + '</b> 口' + (got > 0 ? '，咬下 <span class="g">+' + I.fmt(got) + '</span> 格' : ''), 'abil', 5000); });
   I.on('mega', function () {
     if (!FX) return;
-    var e = I.h('div', 'bsi-mega', '<i class="dark"></i><div class="shark">' + SHARK + '</div><b class="wd">🦈 巨齒鯊！</b>');
+    var e = I.h('div', 'bsi-mega', '<i class="dark"></i>' + I.img('fx/mega', '<div class="shark">' + SHARK + '</div>', 'fx-mega') + '<b class="wd">' + I.img('abil/mega', '🦈', 'wdi') + ' 巨齒鯊！</b>');   // 圖（img/fx/mega：撲出水面）；讀不到 ⇒ 原本游過去的 SVG
     FX.appendChild(e); setTimeout(function () { e.remove(); }, 2000);
     shake(true); I.sfx('mega');
   });
@@ -202,7 +204,7 @@
   // ── 戰鬥的事件 ⇒ 飄字、訊息 ──
   I.on('float', function (sh, g) { I.floatShip(sh, '+' + I.fmt(g), g > I.BT.income * 0.08 ? 'big' : ''); });
   I.on('kill', function (sh, how, g) {
-    var gd = sh.bsi && sh.bsi.gold ? '💰 黃金寶船 ' : '';
+    var gd = sh.bsi && sh.bsi.gold ? I.img('loot/goldmark', '💰') + ' 黃金寶船 ' : '';
     I.floatShip(sh, gd + (how === 'cap' ? '🏳️ 俘獲 ' : '⚓ 擊沉 ') + '+' + I.fmt(g), 'kill ' + how, 14);
     I.toast((how === 'cap' ? '🏳️ <b>' + gd + I.esc(sh.name) + '</b> 降旗了 —— 俘獲賞金' : '⚓ <b>' + gd + I.esc(sh.name) + '</b> 沉了 —— 賞金') + ' <span class="g">+' + I.fmt(g) + '</span>', how + (gd ? ' gold' : ''));
     I.camEvent(sh, 7000);
@@ -210,7 +212,7 @@
   I.on('boom', function (sh, g) { I.floatShip(sh, '💥 殉爆！+' + I.fmt(g), 'boom', 18); I.toast('💥 <b>' + I.esc(sh.name) + '</b> 彈藥庫殉爆！額外賞金 <span class="g">+' + I.fmt(g) + '</span>', 'boom'); I.camEvent(sh, 9000); });
   I.on('reserve', function (sh, left) { var me = sh.team === 'blue'; I.toast((me ? '⚓ 我方換上：<b>' : '🚩 援軍進場：<b>') + I.esc(sh.name) + '</b>' + (left ? '（候補還有 ' + left + ' 艘）' : '（候補用完）'), me ? 'note blue' : 'wave', 3500); });
   I.on('bp', function (id, gift) { I.toast(gift ? '🎁 亞特蘭提斯的禮物：<b>' + I.esc(I.nameOf(id)) + '</b> 的藍圖！（船塢）' : '📜 拿到藍圖：<b>' + I.esc(I.nameOf(id)) + '</b>（' + I.esc(I.AUTHORS[id] || '') + ' 造）—— 船塢可以造了', 'bp', 6000); });
-  I.on('ach', function (a) { I.toast('🏆 成就：<b>' + a.ico + ' ' + I.esc(a.name) + '</b>（收入 ×1.03）', 'ach', 6000); });
+  I.on('ach', function (a) { I.toast('🏆 成就：<b>' + I.img('ach/' + a.id, a.ico) + ' ' + I.esc(a.name) + '</b>（收入 ×1.03）', 'ach', 6000); });
   I.on('lootTake', function (it, click) { if (click) I.sfx(it.k === 'chest' ? 'chest' : it.k === 'bottle' ? 'bottle' : 'coin'); });
   /** 核心的廣播帶了 HTML（<b style="color:…">起火！</b>）⇒ 只留 b／i／strong／em／span 與它們的字色，其他標記拿掉、字照樣跳脫。
    *  ⛔ 直接 esc ⇒ 標記整串印出來（Tim 2026-10-30 截圖）；⛔ 直接塞 innerHTML ⇒ 核心哪天帶了別的標記也照單全收。DOMParser 解析不跑程式、不載圖。 */
@@ -239,7 +241,7 @@
     var m = marks.get(sh);
     if (m) return m;
     var red = sh.team === 'red', gold = sh.bsi && sh.bsi.gold, e = I.h('div', 'bsi-mark ' + (red ? 'foe' : 'mine') + (sh.bsi && sh.bsi.boss ? ' boss' : '') + (gold ? ' gold' : ''));
-    e.innerHTML = '<div class="nm">' + (sh.bsi && sh.bsi.boss ? '👑 ' : '') + (gold ? '💰 ' : '') + I.esc(sh.name) + '</div>' + (red && sh.bsi && sh.bsi.pool ? '<div class="val">💰 ' + I.fmt(sh.bsi.pool * I.valueMul() * I.incomeMul()) + '</div>' : '') +
+    e.innerHTML = '<div class="nm">' + (sh.bsi && sh.bsi.boss ? '👑 ' : '') + (gold ? I.img('loot/goldmark', '💰 ', 'gmk') : '') + I.esc(sh.name) + '</div>' + (red && sh.bsi && sh.bsi.pool ? '<div class="val">💰 ' + I.fmt(sh.bsi.pool * I.valueMul() * I.incomeMul()) + '</div>' : '') +
       '<div class="bar"><i></i></div>' + (red ? '<div class="sub"></div>' : '');
     if (red) e.addEventListener('pointerdown', function (ev) { ev.preventDefault(); ev.stopPropagation(); I.biteShip(sh, ev.clientX, ev.clientY); });   // 名牌在船上面 ⇒ 往船的中心找船身咬
     MK.appendChild(e);
@@ -261,7 +263,7 @@
       C.ships().forEach(function (sh) {
         if (sh.team !== 'red' || sh.sunk || C.isOut(sh)) return;
         var c = C.center(sh), p = c && C.project(c[0], 0, c[2]); if (!p) return;
-        var L = fins.get(sh); if (!L) { L = [I.h('div', 'bsi-fin', FIN), I.h('div', 'bsi-fin', FIN)]; L.forEach(function (e) { FN.appendChild(e); }); fins.set(sh, L); }
+        var L = fins.get(sh); if (!L) { var fh = I.img('fx/fin', FIN, 'fx-fin'); L = [I.h('div', 'bsi-fin', fh), I.h('div', 'bsi-fin', fh)]; L.forEach(function (e) { FN.appendChild(e); }); fins.set(sh, L); }   // 鰭的圖（img/fx/fin）；讀不到 ⇒ SVG
         var rx = I.clamp(15000 / p.d, 40, 240), ry = rx * 0.26, sz = I.clamp(2800 / p.d, 16, 56);
         live.add(sh);
         L.forEach(function (e, k) {

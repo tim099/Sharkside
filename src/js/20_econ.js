@@ -161,6 +161,8 @@
     var base = I.REGIONS[2 + (r - I.REGIONS.length) % (I.REGIONS.length - 2)], depth = r - I.REGIONS.length + 1;
     return { name: I.ABYSS.name + ' ' + depth, ico: I.ABYSS.ico, wx: ['storm', 'clear', 'maelstrom'][r % 3], pool: base.pool, boss: base.boss, say: I.ABYSS.say };
   };
+  /** 第 rg 個海區（I.zone 的 region，從 0 起）的圖名：REGIONS 照順序 region-1…；再往下都是深淵 abyss（ART.md §2；圖：region/<名>、region/banner-<名>）。 */
+  I.regionKey = function (rg) { return rg < I.REGIONS.length ? 'region-' + (rg + 1) : 'abyss'; };
   I.zoneLv = function (N) { return Math.pow(B.lvGrow, N - 1) * (N % 10 === 0 ? B.bossLv : 1) * Math.min(1, B.early0 + (1 - B.early0) * (N - 1) / 10); };   // 新手海：前 10 個海域敵艦弱一點
   I.blockVal = function (N) { return Math.pow(B.vGrow, N - 1); };
   function seeded(s) { return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; }
@@ -268,12 +270,13 @@
   // ── 轉生：潛回亞特蘭提斯 ──
   I.shardsFor = function (z) { return z < B.shardZone ? 0 : Math.floor(0.6 * Math.pow(z - 15, 1.25)); };
   I.canPrestige = function () { return I.shardsFor(I.S.maxZone) > 0; };
-  I.startZone = function () { return Math.max(1, Math.min(1 + 5 * I.tlv('current'), Math.floor(I.S.bestZone / 2))); };
+  /** 轉生之後從第幾海域出發。⛔ 以前也叫 I.startZone ⇒ 被 30_battle.js 的 I.startZone(N)（開打那個海域）蓋掉：深海頁一畫就丟例外、轉生做到一半就斷（格、升級清掉了，海域沒換）。 */
+  I.prestigeZone = function () { return Math.max(1, Math.min(1 + 5 * I.tlv('current'), Math.floor(I.S.bestZone / 2))); };
   I.prestige = function () {
     var S = I.S, g = I.shardsFor(S.maxZone); if (!g) return 0;
     S.shards += g; S.shardsAll += g; S.st.pres++;
     S.blocks = I.tlv('chest') ? 1000 * Math.pow(10, I.tlv('chest')) : 0; S.blocksRun = 0; S.upg = {}; S.bless = {}; S.buffs = []; S.perk = null;
-    S.zone = S.maxZone = I.startZone(); S.farm = 0;
+    S.zone = S.maxZone = I.prestigeZone(); S.farm = 0;
     if (!I.tlv('yard')) { S.slots = 1; S.fleet = ['flyingfish']; S.own = { flyingfish: 1 }; }
     I.emit('prestige', g);
     return g;

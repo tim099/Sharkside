@@ -15,11 +15,11 @@
       '<div class="bsi-top">' +
         '<div class="brand"><span class="fin">🦈</span><div><b>方舷放置</b><small>Sharkside · 鯊魚艦隊的無盡海</small></div></div>' +
         '<div class="cur">' +
-          '<div class="res blk" title="格：打下來的每一格船殼"><span class="ico">🧱</span><b id="bsi-blk">0</b><span class="u">格</span><span class="rate" id="bsi-rate"></span></div>' +
-          '<div class="res shd" id="bsi-shdBox" title="三叉戟碎片：深海科技的貨幣；累計的每一顆讓收入 +10%"><span class="ico">🔱</span><b id="bsi-shd">0</b></div>' +
+          '<div class="res blk" title="格：打下來的每一格船殼"><span class="ico">' + I.img('ui/blocks', '🧱') + '</span><b id="bsi-blk">0</b><span class="u">格</span><span class="rate" id="bsi-rate"></span></div>' +
+          '<div class="res shd" id="bsi-shdBox" title="三叉戟碎片：深海科技的貨幣；累計的每一顆讓收入 +10%"><span class="ico">' + I.img('ui/shards', '🔱') + '</span><b id="bsi-shd">0</b></div>' +
           '<div class="mul" id="bsi-mul" title="收入倍率（成就 × 碎片 × 增益 × 祝福）"></div>' +
         '</div>' +
-        '<div class="btns"><button id="bsi-spd" title="模擬速度"></button><button id="bsi-cam" title="鏡頭（C 換；鎖定敵艦時 Tab 換下一艘）"></button><button id="bsi-mute" title="聲音"></button><button id="bsi-set" title="設定">⚙️</button></div>' +
+        '<div class="btns"><button id="bsi-spd" title="模擬速度"></button><button id="bsi-cam" title="鏡頭（C 換；鎖定敵艦時 Tab 換下一艘）"></button><button id="bsi-mute" title="聲音"></button><button id="bsi-set" title="設定">' + I.img('ui/settings', '⚙️') + '</button></div>' +
       '</div>' +
       '<div class="bsi-zone" id="bsi-zone">' +
         '<div class="zh"><span class="rico" id="bsi-rico"></span><div><div class="rname" id="bsi-rname"></div><div class="zn" id="bsi-zn"></div></div></div>' +
@@ -42,7 +42,7 @@
       '</div>' +
       '<div class="bsi-abil" id="bsi-abil"></div>' +
       '<div class="bsi-wpn" id="bsi-wpn"><span class="ico" id="bsi-wpn-ico"></span><div class="mid"><b id="bsi-wpn-nm"></b><div class="bar"><i id="bsi-wpn-bar"></i></div></div><span class="s" id="bsi-wpn-s"></span></div>' +
-      '<div class="bsi-wpn bsi-frz" id="bsi-frz"><span class="ico">🌊</span><div class="mid"><b id="bsi-frz-nm"></b><div class="bar"><i id="bsi-frz-bar"></i></div></div><span class="s" id="bsi-frz-s"></span></div>' +
+      '<div class="bsi-wpn bsi-frz" id="bsi-frz"><span class="ico">' + I.img('abil/frenzy', '🌊') + '</span><div class="mid"><b id="bsi-frz-nm"></b><div class="bar"><i id="bsi-frz-bar"></i></div></div><span class="s" id="bsi-frz-s"></span></div>' +
       '<div class="bsi-banner" id="bsi-banner"></div>' +
       '<div class="bsi-perk" id="bsi-perk"><div class="pk-h" id="bsi-pk-h"></div><div class="pk-cards" id="bsi-pk-cards"></div><div class="pk-foot"><div class="pk-bar"><i id="bsi-pk-bar"></i></div><span id="bsi-pk-left"></span></div></div>' +
       '<div class="bsi-modal-bg" id="bsi-mbg"><div class="bsi-modal" id="bsi-modal"></div></div>';
@@ -63,10 +63,10 @@
     topBtns();
     ['buy', 'bp', 'fleet', 'prestige', 'ach'].forEach(function (k) { I.on(k, function () { I.dirty(); }); });
     I.on('zoneStart', function () { zoneCard(); I.dirty(); I.camStart(); });
-    I.on('zoneLoad', function (Z) { zoneCard(); banner('<span class="rico">' + Z.R.ico + '</span> 海域 ' + Z.n + (Z.boss ? ' <b class="boss">👑 守將</b>' : '') + '<small>' + I.esc(Z.R.name) + ' —— ' + I.esc(Z.R.say) + '</small>' + (Z.mod && Z.mod.id !== 'calm' ? '<small class="bmod">海況 ' + Z.mod.ico + ' ' + I.esc(Z.mod.name) + '：' + I.esc(Z.mod.desc) + '</small>' : ''), 'zone'); });
+    I.on('zoneLoad', function (Z) { var rk = I.regionKey(Z.region), nr = Z.region !== lastRg; lastRg = Z.region; zoneCard(); banner('<div class="bh"><span class="rico">' + I.img('region/' + rk, Z.R.ico, 'rg') + '</span> 海域 ' + Z.n + (Z.boss ? ' <b class="boss">👑 守將</b>' : '') + '</div><small>' + I.esc(Z.R.name) + ' —— ' + I.esc(Z.R.say) + '</small>' + (Z.mod && Z.mod.id !== 'calm' ? '<small class="bmod">海況 ' + I.img('sea/' + Z.mod.id, Z.mod.ico, 'sm') + ' ' + I.esc(Z.mod.name) + '：' + I.esc(Z.mod.desc) + '</small>' : ''), 'zone' + (nr ? ' rgn' : ''), nr ? I.imgUrl('region/banner-' + rk) : null); });
     I.on('questDone', function (q, g, bf) {
       var d = I.questDef(q.id), T = I.QUEST_TIER[q.tier];
-      I.toast('📜 賞金任務完成：<b>' + d.ico + ' ' + I.esc(d.name) + ' ' + q.need + ' ' + d.unit + '</b> —— <span class="g">+' + I.fmt(g) + '</span>' + (bf ? ' ＋ ' + bf.ico + ' ' + I.esc(bf.name) + ' ' + T.buff + ' 場' : ''), 'quest', 6000);
+      I.toast('📜 賞金任務完成：<b>' + I.img('quest/' + d.id, d.ico) + ' ' + I.esc(d.name) + ' ' + q.need + ' ' + d.unit + '</b> —— <span class="g">+' + I.fmt(g) + '</span>' + (bf ? ' ＋ ' + I.img('buff/' + bf.id, bf.ico) + ' ' + I.esc(bf.name) + ' ' + T.buff + ' 場' : ''), 'quest', 6000);
       I.sfx('perk'); I.dirty();
     });
     I.on('quest', function () { if (tab === 'quest') I.dirty(); });
@@ -75,7 +75,7 @@
       zoneCard();
     });
     I.on('gain', function (a) { rateLog.push([I.now(), a]); });
-    I.on('abil', function (a) { I.toast(a.ico + ' <b>' + a.name + '</b>！', 'abil', 2500); });
+    I.on('abil', function (a) { I.toast(I.img('abil/' + a.id, a.ico) + ' <b>' + a.name + '</b>！', 'abil', 2500); });
     I.on('perk', function () { clearTimeout(pkT); pkT = setTimeout(perkShow, 1100); });   // 先讓「勝利！」的橫幅亮一下
     I.on('perkTake', function (c, i, auto) {
       perkHide(); var t = perkTxt(c);
@@ -89,23 +89,24 @@
   var pkShown = null, pkT = 0;
   function perkTxt(c) {
     if (c.t === 'upg') { var u = I.upgDef(c.id); return { ico: I.img('upg/' + u.id, u.ico), name: u.name + ' +' + c.n + ' 級', desc: '免費升級（Lv ' + I.lv(c.id) + ' → ' + (I.lv(c.id) + c.n) + '）<br>' + I.esc(u.desc) }; }
-    if (c.t === 'buff') { var b = I.buffDef(c.id); return { ico: b.ico, name: b.name, desc: I.esc(b.desc) + '<br>接下來 ' + c.n + ' 場' }; }
-    if (c.t === 'loot') return { ico: '💰', name: '沉船寶藏', desc: '立刻 <b class="g">+' + I.fmt(c.amt) + '</b> 格' };
-    if (c.t === 'cd') return { ico: '⚡', name: '鯊魚直覺', desc: '所有技能的冷卻立刻歸零' };
+    if (c.t === 'buff') { var b = I.buffDef(c.id); return { ico: I.img('buff/' + b.id, b.ico), name: b.name, desc: I.esc(b.desc) + '<br>接下來 ' + c.n + ' 場' }; }
+    if (c.t === 'loot') return { ico: I.img('perk/loot', '💰'), name: '沉船寶藏', desc: '立刻 <b class="g">+' + I.fmt(c.amt) + '</b> 格' };
+    if (c.t === 'cd') return { ico: I.img('perk/cd', '⚡'), name: '鯊魚直覺', desc: '所有技能的冷卻立刻歸零' };
     var d = I.BLESS.filter(function (x) { return x.id === c.id; })[0];
-    return { ico: d.ico, name: d.name, desc: I.esc(d.desc) + '<br>到轉生為止、可以疊（現在 ' + I.mulTxt(I.blessMul(c.id)) + '）' };
+    return { ico: I.img('bless/' + d.id, d.ico), name: d.name, desc: I.esc(d.desc) + '<br>到轉生為止、可以疊（現在 ' + I.mulTxt(I.blessMul(c.id)) + '）' };
   }
   function perkShow() {
     var P = I.S.perk; if (!P) { perkHide(); return; }
     if (pkShown === P) return;
     pkShown = P;
     var best = I.perkBest(P), box = $('bsi-pk-cards');
-    $('bsi-pk-h').innerHTML = (I.zone(P.zone).boss ? '👑 守將倒下了！' : '⚓ 海域 ' + P.zone + ' 拿下了！') + '<small>挑一個強化帶走</small>';
+    $('bsi-pk-h').innerHTML = I.mascot('smug') + '<div>' + (I.zone(P.zone).boss ? '👑 守將倒下了！' : '⚓ 海域 ' + P.zone + ' 拿下了！') + '<small>挑一個強化帶走</small></div>';
     box.innerHTML = '';
     P.cards.forEach(function (c, i) {
-      var t = perkTxt(c), R = I.RARITY[c.r], b = h('button', 'pk-card ' + R.id + (i === best ? ' best' : ''),
+      var t = perkTxt(c), R = I.RARITY[c.r], fr = I.imgUrl('perk/frame-' + R.id), b = h('button', 'pk-card ' + R.id + (i === best ? ' best' : '') + (fr ? ' framed' : ''),
         '<span class="rar">' + R.name + '</span><span class="ico">' + t.ico + '</span><b>' + I.esc(t.name) + '</b><small>' + t.desc + '</small><span class="key">' + (i + 1) + '</span>');
       b.style.animationDelay = (i * 0.09).toFixed(2) + 's';
+      if (fr) { b.style.setProperty('--pkf', 'url("' + fr + '")'); I.imgCheck(fr, function () { b.classList.remove('framed'); }); }      // 卡框（idle.css .pk-card.framed：border-image 照稀有度切；讀不到 ⇒ 瀏覽器照原本的邊框畫）
       b.onclick = function () { I.perkTake(i); };
       box.appendChild(b);
     });
@@ -117,9 +118,9 @@
 
   // ── 上方 ──
   function topBtns() {
-    txt('bsi-spd', '⏩ ×' + I.S.speed);
-    txt('bsi-cam', { foe: '🎯 鎖定', auto: '🎥 自動', flag: '🎥 旗艦', free: '🎥 自由' }[I.S.cam] || '🎥');
-    txt('bsi-mute', I.S.mute ? '🔇' : '🔊');
+    html('bsi-spd', I.img('ui/speed', '⏩') + ' ×' + I.S.speed);
+    html('bsi-cam', I.img('ui/cam', I.S.cam === 'foe' ? '🎯' : '🎥') + ' ' + ({ foe: '鎖定', auto: '自動', flag: '旗艦', free: '自由' }[I.S.cam] || ''));   // 一張圖四種鏡頭 ⇒ 字留著分
+    html('bsi-mute', I.S.mute ? I.img('ui/mute', '🔇') : I.img('ui/sound', '🔊'));
   }
   I.topBtns = topBtns;
   /** 上方的「+N/秒」：最近 RATE_SEC 秒實際入帳的格 ÷ RATE_SEC（Tim 2026-10-30：15 秒 ⇒「改成5秒試看看」：反應更快、跳得更兇）。 */
@@ -133,40 +134,46 @@
   // ── 海域卡 ──
   function zoneCard() {
     var S = I.S, Z = I.BT.Z && I.BT.Z.n === S.zone ? I.BT.Z : I.zone(S.zone), k = (Z.n - 1) % 10, d = '';
-    txt('bsi-rico', Z.R.ico); txt('bsi-rname', Z.R.name + (Z.wx === 'storm' ? ' ⛈' : Z.wx === 'maelstrom' ? ' 🌀' : ''));
+    var rk = I.regionKey(Z.region);
+    html('bsi-rico', I.img('region/' + rk, Z.R.ico, 'rg')); zoneBg(I.imgUrl('region/banner-' + rk)); txt('bsi-rname', Z.R.name + (Z.wx === 'storm' ? ' ⛈' : Z.wx === 'maelstrom' ? ' 🌀' : ''));
     html('bsi-zn', '海域 <b>' + Z.n + '</b>' + (Z.boss ? ' <span class="boss">👑 守將</span>' : '') + '<span class="best">最遠 ' + (S.maxZone) + '</span>');
     for (var i = 0; i < 10; i++) { var n = Z.n - k + i; d += '<i class="' + (n < S.maxZone ? 'done' : '') + (n === Z.n ? ' cur' : '') + (i === 9 ? ' boss' : '') + '"></i>'; }
     html('bsi-dots', d);
+    if (k === 9) I.imgPre(['region/banner-' + I.regionKey(Z.region + 1), 'region/' + I.regionKey(Z.region + 1)]);   // 守將海域 ⇒ 下一區的圖先抓（過場的橫幅一出來就有圖）
     txt('bsi-farm', S.farm ? '打輸了，先退一步練練：再贏 ' + Math.max(0, I.BAL.retryAfter + 1 - S.farm) + ' 場回去挑戰' : '');
     var md = Z.mod;                                                   // 海況（10_data.js SEAMOD）
-    html('bsi-zmod', md ? md.ico + ' <b>' + I.esc(md.name) + '</b><span>' + I.esc(md.desc) + '</span>' : Z.boss ? '👑 <b>守將海域</b><span>強度 ×' + I.BAL.bossLv + '、身價 ×' + I.BAL.bossK + '</span>' : '');
+    html('bsi-zmod', md ? I.img('sea/' + md.id, md.ico, 'sm') + ' <b>' + I.esc(md.name) + '</b><span>' + I.esc(md.desc) + '</span>' : Z.boss ? '👑 <b>守將海域</b><span>強度 ×' + I.BAL.bossLv + '、身價 ×' + I.BAL.bossK + '</span>' : '');
   }
   I.zoneCard = zoneCard;
+  /** 海域卡的底圖：那一區的橫幅（region/banner-*）壓暗墊在字底下；沒有 ⇒ 照原本的底色。 */
+  var zbgNow = null;
+  function zoneBg(u) { if (u === zbgNow) return; zbgNow = u; var e = $('bsi-zone'); e.classList.toggle('bg', !!u); e.style.setProperty('--zbg', u ? 'url("' + u + '")' : 'none'); }
   function zoneLive() {
     var BT = I.BT, Z = BT.Z; if (!Z) return;
     var st = C.state(), ships = C.ships(), up = ships.filter(function (s) { return s.team === 'red' && !C.isOut(s); }).length;
     var s = BT.phase === 'loading' ? '⏳ 船隊集結中…' : BT.phase === 'fight' ? '敵艦 ' + up + ' 艘' + (BT.wave.length ? '（候補 ' + BT.wave.length + ' 艘）' : '') + ' · ' + clock(st.t) + ' / ' + clock(Z.timeout) : BT.phase === 'hold' ? (BT.result === 'win' ? '✔ 拿下了' : '✘ 撤退') : '';
     txt('bsi-zstat', s);
     var a = BT.phase === 'loading' ? I.atk() / Z.lv : BT.atkR, d2 = BT.phase === 'loading' ? I.def() / Z.lv : BT.defR;
-    html('bsi-ratio', '<span class="' + rc(a) + '" title="我方火力 ÷ 這個海域的強度：越高敵艦越脆、我方砲彈越兇">🎯 火力比 ' + a.toFixed(2) + '</span><span class="' + rc(d2) + '" title="我方船堅 ÷ 這個海域的強度：越高越打不穿">🛡️ 船堅比 ' + d2.toFixed(2) + '</span>');
+    html('bsi-ratio', '<span class="' + rc(a) + '" title="我方火力 ÷ 這個海域的強度：越高敵艦越脆、我方砲彈越兇">' + I.img('upg/gun', '🎯', 'in') + ' 火力比 ' + a.toFixed(2) + '</span><span class="' + rc(d2) + '" title="我方船堅 ÷ 這個海域的強度：越高越打不穿">' + I.img('upg/hull', '🛡️', 'in') + ' 船堅比 ' + d2.toFixed(2) + '</span>');
   }
   /** 海域卡底下：現在有效的增益（場數／秒數）、這一輪的祝福。 */
   function buffChips() {
     var now = I.now(), L = I.buffsNow().map(function (b) {
       var d = I.buffDef(b.id);
-      return '<span class="bf' + (b.until ? ' t' : '') + '" title="' + I.esc(d.name + '：' + d.desc) + '">' + d.ico + '<i>' + (b.until ? Math.ceil((b.until - now) / 1000) + 's' : b.left + ' 場') + '</i></span>';
+      return '<span class="bf' + (b.until ? ' t' : '') + '" title="' + I.esc(d.name + '：' + d.desc) + '">' + I.img('buff/' + d.id, d.ico) + '<i>' + (b.until ? Math.ceil((b.until - now) / 1000) + 's' : b.left + ' 場') + '</i></span>';
     });
-    I.BLESS.forEach(function (d) { var n = I.S.bless[d.id]; if (n) L.push('<span class="bf bl" title="' + I.esc(d.name + '：' + d.desc + '（到轉生為止）') + '">' + d.ico + '<i>×' + n + '</i></span>'); });
+    I.BLESS.forEach(function (d) { var n = I.S.bless[d.id]; if (n) L.push('<span class="bf bl" title="' + I.esc(d.name + '：' + d.desc + '（到轉生為止）') + '">' + I.img('bless/' + d.id, d.ico) + '<i>×' + n + '</i></span>'); });
     html('bsi-buffs', L.join(''));
   }
   function rc(x) { return x >= 1.2 ? 'good' : x >= 0.8 ? 'ok' : 'bad'; }
   function clock(t) { t = Math.max(0, Math.floor(t)); return Math.floor(t / 60) + ':' + ('0' + t % 60).slice(-2); }
 
   // ── 結果橫幅 ──
-  var banT = 0;
-  function banner(s, cls) {
+  var banT = 0, lastRg = -1;                                            // lastRg：上一次進的海區（換了 ⇒ 那一區的橫幅當過場）
+  function banner(s, cls, bg) {
     var b = $('bsi-banner'); b.innerHTML = s; b.className = 'bsi-banner on ' + (cls || '');
-    clearTimeout(banT); banT = setTimeout(function () { b.className = 'bsi-banner'; }, 3200);
+    b.style.setProperty('--bbg', bg ? 'url("' + bg + '")' : 'none');
+    clearTimeout(banT); banT = setTimeout(function () { b.classList.remove('on'); }, bg ? 4200 : 3200);
   }
   I.banner = banner;
 
@@ -187,16 +194,18 @@
   function shopHead() {
     var BT = I.BT, Z = BT.Z, k = { sink: 0, cap: 0 }, win = BT.result === 'win';
     BT.kills.forEach(function (x) { k[x.how]++; });
-    html('bsi-sh-head', '<b class="' + (win ? 'win' : 'lose') + '">' + (win ? (Z.boss ? '👑 守將倒下了！' : '⚓ 海域 ' + Z.n + ' 拿下了！') : BT.result === 'timeout' ? '⌛ 僵持不下，撤退' : '🏳️ 艦隊撤退……') + '</b>' +
+    var mh = I.mascot(win ? 'smug' : BT.result === 'timeout' ? 'flustered' : 'angry');   // 贏 ⇒ 得意、僵持 ⇒ 害羞（才不是打不贏）、撤退 ⇒ 生氣
+    $('bsi-sh-head').classList.toggle('has-m', !!mh);
+    html('bsi-sh-head', mh + '<b class="' + (win ? 'win' : 'lose') + '">' + (win ? (Z.boss ? '👑 守將倒下了！' : '⚓ 海域 ' + Z.n + ' 拿下了！') : BT.result === 'timeout' ? '⌛ 僵持不下，撤退' : '🏳️ 艦隊撤退……') + '</b>' +
       '<span>這一場 <b class="g">+' + I.fmt(BT.income) + '</b> 格' + (k.sink ? ' · 擊沉 ' + k.sink : '') + (k.cap ? ' · 俘獲 ' + k.cap : '') + '</span>');
   }
   /** 底下那一列：下一場的海域與強度比（買了升級就跟著變）、自動推進、出航。 */
   function shopFoot() {
     var S = I.S, Z = I.zone(S.zone), a = I.atk() / Z.lv, d = I.def() / Z.lv;
-    html('bsi-sh-next', '下一場 <b>海域 ' + Z.n + '</b>' + (Z.boss ? ' 👑' : '') + '<small><span class="' + rc(a) + '">🎯 火力比 ' + a.toFixed(2) + '</span><span class="' + rc(d) + '">🛡️ 船堅比 ' + d.toFixed(2) + '</span></small>');
+    html('bsi-sh-next', '下一場 <b>海域 ' + Z.n + '</b>' + (Z.boss ? ' 👑' : '') + '<small><span class="' + rc(a) + '">' + I.img('upg/gun', '🎯', 'in') + ' 火力比 ' + a.toFixed(2) + '</span><span class="' + rc(d) + '">' + I.img('upg/hull', '🛡️', 'in') + ' 船堅比 ' + d.toFixed(2) + '</span></small>');
     txt('bsi-zauto', S.auto ? '⏵ 自動推進' : '⏸ 原地練功'); $('bsi-zauto').classList.toggle('on', S.auto);
     $('bsi-zprev').disabled = S.zone <= 1; $('bsi-znext').disabled = S.zone >= S.maxZone;
-    txt('bsi-sail', '⚓ 出航' + (I.BT.Z && S.zone === I.BT.Z.n ? '（同一個海域再打一次）' : ''));
+    html('bsi-sail', I.img('ui/sail', '⚓') + ' 出航' + (I.BT.Z && S.zone === I.BT.Z.n ? '（同一個海域再打一次）' : ''));
   }
   function shopLive() {
     shopFoot();
@@ -225,7 +234,7 @@
   }
   function sec(B, title, sub) { var e = h('div', 'sec', '<h3>' + title + (sub ? '<small>' + sub + '</small>' : '') + '</h3>'); B.appendChild(e); return e; }
   function costBtn(cost, ok, label, fn, cls) {
-    var b = h('button', 'cost ' + (cls || ''), (label ? '<span class="l">' + label + '</span>' : '') + '🧱 ' + I.fmt(cost));
+    var b = h('button', 'cost ' + (cls || ''), (label ? '<span class="l">' + label + '</span>' : '') + '<span class="v">' + I.img('ui/blocks', '🧱') + ' ' + I.fmt(cost) + '</span>');
     b.dataset.cost = cost; b.disabled = !ok; b.onclick = function (e) { e.stopPropagation(); fn(); };
     return b;
   }
@@ -245,7 +254,7 @@
     if (isFinite(sp)) { var r2 = h('div', 'row add', '<span class="ico">➕</span><div class="mid"><b>再一個位置</b><span class="spec">艦隊多一艘候補（放手上最大的那一型）</span></div>'); r2.appendChild(costBtn(sp, S.blocks >= sp, '', function () { I.buySlot(); })); s1.appendChild(r2); }
     var s2 = sec(B, '艦隊方針', '我方砲長照這個挑瞄哪裡'), ch = h('div', 'chips');
     I.DOCTRINE.forEach(function (d) {
-      var lock = S.bestZone < d.zone, b = h('button', 'chip' + (S.doctrine === d.id ? ' on' : '') + (lock ? ' lock' : ''), d.ico + ' ' + d.name);
+      var lock = S.bestZone < d.zone, b = h('button', 'chip' + (S.doctrine === d.id ? ' on' : '') + (lock ? ' lock' : ''), I.img('doctrine/' + d.id, d.ico, 'dc') + ' ' + d.name);
       b.title = lock ? '第 ' + d.zone + ' 海域解鎖' : d.tip; b.disabled = lock;
       b.onclick = function () { S.doctrine = d.id; I.BT.phase === 'fight' && C.ships().forEach(function (sh) { if (sh.team === 'blue') sh.cap = d.id; }); I.dirty(); };
       ch.appendChild(b);
@@ -294,36 +303,36 @@
     var S = I.S, ref = I.questRef(), s = sec(B, '賞金任務', '同時三張 · 做完自動領 · 已完成 ' + S.st.quests + ' 張');
     S.quests.forEach(function (q) {
       var d = I.questDef(q.id), T = I.QUEST_TIER[q.tier], got = Math.min(q.got, q.need);
-      s.appendChild(h('div', 'row quest t' + q.tier, '<span class="ico">' + d.ico + '</span><div class="mid"><b>' + I.esc(d.name) + ' ' + q.need + ' ' + d.unit + '</b><span class="lv">' + T.name + '</span>' +
+      s.appendChild(h('div', 'row quest t' + q.tier, '<span class="ico">' + I.img('quest/' + d.id, d.ico) + '</span><div class="mid"><b>' + I.esc(d.name) + ' ' + q.need + ' ' + d.unit + '</b><span class="lv">' + T.name + '</span>' +
         '<div class="qbar"><i style="width:' + (got / q.need * 100).toFixed(1) + '%"></i></div>' +
-        '<span class="spec">' + (d.max ? '最高 ' : '') + got + ' / ' + q.need + '　獎勵 🧱 ' + I.fmt(ref * T.k) + (T.buff ? ' ＋ 隨機增益 ' + T.buff + ' 場' : '') + '</span></div>'));
+        '<span class="spec">' + (d.max ? '最高 ' : '') + got + ' / ' + q.need + '　獎勵 ' + I.img('ui/blocks', '🧱', 'in') + ' ' + I.fmt(ref * T.k) + (T.buff ? ' ＋ 隨機增益 ' + T.buff + ' 場' : '') + '</span></div>'));
     });
-    sec(B, '怎麼算').appendChild(h('div', 'note', '獎勵照「一場大約賺多少」乘：小 ×2、中 ×4（再給隨機增益 3 場）、大 ×8（增益 5 場）。做完馬上換一張新的。'));
+    sec(B, '怎麼算').appendChild(h('div', 'note', I.say('normal', '獎勵照「一場大約賺多少」乘：小 ×2、中 ×4（再給隨機增益 3 場）、大 ×8（增益 5 場）。做完馬上換一張新的。')));
   }
   function pDeep(B) {
     var S = I.S, g = I.shardsFor(S.maxZone), s = sec(B, '潛回亞特蘭提斯', '轉生');
     var p = h('div', 'pres');
-    p.innerHTML = '<p>這一輪最遠到過 <b>海域 ' + S.maxZone + '</b>。現在潛回去可以帶走 <b class="shd">🔱 ' + g + '</b> 顆三叉戟碎片。</p>' +
-      '<p class="dim">累計的每一顆碎片讓收入 +10%：現在 ' + I.mulTxt(I.shardMul()) + (g ? ' → 轉生後 ' + I.mulTxt(1 + 0.1 * (S.shardsAll + g)) : '') + '。<br>會重來：格、升級、海域、造好的船與艦隊位置（藍圖留著）。從海域 ' + I.startZone() + ' 出發。</p>';
-    var b = h('button', 'big', g ? '🐚 潛回亞特蘭提斯（+🔱 ' + g + '）' : '🔒 到達第 ' + I.BAL.shardZone + ' 海域才能潛回去');
+    p.innerHTML = I.img('key/atlantis', '', 'keyban') + '<p>這一輪最遠到過 <b>海域 ' + S.maxZone + '</b>。現在潛回去可以帶走 <b class="shd">' + I.img('ui/shards', '🔱', 'in') + ' ' + g + '</b> 顆三叉戟碎片。</p>' +
+      '<p class="dim">累計的每一顆碎片讓收入 +10%：現在 ' + I.mulTxt(I.shardMul()) + (g ? ' → 轉生後 ' + I.mulTxt(1 + 0.1 * (S.shardsAll + g)) : '') + '。<br>會重來：格、升級、海域、造好的船與艦隊位置（藍圖留著）。從海域 ' + I.prestigeZone() + ' 出發。</p>';
+    var b = h('button', 'big', g ? '🐚 潛回亞特蘭提斯（+' + I.img('ui/shards', '🔱', 'in') + ' ' + g + '）' : '🔒 到達第 ' + I.BAL.shardZone + ' 海域才能潛回去');
     b.disabled = !g; b.onclick = prestigeAsk; p.appendChild(b); s.appendChild(p);
-    var s2 = sec(B, '深海科技', '🔱 ' + S.shards + ' 顆可以用 · 轉生也留著');
+    var s2 = sec(B, '深海科技', I.img('ui/shards', '🔱', 'in') + ' ' + S.shards + ' 顆可以用 · 轉生也留著');
     I.TECH.forEach(function (t) {
       var L = I.tlv(t.id), maxed = t.max > 0 && L >= t.max, c = I.techCost(t);
-      var r = h('div', 'row tech', '<span class="ico">' + t.ico + '</span><div class="mid"><b>' + t.name + '</b><span class="lv">Lv ' + L + (t.max ? ' / ' + t.max : '') + '</span><span class="spec">' + t.desc + '</span></div>');
+      var r = h('div', 'row tech', '<span class="ico">' + I.img('tech/' + t.id, t.ico) + '</span><div class="mid"><b>' + t.name + '</b><span class="lv">Lv ' + L + (t.max ? ' / ' + t.max : '') + '</span><span class="spec">' + t.desc + '</span></div>');
       if (maxed) r.appendChild(h('span', 'tag', '滿了'));
-      else { var b2 = h('button', 'cost shd', '🔱 ' + c); b2.disabled = S.shards < c; b2.onclick = function () { I.buyTech(t.id); if (t.id === 'tide') topBtns(); }; r.appendChild(b2); }
+      else { var b2 = h('button', 'cost shd', '<span class="v">' + I.img('ui/shards', '🔱') + ' ' + c + '</span>'); b2.disabled = S.shards < c; b2.onclick = function () { I.buyTech(t.id); if (t.id === 'tide') topBtns(); }; r.appendChild(b2); }
       s2.appendChild(r);
     });
   }
   function pAch(B) {
     var n = Object.keys(I.S.ach).length, s = sec(B, '成就', n + ' / ' + I.ACH.length + ' · 收入 ' + I.mulTxt(I.achMul())), g = h('div', 'achs');
-    I.ACH.forEach(function (a) { var on = !!I.S.ach[a.id]; g.appendChild(h('div', 'ach' + (on ? ' on' : ''), '<span class="ico">' + (on ? a.ico : '❔') + '</span><b>' + I.esc(a.name) + '</b><small>' + I.esc(a.desc) + '</small>')); });
+    I.ACH.forEach(function (a) { var on = !!I.S.ach[a.id]; g.appendChild(h('div', 'ach' + (on ? ' on' : ''), '<span class="ico">' + (on ? I.img('ach/' + a.id, a.ico) : '❔') + '</span><b>' + I.esc(a.name) + '</b><small>' + I.esc(a.desc) + '</small>')); });
     s.appendChild(g);
   }
   function pStat(B) {
     var S = I.S, st = S.st, s = sec(B, '航海日誌');
-    [['🧱 這一輪打下來', I.fmt(S.blocksRun) + ' 格'], ['🧱 全部打下來', I.fmt(S.blocksAll) + ' 格'], ['🗺️ 有史以來最遠', '海域 ' + S.bestZone], ['⚔️ 開戰', st.battles + ' 場（贏 ' + st.wins + '、撤退 ' + st.losses + '）'],
+    [[I.img('ui/blocks', '🧱', 'in') + ' 這一輪打下來', I.fmt(S.blocksRun) + ' 格'], [I.img('ui/blocks', '🧱', 'in') + ' 全部打下來', I.fmt(S.blocksAll) + ' 格'], ['🗺️ 有史以來最遠', '海域 ' + S.bestZone], ['⚔️ 開戰', st.battles + ' 場（贏 ' + st.wins + '、撤退 ' + st.losses + '）'],
       ['⚓ 擊沉', st.sunk + ' 艘'], ['🏳️ 俘獲', st.cap + ' 艘'], ['💥 殉爆', st.boom + ' 次'], ['🦷 咬', st.bites + ' 口'], ['🛢️ 漂流寶物', st.loot + ' 件（寶箱 ' + st.chest + '）'], ['🎴 強化', st.perks + ' 次'], ['💰 黃金寶船', st.gold + ' 艘'], ['🔥 最長連咬', st.comboMax + ' 口'], ['📜 賞金任務', st.quests + ' 張'], ['🐚 潛回亞特蘭提斯', st.pres + ' 次'],
       ['⏱️ 航行時間', I.fmtTime(st.playSec)], ['💤 離線效率', I.pct(I.offlineEff())], ['📈 平均收入', I.fmt(S.rate) + ' 格/秒']].forEach(function (x) {
       s.appendChild(h('div', 'kv', '<span>' + x[0] + '</span><b>' + x[1] + '</b>'));
@@ -344,7 +353,7 @@
     A.innerHTML = '<div class="chg" id="bsi-chg" title="蓄力：上一口之後自己蓄，滿了才是全力（狂點只有兩成）"><b>🦷</b><div class="bar"><i id="bsi-chg-bar"></i></div><span id="bsi-chg-t"></span></div>' +
       '<div class="hint" id="bsi-hint">🦈 點敵艦哪裡就咬哪裡 · 漂流寶物點一下撿</div>';
     I.ABIL.forEach(function (a) {
-      var b = h('button', 'ab', '<span class="ico">' + a.ico + '</span><span class="nm">' + a.name + '</span><span class="key">' + a.key + '</span><i class="cd"></i>');
+      var b = h('button', 'ab', '<span class="ico">' + I.img('abil/' + a.id, a.ico) + '</span><span class="nm">' + a.name + '</span><span class="key">' + a.key + '</span><i class="cd"></i>');
       b.id = 'bsi-ab-' + a.id; b.title = a.desc + '（冷卻 ' + a.cd + ' 秒）';
       b.onclick = function () { I.useAbil(a.id); };
       A.appendChild(b);
@@ -371,7 +380,7 @@
   function modalClose() { $('bsi-mbg').className = 'bsi-modal-bg'; }
   I.modal = modal; I.modalClose = modalClose;
   function prestigeAsk() {
-    var g = I.shardsFor(I.S.maxZone), M = modal('<h2>🐚 潛回亞特蘭提斯</h2><p>艦隊要回家了。帶走 <b class="shd">🔱 ' + g + '</b> 顆三叉戟碎片，收入永遠 ' + I.mulTxt(1 + 0.1 * (I.S.shardsAll + g)) + '。</p><p class="dim">格、升級、海域、造好的船會重來；藍圖、成就、深海科技、碎片留著。</p>');
+    var g = I.shardsFor(I.S.maxZone), M = modal(I.img('key/atlantis', '', 'keyban') + '<h2>🐚 潛回亞特蘭提斯</h2><p>艦隊要回家了。帶走 <b class="shd">' + I.img('ui/shards', '🔱', 'in') + ' ' + g + '</b> 顆三叉戟碎片，收入永遠 ' + I.mulTxt(1 + 0.1 * (I.S.shardsAll + g)) + '。</p><p class="dim">格、升級、海域、造好的船會重來；藍圖、成就、深海科技、碎片留著。</p>');
     var r = h('div', 'mbtns'), no = h('button', '', '再打一下'), yes = h('button', 'big', '潛回去');
     no.onclick = modalClose; yes.onclick = function () { modalClose(); shopSail(); I.prestige(); I.save(); I.toast('🐚 回到亞特蘭提斯了。碎片 +' + g + '，重新出航！', 'ach', 6000); I.goZone(I.S.zone); };
     r.appendChild(no); r.appendChild(yes); M.appendChild(r);
@@ -403,7 +412,7 @@
   }
   /** 物理細節（照 Blockside 主選單的「物理設定…」）：一項一項調、馬上套用；下面印出整組，Tim 調好了複製貼回來 ⇒ 改成那一檔的預設（10_data.js PHX_LV）。 */
   function phxPanel() {
-    var S = I.S, f = C.phxInfo(), M = modal('<h2>⚙️ 物理細節</h2><p class="dim small">點了馬上套用；<b>模擬步長、進水</b>開戰時才定 ⇒ 下一場生效（這一場 ' + f.hz + ' Hz）。滑過選項看完整說明。</p>'), g = h('div', 'set');
+    var S = I.S, f = C.phxInfo(), M = modal('<h2>' + I.img('ui/settings', '⚙️') + ' 物理細節</h2><p class="dim small">點了馬上套用；<b>模擬步長、進水</b>開戰時才定 ⇒ 下一場生效（這一場 ' + f.hz + ' Hz）。滑過選項看完整說明。</p>'), g = h('div', 'set');
     M.dataset.view = 'phx';
     phxRow(g, phxPanel);
     f.items.forEach(function (it) {
@@ -449,37 +458,40 @@
   //   開著 ⇒ 我方的船每 0.5 秒記每個水手的位置、職位、送藥手送哪門砲；每一發砲、每門砲的狀態（可開、裝填、沒人、等火藥、泡水、對不對得到目標）；
   //   對得到目標卻 8 秒沒開火的那幾段另外標出來（新的一段跳一則提示）。匯出 ＝ 這一場＋同一張海圖的上一場、存檔摘要、物理設定，一個 JSON 檔。
   //   換海域會重新載入頁面 ⇒ 記錄只留在這一頁；只讀，開著關著戰局一樣。
-  I.dbgApply = function () { C.tlog(I.S.dbg ? true : null, ['blue']); };
+  I.dbgApply = function (boot) { C.tlog(I.S.dbg ? true : boot ? null : false, ['blue']); };   // 開機時關著 ⇒ null（照核心自己的 ?test=1）；中途關掉 ⇒ false（這一場也停）
   var dbgSeen = 0;
   I.dbgTick = function () {
     if (!I.S.dbg) return;
     var f = C.tlogInfo(); if (!f) return;
     if (f.quiet.length < dbgSeen) dbgSeen = 0;                         // 新的一場
     for (; dbgSeen < f.quiet.length; dbgSeen++) {
-      var q = f.quiet[dbgSeen], sh = C.ships().filter(function (s) { return s.i === q.ship; })[0];
-      I.toast('🧪 ' + I.esc(sh ? sh.name : '我方') + ' ' + I.BAL.dbgQuiet + ' 秒沒開火（砲對得到目標）—— 已記下，⚙️ 設定 → 除錯紀錄 → 匯出', 'warn', 6000);
+      var q = f.quiet[dbgSeen];
+      I.toast('🧪 ' + I.esc(q.name || '我方') + ' ' + I.BAL.dbgQuiet + ' 秒沒開火（砲對得到目標）—— 已記下，⚙️ 設定 → 除錯紀錄 → 匯出', 'warn', 6000);
     }
   };
   /** 打完一場（30_battle.js finish）：留一份，下一場開打之後還匯得出來。 */
   I.dbgKeep = function () { if (I.S.dbg) I.dbgLast = C.tlogData(); };
   function dbgSave() {
-    var S = I.S, Z = I.BT.Z, now = C.tlogData(), d = new Date(), p2 = function (v) { return (v < 10 ? '0' : '') + v; };
-    var o = { app: 'Sharkside', at: d.toISOString(), page: location.href, zone: S.zone, region: Z ? Z.name : null, fleet: S.fleet, doctrine: S.doctrine, upg: S.upg, tech: S.tech, buffs: S.buffs, bless: S.bless,
-      phx: C.phxInfo(), speed: S.speed, now: now, last: I.dbgLast && I.dbgLast !== now ? I.dbgLast : null };
+    var S = I.S, Z = I.BT.Z, now = C.tlogData(), d = new Date(), p2 = function (v) { return (v < 10 ? '0' : '') + v; }, zn = Z ? Z.n : S.zone;
+    var o = { app: 'Sharkside', at: d.toISOString(), page: location.href, zone: zn, region: Z ? Z.R.name : null, fleet: S.fleet, doctrine: S.doctrine, upg: S.upg, tech: S.tech, buffs: S.buffs, bless: S.bless,
+      phx: C.phxInfo(), speed: S.speed, now: now, last: dbgOther(now) };
     var a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([JSON.stringify(o)], { type: 'application/json' }));
-    a.download = 'sharkside-debug-z' + S.zone + '-' + d.getFullYear() + p2(d.getMonth() + 1) + p2(d.getDate()) + '-' + p2(d.getHours()) + p2(d.getMinutes()) + p2(d.getSeconds()) + '.json';
+    a.download = 'sharkside-debug-z' + zn + '-' + d.getFullYear() + p2(d.getMonth() + 1) + p2(d.getDate()) + '-' + p2(d.getHours()) + p2(d.getMinutes()) + p2(d.getSeconds()) + '.json';
     document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   }
+  /** 留著的那一場是不是另一場（照底下那串事件比：核心每一場開戰換一串新的）。 */
+  function dbgOther(now) { return I.dbgLast && (!now || I.dbgLast.ev !== now.ev) ? I.dbgLast : null; }
   function dbgRow(g, again) {
     var S = I.S, c = chipRow(g, '🧪 除錯紀錄', [[false, '關'], [true, '開']], S.dbg, function (v) { S.dbg = v; I.dbgApply(); I.save(); }, again);
     var f = C.tlogInfo(), b = h('button', 'chip', '匯出'); b.title = '水手路徑、每一發砲、每門砲的狀態，存成一個 JSON 檔';
     b.disabled = !f && !I.dbgLast; b.onclick = dbgSave; c.appendChild(b);
-    if (S.dbg || f) textRow(g, '', f ? (f.on ? '記錄中' : '停了') + '：路徑 ' + I.fmt(f.points) + ' 點、事件 ' + I.fmt(f.ev) + ' 筆、開火 ' + I.fmt(f.shots) + ' 發、沒開火的段落 ' + f.quiet.length + ' 段' + (I.dbgLast ? '；另有上一場' : '') : '下一場開戰起記');
+    var other = !!dbgOther(C.tlogData());
+    if (S.dbg || f) textRow(g, '', f ? (f.on ? '記錄中' : '停了') + '：路徑 ' + I.fmt(f.points) + ' 點、事件 ' + I.fmt(f.ev) + ' 筆、開火 ' + I.fmt(f.shots) + ' 發、沒開火的段落 ' + f.quiet.length + ' 段' + (other ? '；另有上一場' : '') : '下一場開戰起記');
   }
 
   function settings() {
-    var S = I.S, M = modal('<h2>⚙️ 設定</h2>'), g = h('div', 'set');
+    var S = I.S, M = modal('<h2>' + I.img('ui/settings', '⚙️') + ' 設定</h2>'), g = h('div', 'set');
     M.dataset.view = 'set';
     function row(label, opts, cur, fn) { chipRow(g, label, opts, cur, fn, settings); }
     row('畫質', [['low', '低'], ['mid', '中'], ['high', '高'], ['ultra', '全開']], S.gfx, function (v) { S.gfx = v; C.gfx(v); });
@@ -515,14 +527,14 @@
     txt('bsi-blk', I.fmt(S.blocks));
     var r = rate(); txt('bsi-rate', r > 0 ? '+' + I.fmt(r) + '/秒' : '');
     $('bsi-shdBox').style.display = S.shardsAll > 0 ? '' : 'none'; txt('bsi-shd', I.fmt(S.shards));
-    var m = I.incomeMul(); txt('bsi-mul', m > 1.001 ? I.mulTxt(m) : ''); $('bsi-mul').classList.toggle('hot', I.bmul('income') > 1);
+    var m = I.incomeMul(); html('bsi-mul', m > 1.001 ? I.img('ui/mul', '') + I.mulTxt(m) : ''); $('bsi-mul').classList.toggle('hot', I.bmul('income') > 1);
     if (pkShown) {                                                    // 強化三選一的倒數
       var left = Math.max(0, pkShown.at + I.BAL.perkAuto * 1000 - I.now()) / 1000;
       $('bsi-pk-bar').style.width = (left / I.BAL.perkAuto * 100).toFixed(1) + '%'; txt('bsi-pk-left', Math.ceil(left) + ' 秒後自動選 ★ 那張');
     }
     var W = I.weaponOn(), we = $('bsi-wpn');                             // 拿著特殊武器：哪一把、還剩幾秒（每一格畫那一條才順）
     we.classList.toggle('on', !!W);
-    if (W) { var wl = I.weaponLeft(); txt('bsi-wpn-ico', W.ico); txt('bsi-wpn-nm', W.name + '：點敵艦'); txt('bsi-wpn-s', wl.toFixed(1) + 's'); $('bsi-wpn-bar').style.width = (wl / W.dur * 100).toFixed(1) + '%'; }
+    if (W) { var wl = I.weaponLeft(); html('bsi-wpn-ico', I.img('wpn/' + W.id, W.ico)); txt('bsi-wpn-nm', W.name + '：點敵艦'); txt('bsi-wpn-s', wl.toFixed(1) + 's'); $('bsi-wpn-bar').style.width = (wl / W.dur * 100).toFixed(1) + '%'; }
     var BT = I.BT, fz = I.frenzyOn(), fe = $('bsi-frz');                  // 鯊魚狂潮：還剩幾秒、這一波全力咬了幾口；結束那一下喊一聲（40_fx.js frenzyEnd）
     if (fe.classList.contains('on') !== fz) fe.classList.toggle('on', fz);
     if (fz) { var fl = (BT.frenzyUntil - I.now()) / 1000; txt('bsi-frz-nm', '鯊魚狂潮・蓄力全滿　全力咬了 ' + (BT.frenzyBites || 0) + ' 口'); txt('bsi-frz-s', fl.toFixed(1) + 's'); $('bsi-frz-bar').style.width = (fl / FRZ.dur * 100).toFixed(1) + '%'; }
