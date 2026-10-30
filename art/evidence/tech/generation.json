@@ -1,0 +1,422 @@
+{
+  "task": 1120,
+  "author": "Sirius (Codex)",
+  "tool": "built-in image_gen",
+  "style_approval": "Tim 2026-10-30 approved TASK-1117 overview",
+  "processing": "Nearest-neighbour resizing and alpha threshold128 only; preserve exact generated source and a separate white composite master.",
+  "expected": {
+    "tech": [
+      "trident",
+      "coral",
+      "current",
+      "dream",
+      "chest",
+      "yard",
+      "tide",
+      "instinct",
+      "mate"
+    ]
+  },
+  "assets": [
+    {
+      "batch": "tech",
+      "cat": "tech",
+      "id": "trident",
+      "prompt": "Create ONE original game inventory icon for Sharkside. Attached images are ONLY approved fine pixel-art style references: rich material color, discrete pixel shade clusters, crisp stair-step edges, restrained deep navy outline, dimensional depth and upper-left light. Subject: An original ancient three-pronged golden trident head with violet crystal inlays, thick central point, two curled side points and short dark shaft. Compact strong trident silhouette; magical deep-sea technology, no character or full staff. Centered compact three-quarter composition, generous transparent margin all sides; intended native128x128 with object104px. TRUE transparent background, no ground, no external cast shadow, no border or frame, no text, letters, numbers or watermark. Strong simple distinctive silhouette; no smooth vector gradients or painterly blur.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "path": "art\\evidence\\tech\\source\\tech-trident.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-706d8741-52a0-4048-bdbd-8cca746086bc.png",
+      "source_sha256": "ea27d5604a418b137a628a385c7c6c0fe515dc88d3468567f0674f3ee531ba8a",
+      "output": "img\\tech\\trident.png",
+      "output_sha256": "e035de6e420df940119ebfc861d77b356fb7a08750576edf14ddf4d2ebfb3d2d",
+      "size": [
+        128,
+        128
+      ],
+      "bbox": [
+        20,
+        12,
+        108,
+        116
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "batch": "tech",
+      "cat": "tech",
+      "id": "coral",
+      "prompt": "Create ONE original game inventory icon for Sharkside. Attached images are ONLY approved fine pixel-art style references: rich material color, discrete pixel shade clusters, crisp stair-step edges, restrained deep navy outline, dimensional depth and upper-left light. Subject: One compact shield-shaped cluster of branching coral: coral-red central fan, purple tips and a thick dark teal rock base. Three broad branches, mineral armor facets. Clear coral armor symbol, no literal metal shield. Centered compact three-quarter composition, generous transparent margin all sides; intended native128x128 with object104px. TRUE transparent background, no ground, no external cast shadow, no border or frame, no text, letters, numbers or watermark. Strong simple distinctive silhouette; no smooth vector gradients or painterly blur.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "path": "art\\evidence\\tech\\source\\tech-coral.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-06a8452b-3145-4f24-876e-5675618fead0.png",
+      "source_sha256": "f276732a6569e773b58f260afd4f205812e5d9d46acd22ed694d26b59359c219",
+      "output": "img\\tech\\coral.png",
+      "output_sha256": "ee079c5038c43dd9e57873089ad5dc5531da20b6d2cc32a51236b7749de21a2a",
+      "size": [
+        128,
+        128
+      ],
+      "bbox": [
+        13,
+        12,
+        115,
+        116
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "batch": "tech",
+      "cat": "tech",
+      "id": "current",
+      "prompt": "Create ONE original game inventory icon for Sharkside. Attached images are ONLY approved fine pixel-art style references: rich material color, discrete pixel shade clusters, crisp stair-step edges, restrained deep navy outline, dimensional depth and upper-left light. Subject: One curling cyan ocean current forming a broad C-shaped spiral, carrying a tiny golden sailboat toward its open upper-right end. Thick readable wave trail, violet undershading, sense of a starting route rather than a closed whirlpool. Centered compact three-quarter composition, generous transparent margin all sides; intended native128x128 with object104px. TRUE transparent background, no ground, no external cast shadow, no border or frame, no text, letters, numbers or watermark. Strong simple distinctive silhouette; no smooth vector gradients or painterly blur.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "path": "art\\evidence\\tech\\source\\tech-current.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-f5b74591-fa82-4fec-8b4d-85e1323c7df6.png",
+      "source_sha256": "827cc02da4e5c9f3e60cf8b7c2438c12d7568dc278ce443333e903b76bd44c5b",
+      "output": "img\\tech\\current.png",
+      "output_sha256": "c3e9a9b8b5148b7cf2d71166a8475d3c28aed9ba8dfedaed95ec1bda1acd2994",
+      "size": [
+        128,
+        128
+      ],
+      "bbox": [
+        12,
+        13,
+        116,
+        114
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "batch": "tech",
+      "cat": "tech",
+      "id": "dream",
+      "prompt": "Create ONE original game inventory icon for Sharkside. Attached images are ONLY approved fine pixel-art style references: rich material color, discrete pixel shade clusters, crisp stair-step edges, restrained deep navy outline, dimensional depth and upper-left light. Subject: One deep violet crescent moon cradling a tiny cream-sailed golden boat above a single soft turquoise wave. Serene offline sailing, compact moon silhouette, two small gold star diamonds. No letters or sleep symbols. Centered compact three-quarter composition, generous transparent margin all sides; intended native128x128 with object104px. TRUE transparent background, no ground, no external cast shadow, no border or frame, no text, letters, numbers or watermark. Strong simple distinctive silhouette; no smooth vector gradients or painterly blur.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "path": "art\\evidence\\tech\\source\\tech-dream.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-9f2976ec-c5aa-44df-9652-187ecb1b19fa.png",
+      "source_sha256": "d35207356ea27fd2c49363fd78d21d9a90c2636de896ac15c88be81c80c6ccec",
+      "output": "img\\tech\\dream.png",
+      "output_sha256": "4587551e4cf47ca451cfda91013b3f8e201e524e9c9fcb0ae8c409d9db36e75b",
+      "size": [
+        128,
+        128
+      ],
+      "bbox": [
+        13,
+        12,
+        115,
+        116
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "batch": "tech",
+      "cat": "tech",
+      "id": "chest",
+      "prompt": "Create ONE original game inventory icon for Sharkside. Attached images are ONLY approved fine pixel-art style references: rich material color, discrete pixel shade clusters, crisp stair-step edges, restrained deep navy outline, dimensional depth and upper-left light. Subject: One ancient dark teal shipwreck treasure chest with golden bands, lid slightly open revealing a violet crystal and three gold coins. Broad stout chest silhouette, deep-sea patina, no seabed scene. Centered compact three-quarter composition, generous transparent margin all sides; intended native128x128 with object104px. TRUE transparent background, no ground, no external cast shadow, no border or frame, no text, letters, numbers or watermark. Strong simple distinctive silhouette; no smooth vector gradients or painterly blur.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "path": "art\\evidence\\tech\\source\\tech-chest.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-6d71b5fd-88fb-48da-ad83-3b94787fc0a0.png",
+      "source_sha256": "e4a1da5ee2308dd25e30e90898f65b26e363189730fd8a7d40d9c5d709ac317e",
+      "output": "img\\tech\\chest.png",
+      "output_sha256": "8a26eb83e4c849cfa7b72128673fe0711d28ba523041f4ff3d99c480e2d5c8ea",
+      "size": [
+        128,
+        128
+      ],
+      "bbox": [
+        12,
+        12,
+        115,
+        116
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "batch": "tech",
+      "cat": "tech",
+      "id": "yard",
+      "prompt": "Create ONE original game inventory icon for Sharkside. Attached images are ONLY approved fine pixel-art style references: rich material color, discrete pixel shade clusters, crisp stair-step edges, restrained deep navy outline, dimensional depth and upper-left light. Subject: One heavy old blue-gray iron anchor, thick gold collar and an oak shipyard crossbeam behind it. Compact anchor silhouette, small purple crystal embedded in top ring. No scenery. Centered compact three-quarter composition, generous transparent margin all sides; intended native128x128 with object104px. TRUE transparent background, no ground, no external cast shadow, no border or frame, no text, letters, numbers or watermark. Strong simple distinctive silhouette; no smooth vector gradients or painterly blur.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "path": "art\\evidence\\tech\\source\\tech-yard.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-702b6ae4-cdfe-48cb-8289-081111ea0533.png",
+      "source_sha256": "86110f09ff294fa8ea4e277ed08a95023d613a69897d252dec7490700812b33c",
+      "output": "img\\tech\\yard.png",
+      "output_sha256": "e3795019350dec53ee5d86f8a4e0cb347e2082bd5e93da73deaebc1208abecb2",
+      "size": [
+        128,
+        128
+      ],
+      "bbox": [
+        13,
+        12,
+        115,
+        116
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "batch": "tech",
+      "cat": "tech",
+      "id": "tide",
+      "prompt": "Create ONE original game inventory icon for Sharkside. Attached images are ONLY approved fine pixel-art style references: rich material color, discrete pixel shade clusters, crisp stair-step edges, restrained deep navy outline, dimensional depth and upper-left light. Subject: One thick turquoise wave curling into a RIGHT-pointing arrow, violet shadow bands and three white pixel highlights. A single continuous wave-arrow silhouette expressing accelerated ocean current, no text or numerals. Centered compact three-quarter composition, generous transparent margin all sides; intended native128x128 with object104px. TRUE transparent background, no ground, no external cast shadow, no border or frame, no text, letters, numbers or watermark. Strong simple distinctive silhouette; no smooth vector gradients or painterly blur.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "path": "art\\evidence\\tech\\source\\tech-tide.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-81e31678-a438-4e89-b659-ebb597fd78c9.png",
+      "source_sha256": "e0e0cb28408f1949a217be23912e5daec19699f18a2e401e111fbdd7d7ef2bee",
+      "output": "img\\tech\\tide.png",
+      "output_sha256": "47f343a09b023b19fac4feb1caba82edff837be3e914fda8ee7fe3671a4b4638",
+      "size": [
+        128,
+        128
+      ],
+      "bbox": [
+        12,
+        20,
+        116,
+        107
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "batch": "tech",
+      "cat": "tech",
+      "id": "instinct",
+      "prompt": "Create ONE original Sharkside game icon for shark instinct: unmistakable compact BLUE-GRAY SHARK HEAD in side profile, rounded conical blunt snout pointing right, one round small amber shark eye, three simple gill slits, tiny ivory teeth visible in a slightly open mouth. Smooth shark skin in discrete pixel clusters, NO scales, NO horns, NO spikes, NO eyelid crest, NO reptile or dragon anatomy. A thin violet crescent behind the shark head suggests deep-sea intuition. Use attached approved icons ONLY as fine pixel-art shading and material references, never copy their objects. Crisp 16/32-bit pixel art, strong simple silhouette readable32px, dark navy outline, upper-left light, rich blue-gray, turquoise and violet. Centered compact composition, generous empty margins, intended128x128 object104px. TRUE transparent background, no ground or external shadow, no frame, no letters, digits or text.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "path": "art\\evidence\\tech\\source\\tech-instinct.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-cb119000-f414-4cb4-87e9-fc8c3c537a2e.png",
+      "source_sha256": "eebc44b9b3b1d42e3921ba5fb579d75d6687d4dcb8378f45b80b0ebac2468f8c",
+      "output": "img\\tech\\instinct.png",
+      "output_sha256": "e27b871b6c0122475ad336622dcf6e4a24d1f8597424922b5417fc45012f97f6",
+      "size": [
+        128,
+        128
+      ],
+      "bbox": [
+        12,
+        17,
+        116,
+        111
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    },
+    {
+      "batch": "tech",
+      "cat": "tech",
+      "id": "mate",
+      "prompt": "Create ONE original game inventory icon for Sharkside. Attached images are ONLY approved fine pixel-art style references: rich material color, discrete pixel shade clusters, crisp stair-step edges, restrained deep navy outline, dimensional depth and upper-left light. Subject: One sturdy brass nautical compass with a large coral-red needle, turquoise glass face and violet outer ring, a small oak ship wheel arc behind. Clear compass silhouette, no letters, no compass direction text or numerals. Centered compact three-quarter composition, generous transparent margin all sides; intended native128x128 with object104px. TRUE transparent background, no ground, no external cast shadow, no border or frame, no text, letters, numbers or watermark. Strong simple distinctive silhouette; no smooth vector gradients or painterly blur.",
+      "refs": [
+        "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+        "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+        "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png"
+      ],
+      "path": "art\\evidence\\tech\\source\\tech-mate.png",
+      "generated_path": "C:\\Users\\Tim\\.codex\\generated_images\\01a18b44-60d1-7472-bcd4-47e91addbbb7\\exec-c50bf459-d276-4d49-9658-d20a24440cf5.png",
+      "source_sha256": "23cb659ee5bf12bbf5243016e25d2b476e7dcdc6da5c97cae7486d827ebf3c5e",
+      "output": "img\\tech\\mate.png",
+      "output_sha256": "e3e5b197745d1aeb7de388d8ce6781497fc14299675c7324d087b94b4f4759f0",
+      "size": [
+        128,
+        128
+      ],
+      "bbox": [
+        12,
+        15,
+        116,
+        112
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "references": [
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/gun.png",
+          "sha256": "dfc0192634f68cfd3d0d8894723e19d7ef9d8129293157551d432a70b762933f"
+        },
+        {
+          "path": "D:/GameDev/Sharkside/art/evidence/style/source/hull.png",
+          "sha256": "f273b5edec3d6ce0e3f1bdb5786799544a13c6f801767bb527f70129f6c54c67"
+        },
+        {
+          "path": "D:/Unity/Valhalla/ArtGallery/RawImages/sirius_blocksail_goods_batch3_tools_master.png",
+          "sha256": "40ffb6b5d7f6b1d30e2d86dc2c2b8d016eac976813301ec085238636f279802d"
+        }
+      ]
+    }
+  ],
+  "pending": [
+    "gura integration desktop/375px",
+    "missing-image fallback after integration"
+  ]
+}
