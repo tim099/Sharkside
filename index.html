@@ -491,7 +491,7 @@
   #err button:disabled{ opacity:.5; cursor:default; }
   #err label.chk{ display:inline-flex; align-items:center; gap:6px; margin:8px 0 0; font-size:13px; }
 </style>
-<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "6314e69fc8591331", "shell": "6cd5be7fb3e9"}};</script></head>
+<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "6314e69fc8591331", "shell": "791a4c528c53"}};</script></head>
 <body>
 <!-- 擬真沙盒（84_fleetlab.js；?lab=fleet，根目錄 fleetlab.html 轉過來）：body.flab 才顯示；看實景（body.flab3d）時俯視圖藏起來、底下的遊戲畫布露出來 -->
 <div id="flab">
@@ -46635,7 +46635,8 @@ html.bsi-on #stage > :not(#cv) { display: none !important; }
 #bsi .pk-card b { font-size: 15.5px; }
 #bsi .pk-card small { font-size: 12px; color: #cfe2f2; line-height: 1.45; }
 #bsi .pk-card .key { position: absolute; top: 6px; right: 9px; font-size: 11px; color: var(--dim); }
-#bsi button.pk-card.framed { border-style: solid; border-image-source: var(--pkf); border-image-repeat: stretch; border-radius: 0; background-clip: padding-box; padding: 10px 10px 12px; min-height: 270px; }
+#bsi button.pk-card.framed { border-style: solid; border-image-source: var(--pkf); border-image-repeat: stretch; border-radius: 0; background-clip: padding-box; padding: 10px 10px 12px; min-height: 270px;
+  box-shadow: none; filter: drop-shadow(0 0 7px var(--rc)); }   /* 光暈跟著框的形狀（⛔ box-shadow ⇒ 框外透明的邊外面一圈方的；審查找到的） */
 #bsi .pk-card.framed.common { border-width: 27px 26px 28px 25px; border-image-slice: 32 30 33 29; }   /* 切的位置 ＝ 框的透明洞（img/perk/frame-*.png 量的：普通 x 29～226 y 32～319、稀有 33～222 43～309、史詩 35～220 63～309） */
 #bsi .pk-card.framed.rare { border-width: 36px 29px 36px 28px; border-image-slice: 43 34 43 33; }
 #bsi .pk-card.framed.epic { border-width: 52px 31px 36px 30px; border-image-slice: 63 36 43 35; }
