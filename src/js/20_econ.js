@@ -210,7 +210,7 @@
 
   // ── 升級 ──
   /** 第 L 級的價錢：c0 × g^L × e^(upgRamp × L(L−1)/2) ⇒ 每一級的漲幅 g × e^(upgRamp × L)，越後面漲得越兇（BAL.upgRamp）。 */
-  I.upgCost = function (u, L) { if (L === undefined) L = I.lv(u.id); return Math.ceil(u.c0 * Math.pow(u.g, L) * Math.exp(B.upgRamp * L * (L - 1) / 2)); };
+  I.upgCost = function (u, L) { if (L === undefined) L = I.lv(u.id); return Math.ceil(u.c0 * Math.pow(u.g, L) * Math.exp((u.ramp || B.upgRamp) * L * (L - 1) / 2)); };   // u.ramp：那一項自己的後段加價（沒寫 ⇒ BAL.upgRamp）
   I.upgMaxed = function (u) { return u.max > 0 && I.lv(u.id) >= u.max; };
   /** 買 n 級（Infinity ＝ 買得起的全部）；回買了幾級。 */
   I.buyUpg = function (id, n) {

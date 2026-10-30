@@ -491,7 +491,7 @@
   #err button:disabled{ opacity:.5; cursor:default; }
   #err label.chk{ display:inline-flex; align-items:center; gap:6px; margin:8px 0 0; font-size:13px; }
 </style>
-<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "ad1378963bc9563f", "shell": "278c9bd2a7d1"}};</script></head>
+<script id="bs-shell">window.BS_SHELL={"name": "方舷放置 Sharkside", "opt": {"api": true, "q": {"blue": "flyingfish", "mode": "eve", "prefs": "0", "red": "swallow"}}, "ships": "", "stamp": {"core": "ad1378963bc9563f", "shell": "02d998d1775b"}};</script></head>
 <body>
 <!-- 擬真沙盒（84_fleetlab.js；?lab=fleet，根目錄 fleetlab.html 轉過來）：body.flab 才顯示；看實景（body.flab3d）時俯視圖藏起來、底下的遊戲畫布露出來 -->
 <div id="flab">
@@ -46766,7 +46766,7 @@ html.bsi-frz #bsi::before { content: ''; position: absolute; inset: 0; z-index: 
   I.emit = function (t, a, b, c) { (SUB[t] || []).forEach(function (f) { try { f(a, b, c); } catch (e) { console.error(e); } }); };
 })(window.BSI = window.BSI || {});
 </script><script data-shell="js/05_img.js">// 自動產生（build.py img_js）⛔ 不要手改：img/ 底下有哪些圖（ART.md）⇒ 00_base.js I.img 照它決定用圖還是 emoji；值 ＝ 內容雜湊前 8 碼（網址的 ?v=）
-window.BSI = window.BSI || {}; window.BSI.IMG = {"app/apple-touch-icon":"af27c14b","app/favicon-32":"d08fb1f9","app/icon-192":"6240b76f","app/icon-512":"a85b00f7","app/icon-maskable-512":"db16db2c","app/logo":"dc2a7ff9","ui/blocks":"a85207f5","ui/cam":"4b42998c","ui/mul":"30b86b7c","ui/mute":"e3fdae93","ui/sail":"1d5a3350","ui/settings":"4e0b21b2","ui/shards":"9da72096","ui/sound":"d5ee5b1f","ui/speed":"7a76e8d5","upg/bounty":"f2ac08aa","upg/fear":"1e8539a8","upg/gun":"5c5736ed","upg/hull":"dc84329f","upg/powder":"4841bf7d","upg/pump":"ca72b178","upg/reload":"ea1dfc85","upg/sail":"744b9555","upg/teeth":"47e88a93","upg/value":"eb74b2ab"};
+window.BSI = window.BSI || {}; window.BSI.IMG = {"abil/frenzy":"59f7f33c","abil/mega":"a850499c","abil/repair":"6d4387fd","abil/volley":"4e41924a","app/apple-touch-icon":"af27c14b","app/favicon-32":"d08fb1f9","app/icon-192":"6240b76f","app/icon-512":"a85b00f7","app/icon-maskable-512":"db16db2c","app/logo":"dc2a7ff9","tech/chest":"10ca3591","tech/coral":"b80576d7","tech/current":"84a30f0a","tech/dream":"360e7ea2","tech/instinct":"18224921","tech/mate":"ea7743c3","tech/tide":"c6134a47","tech/trident":"b4d78e7d","tech/yard":"a109fed4","ui/blocks":"a85207f5","ui/cam":"4b42998c","ui/mul":"30b86b7c","ui/mute":"e3fdae93","ui/sail":"1d5a3350","ui/settings":"4e0b21b2","ui/shards":"9da72096","ui/sound":"d5ee5b1f","ui/speed":"7a76e8d5","upg/bounty":"f2ac08aa","upg/fear":"1e8539a8","upg/gun":"5c5736ed","upg/hull":"dc84329f","upg/powder":"4841bf7d","upg/pump":"ca72b178","upg/reload":"ea1dfc85","upg/sail":"744b9555","upg/teeth":"47e88a93","upg/value":"eb74b2ab","wpn/cannon":"992a6fec","wpn/fire":"8adbd989"};
 </script><script data-shell="js/10_data.js">// ───────────────────────── 方舷放置：數值與內容表 ─────────────────────────
 // 調手感只改這一支：BAL 是所有公式的常數；海域、船、升級、深海科技、技能、成就都是表。
 (function (I) {
@@ -46862,8 +46862,10 @@ window.BSI = window.BSI || {}; window.BSI.IMG = {"app/apple-touch-icon":"af27c14
   /** 升級（花格）。tab：atk 攻擊／def 防禦／eco 經濟；eff：每一級的倍率；max 0 ＝ 沒上限。 */
   I.UPG = [
     // 鯊魚利齒（Tim 2026-10-30：「鯊魚利齒應該放到攻擊分類 且放在最上面」「成長價格可以更高一點(現在太容易升滿了) 然後可以加更高的升級等級(後面等級可以加速蓄力)」）：
-    //   每一級漲 1.45 ⇒ 1.75、上限 15 ⇒ 30；前 BAL.teethGrow 級咬得更大、獎勵 ×eff，再上去只加快蓄力（20_econ.js biteChargeT）
-    { id: 'teeth', tab: 'atk', ico: '🦷', name: '鯊魚利齒', c0: 200, g: 1.75, max: 30, eff: 1.25, desc: '點敵艦哪裡就咬哪裡：咬得更大、咬下來的格 ×1.25；第 16 級起改成蓄力更快' },
+    //   上限 15 ⇒ 30；前 BAL.teethGrow 級咬得更大、獎勵 ×eff，再上去只加快蓄力（20_econ.js biteChargeT）
+    //   價錢（Tim 同一天又說：「價格成長曲線可以再更陡一些(總體漲價 且最後幾階段要很貴)」）：起價 200 ⇒ 500、每級 1.45 ⇒ 1.75 ⇒ 1.85，再加自己的後段加價 ramp 0.02（其他升級照 BAL.upgRamp 0.006）
+    //   ⇒ 10 級 58 萬、15 級 4,200 萬、20 級 49 億、25 級 9,600 億、最後一級 94 兆（第一版 1.75／0.006：7.1 萬、170 萬、4,500 萬、14 億、260 億）
+    { id: 'teeth', tab: 'atk', ico: '🦷', name: '鯊魚利齒', c0: 500, g: 1.85, ramp: 0.02, max: 30, eff: 1.25, desc: '點敵艦哪裡就咬哪裡：咬得更大、咬下來的格 ×1.25；第 16 級起改成蓄力更快' },
     { id: 'gun', tab: 'atk', ico: '🎯', name: '砲術訓練', c0: 250, g: 1.25, max: 0, eff: 1.1, desc: '火力 ×1.1：砲彈更兇、洞更大、敵艦的船殼更脆' },
     { id: 'reload', tab: 'atk', ico: '⏱️', name: '裝填演練', c0: 600, g: 1.45, max: 24, eff: 0.95, desc: '裝填時間 ×0.95' },
     { id: 'powder', tab: 'atk', ico: '💥', name: '火藥專家', c0: 5000, g: 1.6, max: 15, eff: 0.88, desc: '敵艦的火藥桶更不耐打（更容易殉爆）、殉爆賞金 +20%' },
@@ -47252,7 +47254,7 @@ window.BSI = window.BSI || {}; window.BSI.IMG = {"app/apple-touch-icon":"af27c14
 
   // ── 升級 ──
   /** 第 L 級的價錢：c0 × g^L × e^(upgRamp × L(L−1)/2) ⇒ 每一級的漲幅 g × e^(upgRamp × L)，越後面漲得越兇（BAL.upgRamp）。 */
-  I.upgCost = function (u, L) { if (L === undefined) L = I.lv(u.id); return Math.ceil(u.c0 * Math.pow(u.g, L) * Math.exp(B.upgRamp * L * (L - 1) / 2)); };
+  I.upgCost = function (u, L) { if (L === undefined) L = I.lv(u.id); return Math.ceil(u.c0 * Math.pow(u.g, L) * Math.exp((u.ramp || B.upgRamp) * L * (L - 1) / 2)); };   // u.ramp：那一項自己的後段加價（沒寫 ⇒ BAL.upgRamp）
   I.upgMaxed = function (u) { return u.max > 0 && I.lv(u.id) >= u.max; };
   /** 買 n 級（Infinity ＝ 買得起的全部）；回買了幾級。 */
   I.buyUpg = function (id, n) {
