@@ -1,0 +1,150 @@
+{
+ "battery_carib": {
+  "src": "870cccc4",
+  "v": 1
+ },
+ "battery_carib_s": {
+  "src": "e3089ac2",
+  "v": 1
+ },
+ "battery_en": {
+  "src": "767999e8",
+  "v": 1
+ },
+ "concepcion": {
+  "src": "238549a4",
+  "v": 1
+ },
+ "constitution": {
+  "src": "d758e955",
+  "v": 1
+ },
+ "cosecha": {
+  "src": "aae55c17",
+  "v": 1
+ },
+ "dingyuan": {
+  "src": "bead6219",
+  "v": 1
+ },
+ "dromon": {
+  "src": "164158da",
+  "v": 1
+ },
+ "ember": {
+  "src": "15938cce",
+  "v": 1
+ },
+ "falcon": {
+  "src": "16076dcd",
+  "v": 1
+ },
+ "flyingfish": {
+  "src": "06129a0d",
+  "v": 1
+ },
+ "fort_carib": {
+  "src": "a6441238",
+  "v": 1
+ },
+ "fort_en": {
+  "src": "186a9249",
+  "v": 1
+ },
+ "fort_es": {
+  "src": "27c809cf",
+  "v": 1
+ },
+ "fort_roche": {
+  "src": "8d2def3d",
+  "v": 1
+ },
+ "fusta": {
+  "src": "e38f383e",
+  "v": 1
+ },
+ "gloire": {
+  "src": "45f49930",
+  "v": 1
+ },
+ "labelle": {
+  "src": "e8722dfd",
+  "v": 1
+ },
+ "matsushima": {
+  "src": "d0dfb12a",
+  "v": 1
+ },
+ "monitor": {
+  "src": "b6854e34",
+  "v": 1
+ },
+ "napoleon": {
+  "src": "ee52d8f4",
+  "v": 1
+ },
+ "nightlamp": {
+  "src": "49aa5754",
+  "v": 1
+ },
+ "oxford": {
+  "src": "6ff90b28",
+  "v": 1
+ },
+ "phoenix": {
+  "src": "1d076f80",
+  "v": 1
+ },
+ "pinas": {
+  "src": "041fc771",
+  "v": 1
+ },
+ "punt": {
+  "src": "061274cb",
+  "v": 1
+ },
+ "reale": {
+  "src": "5a89f74b",
+  "v": 1
+ },
+ "sanroman": {
+  "src": "44b87aaf",
+  "v": 1
+ },
+ "sentinel": {
+  "src": "bc78903c",
+  "v": 1
+ },
+ "stormkaap": {
+  "src": "0309016c",
+  "v": 1
+ },
+ "susquehanna": {
+  "src": "089ab298",
+  "v": 1
+ },
+ "swallow": {
+  "src": "e0423598",
+  "v": 1
+ },
+ "tidegrave": {
+  "src": "9c8f9a49",
+  "v": 1
+ },
+ "tradewind": {
+  "src": "96c18857",
+  "v": 1
+ },
+ "tridente": {
+  "src": "282ffc0b",
+  "v": 1
+ },
+ "virginia": {
+  "src": "983fa5a6",
+  "v": 1
+ },
+ "zeehaen": {
+  "src": "cf6532b0",
+  "v": 1
+ }
+}

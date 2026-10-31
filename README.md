@@ -58,6 +58,7 @@
 | `src/js/45_quest.js` | 賞金任務 |
 | `src/js/50_ui.js` | 介面：資源列、海域卡、面板、技能列、強化三選一、彈窗 |
 | `src/js/55_hullrep.js` | 船體報告（⚙️ 設定 → 🧪 除錯紀錄 →「船體報告」，或主控台 `BSI.hullReport()`）：每艘船的格子跟船型原本的比 —— 側視、俯視、龍骨帶、橫剖面（少最多的那一截、斷口、船長 ¼ ½ ¾），存成一個 HTML |
+| `src/js/56_thumbs.js` | 船型縮圖的拍攝頁：網址帶 `?thumbs=<id,…｜all>` ⇒ 不開遊戲，照核心的 `thumb` 一艘一艘畫、整包寫進頁面（`build.py --thumbs` 用無頭 Chrome 讀回來） |
 | `src/js/90_main.js` | 開機、標題、主迴圈、鍵盤、離線、換海圖重新載入 |
 
 核心這一側（Blockside）只多了外殼 API（`src/js/91_shellapi.js`，說明在它的 `src/CORE_API.md` §7）、預設網址參數、點畫面的掛鉤；Blockside 自己的頁面跟沒加之前逐位元組相同（兩組無頭對拍）。
@@ -67,7 +68,10 @@
 ```bash
 python -I build.py --core <Blockside 的工作副本>           # 套頁 ⇒ index.html；船檔、海圖、圖示照抄
 python -I build.py --core <Blockside 的工作副本> --check   # 只比：跟那一份核心、src/ 對不上 ⇒ exit 1
+python -I build.py --core <Blockside 的工作副本> --thumbs  # 建＋重拍舊了、缺的船型縮圖（--thumbs all 全部重拍）
 ```
+
+- 船型縮圖（`img/ship/<id>.png`，艦隊、船塢那一列）從核心拍：核心換了船型、改了畫法（`THUMB_V`）、多了一型 ⇒ 建置寫 ⚠、`--check` 不過 ⇒ 帶 `--thumbs` 重拍（無頭 Chrome，37 艘約 3 分鐘），照樣先提交 `img/ship/`、`img/ship.json` 再建一次才會換上。
 
 - 核心要有外殼 API（`src/js/91_shellapi.js`）；那一份要先建好（Blockside 的 `python -I src/admin.py build`）。
 - 改了 `src/` 就重建；核心換了也重建（船檔清單、雜湊跟著換）。

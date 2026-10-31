@@ -12,6 +12,11 @@
 · 大張的 png（≥ WEBP_MIN：場景插圖、立繪、字標）另外轉一份 WebP（img/<類>/<id>.webp，q WEBP_Q；Tim 2026-10-30「套用前可以先看一下實際容量」：
   遊戲用的 150 張 22.8 MB，最大的 20 張轉完 19.6 ⇒ 3.5 MB）⇒ 05_img.js 多一份 BSI.IMGW（有 WebP 的那幾張），遊戲先拿 WebP、讀不到回 png、再回 emoji。
   img/webp.json 記每一份是照哪一版 png 轉的 ⇒ png 沒換就不重轉（編碼器換版本不一定逐位元組相同）；需要 Pillow，沒有 ⇒ 那幾張先用 png。⛔ 不要手改 .webp。
+· 船型縮圖 img/ship/<id>.png（TASK-1130；船塢、艦隊那一列）不用畫：從核心拍（外殼 API thumb，Blockside 05_hull.js thumbImg：同一個角度、光線、透明底）。
+  img/ship.json 記每一張是照哪一份船檔（ships/ship-<id>.js 的雜湊）、哪一版畫法（核心的 THUMB_V）拍的 ⇒ 核心換了船型、改了畫法、多了一型 ⇒ 建置寫 ⚠、--check 不過；
+  --thumbs 用無頭 Chrome 開建好的 index.html?thumbs=<id,…>（src/js/56_thumbs.js）把舊了、缺的那幾張重拍（--thumbs all ⇒ 全部重拍）。拍完照樣先提交、再建一次才會換上。
+
+  python -I build.py --core <Blockside 的工作副本> --thumbs [all]   建＋重拍舊了的縮圖
 """
 import argparse
 import filecmp
@@ -30,6 +35,11 @@ IMG_JS = os.path.join(SRC, 'js', '05_img.js')
 WEBP_JSON = os.path.join(HERE, 'img', 'webp.json')
 WEBP_MIN, WEBP_Q = 150 * 1024, 90                                    # 這麼大（位元組）以上的 png 轉一份 WebP；品質（放大兩倍跟 png 看不出差，2026-10-30 比過臉、字標、橫幅、標題）
 WEBP_PNG_ONLY = re.compile(r'^app/(icon-|apple-touch-icon|favicon-)')   # App 圖示：主畫面、manifest 照用 png
+SHIP_IMG = os.path.join(HERE, 'img', 'ship')
+SHIP_JSON = os.path.join(HERE, 'img', 'ship.json')
+THUMB_BATCH = 6                                                      # 一次無頭 Chrome 拍幾艘（每艘都要整個解碼、載好；一次全拍吃記憶體）
+CHROMES = [r'C:\Program Files\Google\Chrome\Application\chrome.exe', r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
+           os.path.expandvars(r'%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe'), r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe']
 
 
 def img_files():
@@ -152,6 +162,74 @@ def want(core):
     return W
 
 
+def thumb_want(core):
+    """縮圖該照什麼拍：(畫法版本, { 船型 id: 船檔的雜湊前 8 碼 })；核心沒有 thumbImg ⇒ 版本 None。
+    船型 id ⇒ 船檔照核心的 src/config/game.json（ships[].el ⇒ ships/<el>.js；憲法號是 ship.js、fort_carib 是 ship-fort-carib.js）；船檔不在（沒建）⇒ 不列，跟核心的 HULL_LIST 一樣。"""
+    m = re.search(r'\bvar THUMB_V = (\d+)', open(os.path.join(core, 'src', 'js', '05_hull.js'), encoding='utf-8').read())
+    S = {}
+    for s in json.load(open(os.path.join(core, 'src', 'config', 'game.json'), encoding='utf-8')).get('ships', []):
+        p = os.path.join(core, 'ships', s.get('el', '') + '.js')
+        if os.path.isfile(p):
+            S[s['id']] = sha8(p)
+    return (int(m.group(1)) if m else None), S
+
+
+def thumb_stale(v, S):
+    """舊了、缺的縮圖：{ id: 原因 }，多的（核心沒有那一型）：[檔名]。"""
+    try:
+        side = json.load(open(SHIP_JSON, encoding='utf-8')) if os.path.isfile(SHIP_JSON) else {}
+    except ValueError:
+        side = {}
+    bad = {}
+    for k, h in S.items():
+        e = side.get(k) or {}
+        if not os.path.isfile(os.path.join(SHIP_IMG, k + '.png')):
+            bad[k] = '沒有縮圖'
+        elif e.get('src') != h:
+            bad[k] = '船檔換了'
+        elif e.get('v') != v:
+            bad[k] = '畫法換了'
+    extra = sorted(f for f in (os.listdir(SHIP_IMG) if os.path.isdir(SHIP_IMG) else []) if f.endswith('.png') and f[:-4] not in S)
+    return bad, extra
+
+
+def thumb_shoot(ids, v, S):
+    """無頭 Chrome 開建好的 index.html?thumbs=<id,…>（src/js/56_thumbs.js）一批一批拍、存 img/ship/<id>.png、改 img/ship.json；回拍不到的 { id: 原因 }。"""
+    import base64, html as _html, tempfile
+    chrome = next((c for c in CHROMES if os.path.exists(c)), None)
+    if not chrome:
+        return {k: '找不到 Chrome' for k in ids}
+    side = json.load(open(SHIP_JSON, encoding='utf-8')) if os.path.isfile(SHIP_JSON) else {}
+    os.makedirs(SHIP_IMG, exist_ok=True)
+    fail = {}
+    for i in range(0, len(ids), THUMB_BATCH):
+        B = ids[i:i + THUMB_BATCH]
+        prof = tempfile.mkdtemp(prefix='sharkthumb_')
+        try:
+            url = 'file:///' + os.path.join(HERE, 'index.html').replace('\\', '/') + '?thumbs=' + ','.join(B)
+            r = subprocess.run([chrome, '--headless=new', '--no-first-run', '--user-data-dir=' + prof, '--use-angle=swiftshader', '--enable-unsafe-swiftshader',
+                                '--virtual-time-budget=600000', '--dump-dom', url], capture_output=True, timeout=1200)
+            ms = re.findall(r'<pre id="bsi-thumbs">({.*?)</pre>', r.stdout.decode('utf-8', 'replace'), re.S)
+            D = json.loads(_html.unescape(ms[-1])) if ms else {'err': '無頭 Chrome 沒跑完'}   # 最後一個 ＝ 頁面寫出來的那個（第一個可能是內嵌程式裡的字串）
+        except Exception as e:
+            D = {'err': str(e)}
+        finally:
+            shutil.rmtree(prof, ignore_errors=True)
+        if D.get('v') != v and not D.get('err'):
+            D = {'err': '頁面的畫法版本 %s ≠ 核心原始碼的 %s（index.html 不是照這份核心建的）' % (D.get('v'), v)}
+        for k in B:
+            u = (D.get('ships') or {}).get(k)
+            if not isinstance(u, str) or not u.startswith('data:image/png;base64,'):
+                fail[k] = (u or {}).get('err') if isinstance(u, dict) else D.get('err', '沒拍到')
+                continue
+            open(os.path.join(SHIP_IMG, k + '.png'), 'wb').write(base64.b64decode(u.split(',', 1)[1]))
+            side[k] = {'src': S[k], 'v': v}
+            print('  📷 %s' % k)
+    side = {k: e for k, e in side.items() if k in S}
+    open(SHIP_JSON, 'w', encoding='utf-8', newline='\n').write(json.dumps(side, ensure_ascii=False, sort_keys=True, indent=1) + '\n')
+    return fail
+
+
 def sync(W, check):
     """照 W 補、蓋、刪；回 (改了的, 多的)。check ⇒ 只回、不動。"""
     have = set()
@@ -183,6 +261,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--core', required=True, help='Blockside 的工作副本（有建好的 index.html、ships/、maps/ 與 src/admin.py）')
     ap.add_argument('--check', action='store_true', help='只比、不寫')
+    ap.add_argument('--thumbs', nargs='?', const='stale', choices=['stale', 'all'], help='建完重拍船型縮圖：舊了、缺的（預設）或 all 全部')
     o = ap.parse_args()
     core = os.path.abspath(o.core)
     admin = os.path.join(core, 'src', 'admin.py')
@@ -229,6 +308,32 @@ def main():
             print('✓ ships/、maps/（%s）跟核心一樣（%d 個檔）' % ('、'.join(nm), len(W)))
     else:
         print('✓ ships/、maps/（%s）：%d 個檔，這次換了 %d 個、刪了 %d 個' % ('、'.join(nm), len(W), len(diff), len(extra)))
+    # ③ 船型縮圖（img/ship/<id>.png）：照核心的船檔與畫法版本比 img/ship.json
+    tv, TS = thumb_want(core)
+    if tv is None:
+        print('⚠ 核心沒有船型縮圖的畫法（05_hull.js THUMB_V）⇒ 縮圖不比')
+    else:
+        tbad, textra = thumb_stale(tv, TS)
+        if o.thumbs and not o.check:
+            ids = sorted(TS) if o.thumbs == 'all' else sorted(tbad)
+            print('📷 拍船型縮圖 %d 艘（畫法 v%d）…' % (len(ids), tv))
+            fail = thumb_shoot(ids, tv, TS) if ids else {}
+            for k in textra:
+                os.remove(os.path.join(SHIP_IMG, k))
+            for k, why in sorted(fail.items()):
+                print('✗ 縮圖 %s 沒拍到：%s' % (k, why))
+            bad |= bool(fail)
+            tbad, textra = thumb_stale(tv, TS)
+            if ids and not fail:
+                print('✓ 拍好了 ⇒ 先提交 img/ship/、img/ship.json，再建一次（05_img.js 只列 git 追蹤的圖）')
+        msg = ['%s（%s）' % (k, w) for k, w in sorted(tbad.items())] + [x + '（多的）' for x in textra]
+        if not msg:
+            print('✓ 船型縮圖 %d 張跟核心的船檔、畫法 v%d 一樣' % (len(TS), tv))
+        elif o.check:
+            bad = True
+            print('✗ 船型縮圖舊了：%s ⇒ python -I build.py --core … --thumbs' % '、'.join(msg[:8]) + ('…' if len(msg) > 8 else ''))
+        else:
+            print('⚠ 船型縮圖舊了：%s ⇒ 帶 --thumbs 重拍' % '、'.join(msg[:8]) + ('…' if len(msg) > 8 else ''))
     if not os.path.isfile(os.path.join(HERE, '.nojekyll')):
         print('⚠ 少了 .nojekyll（GitHub Pages 會先跑 Jekyll）')
     sys.exit(1 if bad else 0)

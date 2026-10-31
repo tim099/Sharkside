@@ -243,10 +243,12 @@
     var c = I.cardOf(id) || {};
     return '<b>' + I.esc(I.nameOf(id)) + '</b><span class="by">' + I.esc(I.AUTHORS[id] || '') + '</span><span class="spec">' + I.fmt(c.tons || 0) + ' 噸 · ' + (c.guns || 0) + ' 門砲 · ' + (c.crew || 0) + ' 人</span>';
   }
+  /** 船型縮圖（img/ship/<id>.png，build.py --thumbs 從核心拍的；TASK-1130）：沒有那張 ⇒ 空框（idle.css .pic:empty 不佔位）、讀不到 ⇒ img 換回空字串 ⇒ 一樣是空框。 */
+  function shipPic(id) { return '<span class="pic">' + I.img('ship/' + id, '') + '</span>'; }
   function pFleet(B) {
     var S = I.S, s1 = sec(B, '我的艦隊', S.fleet.length + ' / ' + S.slots + ' 個位置 · 一次上場一艘，出局了換下一艘');
     S.fleet.forEach(function (id, i) {
-      var r = h('div', 'row slot' + (i === 0 ? ' flag' : ''), '<span class="ico">' + (i === 0 ? '🚩' : '⛵') + '</span><div class="mid">' + shipLine(id) + '</div>');
+      var r = h('div', 'row slot' + (i === 0 ? ' flag' : ''), '<span class="ico">' + (i === 0 ? '🚩' : '⛵') + '</span>' + shipPic(id) + '<div class="mid">' + shipLine(id) + '</div>');
       var sel = h('select'); Object.keys(S.own).sort(function (a, b) { return I.tons(a) - I.tons(b); }).forEach(function (o) { var op = h('option', '', I.esc(I.nameOf(o))); op.value = o; op.selected = o === id; sel.appendChild(op); });
       sel.onchange = function () { I.setSlot(i, sel.value); };
       r.appendChild(sel); s1.appendChild(r);
@@ -267,7 +269,7 @@
     var rank = function (id) { return S.own[id] ? 2 : S.bp[id] ? 0 : 1; };
     I.shipList().sort(function (a, b) { return rank(a) - rank(b) || (rank(a) === 1 ? I.firstZone(a) - I.firstZone(b) : 0); }).forEach(function (id) {
       var own = S.own[id], bp = S.bp[id], fz = I.firstZone(id), p = I.shipPrice(id);
-      var r = h('div', 'row ship' + (own ? ' own' : bp ? '' : ' lock'), '<span class="ico">' + (own ? '✅' : bp ? '📜' : '🔒') + '</span><div class="mid">' + (bp || own ? shipLine(id) : '<b>？？？</b><span class="spec">第 ' + fz + ' 海域' + (I.GIFTS[id] ? '的禮物' : '會遇到') + ' · 擊敗它拿藍圖</span>') + '</div>');
+      var r = h('div', 'row ship' + (own ? ' own' : bp ? '' : ' lock'), '<span class="ico">' + (own ? '✅' : bp ? '📜' : '🔒') + '</span>' + (bp || own ? shipPic(id) : '') + '<div class="mid">' + (bp || own ? shipLine(id) : '<b>？？？</b><span class="spec">第 ' + fz + ' 海域' + (I.GIFTS[id] ? '的禮物' : '會遇到') + ' · 擊敗它拿藍圖</span>') + '</div>');
       if (bp && !own) r.appendChild(costBtn(p, S.blocks >= p, '造船', function () { I.buyShip(id); }));
       if (own) r.appendChild(h('span', 'tag', S.fleet.indexOf(id) >= 0 ? '出航中' : '在港'));
       s3.appendChild(r);

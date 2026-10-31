@@ -3,6 +3,7 @@
   'use strict';
   var C = I.core, $ = I.$, h = I.h;
   if (!C) { document.body.insertAdjacentHTML('beforeend', '<div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#061220;color:#e8f4ff;font:16px sans-serif;z-index:99">這一頁要用有外殼 API 的核心（src/js/91_shellapi.js）建出來 —— python -I src/admin.py shell idle/shell.json</div>'); return; }
+  if (I.thumbMode) return;                                             // 船型縮圖的拍攝頁（56_thumbs.js）：不開遊戲
   var AUTO_KEY = 'bsidle.auto', started = false;
 
   // 外殼的掛鉤（核心 71_input.js shellCall）：點畫面 ⇒ 點到敵艦哪裡就咬哪裡（核心不瞄準、不換成手動）；回主選單 ⇒ 不理
